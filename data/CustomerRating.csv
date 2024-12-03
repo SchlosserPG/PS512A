@@ -1,0 +1,101 @@
+Customer_ID,Cleanliness_Rating,Staff_Friendliness_Rating,Service_Speed_Rating,Type_of_Service,Location,Meal_Stay_Type,Booking_Channel,Purpose_of_Visit
+1,7,8,10,RestaurantChain,Branch_C,Lunch,Online,Leisure
+2,3,7,9,HotelChain,Branch_A,Lunch,third-party,Leisure
+3,3,3,1,HotelChain,Branch_A,Dinner,Online,Business
+4,8,7,2,RestaurantChain,Branch_B,Lunch,Phone,Business
+5,6,1,7,RestaurantChain,Branch_C,Breakfast,Walk-In,Special Occasion
+6,3,6,5,RestaurantChain,Branch_B,Lunch,Online,Special Occasion
+7,4,8,4,HotelChain,Branch_B,Breakfast,Phone,Leisure
+8,8,3,5,HotelChain,Branch_B,Breakfast,Online,Business
+9,6,10,1,HotelChain,Branch_C,Dinner,Phone,Leisure
+10,8,2,1,RestaurantChain,Branch_C,Dinner,third-party,Business
+11,8,6,8,HotelChain,Branch_B,Lunch,Phone,Leisure
+12,4,6,4,HotelChain,Branch_B,Dinner,Phone,Business
+13,6,4,7,HotelChain,Branch_C,Lunch,Phone,Special Occasion
+14,6,4,2,HotelChain,Branch_B,Dinner,Walk-In,Leisure
+15,5,9,8,HotelChain,Branch_B,Breakfast,Online,Special Occasion
+16,6,6,3,HotelChain,Branch_C,Breakfast,Walk-In,Business
+17,2,2,10,RestaurantChain,Branch_A,Lunch,Phone,Special Occasion
+18,8,5,5,RestaurantChain,Branch_C,Breakfast,third-party,Special Occasion
+19,8,10,5,HotelChain,Branch_C,Breakfast,Walk-In,Special Occasion
+20,8,5,5,HotelChain,Branch_B,Lunch,Walk-In,Special Occasion
+21,4,8,1,RestaurantChain,Branch_A,Dinner,third-party,Business
+22,6,10,4,HotelChain,Branch_C,Breakfast,Walk-In,Business
+23,5,5,7,RestaurantChain,Branch_C,Lunch,Online,Special Occasion
+24,5,8,8,HotelChain,Branch_A,Dinner,Walk-In,Special Occasion
+25,9,9,5,HotelChain,Branch_C,Breakfast,third-party,Business
+26,6,3,2,HotelChain,Branch_C,Dinner,third-party,Leisure
+27,4,6,8,RestaurantChain,Branch_A,Dinner,Walk-In,Leisure
+28,1,1,1,RestaurantChain,Branch_A,Dinner,Phone,Business
+29,5,8,5,RestaurantChain,Branch_B,Breakfast,Phone,Special Occasion
+30,8,7,8,RestaurantChain,Branch_B,Lunch,Walk-In,Special Occasion
+31,6,6,3,HotelChain,Branch_C,Breakfast,third-party,Business
+32,3,8,10,HotelChain,Branch_A,Lunch,third-party,Leisure
+33,6,7,1,RestaurantChain,Branch_B,Dinner,Online,Business
+34,3,8,9,RestaurantChain,Branch_B,Lunch,Phone,Special Occasion
+35,3,4,9,RestaurantChain,Branch_A,Lunch,Phone,Leisure
+36,1,1,7,RestaurantChain,Branch_A,Lunch,Phone,Leisure
+37,5,8,7,HotelChain,Branch_A,Breakfast,Phone,Special Occasion
+38,8,6,7,RestaurantChain,Branch_C,Dinner,Phone,Special Occasion
+39,9,5,8,HotelChain,Branch_C,Lunch,Walk-In,Special Occasion
+40,3,4,4,RestaurantChain,Branch_A,Dinner,Online,Leisure
+41,6,5,2,HotelChain,Branch_C,Dinner,Walk-In,Business
+42,9,9,4,HotelChain,Branch_C,Breakfast,Online,Leisure
+43,4,7,3,RestaurantChain,Branch_B,Breakfast,Online,Business
+44,7,7,8,HotelChain,Branch_C,Lunch,Online,Special Occasion
+45,3,1,1,RestaurantChain,Branch_A,Dinner,Walk-In,Business
+46,3,4,10,RestaurantChain,Branch_A,Lunch,third-party,Leisure
+47,8,5,5,RestaurantChain,Branch_B,Lunch,Walk-In,Leisure
+48,3,6,9,RestaurantChain,Branch_A,Lunch,Phone,Leisure
+49,1,7,5,RestaurantChain,Branch_A,Dinner,Phone,Business
+50,7,3,2,HotelChain,Branch_C,Dinner,Walk-In,Leisure
+51,6,4,2,HotelChain,Branch_B,Dinner,Phone,Business
+52,3,8,2,RestaurantChain,Branch_B,Lunch,Online,Business
+53,2,5,5,RestaurantChain,Branch_A,Lunch,Online,Leisure
+54,7,4,5,HotelChain,Branch_C,Breakfast,Phone,Special Occasion
+55,6,8,6,RestaurantChain,Branch_B,Breakfast,third-party,Special Occasion
+56,3,1,2,RestaurantChain,Branch_B,Dinner,Walk-In,Business
+57,3,6,2,RestaurantChain,Branch_A,Dinner,Phone,Leisure
+58,1,6,4,RestaurantChain,Branch_A,Breakfast,Phone,Business
+59,2,3,2,HotelChain,Branch_A,Dinner,Phone,Business
+60,5,4,9,RestaurantChain,Branch_A,Breakfast,Online,Special Occasion
+61,5,4,3,RestaurantChain,Branch_A,Breakfast,third-party,Business
+62,5,8,2,HotelChain,Branch_C,Lunch,Walk-In,Business
+63,5,3,7,HotelChain,Branch_C,Lunch,third-party,Leisure
+64,2,8,5,RestaurantChain,Branch_A,Dinner,Walk-In,Business
+65,6,1,10,RestaurantChain,Branch_C,Lunch,Phone,Special Occasion
+66,8,7,7,HotelChain,Branch_C,Lunch,third-party,Special Occasion
+67,8,4,5,RestaurantChain,Branch_B,Lunch,Phone,Business
+68,2,9,9,HotelChain,Branch_A,Lunch,Phone,Special Occasion
+69,2,3,8,RestaurantChain,Branch_A,Breakfast,Walk-In,Leisure
+70,7,8,2,RestaurantChain,Branch_C,Dinner,Walk-In,Business
+71,8,1,2,RestaurantChain,Branch_C,Dinner,third-party,Leisure
+72,7,8,5,RestaurantChain,Branch_C,Breakfast,Walk-In,Business
+73,8,5,4,HotelChain,Branch_C,Dinner,Online,Business
+74,5,6,3,RestaurantChain,Branch_A,Lunch,Phone,Leisure
+75,9,7,7,HotelChain,Branch_C,Breakfast,Phone,Leisure
+76,2,9,2,HotelChain,Branch_A,Dinner,third-party,Business
+77,4,5,2,HotelChain,Branch_B,Dinner,Phone,Business
+78,2,8,10,RestaurantChain,Branch_A,Breakfast,Walk-In,Leisure
+79,5,3,5,RestaurantChain,Branch_C,Lunch,third-party,Special Occasion
+80,6,4,6,RestaurantChain,Branch_B,Breakfast,Online,Leisure
+81,3,3,5,RestaurantChain,Branch_A,Breakfast,Phone,Leisure
+82,6,3,10,RestaurantChain,Branch_C,Lunch,Walk-In,Special Occasion
+83,7,10,5,HotelChain,Branch_C,Breakfast,Online,Business
+84,7,8,3,RestaurantChain,Branch_C,Lunch,Phone,Leisure
+85,5,5,5,HotelChain,Branch_A,Lunch,Walk-In,Special Occasion
+86,1,1,1,RestaurantChain,Branch_A,Dinner,Phone,Business
+87,6,4,10,RestaurantChain,Branch_C,Lunch,Phone,Leisure
+88,1,4,5,HotelChain,Branch_A,Lunch,Phone,Special Occasion
+89,3,7,2,HotelChain,Branch_B,Dinner,Walk-In,Business
+90,8,4,5,RestaurantChain,Branch_C,Breakfast,third-party,Leisure
+91,4,2,8,RestaurantChain,Branch_B,Dinner,Online,Leisure
+92,10,3,1,RestaurantChain,Branch_C,Dinner,Phone,Leisure
+93,1,8,6,RestaurantChain,Branch_A,Breakfast,Phone,Special Occasion
+94,7,5,1,HotelChain,Branch_C,Dinner,Online,Leisure
+95,7,6,3,HotelChain,Branch_B,Lunch,Phone,Business
+96,8,3,1,HotelChain,Branch_B,Dinner,Online,Leisure
+97,2,10,5,HotelChain,Branch_A,Breakfast,Online,Special Occasion
+98,2,4,4,HotelChain,Branch_A,Dinner,Phone,Business
+99,2,3,10,RestaurantChain,Branch_A,Breakfast,Phone,Special Occasion
+100,5,4,5,HotelChain,Branch_B,Breakfast,Walk-In,Special Occasion

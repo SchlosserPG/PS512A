@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "OMSBA 512A: Probability And Statistics"
+  author: "Pamela Schlosser"
+  date: "5/17/2024"
+  chapters:
+    - index.qmd
+    - module1.qmd
+    - module2.qmd
+    - module3.qmd
+    - module4.qmd
+    - module5.qmd
+    - module6.qmd
+    - module7.qmd
+    - summary.qmd
+
+format:
+  html:
+    css: styles.css
+    number-sections: false 
+
+
+editor: visual
+
+

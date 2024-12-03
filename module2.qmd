@@ -1,0 +1,1438 @@
+---
+title: "Module 2: Descriptive Statistics and Data Prep"
+author: ""
+date: "2024-08-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
+```
+
+-   The goal of this lesson is to teach you how to summarize descriptive statistics for both quantitative and qualitative data in R. To succeed, you will learn to differentiate between these data types and understand their context, which provides crucial information about how the data was collected and its intended use. Additionally, you will gain skills in cleaning datasets for analytics using dplyr, a powerful R package designed for intuitive and efficient data manipulation with data frames or tibbles, a modern reimagining of data frames provided by the tibble package.
+
+### At a Glance
+
+-   In order to succeed in this lesson, we need to be able to evaluate variables descriptively and understand how to clean and prepare data to make variables easier to use and in the correct form. This sometimes includes subsetting and filtering data alongside other techniques.
+
+### Lesson Objectives
+
+-   Choose and conduct descriptive analyses for categorical (factor) variables.
+-   Choose and conduct descriptive analyses for continuous (numeric) variables.
+-   Create variables and identify and change data types.
+-   Learn how to clean data via dplyr.
+
+### Consider While Reading
+
+-   In any analysis, it is critically important to understand your data set by evaluating descriptive statistics. For qualitative data, you should know how to calculate frequencies and proportions and make a user-friendly display of results. For quantitative data, you should know what a histogram is and how it is used to describe quantitative data. We also should know how to describe variables by their center and spread of the distribution. Finally, we should know how to clean datasets to be able to use them more effectively.
+
+## Summarizing Qualitative Data
+
+-   Qualitative data is information that cannot be easily counted, measured, or easily expressed using numbers.
+    -   Nominal variables: a type of categorical variable that represents discrete categories or groups with no inherent order or ranking
+        -   gender (male, female)
+        -   marital status (single, married, divorced)
+        -   eye color (blue, brown, green)
+    -   Ordinal variables: categories possess a natural order or ranking
+        -   a Likert scale measuring agreement with a statement (e.g., strongly disagree, disagree, neutral, agree, strongly agree)
+-   A frequency distribution shows the number of observations in each category for a factor or categorical variable.
+-   Guidelines when constructing frequency distribution:
+    -   Classes or categories are mutually exclusive (they are all unique).
+    -   Classes or categories are exhaustive (a full list of categories).
+-   To calculate frequencies, first, start with a variable that has categorical data.
+
+```{r}
+# Create a vector with some data that could be categorical
+Sample_Vector <- c("A", "B", "A", "C", "A", "B", "A", "C", "A", "B")
+# Create a data frame with the vector
+data <- data.frame(Sample_Vector)
+```
+
+-   To count the number of each category value, we can use the table() command.
+-   The output shows a top row of categories and a bottom row that contains the number of observations in the category.
+
+```{r}
+# Create a table of frequencies
+frequencies <- table(data$Sample_Vector); frequencies
+
+```
+
+-   Relative frequency is how often something happens divided by all outcomes.
+-   The relative frequency is calculated by $f_i/n$, where $f_i$ is the frequency of class $i$ and $n$ is the total frequency.
+-   We can use the prop.table() command to calculate relative frequency by dividing each category’s frequency by the sample size.
+
+```{r}
+# Calculate proportions
+proportions <- prop.table(frequencies)
+```
+
+-   The cumulative relative frequency is given by $cf_i/n$, where $cf_i$ is the cumulative frequency of class $i$.
+-   The cumsum() function calculates the cumulative distribution of the data
+
+```{r}
+# Calculate cumulative frequencies
+cumulfreq <- cumsum(frequencies)
+# Calculate cumulative proportions
+cumulproportions<- cumsum(prop.table(frequencies))
+```
+
+-   The rbind() function is used to combine multiple data frames or matrices by row. The name "rbind" stands for "row bind". Since the data produced by the table is in rows, we can use rbind to link them together.
+
+```{r}
+#combine into table
+frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
+# Print the table
+frequency_table
+
+```
+
+-   We can transpose a table using the t() command, which flips the dataset.
+
+```{r}
+TransposedData <- t(frequency_table)
+TransposedData
+```
+
+-   Finally, sometimes we need to transform our calculations into a dataset.
+-   The as.data.frame function is used to coerce or convert an object into a data frame.
+-   as.data.frame() is used when you have an existing object that needs to be coerced into a data frame. data.frame(), on the other hand, is for creating a data frame from scratch by specifying the data directly. Therefore, both as.data.frame() and data.frame() are used to convert or create data frames in R.
+-   as.data.frame() coerces an existing object (such as a list, matrix, or vector) into a data frame. Data.frame is used to create a new data frame from individual vectors or lists.
+-   as.data.frame() accepts a wider variety of inputs (like lists, matrices, and vectors), while data.frame() directly accepts vectors and lists to construct the data frame.
+
+```{r}
+TransposedData <- as.data.frame(TransposedData)
+TransposedData
+```
+
+## Summarizing Quantitative Data
+
+### Defining and Calculating Central Tendency
+
+-   The term central location refers to how numerical data tend to cluster around some middle or central value.
+-   Measures of central location attempt to find a typical or central value that describes a variable.
+-   Why frequency distributions do not work for numeric variables:
+    -   Numeric variables measured on a continuum.
+    -   Instead, we calculate descriptive statistics including central tendency and spread of the values for a numeric variable.
+-   We will examine the three mostly widely used measures of central location: mean, median and mode.
+-   Then we discuss a percentile: a measure of relative position.
+
+#### Using the Mean
+
+-   The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.
+
+-   The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).
+
+-   $m_x = (\sum_{i=1}^{n} x_{i})/n$
+
+-   Consider the salaries of employees at a company: ![Salary Data](Pictures/Ch2/Salaries.png "Salary Data")
+
+-   We can use the mean() command to calculate the mean in R.
+
+```{r}
+# Create Vector of Salaries
+salaries <- c(40000, 40000, 65000, 90000, 145000, 150000, 550000)
+#Calculate the mean using the mean() command
+mean(salaries)
+```
+
+-   Note that due to at least one *outlier* this mean does not reflect the typical salary - more on that later.
+-   If we edit our vector to include NAs, we have to account for this. This is a common way to handle NAs in functions that do not allow for them.
+
+```{r}
+salaries2 <- c(40000, 40000, 65000, 90000, 145000, 150000, 550000, NA, NA)
+#Calculate the mean using the mean() command
+# Notice that it does not work
+mean(salaries2)
+# Add in na.rm parameter to get it to produce the mean with no NAs. 
+mean(salaries2, na.rm=TRUE)
+```
+
+-   Note that there are other types of means like the weighted mean or the geometric mean.\
+-   The weighted mean uses weights to determine the importance of each data point of a variable. It is calculated by $\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}$, where are the weights associated to the values.
+-   An example is below.
+
+```{r}
+values <- c(4, 7, 10, 5, 6)
+weights <- c(1, 2, 3, 4, 5)
+weighted_mean <- weighted.mean(values, weights)
+weighted_mean
+```
+
+#### Using the Median
+
+-   The median is another measure of central location that is not affected by outliers.
+-   When the data are arranged in ascending order, the median is:
+    -   The middle value if the number of observations is odd, or
+    -   The average of the two middle values if the number of observations is even.
+-   Consider the sorted salaries of employees presented earlier which contains an odd number of observations.\
+-   On the same salaries vector created above, use median() command to calculate the median in R.
+
+```{r}
+# Calculate the median using the median() command
+median(salaries)
+```
+
+-   Now compare to the mean and note the large difference in numbers signifying that at least one outlier is most likely present.
+-   Specifically, if the mean and median are different, it is likely the variable is skewed and contains outliers.
+
+```{r}
+mean(salaries)
+```
+
+-   For another example, consider the sorted data below that contains an even number of values.
+
+```{r}
+GrowthFund <- c(-38.32, 1.71, 3.17, 5.99, 12.56, 13.47, 16.89, 16.96, 32.16, 36.29)
+```
+
+-   When data contains an even number of values, the median is the average of the 2 sorted middle numbers (12.56 and 13.47).
+
+```{r}
+median(GrowthFund) 
+(12.56+13.47)/2
+
+#The mean is still the average
+mean(GrowthFund) 
+```
+
+#### Using the Mode
+
+-   The mode is another measure of central location.
+-   The mode is the most frequently occurring value in a data set.
+-   The mode is useful in summarizing categorical data but can also be used to summarize quantitative data.
+-   A data set can have no mode, one mode (unimodal), two modes (bimodal) or many modes (multimodal).
+-   The mode is less useful when there are more than three modes.
+
+#### Example of Function with Salary Variable
+
+-   Consider the salary of employees presented earlier. The mode is \$40,000 since this value appears most often.
+
+```{r}
+# Try this command with and without it. 
+names(sort(x = table(salaries), decreasing = TRUE))
+
+```
+
+-   40,000 appears 2 times and is the mode because that occurs most often.
+
+#### Finding No Mode
+
+-   Look at the sort(table()) commands with the GrowthFund Vector we made earlier.
+-   I added a \[1:3\] at the end of the statement to produce the 3 highest frequencies found in the vector.
+
+```{r}
+sort(table(GrowthFund), decreasing = TRUE)[1:3]
+```
+
+-   Even if you use this command, you still need to evaluate the data more systematically to verify the mode. If the highest frequency of the sorted table is 1, then there is no mode.
+
+## Defining and Calculating Spread
+
+-   Spread is a measure of distance values are from the central value.
+-   Each measure of central tendency has one or more corresponding measures of spread.
+-   Mean: use variance or standard deviation to measure spread.
+    -   skewness and kurtosis help measure spread as well.
+-   Median: use range or interquartile range (IQR) to measure spread.
+-   Mode: use the index of qualitative variation to measure spread.
+    -   Not formally testing here with a function.
+
+### Spread to Report with the Mean
+
+#### Evaluating Skewness
+
+-   Skewness is a measure of the extent to which a distribution is skewed.
+-   Can evaluate skewness visually with histogram.
+    -   A histogram is a visual representation of a frequency or a relative frequency distribution.
+    -   Bar height represents the respective class frequency (or relative frequency).
+    -   Bar width represents the class width.
+
+![Evaluating Skewness Visually](Pictures/Ch2/Skewness.png "Evaluating Skewness Visually")
+
+#### Skewed Distributions: Median Not Same as Mean
+
+-   Sometimes, a histogram is difficult to tell if skewness is present or if the data is relatively normal or symmetric.
+-   If Mean is less than Median and Mode, then the variable is Left-Skewed.
+-   If the Mean is greater than the Median and Mode, then the variable is Right-Skewed.
+-   If the Mean is about equal to the Median and Mode, then the variable has a symmetric distribution.
+-   In R, we can easily look at mean and median with the summary() command.
+
+![Evaluating Skewness Using Mean and Median](Pictures/Ch2/SkewMeanMedian.png "Evaluating Skewness Using Mean and Median")
+
+-   Mean is great when data are normally distributed (data is not skewed).
+-   Mean is not a good representation of skewed data where outliers are present.
+    -   Adding together a set of values that includes a few very large or very small values like those on the far left of a left-skewed distribution or the far right of the right-skewed distribution will result in a large or small total value in the numerator of Equation and therefore the mean will be a large or small value relative to the actual middle of the data.
+
+#### Using skew() Command in R
+
+-   The skew() command is from the semTools package. The install.packages() command is commented out below, but install it one time on your R before commenting it out.
+
+```{r, message=FALSE}
+# install the semTools package if necessary. 
+# install.packages("semTools")
+# Activate the library
+library(semTools)
+```
+
+-   After the package is installed and loaded, run the skew() command on the salaries vector made above.
+
+```{r}
+
+skew(salaries) 
+
+```
+
+#### Interpreting the skew() Command Results
+
+-   se = standard error
+
+-   z = skew/se
+
+-   If the sample size is small (n \< 50), z values outside the –2 to 2 range are a problem.
+
+-   If the sample size is between 50 and 300, z values outside the –3.29 to 3.29 range are a problem.
+
+-   For large samples (n \> 300), using a visual is recommended over the statistics, but generally z values outside the range of –7 to 7 can be considered problematic.
+
+-   Salary: Our sample size was small, \<50, so the z value of 2.496 in regards to the salary vector indicates there is a problem with skewness.
+
+-   GrowthFund: We can check the skew of GrowthFund.
+
+```{r}
+skew(GrowthFund)
+```
+
+-   GrowthFund was also considered a small sample size, so the same -2/2 thresholds are used. Here, our z value is -1.78250137, which is in normal range. This indicates there is no problem with skewness.
+
+### Histograms
+
+-   A histogram is a graphical representation of the distribution of numerical data.
+-   It consists of a series of contiguous rectangles, or bars, where the area of each bar corresponds to the frequency of observations within a particular range or bin of values.
+-   The x-axis typically represents the range of values being measured, while the y-axis represents the frequency or count of observations falling within each range.
+-   Histograms are commonly used in statistics and data analysis to visualize the distribution of a dataset and identify patterns or trends.
+-   They are particularly useful for understanding the central tendency, variability, and shape of the data distribution - this includes our observation of skewness.
+-   Works much better with larger datsets.
+
+#### Commands to Make a Histogram
+
+-   hist() command in base R.
+
+-   geom_histogram() command in ggplot2 package.
+
+-   a hist using the GrowthFund dataset does not look that great because its sample size is so small.
+
+```{r}
+hist(GrowthFund)
+```
+
+#### hist vs geom_histogram
+
+-   In R, hist() and geom_histogram() are both used to create histograms, but they belong to different packages and have slightly different functionalities.
+
+```{r}
+# Making an appropriate data.frame to use the hist() command
+HousePrice <- c(430, 520, 460, 475, 670, 521, 670, 417, 533, 525, 538, 370, 530, 525, 430, 330, 575, 555, 521, 350, 399, 560, 440, 425, 669, 660, 702, 540, 460, 588, 445, 412, 735, 537, 630, 430) 
+HousePrice <- data.frame(HousePrice)
+```
+
+-   hist(): This function is from the base R graphics package and is used to create histograms. It provides a simple way to visualize the distribution of a single variable.
+
+```{r, fig.alt = "Histogram Generated by R"}
+# Using base R to create the histogram. 
+hist(HousePrice$HousePrice, breaks=5, main = "A Histogram", xlab = "House Prices (in $1,000s)", col="yellow")
+```
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+-   geom_histogram(): This function is from the ggplot2 package, which is part of the tidyverse. It is used to create histograms as part of a more flexible and powerful plotting system.
+
+```{r, fig.alt = "Histogram Generated by R Using ggplot2"}
+# Using geom_histogram() command to create the histogram. 
+ggplot(HousePrice, aes(x=HousePrice))+geom_histogram(binwidth = 100, boundary= 300, color="black", fill="yellow")+ labs(title="A Histogram",x="House Prices (in $1,000s)", y = "Frequency")
+```
+
+-   We could add more parameters here to make the 2 histograms look identical, but this configuration of parameters is very close. Take note that there are a lot more parameters you can add to the geom_histogram() command than you can with base R to make it look more professional. Be sure to look them up and also check with the notes in the book, which focuses on geom_histogram instead of hist().
+
+-   Variance is a measure of spread for numeric variables that is essentially the average of the squared differences between each observation value on some variable and the mean for that variable with population variance. $$Population Var(X) = \sigma^2 = \sum{(x_i-\mu)^2}/N$$ $$Sample Var(x) = s^2 = \sum{(x_i-\bar{x})^2}/(n-1)$$
+
+-   Standard deviation is the square root of the variance.
+
+    -   Use var() command and sd() command to calculate sample variance and sample standard deviation.\
+
+    ```{r}
+    ##Calculated from Small Sample
+    x <- c(1,2,3,4,5)
+    sum((x-mean(x))^2/(5-1))
+    var(x)
+    sqrt(var(x))
+    sd(x)
+
+    sd(HousePrice$HousePrice) #102.6059
+    var(HousePrice$HousePrice) #10527.97
+    skew(HousePrice$HousePrice) #normal
+
+
+    ```
+
+-   Looking at Spread for a Larger Dataset
+
+```{r}
+
+customers <- read.csv("data/customers.csv")
+summary(customers$Spending, na.rm=TRUE) #mean and median
+mean(customers$Spending, na.rm=TRUE) #mean by itself
+median(customers$Spending, na.rm=TRUE) #median by itself
+### Spread to Report with the Mean
+sd(customers$Spending, na.rm=TRUE) 
+var(customers$Spending, na.rm=TRUE)
+```
+
+#### Kurtosis in Evaluating Mean Spread
+
+-   Kurtosis is the sharpness of the peak of a frequency-distribution curve or more formally a measure of how many observations are in the tails of a distribution.
+
+-   The formula for kurtosis is as follows: Kurtosis = $\frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left( \frac{(X_i - \bar{X})^4}{s^4} \right) - \frac{3(n-1)^2}{(n-2)(n-3)}$
+
+Where:
+
+-   $n$ is the sample size
+-   $X_i$ is each individual value
+-   $\bar{X}$ is the mean of the data
+-   $s$ is the standard deviation
+-   A normal distribution will have a kurtosis value of three, where distributions with kurtosis around 3 are described as mesokurtic, significantly higher than 3 indicate leptokurtic, and significantly under 3 indicate platykurtic.
+-   The kurtosis() command from the semTools package subtracts 3 from the kurtosis, so we can evaluate values by comparing them to 0. Positive values will be indicative to a leptokurtic distribution and negative will indicate a platykurtic distribution. To see if kurtosis (leptokurtic or platykurtic) is significant, we confirm them by first evaluating the z-score to see if the variable is normal or not. The same cutoff values from skew also apply for the z for small, medium, and large sample sizes in kurtosis. These are the same basic rules for the rules in judging skewness.
+
+![Evaluate Kurtosis](Pictures/Ch2/Kurtosis.png "Evaluate Kurtosis")
+
+-   The rules of determining problematic distributions with regards to kurtosis are below.
+    -   If the sample size is small (n \< 50), z values outside the –2 to 2 range are a problem.
+    -   If the sample size is between 50 and 300, z values outside the –3.29 to 3.29 range are a problem.
+    -   For large samples (n \> 300), using a visual is recommended over the statistics, but generally z values outside the range of –7 to 7 can be considered problematic.
+    -   If kurtosis is found, then evaluate the excess kur score to see if it is positive or negative to determine whether it is leptokurtic or platykurtic.
+
+```{r}
+# z-value is 3.0398, which is > 2 indicating leptokurtic
+# Small sample size: range is -2 to 2
+kurtosis(salaries)
+
+# z-value is 2.20528007, which is > 2 indicating leptokurtic 
+# Small sample size: range is -2 to 2
+kurtosis(GrowthFund)
+
+# Small sample size: range is -2 to 2
+# Skewness and kurtosis are both in range. 
+skew(HousePrice$HousePrice) #normal
+kurtosis(HousePrice$HousePrice) #normal
+```
+
+-   Let's do a few more examples using the customers dataset.
+
+```{r}
+# Noted sample size at 200 observations or a medium sample size. Using threshold –3.29 to 3.29 to assess normality. 
+
+#-3.4245446445 is below -3.29 so kurtosis is present
+#Negative kurtosis value indicates platykurtic
+kurtosis(customers$Spending)
+geom_histogram(binwidth = 100, fill="pink", color="black")
+semTools::skew(customers$Spending)##normal indicating no skewness
+
+#Normal: 2.977622119 is in between -3.29 and 3.29
+kurtosis(customers$Income) 
+ggplot(customers, aes(Income)) + geom_histogram(binwidth = 10000, fill="pink", color="black")
+semTools::skew(customers$Income) #Skewed right
+
+
+#-3.7251961028 is below -3.29 so kurtosis is present
+#Negative kurtosis value indicates platykurtic
+kurtosis(customers$HHSize)
+ggplot(customers, aes(HHSize)) + geom_histogram(binwidth = 1, fill="pink", color="black")
+semTools::skew(customers$HHSize) #normal
+
+
+#Normal: -0.20056607 is in between -3.29 and 3.29 
+kurtosis(customers$Orders) 
+geom_histogram(binwidth = 5, fill="pink", color="black")
+semTools::skew(customers$Orders) ##skewed right
+
+```
+
+### Spread to Report with the Median
+
+-   Range = Maximum Value – Minimum Value.
+
+    -   Simplest measure.
+    -   Focuses on Extreme values.
+    -   Use commands diff(range()) or max() – min().
+
+-   IQR: Difference between the first and third quartiles.
+
+    -   Use IQR() command or quantile() command.
+
+    ```{r}
+    summary(customers$Spending, na.rm=TRUE)
+    diff(range(customers$Spending, na.rm=TRUE))
+    max(customers$Spending, na.rm=TRUE)-min(customers$Spending, na.rm=TRUE)
+    IQR(customers$Spending, na.rm=TRUE)
+    ```
+
+### Spread to Report with the Mode
+
+-   While there is no great function to test for spread, you can look at the data and see if it is concentrated around 1 or 2 frequencies. If it is, then the spread is distorted towards those high frequency values.
+
+# Data Preparation
+
+-   We often spend a considerable amount of time inspecting and preparing the data for the subsequent analysis. This includes the following:
+    -   Evaluating Data Types
+    -   Sorting Data
+    -   Selecting Variables
+    -   Filtering Data
+    -   Counting Data
+    -   Handling Missing Values
+    -   Summarizing
+    -   Grouping Data
+
+## Evaluating Data Types
+
+-   There are a number of data types in R that are common to programming and statistical analysis.
+-   A data type of a variable specifies the type of data that is stored inside that variable. Sometimes when you read in data it is in the correct type, and other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
+    -   Factor (Nominal or Ordinal)
+    -   Numeric (Real or Discrete (Integer))
+    -   Character
+    -   Logical
+    -   Date
+
+## Coercing Data Types
+
+-   In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, "A"), which results in c("1", "A"). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.
+
+-   To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as "numeric" or "factor". Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like "Male" and "Female" would be a categorical (factor) variable.
+
+### Factor data type:
+
+-   Ordinal: Contain categories that have some logical order (e.g. categories of age).
+
+-   Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).
+
+-   R will treat each unique value of a factor as a different level.
+
+#### Ordinal Variable
+
+-   Ordinal data may be categorized and ranked with respect to some characteristic or trait.
+    -   For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).
+    -   A scale allows us to code the data based on order, assuming equal distance between scale items (aka likert items).
+    -   You can make an ordinal factor data type in R or you can convert the order to meaningful numbers.
+-   To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.
+-   The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.
+-   It allows you to map old values to new ones in a simple and readable manner.
+
+```{r, tidy=FALSE}
+library(tidyverse)
+# Take a vector representing evaluation scores, named evaluate 
+evaluate <- c("excellent", "good", "fair", "poor", "excellent", "good")
+
+data <- data.frame(evaluate)
+data <- data %>%
+     mutate(evaluate = recode(evaluate,
+            "excellent" = 4,
+            "good" = 3,
+            "fair" = 2,
+            "poor" = 1))
+data
+
+```
+
+#### Nominal Variable
+
+-   With nominal variables, data are simply categories for grouping.
+-   For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.
+-   Qualitative values may be converted to quantitative values for analysis purposes. + White = 1, Black = 2, etc. This conversion to numerical representation of the category would be needed to run some analysis.
+    -   Sometimes, R does this on our behalf depending on commands used.
+-   We can force a variable into a factor data type using the as.factor() command.
+-   If we use the read.csv() command, we can sometimes do this by setting an argument $stringsAsFactors=TRUE$. We will do this later in the lesson.
+
+### Numerical data types:
+
+-   A numerical data type is a vector of numbers (Real or Integer)
+
+-   Continuous (Real) variables can take any value along some continuum, hence continuous.
+
+    -   We can force a variable into a numerical data type by using the as.numeric() command.
+    -   For example, we could collect information on a participants age, height, weight, or distance traveled.
+
+-   Two ways to create:
+
+    -   We can create a numeric variable by ensuring our value we assign is a number!
+    -   We can force a variable into an real number data type by using the as.numeric() command.
+
+    ```{r}
+    # Assign Rhode Island limit for medical marijuana in ounces per person
+    kOuncesRhode <- 2.5
+    #Identify the data type 
+    class(x = kOuncesRhode) 
+    ```
+
+-   Discrete (Integer) Variables:
+
+    -   Discrete variables can only take a countable number of distinct values.
+    -   We can force a variable into an integer data type by using the as.integer() command.
+
+-   For example, we could collect information on the number of children in a family or number of points scored in a basketball game.
+
+```{r}
+# Assign the value of 4 to a constant called kTestInteger and set as an integer
+kTestInteger <- as.integer(4)
+class(kTestInteger) #Confirm the data type is an integer 
+
+#Use as.integer() to truncate the variable ouncesRhode
+Trunc <- as.integer(kOuncesRhode); Trunc
+
+```
+
+### Character data type
+
+-   Wrapped in either single or double quotation marks.
+    -   Includes letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
+    -   A quick example is below that shows how to assign a character value to a variable.
+
+```{r}
+# Make constants 
+kFirstName <- "Pamela"
+kLastName <- "Schlosser"
+# Check the data type
+class(x = kFirstName)
+# Create a zip code constant and check the data type
+kZipCode <- "23185"
+class(x = kZipCode)
+```
+
+### Logical data type
+
+-   Values of TRUE and FALSE
+
+-   Result of some expression.
+
+    -   A quick example is below that shows how to assign a logical value to a variable.
+
+    ```{r}
+    # Store the result of 6 > 8 in a constant called kSixEight
+    kSixEight <- 6 > 8 
+    # Can use comparison tests with the following == >= <= > < <> != 
+    kSixEight # Print kSixEight
+    # Determine the data type of kSixEight
+    class(x = kSixEight)
+    ```
+
+### Date data type
+
+-   A variable that should be a date.
+
+```{r}
+# Convert date info in format 'mm/dd/yyyy' using as.Date
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+str(dates)
+```
+
+-   lubridate is a package specifically for converting dates. This package makes dates a lot easier to work with.
+
+```{r}
+# Convert date info in format 'mm/dd/yyyy' using lubridate
+library(lubridate)
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- mdy(strDates) 
+str(dates)
+```
+
+-   If you are only given a year and a month, you can use the ym() command to turn it to a date. But take note that it will add a day to the value as a placeholder.
+
+```{r}
+# Convert date info in format 'yyyymm' using lubridate
+stryyyymm <- c("202201", "202003", "202204")
+dates <- ym(stryyyymm)
+str(dates)
+```
+
+```{r}
+# Convert date info in format 'mm/dd/yyyy' using as.Date
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y") 
+str(dates)
+```
+
+```{r}
+
+
+
+UseDates <- read.csv("data/Lubridate.csv")
+UseDates$Date <- ym(UseDates$Date)
+
+#You can use the month or year function to access the month or year from the date
+UseDates$month <- month(UseDates$Date)
+UseDates$year <- year(UseDates$Date)
+
+##Now, you can access months or year numerically
+summary(UseDates$month) 
+summary(UseDates$year)
+
+##You could code the seasons using a mutate function making a new variable "season"
+library(tidyverse)
+UseDates <- UseDates %>% 
+  mutate(season = case_when(
+    month %in% 3:5 ~ "Spring",
+    month %in% 6:8 ~ "Summer",
+    month %in% 9:11 ~ "Fall",
+    TRUE ~ "Winter"
+  ))
+
+UseDates$season <- as.factor(UseDates$season)
+summary(UseDates$season)
+
+##You could use a filter statement to select a particular year. 
+#In the example below, I save the filtered data into a new data frame UseDate2022. 
+UseDate2022 <- filter(UseDates, year==2022)
+
+```
+
+### Nominal Example with Dataset
+
+```{r, message=FALSE}
+library(tidyverse)
+gss.2016 <- read_csv(file = "data/gss2016.csv") 
+```
+
+```{r}
+#Examine the variable types with summary and class functions.
+summary(gss.2016)
+class(gss.2016$grass) #Check the data type.
+gss.2016$grass <- as.factor(gss.2016$grass) #Turn to a factor.
+class(gss.2016$grass) #Confirming it is now correct.
+```
+
+### Numerical Example with Dataset
+
+-   We need to ensure data can be coded as numeric before using the as.numeric() command. For example, to handle the variable age, it seems like numerical values except one value of "89 OR OLDER". If as.numeric() command was used on this variable, it would put all the 89 and older observations as NAs. To force it to be a numerical variable, and keep that the sample participants were the oldest value, we need to recode it and then use the as.numeric() command to coerce it into a number.
+-   Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.
+
+```{r}
+class(gss.2016$age)
+#Recode "89 OR OLDER" into just "89"
+gss.2016$age <- recode(gss.2016$age, "89 OR OLDER" = "89")
+# Convert to numeric data type
+gss.2016$age <- as.numeric(gss.2016$age) 
+summary(gss.2016) #Conduct final check confirming correct data types
+```
+
+## Common dplyr Functions
+
+### Arrange
+
+-   Sorting or arranging the dataset allows you to specify an order based on variable values.
+-   Sorting allows us to review the range of values for each variable, and we can sort based on a single or multiple variables.
+-   Notice the difference between sort() and arrange() functions below.
+    -   The sort() function sorts a vector.
+    -   The arrange() function sorts a dataset based on a variable.
+-   To conduct an example, read in the data set called gig.csv from your working directory.
+
+```{r}
+gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings="")
+dim(gig)
+head(gig)
+```
+
+-   Using the arrange() function, we add the dataset, followed by a comma and then add in the variable we want to sort. This arranges from small to large.
+
+-   Below is code to rearrange data based on Wage and save it in a new object.
+
+```{r}
+sortTidy <- arrange(gig, Wage)
+head(sortTidy)
+```
+
+-   We can apply a desc() function inside the arrange function to re-sort from high to low like shown below.
+
+```{r}
+sortTidyDesc <- arrange(gig, desc(Wage))
+head(sortTidyDesc)
+```
+
+### Subsetting or Filtering
+
+-   Subsetting or filtering a data frame is the process of indexing, or extracting a portion of the data set that is relevant for subsequent statistical analysis. Subsetting allows you to work with a subset of your data, which is essential for data analysis and manipulation. One of the most common ways to subset in R is by using square brackets \[\]. We can also use the filter() function from tidyverse.
+
+-   We use subsets to do the following:
+
+    -   View data based on specific data values or ranges.
+    -   Compare two or more subsets of the data.
+    -   Eliminate observations that contain missing values, low-quality data, or outliers.
+    -   Exclude variables that contain redundant information, or variables with excessive amounts of missing values.
+
+-   When working with data frames, you can subset by rows and columns using two indices inside the square brackets: data\[row, column\]. For example, if you have df \<- data.frame(a = 1:3, b = c("X", "Y", "Z")), df\[1, 2\] would return the value "X", which is the first row and second column. If you want the entire first row, you would use df\[1, \], and to get the second column, you’d use df\[, 2\].
+
+-   You can also use logical conditions to subset. For instance, x\[x \> 20\] would return all values in x greater than 20, and in a data frame, you could filter rows where a certain condition holds, such as df\[df\$a \> 1, \], which returns rows where column a has values greater than 1.
+
+-   Let's do an example using the customers.csv file we read in earlier as customers in the last lesson. Base R provides several methods for subsetting data structures. Below uses base R by using the square brackets dataset\[row, column\] format.
+
+```{r, results='hide'}
+customers <- read.csv("data/customers.csv", stringsAsFactors = TRUE)
+
+#To subset, note the dataset[row,column] format
+#Results hidden to save space, but be sure to try this code in your .R file. 
+#Data in 1st row
+customers[1,] 
+#Data in 2nd column
+customers[,2] 
+#Data for 2nd column/1st observation (row)
+customers[1,2] 
+#First 3 columns of data
+customers[,1:3] 
+```
+
+-   One of the most powerful and intuitive ways to subset data frames in R is by using the filter() function from the dplyr package, which is part of the tidyverse. Tidyverse is extremely popular when filtering data.
+-   The filter function is used to subset rows of a data frame based on certain conditions.
+-   The below example filters data by the College variable when category values are "Yes" and saves the filtered dataset into an object called college.
+
+```{r}
+#Filtering by whether the customer has a "Yes" for college. 
+#Saving this filter into a new object college which you should see in your global environment. 
+college <- filter(customers, College == "Yes")
+#Showing first 6 records of college - note the College variable is all Yes's. 
+head(college)
+```
+
+-   Using the filter command, we can add filters pretty easily by using an & for and, or an \| for or. The statement below filters by College *and* Income and save the new dataset in an object called twoFilters.
+
+```{r}
+twoFilters <- filter(customers, College == "Yes" & Income < 50000)
+head(twoFilters)
+```
+
+-   Next, we can do an *or* statement. The example below uses the filter command to filter by more than one category in the same field using the \| in between the categories.
+
+```{r}
+TwoRaces <- filter(customers, Race == "Black" | Race == "White")
+head(TwoRaces)
+```
+
+-   The str_detect() function is used to detect the presence or absence of a pattern (regular expression) in a string or vector of strings. It returns a logical vector indicating whether the pattern was found in each element of the input vector.
+-   Using str_detect it with a filter function allows you to pull observations based on the inclusion of a string pattern.
+
+```{r}
+library(tidyverse)
+Birthday2000 <- filter(customers, str_detect(BirthDate, "1985"))
+```
+
+### Select
+
+-   In R, the select() function is part of the dplyr package, which is used for data manipulation. The select() function is specifically designed to subset or choose specific columns from a data frame. It allows you to select variables (columns) by their names or indices.
+-   Both statements below select Income, Spending, and Orders variables from the customers dataset and form them into a new dataset called smallData.
+-   The statements are written with and without the chaining operator.
+
+```{r}
+smallData <- select(customers, Income, Spending, Orders)
+head(smallData)
+```
+
+### Piping (Chaining) Operator
+
+-   The pipe operator takes the output of the expression on its left-hand side and passes it as the first argument to the function on its right-hand side. This enables you to chain multiple functions together, making the code easier to understand and debug.
+-   If we want to keep our code tidy, we can add the piping operator (%\>%) to help combine our lines of code into a new object or overwriting the same object.
+-   This operator allows us to pass the result of one function/argument to the other one in sequence.
+-   The below example uses a select function to pull Income, Spending, and Orders variables fromt he customers dataset and save it as a new object called smallData. It is an identical request to the one directly above, but written with the piping operator.
+
+```{r}
+smallData <- customers %>% select(Income, Spending, Orders)
+```
+
+### Counting
+
+-   Counting allows us to gain a better understanding and insights into the data.
+
+-   This helps to verify that the data set is complete or determine if there are missing values.
+
+-   In R, the length() function returns the number of elements in a vector, list, or any other object with a length attribute. It essentially counts the number of elements in the specified object.
+
+```{r}
+#Gives the length of Industry
+length(gig$Industry)
+```
+
+-   For counting using tidyverse, we typically use the filter and count function together to filter by a value or state and then count the filtered data.
+-   In the function below, I use the piping operator to link together the filter and count functions into one command.
+-   Note that we need a piping operator (%\>%) before each new function that is part of the chunk.
+
+```{r}
+# Counting with a Categorical Variable
+# Here we are filtering by Automotive Industry and then counting the number and saving it in a new object called countAuto
+countAuto <- gig %>%
+     filter(Industry=="Automotive") %>%
+     count()
+countAuto #190
+```
+
+-   Below, we are filtering by Wage and the counting.
+
+```{r}
+# Counting with a Numerical Variable
+# We could also save this in an object. 
+gig %>%
+  filter(Wage > 30) %>%
+  count() ##536
+```
+
+-   We learned that there are 190 employees in the automotive industry and there are 536 employees who earn more than \$30 per hour.
+
+-   We could also calculate the number of people with wages under or equal to 30.
+
+```{r}
+#We find 68 Wages under or equal to 30
+WageLess30 <- gig %>%
+  filter(Wage <= 30) %>%
+  count() #
+WageLess30
+```
+
+-   How many Accountants are there in the Job Category of the gig data set. The answer is shown below. Use filter and count to calculate this answer.
+
+```{r, echo=FALSE}
+gig %>%
+     filter(Job=="Accountant") %>%
+     count()
+## 83 Accountants
+```
+
+### Handling Missing Data
+
+-   After a data set is loaded, there are two common strategies for dealing with missing values.
+
+1.  The omission strategy recommends that observations with missing values be excluded from subsequent analysis.
+
+2.  The imputation strategy recommends that the missing values be replaced with some reasonable imputed values.
+
+    -   Numeric variables: replace with the average.
+    -   Categorical variables: replace with the predominant category.
+
+#### Limitations of Using a Missing Data Technique
+
+-   Recommended Closer Evaluation of Missing Data
+-   There are limitations of both techniques listed above (omission and imputation).
+    -   If a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.
+    -   Removing missing values could also significantly reduce your data set size.
+    -   Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.
+    -   If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.
+-   Missing data needs to be closely evaluated to see if the missing value is meaningful or not.
+    -   For instance, getting data on how many pregnancies would only be applicable to people born of women gender, and blank value for people born of male gender, who are unable to have children, would be expected. In taking this example further, if variable 1 targeted the question, "how many pregnancies have you have had," we would expect missing data or NAs for all the men. If comparing that variable to a second variable "Incubated from COVID-19: Yes/No" we would not want to omit all the blanks in the dataset because then we would eliminate analysis of an entire gender. Thus a different technique should be chosen besides omitting the blanks to be able to evaluate more concisely.\
+-   If a value is not blank and is considered missing, data needs to be mutated to be consistent with the technique of coding true missing values.
+
+#### The na.rm Parameter
+
+```{r}
+y <- c(1, 2, NA, 3, 4, NA)
+# These lines runs, but do not give you anything useful.
+sum(y) 
+mean(y)
+```
+
+-   Many functions in R include parameters that will ignore NAs for you.
+
+    -   sum() and mean() are examples of this, and most summary statistics like median() and var() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.
+
+    ```{r}
+    sum(y, na.rm=TRUE) 
+    mean(y, na.rm=TRUE)
+    # na.omit removes the NAs from the vector of dataset. Here, it works for removing NAs from the vector.  
+    y <- na.omit(y) 
+    ```
+
+#### is.na()
+
+-   In R, the is.na() function is used to check for missing (NA) values in objects like vectors, data frames, or arrays. It returns a logical vector of the same length as the input object, where TRUE indicates a missing value and FALSE indicates a non-missing value.
+
+```{r}
+#Counts the number of all NA values in the entire dataset
+CountAllBlanks <- sum(is.na(gig)); CountAllBlanks 
+
+#Gives the observation number of the observations that include NA values
+which(is.na(gig$Industry))
+
+#Produces a dataset with observations that have NA values in the Industry field. 
+ShowBlankObservations <- gig %>%
+     filter(is.na(Industry))
+ShowBlankObservations
+
+#Counts the number of observations that have NA values in the Industry field. Industry is categorical, so we can count values based on it. 
+CountBlanks <- sum(is.na(gig$Industry)); CountBlanks 
+
+library(tidyverse)
+#Counts the number of observations that have NA values in the Wage field. 
+CountBlanks <- sum(is.na(gig$Wage)); CountBlanks 
+
+```
+
+#### Using na_if()
+
+-   The na_if() function in tidyr is used to replace specific values in a column with NA (missing) values. This function can be particularly useful when you want to standardize missing values across a dataset or when you want to replace certain values with NA for further data processing
+
+```{r}
+TurnNA <- gig %>%
+     mutate(Job = na_if(Job, "Other"))
+head(TurnNA)
+```
+
+#### na.omit() vs. drop_na()
+
+-   Both functions return a new object with the rows containing missing values removed.
+
+-   na.omit() is a base R function, so it doesn't require any additional package installation where drop_na() requires loading the tidyr package, which is part of the tidyverse ecosystem.
+
+-   
+
+    ```         
+    drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.
+    ```
+
+```{r}
+#install.packages("Amelia")
+library(Amelia)
+data("africa")
+summary(africa)
+summary(africa$gdp_pc)
+summary(africa$trade)
+
+africa1 <- na.omit(africa)
+summary(africa1)
+
+##to drop all at once. 
+africa2 <- africa %>% drop_na()
+summary(africa2)
+
+```
+
+-   You try to load the airquality dataset from base R and look at a summary of the dataset.
+
+    -   Sum the number of NAs in airquality.
+    -   Omit all the NAs from airquality and save it in a new data object called airqual and take a new summary of it.
+
+    ```{r, echo=FALSE}
+    data("airquality")
+    summary(airquality)
+    sum(is.na(airquality))
+    #37 + 7
+    airqual <- na.omit(airquality)
+    #153-111
+    summary(airqual)
+    ```
+
+### Summarize
+
+-   The summarize() command is used to create summary statistics for groups of observations in a data frame.
+-   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
+-   In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %\>% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.
+-   In the example below, we can summarize more than one thing into tidy output.
+
+```{r}
+gig %>%
+     drop_na() %>% 
+     summarize(mean.days = mean(Wage),
+               sd.days = sd(Wage),
+               var.days = var(Wage),
+               med.days = median(Wage),
+               iqr.days = IQR(Wage))
+
+```
+
+### Group_by
+
+-   group_by is used for grouping data by one or more variables. When you use group_by() on a data frame, it doesn't actually perform any computations immediately. Instead, it sets up the data frame in such a way that any subsequent operations are performed within these groups
+-   summarize() is often used in combination with group_by() to calculate summary statistics within groups
+
+```{r}
+##summarize data by Industry variable. 
+groupedData <- gig %>%
+     group_by(Industry) %>%
+     summarize(meanWage = mean(Wage))
+groupedData
+
+##same function with na's dropped. 
+groupedData <- gig %>%
+     drop_na() %>%
+     group_by(Industry) %>%
+     summarize(meanWage = mean(Wage))
+groupedData
+
+```
+
+### Mutate
+
+-   mutate() is part of the dplyr package, which is used for data manipulation. The mutate() function is specifically designed to create new variables (columns) or modify existing variables in a data frame. It is commonly used in data wrangling tasks to add calculated columns or transform existing ones.
+-   One example is below, but note that there are many things you can do with the mutate function.
+
+```{r}
+#making a new variable called calculation that multiplies gdp_pc by infl variables in the africa1 dataset. 
+africa.mutated <- mutate(africa1, calculation = gdp_pc * infl)
+head(africa.mutated)
+```
+
+-   Below is an example with the iris dataset, which is part of base R.
+
+```{r}
+data("iris")
+##Selecting 2 variables from the iris dataset: Sepal.Length and Petal.Length
+selected_data <-  select(iris, Sepal.Length, Petal.Length)
+head(selected_data)
+# Filter rows based on a condition: Species = setosa
+filtered_data <-  filter(iris, Species == "setosa")
+head(filtered_data)
+# Arrange rows by the Sepal.Length column
+arranged_data <-  arrange(iris, Sepal.Length)
+# Create a new column by mutating the data by transforming Petal.Width to the log form. 
+mutated_data <- mutate(iris, Petal.Width_Log = log(Petal.Width))
+```
+
+## Full Examples
+
+### gss.2016 Data Cleaning
+
+-   First, because we made some edits to the data set, reread in version a using the read.csv command. This brings the data set back to its original form. It is always a good idea to read the dataset back in when you are unsure about whether you have made a mistake during data preparation that could cause a lack of data integrity.\
+
+```{r message=FALSE}
+gss.2016 <- read.csv(file = "data/gss2016.csv") 
+```
+
+-   Before we remove any missing data, we need it to be the correct data type. In this case, grass should be a factor.
+
+```{r}
+# We coerced this variable earlier, but the object was called gss.2016. 
+#Since we reread in the data set, this needs to be done again. 
+gss.2016$grass <- as.factor(gss.2016$grass)
+```
+
+-   The statement below is an equivalent to the function above, but written with the piping operator. It is overwriting gss.2016 after conducting the coercion to factor.
+-   We added the mutate function because we are going to add other data cleaning tasks to this statement.
+
+```{r}
+gss.2016 <- gss.2016 %>% mutate(grass = as.factor(grass))
+```
+
+#### Piping to More Functions: Missing Data
+
+-   In the code below, the as.factor() command has been moved inside a broader mutate statement (that uses tidyverse library) and piped to it the na_if() command that handles missing data. If you use more than one data manipulation statement, the mutate() command is needed to help organize your code with one mutate() is needed for each major change you are making.
+-   In the code below, we created a new object gss.2016.cleaned to help store the cleaned version of the dataset. This helps maintain data integrity because your original dataset is still intact and each time, you rerun the entire chunk, which includes all the changes at one time.
+
+```{r}
+gss.2016.cleaned <- gss.2016 %>%
+  #Moved coercion statement into a mutate function to keep code tidy
+  mutate(grass = as.factor(grass)) %>% 
+  #Moving DK value to NA for not applicable
+  mutate(grass = na_if(x = grass, y = "DK"))
+
+#Check the summary, there should be 110 + 3 = 113 in the NA category 
+summary(object = gss.2016.cleaned)
+```
+
+#### Drop Levels
+
+-   The droplevels function is part of base R and is used to drop unused levels from factor variables in a data frame. It works by removing any levels from a factor variable that are not present in the data.
+
+-   Next, we want to edit our code to convert IAP and DK to NA values and drop levels that have are empty.
+
+    -   Note the Piping operator added to the end of the DK line so you can keep going with new commands editing gss.2016.cleaned.
+
+    ```{r}
+    gss.2016.cleaned <- gss.2016 %>% 
+      mutate(grass = as.factor(grass)) %>% 
+      #Added piping operator
+      mutate(grass = na_if(x = grass, y = "DK")) %>%   
+      #Turn to na if value of grass = IAP
+      mutate(grass = na_if(x = grass, y = "IAP")) %>% 
+      #Drop levels in grass that have no values
+      mutate(grass = droplevels(x = grass))  
+    #Check what you just did
+    summary(gss.2016.cleaned) 
+    ```
+
+#### Coercing to Numeric
+
+-   Next, we handle a numerical variable, age. Age again has an issue being able to be numerical data type because it has "89 OR OLDER" as a value. Before using the as.numeric() command, we need to recode it. We did this above as a stand-alone statement.\
+
+```{r}
+gss.2016.cleaned <- gss.2016 %>% 
+  mutate(grass = as.factor(grass)) %>% 
+  mutate(grass = na_if(x = grass, y = "DK")) %>% 
+  mutate(grass = na_if(x = grass, y = "IAP")) %>% 
+  #Added piping operator 
+  mutate(grass = droplevels(x = grass)) %>% 
+  #Ensure variable can be coded as numeric and fix if necessary. 
+  mutate(age = recode(age, "89 OR OLDER" = "89")) %>% 
+  #Coerce into numeric
+  mutate(age = as.numeric(x = age)) 
+
+#Check what you just did
+summary(gss.2016.cleaned) 
+```
+
+-   The recode() command that is part of dplyr is like the ifelse() command that is in base R. There are a lot of ways to recode in R.
+
+-   Finally, we want to take our numerical variable, age, and cut it at certain breaks to make categories that can be easily analyzed.
+
+    -   This also ensures that anyone above 89 is coded correctly in a category instead of as the value 89. This again brings back data integrity.
+    -   The cut() function generates class limits and bins used in frequency distributions (and histograms) for quantitative data.
+    -   Here, we are using it to cut age into a categorical variable.
+
+    ```{r}
+    gss.2016.cleaned <- gss.2016 %>% 
+      mutate(grass = as.factor(grass)) %>% 
+      mutate(grass = na_if(x = grass, y = "DK")) %>% 
+      mutate(grass = na_if(x = grass, y = "IAP")) %>% 
+      mutate(grass = droplevels(grass)) %>% 
+      mutate(age = recode(age, "89 OR OLDER" = "89")) %>% 
+      #Added piping operator
+      mutate(age = as.numeric(age)) %>% 
+      #Cut numeric variable into groupings
+      mutate(age.cat = cut(age, breaks = c(-Inf, 29, 59, 74, Inf),labels = c("< 30", "30 - 59", "60 - 74", "75+" ))) 
+
+    #Check what you just did
+    summary(gss.2016.cleaned) 
+    ```
+
+### brfss Data Cleaning
+
+-   The full codebook where this screenshot is taken is brfss_2014_codebook.pdf.
+
+![Evaluate CodeBook Before Making Decisions](Pictures/Ch2/CodeBookPHYSHLTH.png "Evaluate CodeBook Before Making Decisions")
+
+```{r}
+brfss <- read.csv("data/brfss.csv")
+summary(brfss)
+```
+
+#### Qualitative Variable
+
+-   To look at an example, the one below seeks to understand the healthcare issue in reporting gender based on different definitions. The dataset is part of the Behavioral Risk Factor Surveillance System (brfss) dataset (2014), which includes lots of other variables besides reported gender.
+
+```{r}
+#Load the data
+brfss <- read.csv("data/brfss.csv")
+#Summarize the TRNSGNDR variable
+summary(object = brfss$TRNSGNDR) 
+#Find frequencies 
+table(brfss$TRNSGNDR) 
+```
+
+-   Since this table is not very informative, we need to do some edits.
+-   Check the class of the variable to see the issue with analyzing it as a categorical variable.
+
+```{r}
+class(brfss$TRNSGNDR)
+```
+
+-   First, we need to change the TRNSGNDR variable to a factor using as.factor().
+
+```{r}
+# Change variable from numeric to factor
+brfss$TRNSGNDR <- as.factor(brfss$TRNSGNDR)
+# Check data type again to ensure factor
+class(brfss$TRNSGNDR)
+```
+
+-   Then, we need to do some data cleaning on the TRNSGNDR Variable.
+
+```{r tidy=FALSE}
+brfss.cleaned <- brfss %>% 
+  mutate(TRNSGNDR = recode_factor(TRNSGNDR,
+      '1' = 'Male to female',
+      '2' = 'Female to male',
+      '3' = 'Gender non-conforming',
+      '4' = 'Not transgender',
+      '7' = 'Not sure',
+      '9' = 'Refused'))
+```
+
+-   We can use the levels() command to show the factor levels made with the mutate() command above.
+
+```{r}
+levels(brfss.cleaned$TRNSGNDR)
+```
+
+-   Check the summary.
+
+```{r}
+summary(brfss.cleaned$TRNSGNDR)
+```
+
+-   Take a good look at the table to interpret the frequencies in the output above. The highest percentage was the "NA's" category, followed by "Not transgender". Removing the NA's moved the "Not transgender" category to over 97% of observations.
+
+#### Quantitative Variable
+
+-   Let's use the cleaned dataset to make more changes to the continuous variable PHYSHLTH. In the codebook, it looks like the data is most applicable to the first 2 categories. The 1-30 days coding and the 88 coding, which means 0 days of physical illness and injury.
+    -   Using cleaned data, we need to prep the variable a little more before getting an accurate plot.
+    -   Specifically, we need to null out the 77 and 99 values and make sure the 88 coding is set to be 0 for 0 days of illness and injury.
+
+```{r, fig.alt = "Histogram Generated by R of PHYSHLTH variable"}
+brfss.cleaned <- brfss %>% 
+  mutate(TRNSGNDR = recode_factor(TRNSGNDR,
+      '1' = 'Male to female',
+      '2' = 'Female to male',
+      '3' = 'Gender non-conforming',
+      '4' = 'Not transgender',
+      '7' = 'Not sure',
+      '9' = 'Refused')) %>%
+  #Turn the 77 values to NA's. 
+  mutate(PHYSHLTH = na_if(PHYSHLTH, y = 77)) %>%
+  #Turn the 99 values to NA's. 
+  mutate(PHYSHLTH = na_if(PHYSHLTH, y = 99)) %>%
+  #Recode the 88 values to be numeric value of 0. 
+  mutate(PHYSHLTH = recode(PHYSHLTH, '88' = 0L))
+
+
+```
+
+-   The histogram showed most people have between 0 and 10 unhealthy days per 30 days.
+
+-   Next, evaluate mean, median, and mode for the PHYSHLTH variable after ignoring the blanks.
+
+```{r}
+mean(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+median(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+names(x = sort(x = table(brfss.cleaned$PHYSHLTH), decreasing = TRUE))[1]
+```
+
+-   While the mean is higher at 4.22, the median and most common number is 0.
+
+```{r}
+## Spread to Report with the Mean
+var(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+sd(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+##Spread to Report with Median
+summary(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+range(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+max(brfss.cleaned$PHYSHLTH, na.rm=TRUE)-min(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+IQR(brfss.cleaned$PHYSHLTH, na.rm=TRUE)
+```
+
+```{r}
+library(semTools)
+# Plot the data
+brfss.cleaned %>% 
+  ggplot(aes(PHYSHLTH)) + geom_histogram()
+# Calculate Skewness and Kurtosis
+skew(brfss.cleaned$PHYSHLTH)
+kurtosis(brfss.cleaned$PHYSHLTH)
+
+```
+
+-   The skew results provide a z of 607.905 (6.079054e+02) which is much higher than 7 (for large datasets). This indicates a clear right skew which means the data is not normally distributed.
+-   The kurtosis results are also very leptokurtic with a score of 478.063.
+
+#### Using Filters Example
+
+-   Below takes an example of the brfss data to filter by certain variable statuses.
+
+    -   The first filter() chose observations that were any one of the three categories of transgender included in the data. Used the \| “or” operator for this filter().
+    -   The second filter chose people in an age category above category 4 but below category 12, in the age categories 5 through 11.
+    -   The last filter used the !is.na to choose observations where HADMAM variable was not NA.
+
+-   Next, we reduce data set to contain only variables used to create table by using the select() command.
+
+-   Next, we change all the remaining variables in data set to factors using mutate_all() command. This not only changes the strings to factors, but also changes the numerical variables to factors.
+
+-   Finally, we use mutate() commands to change the variable category to something meaningful(from the codebook).
+
+    -   Notice the backslash before the apostrophe in Don't in the X_INCOMG recode. This is to prevent the .R file from ending the quotations. You could use double quotes around the statement to bypass this, or add the backslash like I did here.
+
+    ```{r}
+    brfss_small <- brfss.cleaned %>%
+      filter(TRNSGNDR == 'Male to female'|
+            TRNSGNDR ==  'Female to male'|
+            TRNSGNDR ==  'Gender non-conforming') %>%
+      filter(X_AGEG5YR > 4 & X_AGEG5YR < 12) %>% 
+      filter(!is.na(HADMAM)) %>%
+      select(TRNSGNDR, X_AGEG5YR, X_RACE, X_INCOMG, X_EDUCAG, HLTHPLN1, HADMAM) %>%
+      mutate_all(as.factor) %>%
+      #The next few mutates add labels to categorical variables based on the codebook. 
+      mutate(X_AGEG5YR = recode_factor(X_AGEG5YR,
+              '5' = '40-44',
+              '6' = '45-49',
+              '7' = '50-54',
+              '8' = '55-59',
+              '9' = '60-64',
+              '10' = '65-69',
+              '11' = '70-74')) %>%
+      mutate(X_INCOMG = recode_factor(X_INCOMG,
+              '1' = 'Less than 15,000',
+              '2' = '15,000 to less than 25,000',
+              '3' = '25,000 to less than 35,000',
+              '4' = '35,000 to less than 50,000',
+              '5' = '50,000 or more',
+              '9' = 'Don\'t know/not sure/missing')) %>%
+         mutate(X_EDUCAG = recode_factor(X_EDUCAG,
+              '1' = 'Did not graduate high school',
+              '2' = 'Graduated high school',
+              '3' = 'Attended college/technical school',
+              '4' = 'Graduated from college/technical school',
+              '9' = NA_character_)) %>%
+         mutate(HLTHPLN1 = recode_factor(HLTHPLN1,
+              '1' = 'Yes',
+              '2' = 'No',
+              '7' = 'Don\'t know/not sure/missing',
+              '9' = 'Refused')) %>%
+         mutate(X_RACE = recode_factor(X_RACE,
+              '1' = 'White',
+              '2' = 'Black',
+              '3' = 'Native American',
+              '4' = 'Asian/Pacific Islander',
+              '5' = 'Other',
+              '6' = 'Other',
+              '7' = 'Other',
+              '8' = 'Other',
+              '9' = 'Other'))
+    #print a summary
+    summary(brfss_small)     
+    ```
+
+-   This data set full of categorical variables is now fully cleaned and ready to be analyzed!
+
+# Using AI
+
+Use the following prompts on a generative AI, like chatGPT, to learn more about descriptive statistics.
+
+-   What is the difference between mean, median, and mode in describing data distributions, and how can each be used to understand the shape of a distribution? \* How do mean and median help identify whether a distribution is skewed, and what does it tell us about the dataset?
+
+-   Can you explain how the mean, median, and mode behave in normal, positively skewed, and negatively skewed distributions?
+
+-   What are standard deviation (SD) and variance, and how do they measure the spread of data in a distribution?
+
+-   Explain the differences between range, interquartile range (IQR), and standard deviation in describing the variability in a dataset.
+
+-   How does a high standard deviation or variance affect the interpretation of a dataset compared to a low standard deviation?
+
+-   What is skewness, and how does it affect the shape of a distribution? How can we identify positive and negative skew?
+
+-   How is kurtosis defined in the semTools package in R, and what does it tell us about the tails of a distribution?
+
+-   How would you compare and contrast the roles of skewness and kurtosis in identifying the shape and behavior of a distribution?
+
+-   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
+
+-   Explain the steps to coerce a character variable into a factor using the as.factor() function in R.
+
+-   How can you use the filter() function to subset a dataset based on multiple conditions using & and \| in R?
+
+-   How does subsetting using square brackets \[\] differ from using the filter() function in R?
+
+-   What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?
+
+-   How does the mutate() function help in transforming and creating new variables, and what are some practical examples?"
+
+-   What is the purpose of the group_by() function, and how does it interact with summarize() to create summary statistics in R?"
+
+-   Explain how you can use arrange() to sort a dataset by one or more variables and demonstrate sorting both in ascending and descending order."
+
+-   Why is the piping operator %\>% useful in R, and how does it improve the readability and structure of your code?
+
+-   How would you use summarize() to calculate mean, median, and standard deviation for a numerical variable in R?
+
+# Summary
+
+-   In this lesson, we worked through descriptive statistics including skewness and kurtosis. We learned about variables and scales of measurement, how to summarize qualitative and quantitative data.
+-   We then worked through the basics on data cleaning. Data cleaning is so important and there are so many ways to do it. Provided are some examples using popular functions in dplyr (under tidyverse).

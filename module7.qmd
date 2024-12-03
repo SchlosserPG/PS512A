@@ -1,0 +1,707 @@
+---
+title: "Module 7: Correlation and Regression"
+author: ""
+date: "2024-08-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
+```
+
+-   The main goal of this lesson is to underst and, conduct, and interpret both correlation and regression analyses. We will examine Pearson’s $r$ correlation coefficient and learn how to conduct and interpret an inferential statistical test using this common statistic. Additionally, we will explore regression models and their components, including computing the slope and intercept for simple linear regression and the multiple slopes and intercept for multiple linear regression. Finally, we will learn how to interpret the regression output from R, tying together these key analytical techniques.
+
+### At a Glance
+
+-   In order to succeed at this lesson, you will use a statistical model, called linear regression, that helps us understand an outcome variable and also allows us to make predictions for future instances, or the next occurrence. A linear regression model is quite commonly used in many fields and is often the foundation for future more advanced analysis like machine learning. Linear regression can be a fairly easy way to design and test a research model, and in doing so allows us to gauge helpful predictor variables in understanding a phenomenon. Not only can we understand a research model, but we can also make stronger predictions on the future.
+
+### Lesson Objectives
+
+-   Compute and interpret Pearson’s r correlation coefficient.
+-   Conduct an inferential statistical test for Pearson’s r correlation coefficient.
+-   Explore the statistical model for a line.
+-   Compute the slope and intercept in a simple linear regression.
+-   Interpret a regression model significance and model fit.
+
+### Consider While Reading
+
+-   In this lesson, we will focus on inference for correlation and regression analysis, learning how to conduct a correlation test as well as single and multiple linear regression tests. This builds on the scatterplots introduced in the Data Visualization lesson, which help us visually describe relationships between variables. By revisiting those concepts, we will explore how visualizations can aid in making inferences alongside regression and correlation results. Additionally, we will differentiate between ANOVA, which examines differences between means in categorical data, and linear regression, which focuses on estimating responses or predictions while forming a regression line.
+
+```{r}
+library(tidyverse)
+```
+
+# Correlation
+
+## Covariance
+
+-   Covariance ($s_{xy}$ or $cov_{xy}$) is a numerical measure that describes the direction of the linear relationship between two variables, x and y and reveals the direction of that linear relationship.
+-   The formula for covariance is as follows:
+    -   $cov_{xy} = \sum^n_{i=1}(x_i-m_x)*(y_i-m_y)/(n-1)$
+    -   Where $x_i$ and $y_i$ are the observed values for each observation, $m_x$ and $m_y$ are the mean values for each variable, $i$ represents an individual observation, and $n$ represents the sample size.
+
+```{r}
+
+x <- c(3, 8, 5, 2)
+y <- c(12, 14, 8, 4)
+
+devX <- x-mean(x)
+devY <- y-mean(y)
+
+covXY <- sum(devX * devY)/(length(x)-1); covXY
+
+#We can verify this by using cov() function in R.
+cov(x,y)
+```
+
+## Correlation Coefficient
+
+-   A correlation coefficient ($r_{xy}$) describes both the direction and strength of the relationship between $x$ and $y$. $r_{xy} = cov_{sy}/(s_xs_y)$ or using the standardized formula in the book:
+    -   $r_{xy} = \sum^n_{i=1}(z_x*z_y)/(n-1)$
+
+```{r}
+#Calculated manually
+covXY/(sd(x)*sd(y))
+
+#We can verify this by using cor() function in R.
+cor(x,y)
+
+```
+
+### Rules for the Correlation Coefficient
+
+-   The correlation coefficient has the same sign as the covariance; however, its value ranges between −1 and +1 whereas $-1 \le r_{xy} \le +1$.
+-   The absolute value of the coefficient reflects the strength of the correlation. So a correlation of −.70 is stronger than a correlation of +.50.
+
+![Correlation Coefficient](Pictures/Ch8/Correlation.png "Correlation Coefficient")
+
+## Interpreting the Direction of the Correlation
+
+-   Negative correlations occur when one variable goes up and the other goes down.
+-   No correlation happens when there is no discernible pattern in how two variables vary.
+-   Positive correlations occur when one variable goes up, and the other one also goes up (or when one goes down, the other one does too); both variables move together in the same direction.
+
+![Correlation Scatterplots](Pictures/Ch8/RelationshipScatter.png "Correlation Scatterplots")
+
+### Scatterplots to Visualize Relationship
+
+-   Let's do an example to first visualize the data, and then to calculate the correlation coefficient.
+
+-   First, read in a .csv called *DebtPayments.csv*. This data set has 26 observations and 4 variables:
+
+    -   A character variable with a bunch of metropolitan areas listed;
+    -   An integer numeric debt;
+    -   A numeric variable Income;
+    -   A numeric variable Unemployment.
+
+```{r}
+Debt_Payments <- read.csv("data/DebtPayments.csv")
+str(Debt_Payments)
+```
+
+-   Next, plot the relationship between 2 continuous variables.
+
+    -   There are a few ways to write the plot command using ggplot. We went over these in the Data Visualization lesson. Again we said:
+    -   Layer 1: ggplot() command with aes() command directly inside of it pointing to x and y variables.
+    -   Layer 2: geom_point() command to add the observations as indicators in the chart.
+    -   Layer 3 or more: many other optional additions like labs() command (for labels) or stat_smooth() command to generate a regression line.
+
+    ```{r, fig.alt="Scatterplot Using ggplot2 Generated by R"}
+    Debt_Payments %>% ggplot(aes(Income, Debt))+ 
+      geom_point(color="#183028", shape=2) + 
+      stat_smooth(method="lm", color="#789F90") + 
+      theme_minimal()
+    ```
+
+-   In the above plot, there is a strong positive relationship (upward trend) that should be confirmed with a correlation test.
+
+-   In a second example below, we look at Unemployment as the X variable. This scatterplot is much more difficult to use in determining whether the correlation will be significant. It looks negative, but there is not a strong linear trend to the data. This will also need to be confirmed with a correlation test.
+
+```{r, fig.alt="Scatterplot Using ggplot2 Generated by R"}
+Debt_Payments %>% ggplot(aes(Unemployment, Debt))+
+  geom_point(color="#183028", shape=2) + 
+  stat_smooth(method="lm", color="#789F90") + 
+  theme_minimal()
+```
+
+-   In many scatterplots using big data, the observations are too numerous to see a good relationship. In that case, the statistical test can trump this visual aid. However, in a lot of cases the scatterplot does help visualize the relationship between 2 continuous variables.
+
+### Interpreting the Strength of the Correlation
+
+-   Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between a .2 and .5 is considered weak.
+-   The following is consistent with what is most generally used:
+
+![Correlation Strength](Pictures/Ch8/CorrelationStrength.png "Correlation Strength")
+
+## Interpreting the Significance of the Correlation
+
+-   Correlation values should be tested alongside a p-value to confirm whether or not there is a correlation. The null is tested using a t-distribution specifically testing whether $r = 0$ or not, like the one-sample t-test section from the lesson 6.
+-   The null and alternative are listed below.
+    -   $H_0$: There is no relationship between the two variables ($r = 0$).
+    -   $H_A$: There is a relationship between the two variables ($r \neq 0$).
+-   Even small correlations can be significant: In large datasets, even a small correlation, like .1, can be statistically significant due to the increased power that comes with a high sample size. It's important to interpret both the strength of the correlation and its practical significance in context.
+
+## Statistical significance answers the question: "Is the effect real?“
+
+-   Statistical Significance:
+
+-   A result is statistically significant if it is unlikely to have occurred by random chance, given a pre-defined threshold (usually p \< 0.05).
+
+-   With larger sample sizes, even very small effects can become statistically significant because larger samples reduce variability. For example, a correlation of 0.1 can be statistically significant with enough data.
+
+-   Practical Significance:
+
+-   Practical significance answers the question: "Is the effect meaningful?“
+
+-   Practical significance refers to the real-world importance or relevance of a result. It asks, "Does this effect matter in practice?“
+
+-   Even if a result is statistically significant, it may not be large enough to have a meaningful impact on business decisions or outcomes.
+
+### cor.test() Command
+
+-   The cor() command gives you just the correlation coefficient. This command can be useful if you are testing many correlations at one time. In the below statement, I can use $cor(Variable1, Variable2)$ to see the correlation between 2 continuous variables.
+
+```{r}
+cor(Debt_Payments$Income, Debt_Payments$Debt) 
+```
+
+-   The cor.test() command tests the hypothesis whether $r=0$ or not. This command comes with a p-value and t-test statistic (along with the correlation coefficient).
+
+```{r}
+cor.test(Debt_Payments$Income, Debt_Payments$Debt)
+```
+
+-   This test shows a strong positive correlation of .8675 (\>.8) which is significant. Our p-value is 9.66e-09 or \< .001 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
+-   We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between .723 and .939.
+
+```{r}
+cor.test(Debt_Payments$Income, Debt_Payments$Unemployment)
+```
+
+-   This test shows a moderate negative correlation of -.534 (\<.5 and .8) which is significant. Our p-value is 0.004928 or \< .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
+-   We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between -.765 and -.185. This confidence interval is wider than the one listed above. This is due to the noise in the relationship we noted in the scatterplot - the correlation is weaker, the relationship does not look as linear, the confidence decreases. Even though this is true, we must note that we still found a significant correlation.
+
+## Additional Examples
+
+```{r}
+library(ISLR)
+data("Credit")
+summary(Credit)
+
+attach(Credit)
+
+cor.test(Rating, Income) #0.7913776 moderate and positive
+
+cor.test(Rating, Balance) #0.8636252 strong and positive
+
+cor.test(Rating, Limit) #0.9968797 strong and positive
+##almost perfectly linear 
+ggplot(Credit, aes(Rating, Limit))+geom_point()
+
+cor.test(Rating, Education) #-0.03013563 no correlation
+
+cor.test(Rating, Age) #0.103165 - between -.2 and .2 - so no relationship even though p-value < .05 -- p-value fails at .01 level. 
+ggplot(Credit, aes(Rating, Age))+geom_point()+stat_smooth(method="lm")
+
+
+cor.test(Rating, Cards) #0.05323903 
+ggplot(Credit, aes(Rating, Cards))+geom_point()+stat_smooth(method="lm")
+
+
+
+```
+
+## Comparing to t.test and ANOVA
+
+-   A t-test examines if there is a significant difference in the means of two groups on a dependent variable. For example, whether males and females differ in their credit ratings, where a correlation measures the strength and direction of a linear relationship between two continuous variables, such as Rating and Income.
+-   An independent t-test requires a categorical independent variable (e.g., Gender) with two levels and a continuous dependent variable (e.g., Rating), where a correlation requires two continuous variables.
+-   Both can provide insights into relationships in the dataset, but they address different questions. An independent t-test evaluates mean differences (group comparisons), while correlation evaluates relationships (continuous covariation). \* A significant t-test does not imply a strong correlation between the grouping variable and the dependent variable; the correlation would depend on the coding of the categorical variable and the distribution of data
+
+```{r}
+## -- Example of an independent t.test using same dataset
+t.test(Rating~Gender, data=Credit) ##no group differences
+ggplot(Credit, aes(Gender, Rating)) + geom_boxplot()
+
+t.test(Rating~Married, data=Credit)##no group differences
+ggplot(Credit, aes(Married, Rating)) + geom_boxplot()
+
+
+```
+
+-   An ANOVA tests for significant differences in the means of three or more groups on a dependent variable. For example, whether credit ratings differ across ethnic groups, where a correlation examines the strength of the relationship between two continuous variables.
+-   An Anova requires a categorical independent variable (with three or more levels) and a continuous dependent variable, where a correlation requires two continuous variables.
+-   ANOVA focuses on group comparisons (e.g., Rating differences across Ethnicity), while correlation looks at how two variables change together.A significant ANOVA could suggest that the categorical grouping variable explains some variance in the dependent variable, but this variance is not quantified as a relationship strength (as correlation would provide).
+
+```{r}
+## -- Example of An ANOVA using same dataset
+anova1 <- aov(Rating~Ethnicity, data=Credit)
+anova(anova1) #no group differences - no need for a post hoc test. 
+ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legend=FALSE)
+```
+
+## Limitations of Correlation Analysis
+
+-   Note that a correlation is the first step in understanding causality. Correlation and causality are closely related but fundamentally different concepts in data analysis. Correlation refers to the statistical relationship between two variables, indicating how changes in one variable are associated with changes in another. However, it does not imply that one variable causes the other to change. Causality, on the other hand, goes beyond mere association to establish a cause-and-effect relationship, where one variable directly influences the other. Determining causality requires meeting specific criteria, including significant association, temporal precedence (the cause precedes the effect), and ruling out alternative explanations or confounding variables. While correlation is often the first step in exploring potential relationships, additional analysis—such as experimental design or causal modeling—is necessary to confirm causality. This distinction highlights the importance of critical thinking when interpreting statistical results, as a strong correlation alone does not prove that one variable is the cause of another.
+
+-   To determine a causal model, you need the following:
+
+1.  Significant Correlation: Statistically significant relationship between the variables.
+2.  Temporal Precedence: Causal variable occurred prior to the other variable.
+3.  Eliminate Alternate Variables: No other factors can account for the cause.
+
+-   Some limitations are as follows:
+    -   The correlation coefficient captures only a linear relationship.
+    -   The correlation coefficient may not be a reliable measure in the presence of outliers.
+    -   Even if two variables are highly correlated, one does not necessarily cause the other.
+-   When interpreting results, note that lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.
+
+# The Linear Regression Model
+
+### Overview of the Linear Regression
+
+-   Linear regression analysis is a predictive modelling technique used for building mathematical and statistical models that characterize relationships between a dependent (continuous) variable and one or more independent, or explanatory variables (continuous or categorical), all of which are numerical.
+-   This technique is useful in forecasting, time series modelling, and finding the causal effect between variables.
+-   Simple linear regression involves one *explanatory variable* and one *response variable*.
+    -   Explanatory variable: The variable used to explain the dependent variable, usually denoted by X. Also known as an independent variable or a predictor variable.
+    -   Response variable: The variable we wish to explain, usually denoted by Y. Also known as a dependent variable or outcome variable.
+-   Multiple linear regression involves two or more *explanatory* variables, while still only one *response* variable.
+
+### Examples of Independent and Dependent Variables
+
+-   Example Question: Does increasing the marketing budget lead to higher sales revenue?
+    -   Independent Variable: Marketing budget (how much money is spent on advertising and promotions).
+    -   Dependent Variable: Sales revenue (how much income the business generates from sales).
+-   Example Question: Does additional training improve employee productivity?
+    -   Independent Variable: Hours of employee training.
+    -   Dependent Variable: Employee productivity (e.g., units produced per hour or sales closed per month).
+-   Example Question: Does being a member of a loyalty program increase the frequency of repeat purchases?
+    -   Independent Variable: Participation in a loyalty program (whether a customer is a member or not).
+    -   Dependent Variable: Number of repeat purchases by the customer.
+
+### Estimating Using a Simple Linear Regression Model
+
+-   While the correlation coefficient may establish a linear relationship, it does not suggest that one variable *causes* the other.
+-   With regression analysis, we explicitly assume that the response variable is influenced by other explanatory variables.
+-   Using regression analysis, we may *predict* the response variable given values for our explanatory variables.
+
+### Inexact Relationships
+
+-   If the value of the response variable is uniquely determined by the values of the explanatory variables, we say that the relationship is deterministic.
+    -   But if, as we find in most fields of research, that the relationship is inexact due to omission of relevant factors, we say that the relationship is inexact.
+    -   In regression analysis, we include a stochastic error term, that acknowledges that the actual relationship between the response and explanatory variables is not deterministic.
+
+### Regression as ANOVA
+
+-   ANOVA conducts an F - test to determine whether variation in Y is due to varying levels of X.
+-   ANOVA is used to test for significance of regression:
+    -   $H_0$: population slope coefficient $\beta_1$ $=$ 0
+    -   $H_A$: population slope coefficient $\beta_1$ $\neq$ 0
+-   R reports the p-value (Significant F).
+-   Rejecting $H_0$ indicates that X explains variation in Y.
+
+![Linear Regression Models](Pictures/Ch9/LinearReg.png "Linear Regression Models")
+
+### The Simple Linear Regression Model
+
+-   The simple linear regression model is defined as $y= \beta_0+\beta_1 𝑥+\varepsilon_1$, where $y$ and $x$ are the response and explanatory variables, respectively and $\varepsilon_1$ is the random error term. $\beta_0$ and $\beta_1$ are the unknown parameters to be estimated.
+-   By fitting our data to the model, we obtain the equation $\hat{y} = b_0 + b_1*x$, where $\hat{y}$ is the estimated response variable, $b_0$ is the estimate of $\beta_0$ (Intercept) and $b_1$ is the estimate of $\beta_1$ (Slope).
+-   Sometimes, this equation can be represented using different variable names like $y=mx+b$ This is the same equation as above, but different notation.
+-   Since the predictions cannot be totally accurate, the difference between the predicted and actual value represents the residual $e=y-\hat{y}$.
+
+![Regression Equation](Pictures/Ch9/RegressEquation.png "Regression Equation")
+
+### The Least Squares Estimates
+
+-   The two parameters $\beta_0$ and $\beta_1$ are estimated by minimizing the sum of squared residuals.
+    -   The slope coefficient $\beta_1$ is estimated as $b_1 = \sum(x_i-\bar{x}*y_i-\bar{y})/\sum(x_i-\bar{x})^2$
+    -   The intercept parameter $\beta_0$ is estimated as $b_0 = \hat{y}-b_1*\bar{x}$
+    -   And we use this information to make the regression equation given the formula above: $\hat{y} = b_0 + b_1*x$,
+
+### Goodness of Fit
+
+-   Goodness of fit refers to how well the data fit the regression line. I will introduce three measures to judge how well the sample regression fits the data.
+    1.  Standard Error of the Estimate
+    2.  The Coefficient of Determination ($R^2$)
+    3.  The Adjusted $R^2$
+-   In order to make sense of the goodness of fit measures, we need to go back to the idea of explained and unexplained variance we learned in the ANOVA lesson. Variance can also be known as a difference.\
+-   Unexplained Variance = SSE or Sum of Squares Error: This equals the sum of squared difference between A and B, or between the sum of squares of the difference between observation ($y_i$) and our predicted value of y ($\hat{y}$).
+    -   $SSE = \sum^n_{i=1}(y_i - \hat{y})^2$
+-   Explained Variance = SSR or Sum of Squares Regression: This equals the sum of squared difference between B and C, or between the sum of squares of the difference between our predicted value ($\hat{y}$) and the mean of y ($\bar{y}$).
+    -   $SSR = \sum^n_{i=1}(\hat{y} - \bar{y})^2$
+-   Total Variance = SST or Total Sum of Squares: This equals the sum of squared difference between A and C, or between the sum of squares of the difference between observation ($y_i$) and the mean of y ($\bar{y}$).
+    -   The SST can be broken down into two components: the variation explained by the regression equation (the regression sum of squares or SSR) and the unexplained variation (the error sum of squares or SSE).
+    -   $SST = \sum^n_{i=1}(y_i - \bar{y})^2$
+
+![Visualization of Sum of Squares (SS)](Pictures/Ch9/SS.png "Visualization of Sum of Squares")
+
+### The Standard Error of the Estimate
+
+-   The Standard Error of the Estimate, also known as the Residual Standard Error (RSE) (and labelled such in R), is the variability between observed ($y_i$) and predicted ($\hat{y}$) values, targeting the unexplained variance in the figure above. This measure is a lack of fit of the model to the data.
+-   To compute the standard error of the estimate, we first compute the SSE and the MSE.
+    -   Sum of Squares Error: $SSE = \sum^n_{i=1}e^2_i = \sum^n_{i=1}(y_i - \hat{y})^2$
+    -   Dividing SSE by the appropriate degrees of freedom, n – k – 1, yields the mean squared error:
+        -   Mean Squared Error: $MSE = SSE/(n-k-1)$
+    -   The square root of the MSE is the standard error of the estimate, se.
+        -   Standard Error of Estimate: $se = \sqrt(MSE) = \sqrt(SSE/(n-k-1))$
+
+### The Coefficient of Determination ($R^2$)
+
+-   Coefficient of determination refers to the percentage of variance in one variable that is accounted for by another variable or by a group of variables.
+
+-   This measure of R-squared is a measure of the “fit” of the line to the data.
+
+-   The Coefficient of Determination, denoted as $R^2$, is a statistical measure that indicates the proportion of variance in the dependent variable ($y$) that is explained by the independent variable(s) (x) in a regression model. It is calculated as: SSR/SST or 1-SSE/SST. \*$R^2$ ranges from 0 to 1:
+
+    -   $R^2$=0: None of the variance in $y$ is explained by the model.
+    -   $R^2$=1: The model explains all the variance in y. A higher $R^2$ indicates a better fit of the model to the data.
+
+-   $R^2$ = 1-SSE/SST where $SSE = \sum^n_{i=1}(y_i - \hat{y})^2$ and $SST = \sum^n_{i=1}(y_i - \bar{y})^2$
+
+    -   $R^2$ can also be computed by SSR/SST, which provides the same answer as above.
+    -   This measure of fit targets both the unexplained and the explained variance.
+    -   $R^2$ can also be calculated using the formula for Pearson's r and squaring it. This gives us the same answer.
+
+-   Pearson's $r$ is a statistic that indicates the strength and direction of the relationship between two numeric variables that meet certain assumptions.
+
+    -   (Pearson's $r$)$^2$ = $r^2_{xy} = (cov_{xy}/(s_x*s_y))^2$.
+
+-   You need to see how all these formulas relate to see why all these formulas give you the same answer.
+
+#### Interpreting ($R^2$)
+
+-   This measure is easier to interpret over standard error. In particular, the ($R^2$) quantifies the fraction of variation in the response variable that is explained by changes in the explanatory variables.
+-   The ($R^2$) gives you a score between 0 and 1. A score of 1 indicates that your Y variable is perfectly explained by your X variable or variables (where we only have one in simple regression).
+-   The $R^2$ measure has strength of determination like the correlation coefficient, only all measures are from 0 to 1.
+    -   The closer you get to one, the more *explained variance* we achieve.
+    -   A score of 0 indicates that no variance is explained by the X variable or variables. In this case, the variable would not be a significant predictor variable of Y.
+    -   Again, the strength of the relationship varies by field, but generally, a .2 to a .5 is considered weak, a .5 to a .8 is considered moderate, and above a .8 is considered strong.
+
+#### R Output
+
+-   We do see the $R^2$ in our R output labelled Multiple R-squared.
+
+#### Limitations of The Coefficient of Determination ($R^2$)
+
+-   More explanatory variables always result in a higher $R^2$.
+-   But some of these variables may be unimportant and should not be in the model.
+-   This is only applicable with multiple regression, discussed below.
+
+### The Adjusted $R^2$
+
+-   The Adjusted Coefficient of Determination, denoted as Adjusted $R^2$ modifies $R^2$ to account for the number of predictors in the model relative to the number of data points. It is calculated as Adjusted $R^2 = 1-(1-R^2)*((n-1)/(n-k-1))$, where where n is the sample size and p is the number of predictors.
+
+-   In simple linear regression, $R^2$ is generally more appropriate than Adjusted $R^2$ because there is only one predictor variable in the model.
+
+-   The Adjusted $R^2$ tries to balance the raw explanatory power against the desire to include only important predictors.
+
+    -   Adjusted $R^2 = 1-(1-R^2)*((n-1)/(n-k-1))$.
+    -   The Adjusted $R^2$ penalizes the $R^2$ for adding additional explanatory variables.
+
+#### R Output
+
+-   With our other goodness-of-fit measures, we typically allow the computer to compute the Adjusted $R^2$ using commands in R.\
+-   Therefore, we do see the Adjusted $R^2$ in our R output labelled Adjusted R-squared.
+
+### Example of Simple Linear Regression in R
+
+-   The broad steps are the same as we used in Chapter 6 and 7 when setting up the t-tests and ANOVA hypothesis: 1. set up the hypothesis 2. compute the Test Statistic and calculate probability 3. interpret results and write a conclusion.
+
+-   Step 1: Set Up the Null and Alternative Hypothesis
+
+-   $H_0$: The slope of the line is equal to zero.
+
+-   $H_A$: The slope of the line is not equal to zero.
+
+-   Step 2: Compute the Test Statistic and Calculate Probability
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+Debt_Payments <- read.csv("data/DebtPayments.csv")
+Simple <- lm(Debt~Income, data=Debt_Payments)
+summary(Simple)
+```
+
+-   Step 3: Interpret the Probability and Write a Conclusion
+-   We interpret the probability and write a conclusion after looking at the following:
+
+1.  Goodness of Fit Measures
+2.  The F-test statistic
+3.  The p-value from the hypothesis
+
+-   We then can interpret the hypothesis and make the regression equation if needed to make predictions.
+
+#### Examining the Goodness of Fit Measures
+
+-   Like the ANOVA, we need the summary() command to see the regression output.
+
+-   This output includes the following:
+
+    -   Standard Error of Estimate at 63.26
+    -   a $R^2$ of 0.7526.
+    -   an Adjusted $R^2$ of 0.7423
+
+-   We do not really see a difference in $R^2$ and the Adjusted $R^2$ because we only have a simple linear regression, which includes one X. The other thing that could create a difference between these measures is having a small sample size. A small sample size could adjust the $R^2$ down (like it did a little here $n=28$). In both cases, a score around .75 indicates that we are explaining about 75% of the variance in Debt Payments, which is specifically stated as 75.26% in the $R^2$ value.
+
+-   The Standard Error of Estimate - known in R as the RSE or Residual Standard Error at 63.26.
+
+-   The RSE represents the average amount by which the observed values deviate from the predicted values
+
+-   The RSE has the same units as the dependent variable y, making it directly interpretable in the context of the problem.
+
+    -   The scale of income is in 1000s.
+    -   Therefore, for every 1000 dollars difference in Income we could be off on our debt payments by 63.26 dollars.
+
+-   Again, most statisticians interpret the $R^2$ and the adjusted $R^2$ over the RSE.
+
+#### Examining the F-Test Statistic
+
+-   The F-statistic is a ratio of explained information (in the numerator) to unexplained information (in the denominator). If a model explains more than it leaves unexplained, the numerator is larger and the F-statistic is greater than 1. F-statistics that are much greater than 1 are explaining much more of the variation in the outcome than they leave unexplained. Large F-statistics are more likely to be statistically significant.
+-   We see a F-statistic in our output with a p-value of 9.66e-09, which is less than .05. This indicates that our overall model is significant, which in simple regression means that our one X predictor variable is also significant. If this F-statistic is significant, we can interpret the hypothesis.
+
+#### Examining the Hypothesis
+
+-   We see a p-value on the Income row of 9.66e-09 from a t-value. This is also significant at .05 level. This p-value is the same as the F-test statistic because we only have one X variable.
+-   This significance means our predictor variable does influence the Y variable and that we can reject the null hypothesis and show support for our alternative hypothesis.
+-   This means Income does influence Debt Payments.
+
+#### Interpreting the Hypothesis
+
+-   A $b_1$ estimate of 10.441 indicates that for 1000 dollars of Income (again our data is in 1000s), the payment of dept will increase by 10.441.
+-   A $b_0$ estimate of 210.298 indicates where the regression line will start given a Y at 0.
+    -   This gives us a regression equation at $\hat{y} = 210.298 + 10.441*Income$
+    -   We can graph this regression line using the abline() command on our plot we did earlier.
+    -   As you can see from the chart, there was no data at the Y intercept, but if I extend the chart out, it does hit the y axis at 210 like stated.
+    -   Also from the chart, we note that for each unit of income we go to the right, we go up by 10.441 units in dept payments.
+
+```{r, fig.alt="Scatterplot of Debt_Payments"}
+plot(Debt~Income, data=Debt_Payments, xlim=c(0,120), ylim=c(0,1350))
+abline(Simple)
+```
+
+### Predictions
+
+-   We can calculate this using the regression equation or use the predict() command in order to calculate different values of y given values of x based on our regression equation we got in the step above.
+-   The coef() function returns the model’s coefficients which are needed to make the regression equation.
+
+```{r}
+#What would be your debt payments if Income was 100 ( for 100,000)
+coef(Simple)
+210.298 + 10.441*(100)
+predict(Simple, data.frame(Income=100))
+```
+
+## Multiple Regression
+
+-   Multiple regression allows us to explore how several *explanatory* variables influence the *response* variable.
+
+-   Suppose there are $k$ explanatory variables. The multiple linear regression model is defined as: $y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \ ⋯ + \beta_kx_k +\varepsilon$
+
+-   Where:
+
+    -   $y$ is the dependent variable,
+    -   $x_1, ⋯, x_k$ are independent explanatory variables,
+    -   $\beta_0$ is the intercept term,
+    -   $\beta_1 ⋯, \beta_k$ are the regression coefficients for the independent variables,
+    -   $varepsilon$ is the random error term
+
+-   We estimate the regression coefficients—called partial regression coefficients — $b_0, b_1, b_2,… b_k$, then use the model: $\hat{y} = b_0 + b_1x_1 + b_2x_2 + \ ... + b_kx_k$ .
+
+-   The partial regression coefficients represent the expected change in the dependent variable when the associated independent variable is increased by one unit while the values of all other independent variables are held constant.
+
+-   For example, if there are $k = 3$ explanatory variables, the value $b_1$ estimates how a change in $x_1$ will influence $y$ assuming $x_2$ and $x_3$ are held constant.
+
+### Example of Multiple Linear Regression in R
+
+-   The steps to multiple linear regression are the same as simple linear regression except we should have more than one hypothesis.
+
+1.  Step 1: Set up the null and alternative hypotheses
+
+-   Hypothesis 1: Income affects Debt Payments.
+    -   $H_0$: The slope of the line in regards to Income is equal to zero.
+    -   $H_A$: The slope of the line in regards to Income is not equal to zero.
+-   Hypothesis 2: Unemployment affects Debt Payments.
+    -   $H_0$: The slope of the line in regards to Unemployment is equal to zero.
+    -   $H_A$: The slope of the line in regards to Unemployment is not equal to zero.
+
+2.  Step 2: Compute the test statistic and calculate probability
+
+```{r}
+Debt_Payments <- read.csv("data/DebtPayments.csv")
+Multiple <-lm(Debt~Income+Unemployment, data=Debt_Payments)
+summary(Multiple)
+```
+
+3.  Step 3: Interpret the probability and write a conclusion
+
+-   We interpret the probability and write a conclusion after looking at the following:
+    -   Goodness of Fit Measures
+    -   The F-test statistic
+    -   The p-values from the hypotheses
+-   We then can interpret the hypotheses and make the regression equation if needed to make predictions.
+
+### Examining the Goodness of Fit Measures
+
+-   Like the ANOVA, we need the summary() command to see the regression output.
+-   This output includes the following:
+    -   Standard error of estimate at 64.61 - was previously 63.26 with simple regression.
+    -   a $R^2$ of 0.7527 - was previously 0.7526 with simple regression.
+    -   an Adjusted $R^2$ of 0.7312 - was previously 0.7423 with simple regression.
+-   Looking at the goodness of fit indices, they suggest that we are not explaining anything more by adding the unemployment variable over what we had with the Income variable. Our RSE and $R^2$ are about the same, and our adjusted $R^2$ has gone down - again paying the price for including an unnecessary variable.
+
+### Examining the F-Test Statistic
+
+-   We see a overall F-statistic in our output with a p-value of 1.054e-07, which is less than .05. This indicates that our overall model is significant - which in multiple regression means that *at least one* X predictor variable is significant. If this F-statistic is significant, we can interpret the hypotheses.
+
+### Examining the Hypotheses
+
+-   Hypothesis 1: The output shows a p-value on the Income row of 2.98e-07 from a t-value. This was significant in our simple regression model, and is still significant at .05 level here. This significance means our predictor variable does influence the Y variable and that we can reject the null hypothesis and show support for our alternative hypothesis.
+-   Hypothesis 2: The output shows a p-value on the Unemployment row of 0.929 from a t-value. This is *NOT* significant at any appropriate level of alpha. This lack of significance means our predictor variable does *NOT* influence the Y variable and that we fail to reject the null hypothesis that there is a slope.
+
+### Interpreting the Hypothesis
+
+-   Because Unemployment is not significant, we should drop it from the model before creating the regression equation. The extra variable is only adding *noise* to our model and not adding anything useful in understanding debt payments.
+
+## The P-value Method
+
+-   When you have a lot of predictors, it can be difficult to come up with a good model.
+
+-   A common criteria is to remove based on the highest p-value.
+
+-   Remove indicators until all variables are significant, and none are insignificant.
+
+-   As we drop variables, we also want to keep an eye on the adjusted R-Squared to make sure it does not significantly decrease. It should stay about the same if we drop variables that are not helpful in understanding the model, and could improve because we are decreasing the number of variables being evaluated.
+
+```{r, warning=FALSE, message=FALSE}
+library(ISLR)
+data("Credit")
+str(Credit)
+library(tidyverse)
+
+##Removing variables that are of no interest to the model based on what we have learned so far. 
+# The following lines removes the categorical variables, Gender, Student, Married, and Ethnicity. It also removed the ID because that is not a helpful variable. 
+
+Credit <- select(Credit, -Gender, -Student, - Married, -Ethnicity, -ID)
+
+creditlm <- lm(Balance~., data=Credit)
+summary(creditlm)
+#Multiple R-squared:  0.8782, Adjusted R-squared:  0.8764 
+
+```
+
+-   Education has the highest p-value, so it is removed from analysis. We use the minus sign to remove the variable in the lm function.
+
+```{r}
+creditlm <- lm(Balance~.-Education, data=Credit)
+summary(creditlm)
+# Multiple R-squared: 0.8781, Adjusted R-squared:  0.8765 
+```
+
+-   Cards has the next highest p-value, so it is removed from analysis using the - minus sign format.
+
+```{r}
+creditlm <- lm(Balance~.-Education-Cards, data=Credit)
+summary(creditlm)
+# Multiple R-squared:  0.8772, Adjusted R-squared:  0.876 
+```
+
+-   Age is next to be removed because it has the next highest p-value at .06270.
+
+```{r}
+creditlm <- lm(Balance~.-Education-Cards-Age, data=Credit)
+summary(creditlm)
+# Multiple R-squared:  0.8762, Adjusted R-squared:  0.8753 
+```
+
+-   Finally Limit is the next to be removed because it has the next highest (and still insignificant) p-value at .059.
+
+-   Age is next to be removed because it has the next highest p-value at .06270.
+
+```{r}
+creditlm <- lm(Balance~.-Education-Cards-Age-Limit, data=Credit)
+summary(creditlm)
+# Multiple R-squared:  0.8751,Adjusted R-squared:  0.8745 
+```
+
+-   In our original model with non-helpful insignificant predictors, we had an adjusted R-Squared at 0.8764. After removing insignificant predictors, we are only down to .8745. This means we can explain someones Balance best by understanding Income and Rating.
+-   The interpretation is as follows:
+-   A one unit change in Income causes a negative 7.67 change in Balance.
+-   A one unit change in Rating causes a 3.949 change in Balance.
+
+## Multicollinerity
+
+-   Multicollinearity refers to the situation in which two or more predictor variables are closely related to another.
+-   Collinearity can cause significant factors to be insignificant, or insignificant factors to seem significant. Both are problematic.
+-   If sample correlation coefficient between 2 explanatory variables is more than .80 or less than -.80, we could have severe multicollinearity. Seemingly wrong signs of estimated regression coefficients may also indicate multicollinearity. A good remedy may be to simply drop one of the collinear variables if we can justify it as redundant.
+-   Alternatively, we could try to increase our sample size.
+-   Another option would be to try to transform our variables so that they are no longer collinear.
+-   Last, especially if we are interested only in maintaining a high predictive power, it may make sense to do nothing.
+
+```{r}
+cor(Credit$Income, Credit$Rating) ##close to .8, but still under
+```
+
+-   The second way to tell if there is multicollinearity is to use the vif() command from the car package.
+-   The vif() function in R is used to calculate the Variance Inflation Factor (VIF) for each predictor variable in a multiple regression model. The VIF quantifies how much the variance of a regression coefficient is inflated due to multicollinearity among the predictors. High VIF values indicate high multicollinearity, which can affect the stability and interpretability of the regression coefficients.
+-   We want all scores to be under 10 to indicate the absence of problematic multicollinerity in our model.
+
+```{r}
+
+library(car) ##need to have car package installed first. 
+#Place regression model object in the function to see vif scores. 
+vif(creditlm)
+```
+
+-   While statisticians differ on what constitutes, the general consenses is that scores need to be under 5 or 10.
+-   Both scores are under 10, so we do have an absence of multicollinerity in our final model.
+    -   VIF = 1: No correlation between the predictor and the other predictors.
+    -   1 \< VIF \< 5: Moderate correlation but not severe enough to require correction.
+    -   5 \< VIF \< 10: High correlation, indicating potential multicollinearity problems.
+    -   VIF \>= 10: High correlation, indicating multicollinearity problems.
+
+# Using AI
+
+-   Use the following prompts on a generative AI, like chatGPT, to learn more about regression analysis in R.
+
+-   Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?"
+
+-   What is covariance, and how does it describe the relationship between two variables? Provide an example with a simple dataset. Describe Pearson’s correlation coefficient. How do you calculate it, and what does it tell you about the relationship between two variables?
+
+-   Explain how to create a scatterplot using ggplot2 in R to visualize the relationship between two continuous variables. How can you add a regression line to assess the linearity of the relationship?
+
+-   How can you use the cor.test() function in R to conduct a hypothesis test for correlation? What do the p-value and confidence interval indicate in the context of correlation?
+
+-   How do you interpret the strength and direction of a correlation? What is considered a strong, moderate, or weak correlation in the context of business data?
+
+-   Explain the null and alternative hypotheses for correlation testing. How does the t-distribution play a role in testing the significance of a correlation coefficient?
+
+-   What are some challenges of visualizing relationships between variables when dealing with big data, and how can statistical tests help when scatterplots are not effective?
+
+-   Discuss the limitations of correlation analysis. Why is it important to be cautious when interpreting correlation as causation?
+
+-   What are the key differences between correlation and causation? How can you determine if a correlation implies causality?
+
+-   Explain how to perform simple linear regression in R. Use the lm() function and discuss how to interpret the slope, intercept, and R-squared values from the regression output.
+
+-   What is the coefficient of determination (R-squared) in regression analysis, and how does it relate to the goodness of fit? How can the residual standard error (RSE) and adjusted R-squared help in interpreting a model?
+
+-   Describe how to perform multiple linear regression in R using the lm() function. How do you interpret the coefficients for multiple predictors, and what do the p-values tell you about their significance?
+
+-   What does the F-statistic in a regression output indicate? How does it help in determining the significance of a regression model, and what role does it play when comparing multiple models?
+
+-   Explain how ANOVA is related to regression analysis. How can the F-test be used to assess the significance of regression models? What are residuals in a regression model, and how can analyzing them help assess model fit? How is the sum of squared errors (SSE) related to residual analysis?
+
+-   What is multicollinearity, and why is it problematic in multiple regression? How can you detect multicollinearity in R using the vif() function, and what steps can be taken to address it?
+
+-   How can you use a fitted regression model to make predictions for new data in R? Explain how the predict() function works and provide an example using both simple and multiple regression.
+
+-   Given the output from the summary() function for a regression model in R, explain how to interpret the coefficients, R-squared, adjusted R-squared, residual standard error, and p-values.
+
+-   Describe how to use the p-value method for variable selection in multiple regression. How do you iteratively remove insignificant predictors while monitoring the R-squared and adjusted R-squared values?
+
+# Summary
+
+-   In this lesson, we explored the correlation coefficient, learning how to evaluate the strength and direction of a correlation (strong, moderate, weak; positive or negative) and how to visualize relationships using scatterplots. We also learned to test whether a correlation is statistically significant. Additionally, we delved into simple and multiple linear regression models, understanding how to write and interpret these models, assess goodness-of-fit measures, and test hypotheses by interpreting the summary output from the lm() command. Finally, we examined how regression can incorporate both continuous and categorical predictor variables.

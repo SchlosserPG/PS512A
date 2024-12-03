@@ -1,0 +1,21 @@
+# Summary
+
+# Required Reading
+
+Harris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.
+
+# Recommended Further Reading Materials
+
+James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. (Springer Texts in Statistics)
+
+Jaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education. }
+
+# Summary
+
+-   This book is designed to complement our traditional probability and statistics course. We went over information to make sure you had some basics to really start learning R. This journey began with the basics of R, emphasizing that while multiple methods exist to achieve the same results in R, it's crucial to find the approach that works best for you. As we learn R, you will get used to doing things your way to be able to slice and evaluate the data to find rich information from the data sets we look at. As long as the data was handled properly, it does not matter how we reach our goal using R as long as we do it ourselves.
+-   Mastering R allows you to effectively clean, analyze, and interpret data, unlocking valuable insights from various datasets. We explored the essential practice of data cleaning, learning various techniques and popular functions within the dplyr package under the tidyverse. Proper data cleaning ensures the integrity and accuracy of your analysis. We delved into skewness, kurtosis, variables, and scales of measurement, focusing on summarizing qualitative and quantitative data. Visualizations were introduced as powerful tools to describe variables and uncover patterns in the data.
+-   We examined basic probability rules were covered alongside binomial and continuous distributions. We examined the normal distribution, its limitations, and methods for transforming non-normal variables.
+-   We learned how to set up null and alternative hypotheses, and the different types of hypotheses tests (two-tailed, right-tailed, and left-tailed). We discussed three t-tests: one-sample, independent samples, and dependent samples, interpreting results through the p-value approach. Note that the assumptions for t-tests were not covered and are reserved for a future discussion.
+-   We used contingency tables to calculate probabilities with categorical variables and computed chi-squared statistics for tests of independence and goodness of fit.
+-   The concepts of Type I and Type II errors were introduced, emphasizing their reduction. We covered one-way and two-way ANOVA, including conducting and evaluating post-hoc tests. We learned how to write and interpret simple and multiple linear regression models, including goodness of fit measures and hypothesis testing using regression. The lm() command was crucial for interpreting summary output, and we explored using both continuous and categorical variables as predictors.
+-   This book has equipped you with the foundational skills to handle and analyze data using R. Remember, the key to mastering these techniques lies in consistent practice and finding the methods that best suit your analytical style.

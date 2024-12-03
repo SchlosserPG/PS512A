@@ -1,0 +1,695 @@
+---
+title: "Module 5: Hypothesis Testing"
+author: ""
+date: "2024-08-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
+```
+
+-   The goal of this lesson is to teach you how to conduct statistical inference with regards to hypothesis testing. In doing so, we will learn a few key hypothesis tests given t-distributions, including the one-sample t-test, the independent samples t-test, and the dependent samples t-test. We will continue to conduct hypothesis tests in the later modules as they are the cornerstone to conducting sound statistical inference.
+
+### At a Glance
+
+-   In order to succeed in this section, you will need to understand how to set up and test a hypothesis, knowing that we can reuse our logic of hypothesis testing for other types of models later on. Pay close attention to the idea of and the reason for the t-distribution with regards to one-sample, independent samples, and dependent samples hypothesis test. Additionally, note when the test is a two-tailed, a right-tailed, or a left-tailed test, and what that means for the interpretation of the results.
+
+### Lesson Objectives
+
+-   Compare a sample mean to a population mean with a one-sample t-test.
+-   Compare two unrelated sample means with an independent-samples t-test.
+-   Compare two related sample means with a dependent-samples t-test.
+-   Compare and contrast the the three t-tests covered in this module: one-sample, independent samples, and dependent samples.
+
+### Consider While Reading
+
+-   In this lesson, we learn more about hypothesis testing, which will continue throughout the rest of the term! We are still conducting inference analysis. As an analyst, I like to say that this starts the fun stuff.
+-   We cover three important t-tests. There are more examples on the our course management system with regards to setting up a two-tailed, right-tailed, or left-tailed test and adjusting the $\mu$ of interest.
+-   Make sure you understand the key differences between all the three t-tests presented in this module and their role in interpreting data and making inferences. All three tests are making comparisons: comparisons to a mean value, comparison to another population, or comparison to paired data like before and after results.
+
+## Hypothesis Testing
+
+-   A hypothesis test resolves conflicts between two competing opinions (hypotheses).
+-   In a hypothesis test, we define the null hypothesis as $H_0$, which is the presumed default state of nature or status quo. We define the alternative hypothesis as $H_A$, *a contradiction of the* default state of nature or status quo.
+-   In statistics we use sample information to make inferences regarding the unknown population parameters of interest. We conduct hypothesis tests to determine if sample evidence contradicts $H_0$.
+    -   On the basis of sample information, we either “Reject the null hypothesis” in which sample evidence is inconsistent with $H_0$. This means that we show support for our alternative hypothesis, $H_A$.
+    -   Or we “Do not reject the null hypothesis.” in which the sample evidence is not inconsistent with $H_0$; or we do not have enough evidence to “accept” $H_0$. This means that there is no support for our alternative hypothesis, $H_A$.
+-   General guidelines:
+    -   Null hypothesis, $H_0$, states the status quo.
+    -   Alternative hypothesis, $H_A$, states whatever we wish to establish (i.e., contests the status quo).
+-   Use the following signs in hypothesis tests:
+    -   $H_0$: $=$ or $>=$ or $<=$ to specify status quo.
+    -   $H_A$: $\neq$ or $<$ or $>$ to contradict $H_0$.
+-   Where $H_0$ always contains the equality sign.
+
+### Hypothesis Testing Covers a Variety of Tests
+
+-   We will cover the following:
+
+1.  One-Sample t-test;
+2.  Independent samples t-test;
+3.  Dependent (or Paired) samples t-test.
+
+### Using a t-Distribution
+
+-   All of these hypothesis tests listed above use a t-distribution, which is like a z-distribution (i.e., z-score), but specifically accounts for some specific population information being unknown.
+    -   The z-distribution shows how many sample standard deviations (SD) some value is away from the mean.
+    -   The t-distribution shows how many standard errors (SE) some value is away from the mean.
+-   All of these hypothesis tests in the assigned readings use the t.test() command to execute in R with different parameters set.
+
+### Approaches to Hypothesis Testing
+
+-   All approaches to scientific hypothesis testing enable us to determine whether the sample evidence is inconsistent with what is hypothesized under the null hypothesis, $H_0$.
+
+-   Basic principle: First assume that $H_0$ is true and then determine if sample evidence contradicts this assumption.
+
+-   This means that we can never assume our claim (against status quo) is supported without rejecting the null statistically through the scientific process.
+
+-   There are two general approaches to hypothesis testing:
+
+    -   The Critical Value Approach
+    -   The p-value Approach
+
+#### The Critical Value Approach: Not used here.
+
+-   In this approach, we calculate the test statistic, which is also based on the type of test conducted. We then see whether the test statistic is past the critical value either looked up in a table or computed directly from a function in R.
+
+#### The p-Value Approach: What we are using here.
+
+-   In this approach, we still calculate the test statistic, which is still based on the type of test conducted. However, in the p-value approach, this test statistic corresponds directly to a p-value, or probability value, that we use to make a decision on whether the hypothesis is supported or not.
+    -   The *p-value* is the likelihood, or probability, of observing a sample mean that is at least as extreme as the one derived from the given sample, under the assumption that the null hypothesis is true.
+    -   The calculation of the p-value depends on the specification of the alternative hypothesis.
+    -   We set a decision rule to reject $H_0$ if p-value $< \alpha$, which is set apriori. Specifically, the p-value approach sets an $\alpha$ value (e.g., .05, .01, .001) and then determines if the p-value calculated is less than the set alpha value. The smaller the $\alpha$, the more difficult it is to find significance in your alternative hypothesis, where you reject $H_0$.
+        -   We typically set a $\alpha < .05$ for a variety of tests.
+        -   We can go lower (e.g. .01, .001), but we typically do not go higher than .05.
+
+#### Why Use The p-Value Approach
+
+-   The critical value approach has variance in the formulas and numbers looked up (based on distribution and sometimes degrees of freedom), while the p-value is used consistently, we reject the null if our p-value is less than an $\alpha$ set apriori.
+
+#### Three Step Procedure Using The p-value Approach
+
+1.  Specify null and alternative hypothesis.
+2.  Compute the test statistic and calculate the p-value.\
+3.  Interpret the probability and state the conclusion.
+
+### Setting up Hypotheses Tests
+
+-   There are three types of hypotheses tests that you can analyze:
+
+1.  Two-tailed test: $H_0 =$ vs $H_A \neq$
+2.  Right-tailed test: $H_0 <=$ vs $H_A >$
+3.  Left-tailed test: $H_0 >=$ vs $H_A <$
+
+-   In a two-tailed test, the null is set to the equality ($H_0 =$) vs an alternate set to the inequality ($H_A \neq$). In a right-tailed test, the null is set to less than or equal to ($H_0 <=$), while the alternative is set to greater than ($H_A >$). Finally, in a left-tailed test, the null is set to greater than or equal to ($H_0 >=$), while the alternative is set to less than ($H_A <$).
+
+-   In the figure below, the green area is the *Rejection region* where we reject $H_0$ and show support for our alternative hypothesis $H_A$.
+
+    -   The rest of the area under the curve is the *Failure to Reject* $H_0$ region in which we cannot show support for our alternative hypothesis $H_A$.
+
+![Hypothesis Test](Pictures/Ch6/HypTest.png "Hypothesis Test")
+
+-   In a hypothesis test, you have to decide if a claim is true or not. Before you can figure out if you have a left-tailed test or right-tailed test, you have to make sure you have a single tail to begin with. A tail in hypothesis testing refers to the tail at either end of a distribution curve.
+
+    -   Step 1: Write your null hypothesis statement and your alternate hypothesis statement.
+    -   Step 2: Draw a normal distribution curve.
+    -   Step 3: Shade in the related area under the normal distribution curve. The area under a curve represents 100%, so shade the area accordingly. The number line goes from left to right, so the first 25% is on the left and the 75% mark would be at the right tail. ![Setting Up Hypothesis Test](Pictures/Ch6/Distribution.png "Setting Up Hypothesis Test")
+
+### Hypothesis Testing: Single Population: A Right-Tailed Test
+
+-   A right-tailed test is where your hypothesis statement contains a greater than (\>) symbol. In other words, the inequality points to the right.
+    -   For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is greater than the original 90 hours, your hypothesis statements might be:
+    -   Null hypothesis: No change or less than ($H_0$ ≤ 90)
+    -   Alternate hypothesis: Increased change ($H_A$ \> 90) ![Right-Tailed Hypothesis Test](Pictures/Ch6/RightTailedHTest.png "Right-Tailed Hypothesis Test")
+
+### Hypothesis Testing: Single Population: A Left-Tailed Test
+
+-   A left-tailed test is where your hypothesis statement contains a less than (\<) symbol. In other words, the inequality points to the left.
+    -   For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is less than 70 hours, your hypothesis statements might be:
+    -   Null hypothesis: No change or greater than ($H_0$ ≥ 70)
+    -   Alternate hypothesis: Decreased change ($H_A$ \< 70)
+
+![Left-Tailed Hypothesis Test](Pictures/Ch6/LeftTailedHTest.png "Left-Tailed Hypothesis Test")
+
+### Hypothesis Testing: Single Population: A Two-Tailed Test
+
+-   The two-tailed test is called a two-tailed test because the rejection region can be in either tail.
+    -   For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is different from the mean value, your hypothesis statements might be:
+    -   Null hypothesis: Equals mean ($H_0 = \mu$).
+    -   Alternate hypothesis: Not equal to mean ($H_A \neq \mu$).
+
+![Two-Tailed Hypothesis Test](Pictures/Ch6/TwoTailedHTest.png "Two-Tailed Hypothesis Test")
+
+### Forming a Hypothesis
+
+-   When forming a hypothesis, we need to do the following first.
+    1.  Identify the relevant population parameter of interest (e.g., $\mu$).
+    2.  Determine whether it is a one- or a two-tailed test.
+    3.  Include some form of the equality sign in $H_0$ and use $H_A$ to establish a claim.
+-   For an example in how to set up a hypothesis, we can look at a trade group that predicts that back-to-school spending will average \$606.40 per family this year. The group uses this information to set an economic model in making predictions. A different economic model will be needed if the prediction is wrong.
+    1.  Parameter of interest is $\mu$ since we are interested in the average back-to-school spending.
+    2.  Since we want to determine if the population mean differs from 606.4 (i.e, $\neq$), it is a two-tail test.
+    3.  The hypothesis test is as follows: $H_0: \mu = 606.4$ versus $H_A: \mu \neq 606.4$
+
+## t.test() Command
+
+-   The t.test() command can be used in a variety of ways to test many different kinds of hypotheses. It is important to look up that command in your help and see all the different arguments you can change. The following screenshot shows a snippet of this.
+
+![t.test Command](Pictures/Ch6/tTest.png "t.test command")
+
+-   We use the default S3 method in conducting the t.test:
+    -   Default S3 method: t.test(x, y = NULL,alternative = c("two.sided", "less", "greater"), mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95, ...).
+-   We change arguments as needed to satisfy the type of test that we are conducting.
+
+## One-Sample t-Test
+
+-   A one-sample t-test compares a mean to a population or hypothesized value.
+-   A one-sample t-test requires a normal distribution; however, if underlying distribution is not normal, then by the rules outlined in central limit theorem (CLT), the sampling distribution is the approximately normal only if $n >= 30$.
+
+### t.test() Command for One-Sample t-Test
+
+-   In base R, the t.test() command discussed above is useful for getting the t for a one-sample t-test. The command arguments include the name of the variable and the hypothesized or population value ($\mu$) to compare it to. We can also include the alternative statement to signify a right-tailed, left-tailed, or two-tailed test.
+
+### Step 1: Specify Null and Alternative Hypothesis
+
+-   In order to set up the appropriate null and alternative hypothesis, we need to determine the type of test: two-tailed, right-tailed, or left-tailed.
+
+#### Two-Tailed Test
+
+-   Reject $H_0$ on either side of the hypothesized value of the population parameter.
+
+    -   $H_0: \mu =\mu_0$ versus $H_A$: $\mu \neq \mu_0$.
+
+-   The $\neq$ symbol in $H_A$ indicates that both tail areas in the distribution will be used to make the decision regarding the rejection of $H_0$.
+
+-   A not equal to sign in the alternative signifies a two-tailed test.
+
+    -   An example of a *two-tailed* problem: A Dean is interested if the hours of study time per week is different than 12 hours.
+    -   $H_0$: Study hours is not different than 12 hours ($=$).
+    -   $H_A$: Study hours is different than 12 hours. ($\neq$).
+
+-   Example of command in R:
+
+    -   *two.sided* for two-tailed. However, this is the default value so it could be left out of the statement for the same results.
+    -   $\mu$ of interest is 12.
+
+    ```{r}
+    StudyHours <- read.csv("data/StudyHours.csv")
+    summary(StudyHours)
+    OneSample <- t.test(StudyHours$Hours, alterantive="two.sided", mu=12); OneSample
+    #This test is significant at the .01 level as indicated by the p-value of .001047. 
+    #We are 95% confident that our true mean lies between  13.89281 and 18.85005
+    ```
+
+#### One-Tailed Test
+
+-   Reject $H_0$ only on one side of the hypothesized value of the population parameter.
+
+    -   $H_0$: $\mu <=\mu_0$ versus $H_A$: $\mu > \mu_0$ (right-tailed test).
+    -   $H_0$: $\mu >=\mu_0$ versus $H_A$: $\mu < \mu_0$ (left-tailed test).
+
+-   Note that the inequality in the alternative $H_A$ determines which tail area will be used to make the decision regarding the rejection of $H_0$, right (\>) or left (\<).
+
+-   A greater than sign in the alternative signifies a right-tailed test.
+
+    -   An example of a *right-tailed* problem: A Dean is interested if the hours of study time per week is greater than 10 hours.
+
+    -   $H_0$: Study hours are less than or equal to than 10 hours a week. ($<=$) $H_A$: Study hours are greater than 10 hours a week. ($>$)
+
+    -   Example of right-tailed command in R:
+
+        -   *greater* for right-tailed.
+        -   $\mu$ of interest is 10 for 10 hours a week.
+
+```{r}
+
+OneSampleRight <- t.test(StudyHours$Hours, alternative="greater", mu=10); OneSampleRight
+
+#test statistic is 5.224
+# p-value is very small, close to 0. This test is significant at the .001 level as indicated by the p-value of 4.398e-06. 
+#Reject the null and find that the hours of study are greater than 10 hours. 
+#We are 95% confident that the true mean is greater than 14.3091
+
+```
+
+-   A less than sign in the alternative signifies a left-tailed test.
+
+    -   Example of a *left-tailed* problem: A Dean is interested if the hours of study time per week is less than 24 hours.
+
+    -   $H_0$: Study hours are greater than or equal to than 24 hours a week. ($>=$)
+
+    -   $H_A$: Study hours are less than 24 hours a week. ($<$)
+
+    -   Example of left-tailed command in R:
+
+        -   *less* for left-tailed.
+        -   $\mu$ of interest is 24 for 24 hours a week.
+
+```{r}
+OneSampleLeft <- t.test(StudyHours$Hours, alternative="less", mu=24); OneSampleLeft
+#This test is significant at the .001 level as indicated by the p-value of 2.015e-07. 
+#test statistic: -6.2547
+#p-value < .001 which means reject the null and find that true mean is less than 24
+##We are 95% confident that the true mean is less than 18.43376
+```
+
+### Step 2. Compute the Test Statistic and calculate the p-value
+
+-   When the population standard deviation $\sigma$ is unknown, the test statistic for testing the population mean $\mu$ is assumed to follow the $t$ distribution with a computed degrees of freedom ($df$) based on whether population variances are assumed to be equal or not.
+-   Formula for the Test Statistic: $t = (m_x-\mu_x)/(s_x/\sqrt(n_x))$
+    -   In the One-sample t-test, $m_x$ represents the mean of the variable $x$, the variable to be tested, $\mu_x$ is the population mean or hypothesized value of the variable, $s_x$ is the sample standard deviation of $s$, and $n$ is the sample size.
+-   R will compute the $df$ based on the parameters set in the t.test() command along with the test statistic, so we can rely on it to calculate this for us.
+
+### Step 3. Interpret probability and results.
+
+-   Set alpha ($\alpha$) to a common level, like .05, and compare it to the calculated p-value from your output in R.
+-   Reject $H_0$ if p-value is less than $\alpha$ value. This means we show support for our alternative hypothesis $H_A$, which is against status quo.
+-   Interpret the results in plain English.
+
+### Example of a One-Sample t-Test in R
+
+-   To conduct a one-sample t-Test in R, first, let's read in a dataset nhanes2016.csv from your book files and go ahead and load the tidyverse. Tidyverse is loaded so that we can subset the dataset in the next example.
+
+```{r, message=FALSE, warning=FALSE}
+nhanes.2016 <- read.csv(file = "data/nhanes2016.csv")
+library("tidyverse")
+```
+
+-   Second, lets select a variable to test. We are going to compare the mean of variable BPXSY1 to 120, which makes it a two-tailed test ($= vs \neq$) with the $\mu$ set to 120.
+
+-   Once we have our problem idea, we can go through the steps listed above.
+
+-   Step 1: Write null and alternative.
+
+    -   H0: There is no difference between mean systolic BP and the cutoff for normal BP, 120 mmHG.
+    -   HA: There is a difference between mean systolic BP and the cutoff for normal BP, 120 mmHG.
+
+-   Step 2: Calculating test-statistic and p-value.
+
+    -   Again, the t.test() command does both, the statement and output are listed below.
+
+```{r}
+t.test(x = nhanes.2016$BPXSY1, mu = 120, alternative="two.sided")
+###p-value is 0.01435
+####At an alpha of .05 - we reject the null. 
+###At an alpha of .01 or .001 - we fail to reject the null. 
+
+##We are 95$ confident that our true mean is in between  120.1077 and 120.9711
+##sample mean of 120.5394 
+```
+
+-   Step 3: Interpret probability and results.
+
+    -   We found a test statistic is 2.4491, and a corresponding p-value is .01435. If our alpha was set to .05, .01435 is smaller than that (p-value \< alpha) This indicates that we should reject the null ($H_0$) and support the alternative ($H_A$) that the true mean is not equal to 120. This is in regards to blood pressure.
+    -   Therefore, the sample mean systolic BP not equal to 120, or more formally the mean systolic blood pressure in a sample of 7,145 people was 120.54 (sd = 18.62). And our one-sample t-test found this mean to be statistically significantly different from the hypothesized mean of 120 \[t(7144) = 2.449; p = 0.01435\].
+
+-   This indicates that the sample likely came from a population with a mean systolic blood pressure not equal to 120, signifying that the true population is likely not equal to 120.
+
+-   Take note that if we used a smaller alpha (like .01 or .001), we would not pass the test and instead fail to reject the null.
+
+### Example of a One-Sample Using a Subset
+
+-   Let's do another example using a subset of the data. In this example, let's create a subset of people 65+ years old to run the same two-tailed test. This allows us to see if the people 65 years and older had a different blood pressure than 120.
+-   In the command below, we use tidyverse to set up a new data frame object named nhanes.2016.65plus to save the filtered data.\
+
+```{r}
+nhanes.2016.65plus <- nhanes.2016 %>%
+  filter(RIDAGEYR >= 65)
+```
+
+-   Step 1: Write null and alternative.
+    -   H0: There is no difference between mean systolic BP and the cutoff for normal BP, 120 mmHG when people are 65 or over.
+    -   HA: There is a difference between mean systolic BP and the cutoff for normal BP, 120 mmHG when people are 65 or over.
+-   Step 2: Calculating test-statistic and p-value.
+-   Again, we can use one t.test() command to handle steps 2 and 3.
+
+```{r}
+t.test(x = nhanes.2016.65plus$BPXSY1, mu = 120)
+###Reject Ho and find that Systolic BP is different for people 65 and older.
+```
+
+-   Step 3: Interpret probability and results.
+    -   Based on our output, we found a test statistic is 29.238, and a corresponding p-value is .000. If our alpha was set to .05, .000 is smaller than that (p-value \< alpha). This indicates that we should reject the null and support the alternative that the true mean is not equal to 120 for people 65 and older. This again is in regards to blood pressure.
+    -   The mean systolic blood pressure in a sample of 1233 NHANES participants who were age 65 and above was 136.60 (sd = 19.93). The mean systolic blood pressure was found to be statistically significantly different from the hypothesized mean of 120 via a one-sample t-test (t(1232) = 29.238, p \< 0.001). The true mean systolic blood pressure in the population of adults 65 and older is likely not equal to 120.
+
+## Independent Samples t-Test
+
+-   Independent samples t-test compares the means of two unrelated groups, so instead of just one population, we have 2 mutually exclusive groups.
+-   More formally, two (or more) random samples are considered independent if the process that generates one sample is completely separate from the process that generates the other sample.
+    -   The samples are clearly delineated.
+    -   $\mu_1$ is the mean of the first population.
+    -   $\mu_2$ is the mean of the second population.
+-   The sampling distribution is assumed to be normal and the linear combination of normally distributed random variables is also normally distributed.
+-   If underlying distribution is not normal, then by the CLT, the sampling distribution is approximately normal only if both $n_1 >= 30$ and $n_2 >= 30$.
+
+### t.test() Command for Independent Samples t-Test
+
+-   In base R, the t.test() command is useful for getting the t for the Independent samples t-test. This is the same t.test() command used above.
+
+-   The command needs to be altered to handle the second group. In the command, the arguments include a formula which is formatted as t.test(continuous_variable \~ grouping_variable) or t.test(population1, population2). Deciding on the correct format of the argument depends on the shape of the data discussed later on.
+
+![Tilde or Comma](Pictures/Ch6/Tilde.png "Choosing between Tilde and Comma")
+
+-   Using the \~ symbol between variables: This method allows you to run the t-test without having to split the data manually if your data is not already split. You specify the numerical variable (your continuous measurement) on the left and the categorical variable (which identifies the two groups) on the right of the \~ symbol.
+
+### Step 1: Specify Null and Alternative Hypothesis
+
+-   When conducting hypothesis tests concerning $\mu_1  - \mu_2$ , the competing hypotheses will take one of the following forms:
+    -   Two-tailed Test: $H_0: \mu_1  - \mu_2 =  d_0$ versus $H_A: \mu_1  - \mu_2 \neq  d_0$
+    -   Right-tailed Test: $H_0: \mu_1  - \mu_2 <=  d_0$ versus $H_A: \mu_1  - \mu_2 >  d_0$
+    -   Left-tailed Test: $H_0: \mu_1  - \mu_2 >=  d_0$ versus $H_A: \mu_1  - \mu_2 <  d_0$
+-   Where $d_0$ is the hypothesized difference between $\mu_1  - \mu_2$.
+
+![Independent Samples Table](Pictures/Ch6/TableIndSamp.png "Independent Samples Table")
+
+-   A separate ($d_0$) value can be set here under the ($\mu$) parameter if the value is not equal to 0, however 0 is the most common which tests for differences between populations (i.e., is the mean of population 1 different than mean of population 2). The alternative statement can be set at "two.sided", "greater", or "less".
+
+-   Example of a two-tailed test:
+
+-   Does spending differ between men and women?
+
+    -   $H_0$: No difference in spending between men and women. ($=$).
+
+    -   $H_A$: There is a difference in spending between men and women ($\neq$).
+
+    -   Example of a two-tailed command in R:
+
+        -   The statement assumes that men's spending and women's spending are in 2 different columns in the data set. Therefore, the format t.test(var1, var2) should be used.
+
+```{r}
+Spend <- read.csv("data/Spend.csv")
+summary(Spend)
+```
+
+```{r}
+t.test(Spend$MenSpend, Spend$WomenSpend, alternative= "two.sided", mu=0) 
+#This test is not significant as indicated by a p-value = 0.1259 which is greater than .05. 
+##95% confident that the true mean difference is in between  -3.984055 and 31.317388
+```
+
+-   The alternative $H_A$ and $\mu$ are not changed off their default values, so the statement above could be simplified from what is provided to the statement below.
+
+```{r}
+t.test(Spend$MenSpend, Spend$WomenSpend)
+
+#Take note of the order of the means present in the t-test function. 
+mean(Spend$MenSpend) #100.9
+mean(Spend$WomenSpend) #87.23333
+
+```
+
+-   Example of a right-tailed test: Is men's spending ($\bar{x}_1$) greater than that of women's spending ($\bar{x}_2$)?
+    -   $H_0$: Men's spending is less than or equal to women's spending ($<=$).
+    -   $H_A$: Men's spending is greater than women's spending ($>$).
+    -   Example of a right-tailed command in R:
+-   Again, the statement assumes that men's spending and women's spending are in 2 different columns in the data set. The alternative is changed off the default value, so the statement parameter is required.
+
+```{r}
+t.test(Spend$MenSpend, Spend$WomenSpend, alternative= "greater") 
+#This test is not significant as indicated by a p-value = 0.06296 which is greater than .05. 
+```
+
+-   Example of a left-tailed test: Is men's spending ($\bar{x}_1$) less than that of women's spending ($\bar{x}_2$)?
+    -   $H_0$: Men's spending is greater than or equal to women's spending ($>=$).
+    -   $H_A$: Men's spending is less than women's spending ($<$).
+    -   Example of a left-tailed command in R:
+-   Again, the statement assumes that men's spending and women's spending are in 2 different columns in the data set. The alternative is changed off the default value, so the statement parameter is required.
+
+```{r}
+t.test(Spend$MenSpend, Spend$WomenSpend, alternative= "less") 
+#This test is not significant as indicated by a p-value = 0.937 which is greater than .05. 
+```
+
+### Step 2: Compute the Test Statistic and Calcuate the p-value
+
+Formula for the Test Statistic: $t = (m_1 - m_2)/\sqrt((s^2_1/n_1)+(s^2_2/n_2))$
+
+-   In the independent samples t-test formula, $m_1$ is the mean of one group and $m_2$ is the mean of the other group; the difference between the means makes up the numerator. The larger the difference between the group means, the larger the numerator will be and the larger the t-statistic will be!
+
+-   The denominator includes the variances for the first group, $s^2_1$, and the second group, $s^2_2$ along with the sample sizes for each group, $n_1$ and $n_2$.
+
+-   Degrees of freedom are computed as n – k.
+
+-   There is a 95% confidence interval around the difference between the groups.
+
+-   Calculate the p-value and Compare it to a Predetermined Alpha level
+
+### Step 3: Interpret the Probability and Write a Conclusion
+
+### Example of an Independent Samples t-Test in R
+
+-   Using the nhanes data set, let's bring over some code from the last section so that we can work this example. This includes reading in the data set and creating the subset for the ages 65 and over.
+
+```{r, message=FALSE}
+nhanes.2016 <- read.csv(file = "data/nhanes2016.csv")
+library("tidyverse")
+nhanes.2016.65plus <- nhanes.2016 %>%
+  filter(RIDAGEYR >= 65)
+```
+
+-   When conducting independent samples, grouping variables are common, so you can see if there is a difference between groups. In this example, we can test for a difference in blood pressure by sex (Male vs Female). This is coded as 1 and 2 in the data set, so we need to recode it before we begin the official test.
+
+```{r}
+nhanes.2016.cleaned <- nhanes.2016 %>%
+  mutate(RIAGENDR = recode_factor(.x = RIAGENDR,
+     '1' = 'Male',
+     '2' = 'Female')) %>%
+  rename(sex = RIAGENDR) %>%
+  rename(systolic = BPXSY1)
+```
+
+-   Step 1: Write null and alternative.
+
+    -   $H_0$: There is no difference between systolic blood pressure for males and females ($=$).
+    -   $H_A$: There is a difference between systolic blood pressure for males and females ($\neq$).
+    -   This is a two tailed test.
+
+-   Step 2: Calculating test-statistic and p-value.
+
+    -   The statement below assumes that the grouping variable (sex) is in one column, and the continuous variable (systolic) is in another column. In this case, instead of a comma between the two columns of sex (like above), we write the statement as t.test(continuousVar \~ groupingVar) like below.
+
+    ```{r}
+    # All other parameters can be left at default values
+    t.test(nhanes.2016.cleaned$systolic ~ nhanes.2016.cleaned$sex)
+    ```
+
+-   Step 3: Interpret probability and results.
+
+    -   We found a test statistic is 7.3135, and a corresponding p-value is .000. If our alpha was set to .05, .000 is smaller than that (p-value \< alpha). This indicates that we should reject the null and support the alternative that the men and women had different systolic blood pressure. Thus, there is a statistically significant difference in the mean blood pressure of males and females in the 2016 data set (t(7143) = 7.3135, p = .000).
+
+### Example Independent t-test Using a Subset
+
+-   Create a subset of the data frame of people 65+ years old to run the same test on blood pressure (two-tailed test).
+
+```{r}
+nhanes.2016.65plus.clean<- 
+  nhanes.2016.65plus %>%
+  drop_na(BPXSY1) %>%
+  mutate(sex = recode_factor(.x = RIAGENDR,
+     '1' = 'Male',
+     '2' = 'Female')) %>%
+  rename(systolic = BPXSY1)
+```
+
+-   Step 1: Write null and alternative.
+    -   $H_0$: There is no difference between systolic blood pressure for males and females 65 years or older
+    -   $H_A$: There is a difference between systolic blood pressure for males and females 65 years or older
+    -   This is a two tailed test.
+-   Step 2: Calculating test-statistic and p-value.
+
+```{r}
+t.test(nhanes.2016.65plus.clean$systolic ~ nhanes.2016.65plus.clean$sex)
+```
+
+-   Step 3: Interpret probability and results.
+    -   We found a test statistic is -2.0141, and a corresponding p-value is 0.04422. If our alpha was set to .05, 0.04422 is smaller than that (p-value \< alpha). This indicates that we should reject the null and support the alternative that the men and women 65 or older had different systolic blood pressure. Thus, there is a statistically significant difference in the mean blood pressure of males and females over the age of 65 participating in the 2016 NHANES (t(1231) = -2.01, p = 0.044).
+
+## Dependent Samples t-Test
+
+-   Dependent samples or a Paired samples t-test compares the means of two related groups.
+-   The *Dependent* means there is a deliberate Pairing, or more specifically *Matched Pairing* that generally come from 2 methods:
+    -   "Before” and “after” studies characterized by a measurement, some type of intervention, and another measurement, all on the same subject.
+        -   Example: Measuring the weight of clients before and after a diet plan.
+    -   A pairing of observations, where it is not on the same subject that gets sampled twice.
+        -   Example: Matching 20 adjacent plots of land using a nonorganic fertilizer on one half of the plot and an organic fertilizer on the other.
+-   The parameter of interest is the mean difference D where $D = x_1 - x_2$ and the random variable $x_1$ and $x_2$ are a matched pair.
+-   This works under the assumption regarding CLT that both $x_1$ and $x_2$ are normally distributed or $n >= 30$.
+
+### t.test() Command for Dependent Samples t-Test
+
+-   Option 1: Requires the *paired = TRUE* parameter: The default for the command is *paired=FALSE*, which is an independent samples t-test.
+-   Option 2: Can also calculate a formula instead of turning the paired argument to true and place in the first parameter.
+-   Summary: In a paired t-test, you're comparing two related sets of observations, such as measurements taken from the same subjects under different conditions. The key is that each observation in one group has a corresponding observation in the other group. In R, you can perform a paired t-test by either specifying paired = TRUE in the t.test function or by directly calculating the differences between the paired observations and running the t-test on those differences. If you choose the second approach, you subtract one set of values from the other and then use that result as the first argument in the t.test function (essentially calculating the $\mu_d$. This directly tests whether the mean of the differences is significantly different from zero, giving the same result as a paired t-test but with the differences calculated explicitly beforehand. Either method is fine.
+
+### Step 1: Write Null and Alternative Hypothesis
+
+-   When conducting hypothesis tests concerning $\mu_d$ , the competing hypotheses will take one of the following forms:
+    -   Two-tailed Test: $H_0: \mu_d  = d_0$ versus $H_A: \mu_d \neq  d_0$
+    -   Right-tailed Test: $H_0: \mu_d <= d_0$ versus $H_A: \mu_d>  d_0$
+    -   Left-tailed Test: $H_0: \mu_d >= d_0$ versus $H_A: \mu_d< d_0$
+-   Where $d_0$ typically is equal to 0, but not always. If $d_0$ is something other than 0, then you change the mu parameter in R in the t.test() command.
+
+![Dependent Samples Table](Pictures/Ch6/TableDepSamp.png "Dependent Samples Table")
+
+-   Example of a two-tailed test:
+
+-   Is the weight before and after quitting smoking different from each other?
+
+    -   The before and after signifies a paired test.
+    -   $H_0$: No difference in weight before and after smoking ($=$).
+    -   $H_A$: There is a difference in weight before and after smoking ($\neq$).
+    -   Example of a two-tailed command in R for a paired test:
+
+    ```{r}
+    Smoke <- read.csv("data/Smoke.csv")
+    #Other default values are left off this statement. Assumes a mu at 0. 
+    t.test(Smoke$After, Smoke$Before, paired = TRUE )
+    #This test is significant at the .001 level as indicated by the p-value of 2.695e-08.  
+    ```
+
+-   Example of a right-tailed test:
+
+-   Is the weight after quitting smoking ($\mu_1$) greater than the weight before ($\mu_2$)?
+
+    -   $H_0$: Weight after smoking is less than or equal to the weight before ($<=$).
+    -   $H_A$: Weight after smoking is greater the weight to before ($>$).
+    -   Example of a right-tailed command in R for a paired test:
+
+    ```{r}
+    # The paired statement is true (due to the before after)
+    #If we bring WeightBeforeQuitting to the right side of the equation we get WeightAfterQuitting > WeightBeforeQuitting, which is what our hypothesis wants. 
+    #Therefore, in the statement below, after comes first as m1 followed by a comma, followed by the before as m2. 
+    #The alternative parameter is then set to "greater"
+    #Other default values are left off this statement
+    t.test(Smoke$After, Smoke$Before, paired = TRUE, alternative="greater" )
+    #This test is significant at the .001 level as indicated by the p-value of 1.347e-08. 
+    ```
+
+-   Example of a left-tailed test:
+
+-   Is the weight after quitting smoking ($\mu_1$) less than the weight before ($mu_2$)?
+
+    -   $H_0$: Weight after smoking is greater than or equal to the weight before ($>=$).
+    -   $H_A$: Weight after smoking is less to the weight before ($<$).
+    -   Example of a left-tailed command in R for a paired test:
+
+    ```{r}
+    #The alternative parameter switches to "less" leaving all else the same as above. 
+    #Again, other default values are left off this statement
+    t.test(Smoke$After, Smoke$Before, paired = TRUE, alternative="less" )
+    #This test is not significant as indicated by a p-value of 1, which is greater than .05.
+    ```
+
+### Step 2: Compute the Test Statistic and Calculate the p-value
+
+Formula for the Test Statistic: $t = (m_d-d_0)/\sqrt((s^2_d/n_d)$
+
+-   Dependent samples t-test formula: The $m_d$ is the mean of the differences between the related measures, the $s^2_d$ is the variance of the mean difference between the measures, and $n_d$ is the sample size. The dependent samples t-test worked a little differently from the independent samples t-test. In this case, the formula uses the mean of the differences between the two related measures.
+
+-   Calculate the p-value and Compare it to a Predetermined Alpha level
+
+### Step 3: Interpret the Probability and Write a Conclusion
+
+-   The steps involved with setting up the null and alternative hypotheses and calculating the test statistic are based on different rules and formulas for all three t-tests, but the rest of the steps are the same.
+
+### Example of an Dependent Samples t-Test in R
+
+-   Given the nhanes.2016 dataset, let's ask the following research question: Is there a difference between measure 1 and 2 for systolic BP?
+
+-   First, bring back in the data set from the last section.
+
+```{r, message=FALSE}
+nhanes.2016 <- read.csv(file = "data/nhanes2016.csv")
+library("tidyverse")
+```
+
+-   Step 1: Write null and alternative.
+    -   $H_0$: No difference between measures 1 and 2 for systolic BP. ($=$)
+    -   $H_A$: There is a difference between measures 1 and 2 for systolic BP. ($\neq$).
+    -   This is a two tailed test.
+-   Use the nhanes.2016.cleaned from above but be sure to rename BPXSY2 to systolic2 (two-tailed test).
+
+```{r}
+nhanes.2016.cleaned <- nhanes.2016 %>%
+  mutate(RIAGENDR = recode_factor(.x = RIAGENDR,
+    '1' = 'Male',
+    '2' = 'Female')) %>%
+  rename(sex = RIAGENDR) %>%
+  rename(systolic = BPXSY1) %>%
+  rename(systolic2 = BPXSY2) %>%
+  mutate(diff.syst = systolic - systolic2)
+```
+
+-   Step 2: Calculate test-statistic and p-value.
+
+```{r}
+t.test(nhanes.2016.cleaned$systolic,
+       nhanes.2016.cleaned$systolic2,
+       paired = TRUE)
+```
+
+-   Step 3: Interpret probability and results
+    -   We found a test statistic is 9.3762, and a corresponding p-value is 0.000. If our alpha was set to .05, 0.000 is smaller than that (p-value \< alpha). This indicates that there is a difference in systolic blood pressure 1 and 2. Thus, there is a statistically significant difference in the mean blood pressure of reading 1 and 2 in the 2016 NHANES (t(7100) = 9.3762, p = 0.000).
+
+### reshape function
+
+-   The reshape function allows you to restructure a data frame by specifying a timevar (The variable in the data that defines the different time points or conditions), and idvar (The variable that uniquely identifies each subject or observational unit), and a direction ("wide" or "long")
+-   The syntax is as follows: reshape(data, timevar, idvar, direction, ...)
+-   The direction of reshaping, either "wide" to spread the data across columns or "long" to gather the data into rows.
+
+```{r}
+data("sleep")
+summary(sleep)
+sleep2 <- reshape(sleep, timevar ="group", idvar = "ID", direction="wide")
+summary(sleep2)
+t.test(sleep2$extra.1, sleep2$extra.2, paired=TRUE)
+
+```
+
+-   Using tidyverse, we could get the same effect using the filter, select, and rename functions which are a part of dplyr. This method involves dividing the dataset into two separate groups based on a categorical variable. You then run the t-test on these two groups. In the code below, we use filter to divide by group and then after selecting and renaming the columns we need, we join back together using a full_join.
+-   Using full_join ensures that all IDs are included in the resulting dataset, even if they only appear in one of the groups. This can be useful if your data might have missing group entries for some IDs.
+
+```{r}
+data("sleep")
+summary(sleep)
+library(tidyverse)
+group1 <- sleep %>%
+     filter(group == 1) %>%
+     select(ID, extra) %>%
+     rename(extra.1 = extra)
+
+group2 <- sleep %>%
+     filter(group == 2) %>%
+     select(ID, extra) %>%
+     rename(extra.2 = extra)
+
+sleep2 <- group1 %>%
+     full_join(group2, by = "ID")
+t.test(sleep2$extra.1, sleep2$extra.2, paired=TRUE)
+```
+
+-   In either case, we reject the null hypotheses and find that the type of drug does affect the sleep in patient
+
+## Using AI
+
+-   Use the following prompts on a generative AI, like chatGPT, to learn more about t.test's and confidence intervals.
+
+-   Can you explain the difference between the null hypothesis and the alternative hypothesis, and why is it important to set up both correctly before conducting a t-test?
+
+-   What factors determine whether you should use a one-sample, independent samples, or dependent samples t-test, and how do the results differ based on the test chosen?
+
+-   When should I use a two-tailed t-test compared to a right- or left-tailed test, and how does the alternative hypothesis guide this decision?
+
+-   What are the key arguments in the t.test() function in R, and how do I modify these arguments to perform different types of t-tests, such as two-tailed or paired t-tests?
+
+-   How do I interpret the p-value in the context of hypothesis testing, and how does it relate to rejecting or failing to reject the null hypothesis?
+
+-   How does the confidence interval calculated during a t-test help in understanding the range of possible population parameters, and why is it important in hypothesis testing?
+
+-   What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used?
+
+## Summary
+
+-   In summary, we learned about the basic rules of hypothesis testing and how to set up a null and alternative hypothesis. We learned about two-tailed, right-tailed, and left-tailed hypotheses. We learned about 3 t.tests: the one-sample t-test, the independent samples t-test, and the dependent (or paired) samples t-test. Finally, we also learned how to interpret the results using the p-value approach.
+-   Take note that this lesson does not include the assumptions for t-tests. Assumptions are extremely important, but I will leave the discussion of them to another class.
