@@ -272,6 +272,17 @@ window.Quarto = {
   <li><a href="#importing-a-data-frame-into-r" id="toc-importing-a-data-frame-into-r" class="nav-link" data-scroll-target="#importing-a-data-frame-into-r">Importing a Data Frame into R</a></li>
   <li><a href="#summarize-data" id="toc-summarize-data" class="nav-link" data-scroll-target="#summarize-data">Summarize Data</a></li>
   </ul></li>
+  <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a></li>
+  <li><a href="#coercing-data-types" id="toc-coercing-data-types" class="nav-link" data-scroll-target="#coercing-data-types">Coercing Data Types</a>
+  <ul class="collapse">
+  <li><a href="#factor-data-type" id="toc-factor-data-type" class="nav-link" data-scroll-target="#factor-data-type">Factor data type:</a></li>
+  <li><a href="#numerical-data-types" id="toc-numerical-data-types" class="nav-link" data-scroll-target="#numerical-data-types">Numerical data types:</a></li>
+  <li><a href="#character-data-type" id="toc-character-data-type" class="nav-link" data-scroll-target="#character-data-type">Character data type</a></li>
+  <li><a href="#logical-data-type" id="toc-logical-data-type" class="nav-link" data-scroll-target="#logical-data-type">Logical data type</a></li>
+  <li><a href="#date-data-type" id="toc-date-data-type" class="nav-link" data-scroll-target="#date-data-type">Date data type</a></li>
+  <li><a href="#nominal-example-with-dataset" id="toc-nominal-example-with-dataset" class="nav-link" data-scroll-target="#nominal-example-with-dataset">Nominal Example with Dataset</a></li>
+  <li><a href="#numerical-example-with-dataset" id="toc-numerical-example-with-dataset" class="nav-link" data-scroll-target="#numerical-example-with-dataset">Numerical Example with Dataset</a></li>
+  </ul></li>
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
@@ -1400,6 +1411,323 @@ window.Quarto = {
 </section>
 </section>
 </section>
+<section id="evaluating-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-data-types">Evaluating Data Types</h2>
+<ul>
+<li>There are a number of data types in R that are common to programming and statistical analysis.</li>
+<li>A data type of a variable specifies the type of data that is stored inside that variable. Sometimes when you read in data it is in the correct type, and other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
+<ul>
+<li>Factor (Nominal or Ordinal)</li>
+<li>Numeric (Real or Discrete (Integer))</li>
+<li>Character</li>
+<li>Logical</li>
+<li>Date</li>
+</ul></li>
+</ul>
+</section>
+<section id="coercing-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="coercing-data-types">Coercing Data Types</h2>
+<ul>
+<li><p>In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, “A”), which results in c(“1”, “A”). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.</p></li>
+<li><p>To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as “numeric” or “factor”. Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like “Male” and “Female” would be a categorical (factor) variable.</p></li>
+</ul>
+<section id="factor-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="factor-data-type">Factor data type:</h3>
+<ul>
+<li><p>Ordinal: Contain categories that have some logical order (e.g.&nbsp;categories of age).</p></li>
+<li><p>Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).</p></li>
+<li><p>R will treat each unique value of a factor as a different level.</p></li>
+</ul>
+<section id="ordinal-variable" class="level4">
+<h4 class="anchored" data-anchor-id="ordinal-variable">Ordinal Variable</h4>
+<ul>
+<li>Ordinal data may be categorized and ranked with respect to some characteristic or trait.
+<ul>
+<li>For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).</li>
+<li>A scale allows us to code the data based on order, assuming equal distance between scale items (aka likert items).</li>
+<li>You can make an ordinal factor data type in R or you can convert the order to meaningful numbers.</li>
+</ul></li>
+<li>To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.</li>
+<li>The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.</li>
+<li>It allows you to map old values to new ones in a simple and readable manner.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a vector representing evaluation scores, named evaluate </span></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>evaluate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"excellent"</span>, <span class="st">"good"</span>, <span class="st">"fair"</span>, <span class="st">"poor"</span>, <span class="st">"excellent"</span>, <span class="st">"good"</span>)</span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(evaluate)</span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">evaluate =</span> <span class="fu">recode</span>(evaluate,</span>
+<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"excellent"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"good"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"fair"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"poor"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  evaluate
+1        4
+2        3
+3        2
+4        1
+5        4
+6        3</code></pre>
+</div>
+</div>
+</section>
+<section id="nominal-variable" class="level4">
+<h4 class="anchored" data-anchor-id="nominal-variable">Nominal Variable</h4>
+<ul>
+<li>With nominal variables, data are simply categories for grouping.</li>
+<li>For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.</li>
+<li>Qualitative values may be converted to quantitative values for analysis purposes. + White = 1, Black = 2, etc. This conversion to numerical representation of the category would be needed to run some analysis.
+<ul>
+<li>Sometimes, R does this on our behalf depending on commands used.</li>
+</ul></li>
+<li>We can force a variable into a factor data type using the as.factor() command.</li>
+<li>If we use the read.csv() command, we can sometimes do this by setting an argument <span class="math inline">\(stringsAsFactors=TRUE\)</span>. We will do this later in the lesson.</li>
+</ul>
+</section>
+</section>
+<section id="numerical-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-data-types">Numerical data types:</h3>
+<ul>
+<li><p>A numerical data type is a vector of numbers (Real or Integer)</p></li>
+<li><p>Continuous (Real) variables can take any value along some continuum, hence continuous.</p>
+<ul>
+<li>We can force a variable into a numerical data type by using the as.numeric() command.</li>
+<li>For example, we could collect information on a participants age, height, weight, or distance traveled.</li>
+</ul></li>
+<li><p>Two ways to create:</p>
+<ul>
+<li>We can create a numeric variable by ensuring our value we assign is a number!</li>
+<li>We can force a variable into an real number data type by using the as.numeric() command.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Rhode Island limit for medical marijuana in ounces per</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="co"># person</span></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>kOuncesRhode <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the data type</span></span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kOuncesRhode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div></li>
+<li><p>Discrete (Integer) Variables:</p>
+<ul>
+<li>Discrete variables can only take a countable number of distinct values.</li>
+<li>We can force a variable into an integer data type by using the as.integer() command.</li>
+</ul></li>
+<li><p>For example, we could collect information on the number of children in a family or number of points scored in a basketball game.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co"># an integer</span></span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>kTestInteger <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">4</span>)</span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(kTestInteger)  <span class="co">#Confirm the data type is an integer </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use as.integer() to truncate the variable ouncesRhode</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>Trunc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(kOuncesRhode)</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>Trunc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section>
+<section id="character-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="character-data-type">Character data type</h3>
+<ul>
+<li>Wrapped in either single or double quotation marks.
+<ul>
+<li>Includes letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).</li>
+<li>A quick example is below that shows how to assign a character value to a variable.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make constants</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>kFirstName <span class="ot">&lt;-</span> <span class="st">"Pamela"</span></span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>kLastName <span class="ot">&lt;-</span> <span class="st">"Schlosser"</span></span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the data type</span></span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kFirstName)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a zip code constant and check the data type</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>kZipCode <span class="ot">&lt;-</span> <span class="st">"23185"</span></span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kZipCode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+</section>
+<section id="logical-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="logical-data-type">Logical data type</h3>
+<ul>
+<li><p>Values of TRUE and FALSE</p></li>
+<li><p>Result of some expression.</p>
+<ul>
+<li>A quick example is below that shows how to assign a logical value to a variable.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the result of 6 &gt; 8 in a constant called kSixEight</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>kSixEight <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">&gt;</span> <span class="dv">8</span></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Can use comparison tests with the following == &gt;= &lt;= &gt; &lt; &lt;&gt; !=</span></span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a>kSixEight  <span class="co"># Print kSixEight</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine the data type of kSixEight</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kSixEight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "logical"</code></pre>
+</div>
+</div></li>
+</ul>
+</section>
+<section id="date-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="date-data-type">Date data type</h3>
+<ul>
+<li>A variable that should be a date.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
+</div>
+</div>
+<ul>
+<li>lubridate is a package specifically for converting dates. This package makes dates a lot easier to work with.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using lubridate</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb144-4"><a href="#cb144-4" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">mdy</span>(strDates)</span>
+<span id="cb144-5"><a href="#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
+</div>
+</div>
+<ul>
+<li>If you are only given a year and a month, you can use the ym() command to turn it to a date. But take note that it will add a day to the value as a placeholder.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'yyyymm' using lubridate</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>stryyyymm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"202201"</span>, <span class="st">"202003"</span>, <span class="st">"202204"</span>)</span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">ym</span>(stryyyymm)</span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Date[1:3], format: "2022-01-01" "2020-03-01" "2022-04-01"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Lubridate.csv"</span>)</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">ym</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="co"># You can use the month or year function to access the month or year</span></span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="co"># from the date</span></span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb150-8"><a href="#cb150-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-9"><a href="#cb150-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Now, you can access months or year numerically</span></span>
+<span id="cb150-10"><a href="#cb150-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   4.000   7.000   6.538   9.000  12.000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2019    2020    2021    2021    2021    2022 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could code the seasons using a mutate function making a new</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="do">## variable 'season'</span></span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> UseDates <span class="sc">%&gt;%</span></span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">case_when</span>(month <span class="sc">%in%</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">~</span> <span class="st">"Spring"</span>, month <span class="sc">%in%</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">8</span> <span class="sc">~</span></span>
+<span id="cb154-6"><a href="#cb154-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Summer"</span>, month <span class="sc">%in%</span> <span class="dv">9</span><span class="sc">:</span><span class="dv">11</span> <span class="sc">~</span> <span class="st">"Fall"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Winter"</span>))</span>
+<span id="cb154-7"><a href="#cb154-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-8"><a href="#cb154-8" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>season <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(UseDates<span class="sc">$</span>season)</span>
+<span id="cb154-9"><a href="#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Fall Spring Summer Winter 
+     9      9     12      9 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could use a filter statement to select a particular year.  In</span></span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the example below, I save the filtered data into a new data frame</span></span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="do">## UseDate2022.</span></span>
+<span id="cb156-4"><a href="#cb156-4" aria-hidden="true" tabindex="-1"></a>UseDate2022 <span class="ot">&lt;-</span> <span class="fu">filter</span>(UseDates, year <span class="sc">==</span> <span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nominal-example-with-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="nominal-example-with-dataset">Nominal Example with Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the variable types with summary and class functions.</span></span>
+<span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    grass               age           
+ Length:2867        Length:2867       
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Check the data type.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Turn to a factor.</span></span>
+<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Confirming it is now correct.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+</section>
+<section id="numerical-example-with-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-example-with-dataset">Numerical Example with Dataset</h3>
+<ul>
+<li>We need to ensure data can be coded as numeric before using the as.numeric() command. For example, to handle the variable age, it seems like numerical values except one value of “89 OR OLDER”. If as.numeric() command was used on this variable, it would put all the 89 and older observations as NAs. To force it to be a numerical variable, and keep that the sample participants were the oldest value, we need to recode it and then use the as.numeric() command to coerce it into a number.</li>
+<li>Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode '89 OR OLDER' into just '89'</span></span>
+<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)</span>
+<span id="cb166-3"><a href="#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to numeric data type</span></span>
+<span id="cb166-4"><a href="#cb166-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span>
+<span id="cb166-5"><a href="#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)  <span class="co">#Conduct final check confirming correct data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       grass           age       
+ DK       : 110   Min.   :18.00  
+ IAP      : 911   1st Qu.:34.00  
+ LEGAL    :1126   Median :49.00  
+ NOT LEGAL: 717   Mean   :49.16  
+ NA's     :   3   3rd Qu.:62.00  
+                  Max.   :89.00  
+                  NA's   :10     </code></pre>
+</div>
+</div>
+</section>
+</section>
 <section id="using-ai" class="level1">
 <h1>Using AI</h1>
 <p>Use the following prompts on a generative AI, like chatGPT, to learn more about introductory topics.</p>
@@ -1413,6 +1741,8 @@ window.Quarto = {
 <li><p>Write a script that reads a CSV file into R using read.csv(). Summarize the dataset and explain how the columns and rows are structured.</p></li>
 <li><p>How can you access specific columns of a data frame using the $ operator? Provide an example using a sample dataset in R.</p></li>
 <li><p>Explain how to use the summary() function in R to summarize a dataset. Write a script that loads a dataset and runs summary() on it.</p></li>
+<li><p>What is the difference between ordinal and nominal variables, and how can you recode these data types in R?</p></li>
+<li><p>Explain the steps to coerce a character variable into a factor using the as.factor() function in R.</p></li>
 </ul>
 </section>
 <section id="summary" class="level1">
