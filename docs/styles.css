@@ -1,0 +1,91 @@
+
+h1 {
+  color: darkblue;
+}
+
+
+body{margin:0px 0px;padding:0px; font-size:12pt;
+        font-family:Lato, Arial, sans-serif;
+        background-color:white;color:#3E3E3E}
+    
+h1{color:#183028;background-color:ghostwhite; font-variant: small-caps;font-size:120%;line-height:.8; border:1px solid #B9975B;padding: 10px;}
+h2{color:#00313C;font-size:115%;line-height:.6; border:1px solid #B9975B;padding: 10px;}
+h3{font-size: 1.1em; background-color:#4C575E;margin-left:10px;color:ghostwhite; border:1px solid #B9975B; padding:10px;}
+h4{font-size: 1.05em; background-color:#435951;color:ghostwhite; margin-left:25px;border:1px solid #B9975B;padding:5px;}
+
+.sourceCode pre{font-size:.9em;
+    padding:5px; 
+    background-color:#f8f8f8;
+    color:#364741;
+    margin:0px 0px;
+    display:block;
+    word-wrap: break-word;
+        border:1px dashed #a98546;
+}
+
+code span.do, code span.co, code span.st, code span.dv, code span.f1, code span.at, code span.fl {color:#364741; font-size: 11pt; 
+}
+
+ul, ol{font-size:1.0 em;}
+ul li{margin-left:15px;}
+ul li li, ol li li {color:#5B6770;list-style-type: circle;}
+
+
+
+#header{display:block; font-size:1.2em}
+.author, .date{display:none;}
+img{    display:block;
+        margin-left: auto;
+        margin-right: auto; width:60% }
+
+.col-xs-12.col-sm-8.col-md-9 {background-color:white;
+        color:darkblue;
+        display:block;
+        border-radius:25px;
+        text-align:left;
+        border:2px ridge plum;
+        margin:0px 0px;padding:10px;
+        vertical-align: middle;}
+}
+
+
+p{font-size: 1em;}
+
+.sourceCode {font-size:.95em;
+  padding:5px;word-wrap: break-word;
+    }
+
+
+
+
+code.sourceCode.r{
+    display:inline; margin:0px 0px; overflow-y: scroll; word-wrap: break-word; max-width:inherit;}
+
+span{margin:0px 0px; padding 2px;}
+
+pre code{font-size:11pt;
+  padding:5px;; 
+}
+
+.cell-output cell-output-stdout{background-color:#f8fff8;}
+
+
+h2 .header-section-number{color:#00313C;}
+
+span.co { color:red; display:block; word-wrap: break-word; line-height: 1em}
+
+.header-section-number{color:ghostwhite;}
+
+p.caption{text-align: center;font-size:.7em;}
+.figcaption{text-align: center}
+a {color:#3E3E3E;}
+
+figcaption{text-align: center}
+
+.toc ol, .toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+div.quarto-title-meta{display:none;}
+#title-block-header.quarto-title-block.default .quarto-title-meta{display:none;}
