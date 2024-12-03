@@ -758,7 +758,7 @@ summary(ChickWeight)
 tapply(ChickWeight$weight,ChickWeight$Diet, mean)
 ```
 
-## Evaluating Data Types
+# Evaluating Data Types
 
 -   There are a number of data types in R that are common to programming and statistical analysis.
 -   A data type of a variable specifies the type of data that is stored inside that variable. Sometimes when you read in data it is in the correct type, and other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
@@ -989,6 +989,131 @@ gss.2016$age <- as.numeric(gss.2016$age)
 summary(gss.2016) #Conduct final check confirming correct data types
 ```
 
+# Handling Missing Data
+
+-   After a data set is loaded, there are two common strategies for dealing with missing values.
+
+1.  The omission strategy recommends that observations with missing values be excluded from subsequent analysis.
+
+2.  The imputation strategy recommends that the missing values be replaced with some reasonable imputed values.
+
+    -   Numeric variables: replace with the average.
+    -   Categorical variables: replace with the predominant category.
+
+## Limitations of Using a Missing Data Technique
+
+-   Recommended Closer Evaluation of Missing Data
+-   There are limitations of both techniques listed above (omission and imputation).
+    -   If a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.
+    -   Removing missing values could also significantly reduce your data set size.
+    -   Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.
+    -   If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.
+-   Missing data needs to be closely evaluated to see if the missing value is meaningful or not.
+    -   For instance, getting data on how many pregnancies would only be applicable to people born of women gender, and blank value for people born of male gender, who are unable to have children, would be expected. In taking this example further, if variable 1 targeted the question, "how many pregnancies have you have had," we would expect missing data or NAs for all the men. If comparing that variable to a second variable "Incubated from COVID-19: Yes/No" we would not want to omit all the blanks in the dataset because then we would eliminate analysis of an entire gender. Thus a different technique should be chosen besides omitting the blanks to be able to evaluate more concisely.\
+-   If a value is not blank and is considered missing, data needs to be mutated to be consistent with the technique of coding true missing values.
+
+## The na.rm Parameter
+
+```{r}
+y <- c(1, 2, NA, 3, 4, NA)
+# These lines runs, but do not give you anything useful.
+sum(y) 
+mean(y)
+```
+
+-   Many functions in R include parameters that will ignore NAs for you.
+
+    -   sum() and mean() are examples of this, and most summary statistics like median() and var() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.
+
+    ```{r}
+    sum(y, na.rm=TRUE) 
+    mean(y, na.rm=TRUE)
+    # na.omit removes the NAs from the vector of dataset. Here, it works for removing NAs from the vector.  
+    y <- na.omit(y) 
+    ```
+
+## is.na()
+
+-   In R, the is.na() function is used to check for missing (NA) values in objects like vectors, data frames, or arrays. It returns a logical vector of the same length as the input object, where TRUE indicates a missing value and FALSE indicates a non-missing value.
+-   To conduct an example, read in the data set called gig.csv from your working directory.
+
+```{r}
+gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings="")
+dim(gig)
+head(gig)
+#Counts the number of all NA values in the entire dataset
+CountAllBlanks <- sum(is.na(gig)); CountAllBlanks 
+
+#Gives the observation number of the observations that include NA values
+which(is.na(gig$Industry))
+
+#Produces a dataset with observations that have NA values in the Industry field. 
+ShowBlankObservations <- gig %>%
+     filter(is.na(Industry))
+ShowBlankObservations
+
+#Counts the number of observations that have NA values in the Industry field. Industry is categorical, so we can count values based on it. 
+CountBlanks <- sum(is.na(gig$Industry)); CountBlanks 
+
+library(tidyverse)
+#Counts the number of observations that have NA values in the Wage field. 
+CountBlanks <- sum(is.na(gig$Wage)); CountBlanks 
+
+```
+
+## Using na_if()
+
+-   The na_if() function in tidyr is used to replace specific values in a column with NA (missing) values. This function can be particularly useful when you want to standardize missing values across a dataset or when you want to replace certain values with NA for further data processing
+
+```{r}
+TurnNA <- gig %>%
+     mutate(Job = na_if(Job, "Other"))
+head(TurnNA)
+```
+
+## na.omit() vs. drop_na()
+
+-   Both functions return a new object with the rows containing missing values removed.
+
+-   na.omit() is a base R function, so it doesn't require any additional package installation where drop_na() requires loading the tidyr package, which is part of the tidyverse ecosystem.
+
+-   
+
+```         
+    drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.
+```
+
+```{r}
+#install.packages("Amelia")
+library(Amelia)
+data("africa")
+summary(africa)
+summary(africa$gdp_pc)
+summary(africa$trade)
+
+africa1 <- na.omit(africa)
+summary(africa1)
+
+##to drop all at once. 
+africa2 <- africa %>% drop_na()
+summary(africa2)
+
+```
+
+-   You try to load the airquality dataset from base R and look at a summary of the dataset.
+
+    -   Sum the number of NAs in airquality.
+    -   Omit all the NAs from airquality and save it in a new data object called airqual and take a new summary of it.
+
+    ```{r, echo=FALSE}
+    data("airquality")
+    summary(airquality)
+    sum(is.na(airquality))
+    #37 + 7
+    airqual <- na.omit(airquality)
+    #153-111
+    summary(airqual)
+    ```
 
 # Using AI
 
@@ -1015,6 +1140,8 @@ Use the following prompts on a generative AI, like chatGPT, to learn more about 
 -   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
 
 -   Explain the steps to coerce a character variable into a factor using the as.factor() function in R.
+
+-   What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?
 
 # Summary
 

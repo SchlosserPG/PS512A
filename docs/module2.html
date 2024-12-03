@@ -251,7 +251,6 @@ window.Quarto = {
   <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select">Select</a></li>
   <li><a href="#piping-chaining-operator" id="toc-piping-chaining-operator" class="nav-link" data-scroll-target="#piping-chaining-operator">Piping (Chaining) Operator</a></li>
   <li><a href="#counting" id="toc-counting" class="nav-link" data-scroll-target="#counting">Counting</a></li>
-  <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data">Handling Missing Data</a></li>
   <li><a href="#summarize" id="toc-summarize" class="nav-link" data-scroll-target="#summarize">Summarize</a></li>
   <li><a href="#group_by" id="toc-group_by" class="nav-link" data-scroll-target="#group_by">Group_by</a></li>
   <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate">Mutate</a></li>
@@ -1321,273 +1320,6 @@ position_stack </code></pre>
 </div>
 </div>
 </section>
-<section id="handling-missing-data" class="level3">
-<h3 class="anchored" data-anchor-id="handling-missing-data">Handling Missing Data</h3>
-<ul>
-<li>After a data set is loaded, there are two common strategies for dealing with missing values.</li>
-</ul>
-<ol type="1">
-<li><p>The omission strategy recommends that observations with missing values be excluded from subsequent analysis.</p></li>
-<li><p>The imputation strategy recommends that the missing values be replaced with some reasonable imputed values.</p>
-<ul>
-<li>Numeric variables: replace with the average.</li>
-<li>Categorical variables: replace with the predominant category.</li>
-</ul></li>
-</ol>
-<section id="limitations-of-using-a-missing-data-technique" class="level4">
-<h4 class="anchored" data-anchor-id="limitations-of-using-a-missing-data-technique">Limitations of Using a Missing Data Technique</h4>
-<ul>
-<li>Recommended Closer Evaluation of Missing Data</li>
-<li>There are limitations of both techniques listed above (omission and imputation).
-<ul>
-<li>If a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.</li>
-<li>Removing missing values could also significantly reduce your data set size.</li>
-<li>Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.</li>
-<li>If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.</li>
-</ul></li>
-<li>Missing data needs to be closely evaluated to see if the missing value is meaningful or not.
-<ul>
-<li>For instance, getting data on how many pregnancies would only be applicable to people born of women gender, and blank value for people born of male gender, who are unable to have children, would be expected. In taking this example further, if variable 1 targeted the question, “how many pregnancies have you have had,” we would expect missing data or NAs for all the men. If comparing that variable to a second variable “Incubated from COVID-19: Yes/No” we would not want to omit all the blanks in the dataset because then we would eliminate analysis of an entire gender. Thus a different technique should be chosen besides omitting the blanks to be able to evaluate more concisely.<br>
-</li>
-</ul></li>
-<li>If a value is not blank and is considered missing, data needs to be mutated to be consistent with the technique of coding true missing values.</li>
-</ul>
-</section>
-<section id="the-na.rm-parameter" class="level4">
-<h4 class="anchored" data-anchor-id="the-na.rm-parameter">The na.rm Parameter</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">NA</span>)</span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co"># These lines runs, but do not give you anything useful.</span></span>
-<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] NA</code></pre>
-</div>
-</div>
-<ul>
-<li><p>Many functions in R include parameters that will ignore NAs for you.</p>
-<ul>
-<li>sum() and mean() are examples of this, and most summary statistics like median() and var() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit removes the NAs from the vector of dataset. Here, it works</span></span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for removing NAs from the vector.</span></span>
-<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-</ul>
-</section>
-<section id="is.na" class="level4">
-<h4 class="anchored" data-anchor-id="is.na">is.na()</h4>
-<ul>
-<li>In R, the is.na() function is used to check for missing (NA) values in objects like vectors, data frames, or arrays. It returns a logical vector of the same length as the input object, where TRUE indicates a missing value and FALSE indicates a non-missing value.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of all NA values in the entire dataset</span></span>
-<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>CountAllBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig))</span>
-<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a>CountAllBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 26</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gives the observation number of the observations that include NA</span></span>
-<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="co"># values</span></span>
-<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1]  24 139 361 378 441 446 479 500 531 565</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produces a dataset with observations that have NA values in the</span></span>
-<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field.</span></span>
-<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(Industry))</span>
-<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   EmployeeID  Wage Industry        Job
-1          24 42.58     &lt;NA&gt;  Sales Rep
-2         139 42.18     &lt;NA&gt;   Engineer
-3         361 31.33     &lt;NA&gt;      Other
-4         378 48.09     &lt;NA&gt;      Other
-5         441 32.35     &lt;NA&gt; Accountant
-6         446 30.76     &lt;NA&gt; Accountant
-7         479 42.85     &lt;NA&gt; Consultant
-8         500 43.13     &lt;NA&gt;  Sales Rep
-9         531 43.13     &lt;NA&gt;   Engineer
-10        565 38.98     &lt;NA&gt; Accountant</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the</span></span>
-<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field. Industry is categorical, so we can count values</span></span>
-<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="co"># based on it.</span></span>
-<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span>
-<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the Wage</span></span>
-<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="co"># field.</span></span>
-<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Wage))</span>
-<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-</div>
-</section>
-<section id="using-na_if" class="level4">
-<h4 class="anchored" data-anchor-id="using-na_if">Using na_if()</h4>
-<ul>
-<li>The na_if() function in tidyr is used to replace specific values in a column with NA (missing) values. This function can be particularly useful when you want to standardize missing values across a dataset or when you want to replace certain values with NA for further data processing</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>TurnNA <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Job =</span> <span class="fu">na_if</span>(Job, <span class="st">"Other"</span>))</span>
-<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(TurnNA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  EmployeeID  Wage     Industry        Job
-1          1 32.81 Construction    Analyst
-2          2 46.00   Automotive   Engineer
-3          3 43.13 Construction  Sales Rep
-4          4 48.09   Automotive       &lt;NA&gt;
-5          5 43.62   Automotive Accountant
-6          6 46.98 Construction   Engineer</code></pre>
-</div>
-</div>
-</section>
-<section id="na.omit-vs.-drop_na" class="level4">
-<h4 class="anchored" data-anchor-id="na.omit-vs.-drop_na">na.omit() vs.&nbsp;drop_na()</h4>
-<ul>
-<li><p>Both functions return a new object with the rows containing missing values removed.</p></li>
-<li><p>na.omit() is a base R function, so it doesn’t require any additional package installation where drop_na() requires loading the tidyr package, which is part of the tidyverse ecosystem.</p></li>
-<li><pre><code>drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.</code></pre></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('Amelia')</span></span>
-<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
-<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
-<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      year              country       gdp_pc            infl        
- Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.400  
- 1st Qu.:1977   Burundi     :20   1st Qu.: 513.8   1st Qu.:  4.760  
- Median :1982   Cameroon    :20   Median :1035.5   Median :  8.725  
- Mean   :1982   Congo       :20   Mean   :1058.4   Mean   : 12.753  
- 3rd Qu.:1986   Senegal     :20   3rd Qu.:1244.8   3rd Qu.: 13.560  
- Max.   :1991   Zambia      :20   Max.   :2723.0   Max.   :127.890  
-                                  NA's   :2                         
-     trade            civlib         population      
- Min.   : 24.35   Min.   :0.0000   Min.   : 1332490  
- 1st Qu.: 38.52   1st Qu.:0.1667   1st Qu.: 4332190  
- Median : 59.59   Median :0.1667   Median : 5853565  
- Mean   : 62.60   Mean   :0.2889   Mean   : 5765594  
- 3rd Qu.: 81.16   3rd Qu.:0.3333   3rd Qu.: 7355000  
- Max.   :134.11   Max.   :0.6667   Max.   :11825390  
- NA's   :5                                           </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>gdp_pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  376.0   513.8  1035.5  1058.4  1244.8  2723.0       2 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>trade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  24.35   38.52   59.59   62.60   81.16  134.11       5 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a>africa1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(africa)</span>
-<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      year              country       gdp_pc            infl       
- Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  
- 1st Qu.:1976   Burundi     :17   1st Qu.: 511.5   1st Qu.:  4.67  
- Median :1981   Cameroon    :18   Median :1062.0   Median :  8.72  
- Mean   :1981   Congo       :20   Mean   :1071.8   Mean   : 12.91  
- 3rd Qu.:1986   Senegal     :20   3rd Qu.:1266.0   3rd Qu.: 13.57  
- Max.   :1991   Zambia      :20   Max.   :2723.0   Max.   :127.89  
-     trade            civlib         population      
- Min.   : 24.35   Min.   :0.0000   Min.   : 1332490  
- 1st Qu.: 38.52   1st Qu.:0.1667   1st Qu.: 4186485  
- Median : 59.59   Median :0.1667   Median : 5858750  
- Mean   : 62.60   Mean   :0.2899   Mean   : 5749761  
- 3rd Qu.: 81.16   3rd Qu.:0.3333   3rd Qu.: 7383000  
- Max.   :134.11   Max.   :0.6667   Max.   :11825390  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="do">## to drop all at once.</span></span>
-<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a>africa2 <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span></span>
-<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
-<span id="cb165-4"><a href="#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      year              country       gdp_pc            infl       
- Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  
- 1st Qu.:1976   Burundi     :17   1st Qu.: 511.5   1st Qu.:  4.67  
- Median :1981   Cameroon    :18   Median :1062.0   Median :  8.72  
- Mean   :1981   Congo       :20   Mean   :1071.8   Mean   : 12.91  
- 3rd Qu.:1986   Senegal     :20   3rd Qu.:1266.0   3rd Qu.: 13.57  
- Max.   :1991   Zambia      :20   Max.   :2723.0   Max.   :127.89  
-     trade            civlib         population      
- Min.   : 24.35   Min.   :0.0000   Min.   : 1332490  
- 1st Qu.: 38.52   1st Qu.:0.1667   1st Qu.: 4186485  
- Median : 59.59   Median :0.1667   Median : 5858750  
- Mean   : 62.60   Mean   :0.2899   Mean   : 5749761  
- 3rd Qu.: 81.16   3rd Qu.:0.3333   3rd Qu.: 7383000  
- Max.   :134.11   Max.   :0.6667   Max.   :11825390  </code></pre>
-</div>
-</div>
-<ul>
-<li><p>You try to load the airquality dataset from base R and look at a summary of the dataset.</p>
-<ul>
-<li>Sum the number of NAs in airquality.</li>
-<li>Omit all the NAs from airquality and save it in a new data object called airqual and take a new summary of it.</li>
-</ul>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>     Ozone           Solar.R           Wind             Temp      
- Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
- 1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
- Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
- Mean   : 42.13   Mean   :185.9   Mean   : 9.958   Mean   :77.88  
- 3rd Qu.: 63.25   3rd Qu.:258.8   3rd Qu.:11.500   3rd Qu.:85.00  
- Max.   :168.00   Max.   :334.0   Max.   :20.700   Max.   :97.00  
- NA's   :37       NA's   :7                                       
-     Month            Day      
- Min.   :5.000   Min.   : 1.0  
- 1st Qu.:6.000   1st Qu.: 8.0  
- Median :7.000   Median :16.0  
- Mean   :6.993   Mean   :15.8  
- 3rd Qu.:8.000   3rd Qu.:23.0  
- Max.   :9.000   Max.   :31.0  
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 44</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     Ozone          Solar.R           Wind            Temp      
- Min.   :  1.0   Min.   :  7.0   Min.   : 2.30   Min.   :57.00  
- 1st Qu.: 18.0   1st Qu.:113.5   1st Qu.: 7.40   1st Qu.:71.00  
- Median : 31.0   Median :207.0   Median : 9.70   Median :79.00  
- Mean   : 42.1   Mean   :184.8   Mean   : 9.94   Mean   :77.79  
- 3rd Qu.: 62.0   3rd Qu.:255.5   3rd Qu.:11.50   3rd Qu.:84.50  
- Max.   :168.0   Max.   :334.0   Max.   :20.70   Max.   :97.00  
-     Month            Day       
- Min.   :5.000   Min.   : 1.00  
- 1st Qu.:6.000   1st Qu.: 9.00  
- Median :7.000   Median :16.00  
- Mean   :7.216   Mean   :15.95  
- 3rd Qu.:9.000   3rd Qu.:22.50  
- Max.   :9.000   Max.   :31.00  </code></pre>
-</div>
-</div></li>
-</ul>
-</section>
-</section>
 <section id="summarize" class="level3">
 <h3 class="anchored" data-anchor-id="summarize">Summarize</h3>
 <ul>
@@ -1597,10 +1329,10 @@ position_stack </code></pre>
 <li>In the example below, we can summarize more than one thing into tidy output.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a>gig <span class="sc">%&gt;%</span></span>
-<span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb170-3"><a href="#cb170-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean.days =</span> <span class="fu">mean</span>(Wage), <span class="at">sd.days =</span> <span class="fu">sd</span>(Wage), <span class="at">var.days =</span> <span class="fu">var</span>(Wage),</span>
-<span id="cb170-4"><a href="#cb170-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">med.days =</span> <span class="fu">median</span>(Wage), <span class="at">iqr.days =</span> <span class="fu">IQR</span>(Wage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>gig <span class="sc">%&gt;%</span></span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean.days =</span> <span class="fu">mean</span>(Wage), <span class="at">sd.days =</span> <span class="fu">sd</span>(Wage), <span class="at">var.days =</span> <span class="fu">var</span>(Wage),</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">med.days =</span> <span class="fu">median</span>(Wage), <span class="at">iqr.days =</span> <span class="fu">IQR</span>(Wage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  mean.days  sd.days var.days med.days iqr.days
 1  40.14567 7.047058 49.66103    41.82   11.465</code></pre>
@@ -1614,11 +1346,11 @@ position_stack </code></pre>
 <li>summarize() is often used in combination with group_by() to calculate summary statistics within groups</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize data by Industry variable.</span></span>
-<span id="cb172-2"><a href="#cb172-2" aria-hidden="true" tabindex="-1"></a>groupedData <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb172-3"><a href="#cb172-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Industry) <span class="sc">%&gt;%</span></span>
-<span id="cb172-4"><a href="#cb172-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">meanWage =</span> <span class="fu">mean</span>(Wage))</span>
-<span id="cb172-5"><a href="#cb172-5" aria-hidden="true" tabindex="-1"></a>groupedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="do">## summarize data by Industry variable.</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>groupedData <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Industry) <span class="sc">%&gt;%</span></span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">meanWage =</span> <span class="fu">mean</span>(Wage))</span>
+<span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a>groupedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   Industry     meanWage
@@ -1628,12 +1360,12 @@ position_stack </code></pre>
 3 Tech             40.7
 4 &lt;NA&gt;             39.5</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="do">## same function with na's dropped.</span></span>
-<span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a>groupedData <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb174-4"><a href="#cb174-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Industry) <span class="sc">%&gt;%</span></span>
-<span id="cb174-5"><a href="#cb174-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">meanWage =</span> <span class="fu">mean</span>(Wage))</span>
-<span id="cb174-6"><a href="#cb174-6" aria-hidden="true" tabindex="-1"></a>groupedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="do">## same function with na's dropped.</span></span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>groupedData <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Industry) <span class="sc">%&gt;%</span></span>
+<span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">meanWage =</span> <span class="fu">mean</span>(Wage))</span>
+<span id="cb139-6"><a href="#cb139-6" aria-hidden="true" tabindex="-1"></a>groupedData</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   Industry     meanWage
@@ -1651,10 +1383,13 @@ position_stack </code></pre>
 <li>One example is below, but note that there are many things you can do with the mutate function.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># making a new variable called calculation that multiplies gdp_pc by</span></span>
-<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="co"># infl variables in the africa1 dataset.</span></span>
-<span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a>africa.mutated <span class="ot">&lt;-</span> <span class="fu">mutate</span>(africa1, <span class="at">calculation =</span> gdp_pc <span class="sc">*</span> infl)</span>
-<span id="cb176-4"><a href="#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(africa.mutated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="co"># making a new variable called calculation that multiplies gdp_pc by</span></span>
+<span id="cb141-5"><a href="#cb141-5" aria-hidden="true" tabindex="-1"></a><span class="co"># infl variables in the africa1 dataset.</span></span>
+<span id="cb141-6"><a href="#cb141-6" aria-hidden="true" tabindex="-1"></a>africa.mutated <span class="ot">&lt;-</span> <span class="fu">mutate</span>(africa, <span class="at">calculation =</span> gdp_pc <span class="sc">*</span> infl)</span>
+<span id="cb141-7"><a href="#cb141-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(africa.mutated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  year      country gdp_pc  infl trade    civlib population calculation
 1 1972 Burkina Faso    377 -2.92 29.69 0.5000000    5848380    -1100.84
@@ -1669,11 +1404,11 @@ position_stack </code></pre>
 <li>Below is an example with the iris dataset, which is part of base R.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
-<span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Selecting 2 variables from the iris dataset: Sepal.Length and</span></span>
-<span id="cb178-3"><a href="#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Petal.Length</span></span>
-<span id="cb178-4"><a href="#cb178-4" aria-hidden="true" tabindex="-1"></a>selected_data <span class="ot">&lt;-</span> <span class="fu">select</span>(iris, Sepal.Length, Petal.Length)</span>
-<span id="cb178-5"><a href="#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(selected_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"iris"</span>)</span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Selecting 2 variables from the iris dataset: Sepal.Length and</span></span>
+<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Petal.Length</span></span>
+<span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a>selected_data <span class="ot">&lt;-</span> <span class="fu">select</span>(iris, Sepal.Length, Petal.Length)</span>
+<span id="cb143-5"><a href="#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(selected_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Petal.Length
 1          5.1          1.4
@@ -1683,9 +1418,9 @@ position_stack </code></pre>
 5          5.0          1.4
 6          5.4          1.7</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter rows based on a condition: Species = setosa</span></span>
-<span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
-<span id="cb180-3"><a href="#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(filtered_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter rows based on a condition: Species = setosa</span></span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(iris, Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span>
+<span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(filtered_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
@@ -1695,11 +1430,11 @@ position_stack </code></pre>
 5          5.0         3.6          1.4         0.2  setosa
 6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange rows by the Sepal.Length column</span></span>
-<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>arranged_data <span class="ot">&lt;-</span> <span class="fu">arrange</span>(iris, Sepal.Length)</span>
-<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column by mutating the data by transforming</span></span>
-<span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Petal.Width to the log form.</span></span>
-<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a>mutated_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(iris, <span class="at">Petal.Width_Log =</span> <span class="fu">log</span>(Petal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange rows by the Sepal.Length column</span></span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>arranged_data <span class="ot">&lt;-</span> <span class="fu">arrange</span>(iris, Sepal.Length)</span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column by mutating the data by transforming</span></span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Petal.Width to the log form.</span></span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a>mutated_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(iris, <span class="at">Petal.Width_Log =</span> <span class="fu">log</span>(Petal.Width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1712,24 +1447,24 @@ position_stack </code></pre>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Before we remove any missing data, we need it to be the correct data type. In this case, grass should be a factor.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We coerced this variable earlier, but the object was called</span></span>
-<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gss.2016.  Since we reread in the data set, this needs to be done</span></span>
-<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="co"># again.</span></span>
-<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We coerced this variable earlier, but the object was called</span></span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gss.2016.  Since we reread in the data set, this needs to be done</span></span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co"># again.</span></span>
+<span id="cb149-4"><a href="#cb149-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>The statement below is an equivalent to the function above, but written with the piping operator. It is overwriting gss.2016 after conducting the coercion to factor.</li>
 <li>We added the mutate function because we are going to add other data cleaning tasks to this statement.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
-<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="piping-to-more-functions-missing-data" class="level4">
 <h4 class="anchored" data-anchor-id="piping-to-more-functions-missing-data">Piping to More Functions: Missing Data</h4>
@@ -1738,15 +1473,15 @@ position_stack </code></pre>
 <li>In the code below, we created a new object gss.2016.cleaned to help store the cleaned version of the dataset. This helps maintain data integrity because your original dataset is still intact and each time, you rerun the entire chunk, which includes all the changes at one time.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
-<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Moved coercion statement into a mutate function to keep code</span></span>
-<span id="cb186-3"><a href="#cb186-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tidy</span></span>
-<span id="cb186-4"><a href="#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb186-5"><a href="#cb186-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Moving DK value to NA for not applicable</span></span>
-<span id="cb186-6"><a href="#cb186-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>))</span>
-<span id="cb186-7"><a href="#cb186-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb186-8"><a href="#cb186-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the summary, there should be 110 + 3 = 113 in the NA category</span></span>
-<span id="cb186-9"><a href="#cb186-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Moved coercion statement into a mutate function to keep code</span></span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tidy</span></span>
+<span id="cb151-4"><a href="#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb151-5"><a href="#cb151-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Moving DK value to NA for not applicable</span></span>
+<span id="cb151-6"><a href="#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>))</span>
+<span id="cb151-7"><a href="#cb151-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-8"><a href="#cb151-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the summary, there should be 110 + 3 = 113 in the NA category</span></span>
+<span id="cb151-9"><a href="#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       grass          age           
  DK       :   0   Length:2867       
@@ -1766,16 +1501,16 @@ position_stack </code></pre>
 <li>Note the Piping operator added to the end of the DK line so you can keep going with new commands editing gss.2016.cleaned.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
-<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb188-3"><a href="#cb188-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
-<span id="cb188-4"><a href="#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb188-5"><a href="#cb188-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn to na if value of grass = IAP</span></span>
-<span id="cb188-6"><a href="#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb188-7"><a href="#cb188-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop levels in grass that have no values</span></span>
-<span id="cb188-8"><a href="#cb188-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(<span class="at">x =</span> grass))</span>
-<span id="cb188-9"><a href="#cb188-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
-<span id="cb188-10"><a href="#cb188-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
+<span id="cb153-4"><a href="#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb153-5"><a href="#cb153-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn to na if value of grass = IAP</span></span>
+<span id="cb153-6"><a href="#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb153-7"><a href="#cb153-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop levels in grass that have no values</span></span>
+<span id="cb153-8"><a href="#cb153-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(<span class="at">x =</span> grass))</span>
+<span id="cb153-9"><a href="#cb153-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
+<span id="cb153-10"><a href="#cb153-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       grass          age           
  LEGAL    :1126   Length:2867       
@@ -1792,19 +1527,19 @@ position_stack </code></pre>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
-<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
-<span id="cb190-6"><a href="#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(<span class="at">x =</span> grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb190-7"><a href="#cb190-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ensure variable can be coded as numeric and fix if necessary.</span></span>
-<span id="cb190-8"><a href="#cb190-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">recode</span>(age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb190-9"><a href="#cb190-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Coerce into numeric</span></span>
-<span id="cb190-10"><a href="#cb190-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(<span class="at">x =</span> age))</span>
-<span id="cb190-11"><a href="#cb190-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb190-12"><a href="#cb190-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
-<span id="cb190-13"><a href="#cb190-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
+<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(<span class="at">x =</span> grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ensure variable can be coded as numeric and fix if necessary.</span></span>
+<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">recode</span>(age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Coerce into numeric</span></span>
+<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(<span class="at">x =</span> age))</span>
+<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-12"><a href="#cb155-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
+<span id="cb155-13"><a href="#cb155-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       grass           age       
  LEGAL    :1126   Min.   :18.00  
@@ -1825,20 +1560,20 @@ position_stack </code></pre>
 <li>Here, we are using it to cut age into a categorical variable.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
-<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-3"><a href="#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-4"><a href="#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-5"><a href="#cb192-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(grass)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-6"><a href="#cb192-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">recode</span>(age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-7"><a href="#cb192-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
-<span id="cb192-8"><a href="#cb192-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)) <span class="sc">%&gt;%</span></span>
-<span id="cb192-9"><a href="#cb192-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cut numeric variable into groupings</span></span>
-<span id="cb192-10"><a href="#cb192-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age.cat =</span> <span class="fu">cut</span>(age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">29</span>, <span class="dv">59</span>, <span class="dv">74</span>, <span class="cn">Inf</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt; 30"</span>,</span>
-<span id="cb192-11"><a href="#cb192-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"30 - 59"</span>, <span class="st">"60 - 74"</span>, <span class="st">"75+"</span>)))</span>
-<span id="cb192-12"><a href="#cb192-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb192-13"><a href="#cb192-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
-<span id="cb192-14"><a href="#cb192-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>gss.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> gss<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">as.factor</span>(grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"DK"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">na_if</span>(<span class="at">x =</span> grass, <span class="at">y =</span> <span class="st">"IAP"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-5"><a href="#cb157-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">grass =</span> <span class="fu">droplevels</span>(grass)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-6"><a href="#cb157-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">recode</span>(age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-7"><a href="#cb157-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Added piping operator</span></span>
+<span id="cb157-8"><a href="#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)) <span class="sc">%&gt;%</span></span>
+<span id="cb157-9"><a href="#cb157-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cut numeric variable into groupings</span></span>
+<span id="cb157-10"><a href="#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">age.cat =</span> <span class="fu">cut</span>(age, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">29</span>, <span class="dv">59</span>, <span class="dv">74</span>, <span class="cn">Inf</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"&lt; 30"</span>,</span>
+<span id="cb157-11"><a href="#cb157-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"30 - 59"</span>, <span class="st">"60 - 74"</span>, <span class="st">"75+"</span>)))</span>
+<span id="cb157-12"><a href="#cb157-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-13"><a href="#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what you just did</span></span>
+<span id="cb157-14"><a href="#cb157-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss.<span class="fl">2016.</span>cleaned)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       grass           age           age.cat    
  LEGAL    :1126   Min.   :18.00   &lt; 30   : 481  
@@ -1865,8 +1600,8 @@ position_stack </code></pre>
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a>brfss <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/brfss.csv"</span>)</span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>brfss <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/brfss.csv"</span>)</span>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    TRNSGNDR        X_AGEG5YR          X_RACE         X_INCOMG    
  Min.   :1.00     Min.   : 1.000   Min.   :1.000   Min.   :1.000  
@@ -1900,16 +1635,16 @@ position_stack </code></pre>
 <li>To look at an example, the one below seeks to understand the healthcare issue in reporting gender based on different definitions. The dataset is part of the Behavioral Risk Factor Surveillance System (brfss) dataset (2014), which includes lots of other variables besides reported gender.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
-<span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a>brfss <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/brfss.csv"</span>)</span>
-<span id="cb196-3"><a href="#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the TRNSGNDR variable</span></span>
-<span id="cb196-4"><a href="#cb196-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>brfss <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/brfss.csv"</span>)</span>
+<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the TRNSGNDR variable</span></span>
+<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
    1.00    4.00    4.00    4.06    4.00    9.00  310602 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find frequencies</span></span>
-<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find frequencies</span></span>
+<span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      1      2      3      4      7      9 
@@ -1921,7 +1656,7 @@ position_stack </code></pre>
 <li>Check the class of the variable to see the issue with analyzing it as a categorical variable.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
@@ -1930,10 +1665,10 @@ position_stack </code></pre>
 <li>First, we need to change the TRNSGNDR variable to a factor using as.factor().</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change variable from numeric to factor</span></span>
-<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a>brfss<span class="sc">$</span>TRNSGNDR <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(brfss<span class="sc">$</span>TRNSGNDR)</span>
-<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data type again to ensure factor</span></span>
-<span id="cb202-4"><a href="#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change variable from numeric to factor</span></span>
+<span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a>brfss<span class="sc">$</span>TRNSGNDR <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(brfss<span class="sc">$</span>TRNSGNDR)</span>
+<span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data type again to ensure factor</span></span>
+<span id="cb167-4"><a href="#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(brfss<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
@@ -1942,20 +1677,20 @@ position_stack </code></pre>
 <li>Then, we need to do some data cleaning on the TRNSGNDR Variable.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="ot">&lt;-</span> brfss <span class="sc">%&gt;%</span> </span>
-<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRNSGNDR =</span> <span class="fu">recode_factor</span>(TRNSGNDR,</span>
-<span id="cb204-3"><a href="#cb204-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">'1'</span> <span class="ot">=</span> <span class="st">'Male to female'</span>,</span>
-<span id="cb204-4"><a href="#cb204-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">'2'</span> <span class="ot">=</span> <span class="st">'Female to male'</span>,</span>
-<span id="cb204-5"><a href="#cb204-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">'3'</span> <span class="ot">=</span> <span class="st">'Gender non-conforming'</span>,</span>
-<span id="cb204-6"><a href="#cb204-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">'4'</span> <span class="ot">=</span> <span class="st">'Not transgender'</span>,</span>
-<span id="cb204-7"><a href="#cb204-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">'7'</span> <span class="ot">=</span> <span class="st">'Not sure'</span>,</span>
-<span id="cb204-8"><a href="#cb204-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">'9'</span> <span class="ot">=</span> <span class="st">'Refused'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="ot">&lt;-</span> brfss <span class="sc">%&gt;%</span> </span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRNSGNDR =</span> <span class="fu">recode_factor</span>(TRNSGNDR,</span>
+<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">'1'</span> <span class="ot">=</span> <span class="st">'Male to female'</span>,</span>
+<span id="cb169-4"><a href="#cb169-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">'2'</span> <span class="ot">=</span> <span class="st">'Female to male'</span>,</span>
+<span id="cb169-5"><a href="#cb169-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">'3'</span> <span class="ot">=</span> <span class="st">'Gender non-conforming'</span>,</span>
+<span id="cb169-6"><a href="#cb169-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">'4'</span> <span class="ot">=</span> <span class="st">'Not transgender'</span>,</span>
+<span id="cb169-7"><a href="#cb169-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">'7'</span> <span class="ot">=</span> <span class="st">'Not sure'</span>,</span>
+<span id="cb169-8"><a href="#cb169-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">'9'</span> <span class="ot">=</span> <span class="st">'Refused'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>We can use the levels() command to show the factor levels made with the mutate() command above.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(brfss.cleaned<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(brfss.cleaned<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Male to female"        "Female to male"        "Gender non-conforming"
 [4] "Not transgender"       "Not sure"              "Refused"              </code></pre>
@@ -1965,7 +1700,7 @@ position_stack </code></pre>
 <li>Check the summary.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss.cleaned<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss.cleaned<span class="sc">$</span>TRNSGNDR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Male to female        Female to male Gender non-conforming 
                   363                   212                   116 
@@ -1989,31 +1724,31 @@ position_stack </code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="ot">&lt;-</span> brfss <span class="sc">%&gt;%</span></span>
-<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">TRNSGNDR =</span> <span class="fu">recode_factor</span>(TRNSGNDR, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Male to female"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Female to male"</span>,</span>
-<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Gender non-conforming"</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Not transgender"</span>, <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Not sure"</span>,</span>
-<span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Refused"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn the 77 values to NA's.</span></span>
-<span id="cb209-6"><a href="#cb209-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">na_if</span>(PHYSHLTH, <span class="at">y =</span> <span class="dv">77</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb209-7"><a href="#cb209-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn the 99 values to NA's.</span></span>
-<span id="cb209-8"><a href="#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">na_if</span>(PHYSHLTH, <span class="at">y =</span> <span class="dv">99</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb209-9"><a href="#cb209-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode the 88 values to be numeric value of 0.</span></span>
-<span id="cb209-10"><a href="#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">recode</span>(PHYSHLTH, <span class="st">`</span><span class="at">88</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="ot">&lt;-</span> brfss <span class="sc">%&gt;%</span></span>
+<span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">TRNSGNDR =</span> <span class="fu">recode_factor</span>(TRNSGNDR, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Male to female"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Female to male"</span>,</span>
+<span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Gender non-conforming"</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Not transgender"</span>, <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Not sure"</span>,</span>
+<span id="cb174-4"><a href="#cb174-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Refused"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb174-5"><a href="#cb174-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn the 77 values to NA's.</span></span>
+<span id="cb174-6"><a href="#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">na_if</span>(PHYSHLTH, <span class="at">y =</span> <span class="dv">77</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb174-7"><a href="#cb174-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn the 99 values to NA's.</span></span>
+<span id="cb174-8"><a href="#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">na_if</span>(PHYSHLTH, <span class="at">y =</span> <span class="dv">99</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb174-9"><a href="#cb174-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode the 88 values to be numeric value of 0.</span></span>
+<span id="cb174-10"><a href="#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">PHYSHLTH =</span> <span class="fu">recode</span>(PHYSHLTH, <span class="st">`</span><span class="at">88</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">0</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>The histogram showed most people have between 0 and 10 unhealthy days per 30 days.</p></li>
 <li><p>Next, evaluate mean, median, and mode for the PHYSHLTH variable after ignoring the blanks.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.224106</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="at">x =</span> <span class="fu">sort</span>(<span class="at">x =</span> <span class="fu">table</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="at">x =</span> <span class="fu">sort</span>(<span class="at">x =</span> <span class="fu">table</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "0"</code></pre>
 </div>
@@ -2022,54 +1757,54 @@ position_stack </code></pre>
 <li>While the mean is higher at 4.22, the median and most common number is 0.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Spread to Report with the Mean</span></span>
-<span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Spread to Report with the Mean</span></span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 77.00419</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.775203</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Spread to Report with Median</span></span>
-<span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Spread to Report with Median</span></span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   0.000   0.000   0.000   4.224   3.000  30.000   10303 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  0 30</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH,</span>
-<span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH,</span>
+<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 30</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
-<span id="cb228-2"><a href="#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb228-3"><a href="#cb228-3" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="sc">%&gt;%</span></span>
-<span id="cb228-4"><a href="#cb228-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(PHYSHLTH)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
+<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a>brfss.cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb193-4"><a href="#cb193-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(PHYSHLTH)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="module2_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="module2_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Skewness and Kurtosis</span></span>
-<span id="cb229-2"><a href="#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Skewness and Kurtosis</span></span>
+<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   skew (g1)           se            z            p 
 2.209078e+00 3.633918e-03 6.079054e+02 0.000000e+00 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(brfss.cleaned<span class="sc">$</span>PHYSHLTH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Excess Kur (g2)              se               z               p 
    3.474487e+00    7.267836e-03    4.780634e+02    0.000000e+00 </code></pre>
@@ -2096,30 +1831,30 @@ position_stack </code></pre>
 <li>Notice the backslash before the apostrophe in Don’t in the X_INCOMG recode. This is to prevent the .R file from ending the quotations. You could use double quotes around the statement to bypass this, or add the backslash like I did here.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a>brfss_small <span class="ot">&lt;-</span> brfss.cleaned <span class="sc">%&gt;%</span></span>
-<span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(TRNSGNDR <span class="sc">==</span> <span class="st">"Male to female"</span> <span class="sc">|</span> TRNSGNDR <span class="sc">==</span> <span class="st">"Female to male"</span> <span class="sc">|</span></span>
-<span id="cb233-3"><a href="#cb233-3" aria-hidden="true" tabindex="-1"></a>        TRNSGNDR <span class="sc">==</span> <span class="st">"Gender non-conforming"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb233-4"><a href="#cb233-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(X_AGEG5YR <span class="sc">&gt;</span> <span class="dv">4</span> <span class="sc">&amp;</span> X_AGEG5YR <span class="sc">&lt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb233-5"><a href="#cb233-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HADMAM)) <span class="sc">%&gt;%</span></span>
-<span id="cb233-6"><a href="#cb233-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(TRNSGNDR, X_AGEG5YR, X_RACE, X_INCOMG, X_EDUCAG, HLTHPLN1, HADMAM) <span class="sc">%&gt;%</span></span>
-<span id="cb233-7"><a href="#cb233-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_all</span>(as.factor) <span class="sc">%&gt;%</span></span>
-<span id="cb233-8"><a href="#cb233-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The next few mutates add labels to categorical variables based</span></span>
-<span id="cb233-9"><a href="#cb233-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># on the codebook.</span></span>
-<span id="cb233-10"><a href="#cb233-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">X_AGEG5YR =</span> <span class="fu">recode_factor</span>(X_AGEG5YR, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"40-44"</span>, <span class="st">`</span><span class="at">6</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"45-49"</span>,</span>
-<span id="cb233-11"><a href="#cb233-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"50-54"</span>, <span class="st">`</span><span class="at">8</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"55-59"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"60-64"</span>, <span class="st">`</span><span class="at">10</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"65-69"</span>, <span class="st">`</span><span class="at">11</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"70-74"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb233-12"><a href="#cb233-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_INCOMG =</span> <span class="fu">recode_factor</span>(X_INCOMG, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Less than 15,000"</span>,</span>
-<span id="cb233-13"><a href="#cb233-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"15,000 to less than 25,000"</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"25,000 to less than 35,000"</span>,</span>
-<span id="cb233-14"><a href="#cb233-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"35,000 to less than 50,000"</span>, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"50,000 or more"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Don't know/not sure/missing"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb233-15"><a href="#cb233-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_EDUCAG =</span> <span class="fu">recode_factor</span>(X_EDUCAG, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Did not graduate high school"</span>,</span>
-<span id="cb233-16"><a href="#cb233-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Graduated high school"</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Attended college/technical school"</span>,</span>
-<span id="cb233-17"><a href="#cb233-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Graduated from college/technical school"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="cn">NA_character_</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb233-18"><a href="#cb233-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">HLTHPLN1 =</span> <span class="fu">recode_factor</span>(HLTHPLN1, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Yes"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"No"</span>,</span>
-<span id="cb233-19"><a href="#cb233-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Don't know/not sure/missing"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Refused"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb233-20"><a href="#cb233-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_RACE =</span> <span class="fu">recode_factor</span>(X_RACE, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"White"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Black"</span>,</span>
-<span id="cb233-21"><a href="#cb233-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Native American"</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Asian/Pacific Islander"</span>, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>,</span>
-<span id="cb233-22"><a href="#cb233-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">6</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">8</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>))</span>
-<span id="cb233-23"><a href="#cb233-23" aria-hidden="true" tabindex="-1"></a><span class="co"># print a summary</span></span>
-<span id="cb233-24"><a href="#cb233-24" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss_small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a>brfss_small <span class="ot">&lt;-</span> brfss.cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(TRNSGNDR <span class="sc">==</span> <span class="st">"Male to female"</span> <span class="sc">|</span> TRNSGNDR <span class="sc">==</span> <span class="st">"Female to male"</span> <span class="sc">|</span></span>
+<span id="cb198-3"><a href="#cb198-3" aria-hidden="true" tabindex="-1"></a>        TRNSGNDR <span class="sc">==</span> <span class="st">"Gender non-conforming"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb198-4"><a href="#cb198-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(X_AGEG5YR <span class="sc">&gt;</span> <span class="dv">4</span> <span class="sc">&amp;</span> X_AGEG5YR <span class="sc">&lt;</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb198-5"><a href="#cb198-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HADMAM)) <span class="sc">%&gt;%</span></span>
+<span id="cb198-6"><a href="#cb198-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(TRNSGNDR, X_AGEG5YR, X_RACE, X_INCOMG, X_EDUCAG, HLTHPLN1, HADMAM) <span class="sc">%&gt;%</span></span>
+<span id="cb198-7"><a href="#cb198-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_all</span>(as.factor) <span class="sc">%&gt;%</span></span>
+<span id="cb198-8"><a href="#cb198-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The next few mutates add labels to categorical variables based</span></span>
+<span id="cb198-9"><a href="#cb198-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># on the codebook.</span></span>
+<span id="cb198-10"><a href="#cb198-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">X_AGEG5YR =</span> <span class="fu">recode_factor</span>(X_AGEG5YR, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"40-44"</span>, <span class="st">`</span><span class="at">6</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"45-49"</span>,</span>
+<span id="cb198-11"><a href="#cb198-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"50-54"</span>, <span class="st">`</span><span class="at">8</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"55-59"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"60-64"</span>, <span class="st">`</span><span class="at">10</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"65-69"</span>, <span class="st">`</span><span class="at">11</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"70-74"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb198-12"><a href="#cb198-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_INCOMG =</span> <span class="fu">recode_factor</span>(X_INCOMG, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Less than 15,000"</span>,</span>
+<span id="cb198-13"><a href="#cb198-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"15,000 to less than 25,000"</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"25,000 to less than 35,000"</span>,</span>
+<span id="cb198-14"><a href="#cb198-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"35,000 to less than 50,000"</span>, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"50,000 or more"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Don't know/not sure/missing"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb198-15"><a href="#cb198-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_EDUCAG =</span> <span class="fu">recode_factor</span>(X_EDUCAG, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Did not graduate high school"</span>,</span>
+<span id="cb198-16"><a href="#cb198-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Graduated high school"</span>, <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Attended college/technical school"</span>,</span>
+<span id="cb198-17"><a href="#cb198-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Graduated from college/technical school"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="cn">NA_character_</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb198-18"><a href="#cb198-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">HLTHPLN1 =</span> <span class="fu">recode_factor</span>(HLTHPLN1, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Yes"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"No"</span>,</span>
+<span id="cb198-19"><a href="#cb198-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Don't know/not sure/missing"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Refused"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb198-20"><a href="#cb198-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">X_RACE =</span> <span class="fu">recode_factor</span>(X_RACE, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"White"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Black"</span>,</span>
+<span id="cb198-21"><a href="#cb198-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Native American"</span>, <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Asian/Pacific Islander"</span>, <span class="st">`</span><span class="at">5</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>,</span>
+<span id="cb198-22"><a href="#cb198-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">6</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">8</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>, <span class="st">`</span><span class="at">9</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Other"</span>))</span>
+<span id="cb198-23"><a href="#cb198-23" aria-hidden="true" tabindex="-1"></a><span class="co"># print a summary</span></span>
+<span id="cb198-24"><a href="#cb198-24" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brfss_small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  TRNSGNDR   X_AGEG5YR                     X_RACE   
  Male to female       : 77   40-44:27   White                 :152  
@@ -2167,7 +1902,6 @@ position_stack </code></pre>
 <li><p>How would you compare and contrast the roles of skewness and kurtosis in identifying the shape and behavior of a distribution?</p></li>
 <li><p>How can you use the filter() function to subset a dataset based on multiple conditions using &amp; and | in R?</p></li>
 <li><p>How does subsetting using square brackets [] differ from using the filter() function in R?</p></li>
-<li><p>What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?</p></li>
 <li><p>How does the mutate() function help in transforming and creating new variables, and what are some practical examples?”</p></li>
 <li><p>What is the purpose of the group_by() function, and how does it interact with summarize() to create summary statistics in R?”</p></li>
 <li><p>Explain how you can use arrange() to sort a dataset by one or more variables and demonstrate sorting both in ascending and descending order.”</p></li>
