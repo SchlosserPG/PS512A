@@ -655,7 +655,7 @@ library(car) ##need to have car package installed first.
 vif(creditlm)
 ```
 
--   While statisticians differ on what constitutes, the general consenses is that scores need to be under 5 or 10.
+-   While statisticians differ on what constitutes, the general consensus is that scores need to be under 5 or 10.
 -   Both scores are under 10, so we do have an absence of multicollinerity in our final model.
     -   VIF = 1: No correlation between the predictor and the other predictors.
     -   1 \< VIF \< 5: Moderate correlation but not severe enough to require correction.
