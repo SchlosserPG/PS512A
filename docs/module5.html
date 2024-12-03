@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="">
+<meta name="dcterms.date" content="2024-08-09">
+
+<title>Module 5: Hypothesis Testing – OMSBA 512A: Probability And Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./module6.html" rel="next">
+<link href="./module4.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-64b801fe9b6685c0a799f7172ecad621.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module5.html"><span class="chapter-title">Module 5: Hypothesis Testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">OMSBA 512A: Probability And Statistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 0: Software Know-How</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 1: Introduction to R and RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 2: Descriptive Statistics and Data Prep</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 3: Data Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 4: Calculating Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module5.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Module 5: Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 7: Correlation and Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link active" data-scroll-target="#at-a-glance">At a Glance</a></li>
+  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
+  <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-testing-covers-a-variety-of-tests" id="toc-hypothesis-testing-covers-a-variety-of-tests" class="nav-link" data-scroll-target="#hypothesis-testing-covers-a-variety-of-tests">Hypothesis Testing Covers a Variety of Tests</a></li>
+  <li><a href="#using-a-t-distribution" id="toc-using-a-t-distribution" class="nav-link" data-scroll-target="#using-a-t-distribution">Using a t-Distribution</a></li>
+  <li><a href="#approaches-to-hypothesis-testing" id="toc-approaches-to-hypothesis-testing" class="nav-link" data-scroll-target="#approaches-to-hypothesis-testing">Approaches to Hypothesis Testing</a></li>
+  <li><a href="#setting-up-hypotheses-tests" id="toc-setting-up-hypotheses-tests" class="nav-link" data-scroll-target="#setting-up-hypotheses-tests">Setting up Hypotheses Tests</a></li>
+  <li><a href="#hypothesis-testing-single-population-a-right-tailed-test" id="toc-hypothesis-testing-single-population-a-right-tailed-test" class="nav-link" data-scroll-target="#hypothesis-testing-single-population-a-right-tailed-test">Hypothesis Testing: Single Population: A Right-Tailed Test</a></li>
+  <li><a href="#hypothesis-testing-single-population-a-left-tailed-test" id="toc-hypothesis-testing-single-population-a-left-tailed-test" class="nav-link" data-scroll-target="#hypothesis-testing-single-population-a-left-tailed-test">Hypothesis Testing: Single Population: A Left-Tailed Test</a></li>
+  <li><a href="#hypothesis-testing-single-population-a-two-tailed-test" id="toc-hypothesis-testing-single-population-a-two-tailed-test" class="nav-link" data-scroll-target="#hypothesis-testing-single-population-a-two-tailed-test">Hypothesis Testing: Single Population: A Two-Tailed Test</a></li>
+  <li><a href="#forming-a-hypothesis" id="toc-forming-a-hypothesis" class="nav-link" data-scroll-target="#forming-a-hypothesis">Forming a Hypothesis</a></li>
+  </ul></li>
+  <li><a href="#t.test-command" id="toc-t.test-command" class="nav-link" data-scroll-target="#t.test-command">t.test() Command</a></li>
+  <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test">One-Sample t-Test</a>
+  <ul class="collapse">
+  <li><a href="#t.test-command-for-one-sample-t-test" id="toc-t.test-command-for-one-sample-t-test" class="nav-link" data-scroll-target="#t.test-command-for-one-sample-t-test">t.test() Command for One-Sample t-Test</a></li>
+  <li><a href="#step-1-specify-null-and-alternative-hypothesis" id="toc-step-1-specify-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-specify-null-and-alternative-hypothesis">Step 1: Specify Null and Alternative Hypothesis</a></li>
+  <li><a href="#step-2.-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2.-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2.-compute-the-test-statistic-and-calculate-the-p-value">Step 2. Compute the Test Statistic and calculate the p-value</a></li>
+  <li><a href="#step-3.-interpret-probability-and-results." id="toc-step-3.-interpret-probability-and-results." class="nav-link" data-scroll-target="#step-3.-interpret-probability-and-results.">Step 3. Interpret probability and results.</a></li>
+  <li><a href="#example-of-a-one-sample-t-test-in-r" id="toc-example-of-a-one-sample-t-test-in-r" class="nav-link" data-scroll-target="#example-of-a-one-sample-t-test-in-r">Example of a One-Sample t-Test in R</a></li>
+  <li><a href="#example-of-a-one-sample-using-a-subset" id="toc-example-of-a-one-sample-using-a-subset" class="nav-link" data-scroll-target="#example-of-a-one-sample-using-a-subset">Example of a One-Sample Using a Subset</a></li>
+  </ul></li>
+  <li><a href="#independent-samples-t-test" id="toc-independent-samples-t-test" class="nav-link" data-scroll-target="#independent-samples-t-test">Independent Samples t-Test</a>
+  <ul class="collapse">
+  <li><a href="#t.test-command-for-independent-samples-t-test" id="toc-t.test-command-for-independent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-independent-samples-t-test">t.test() Command for Independent Samples t-Test</a></li>
+  <li><a href="#step-1-specify-null-and-alternative-hypothesis-1" id="toc-step-1-specify-null-and-alternative-hypothesis-1" class="nav-link" data-scroll-target="#step-1-specify-null-and-alternative-hypothesis-1">Step 1: Specify Null and Alternative Hypothesis</a></li>
+  <li><a href="#step-2-compute-the-test-statistic-and-calcuate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calcuate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calcuate-the-p-value">Step 2: Compute the Test Statistic and Calcuate the p-value</a></li>
+  <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion" id="toc-step-3-interpret-the-probability-and-write-a-conclusion" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion">Step 3: Interpret the Probability and Write a Conclusion</a></li>
+  <li><a href="#example-of-an-independent-samples-t-test-in-r" id="toc-example-of-an-independent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-independent-samples-t-test-in-r">Example of an Independent Samples t-Test in R</a></li>
+  <li><a href="#example-independent-t-test-using-a-subset" id="toc-example-independent-t-test-using-a-subset" class="nav-link" data-scroll-target="#example-independent-t-test-using-a-subset">Example Independent t-test Using a Subset</a></li>
+  </ul></li>
+  <li><a href="#dependent-samples-t-test" id="toc-dependent-samples-t-test" class="nav-link" data-scroll-target="#dependent-samples-t-test">Dependent Samples t-Test</a>
+  <ul class="collapse">
+  <li><a href="#t.test-command-for-dependent-samples-t-test" id="toc-t.test-command-for-dependent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-dependent-samples-t-test">t.test() Command for Dependent Samples t-Test</a></li>
+  <li><a href="#step-1-write-null-and-alternative-hypothesis" id="toc-step-1-write-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-write-null-and-alternative-hypothesis">Step 1: Write Null and Alternative Hypothesis</a></li>
+  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
+  <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion-1" id="toc-step-3-interpret-the-probability-and-write-a-conclusion-1" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion-1">Step 3: Interpret the Probability and Write a Conclusion</a></li>
+  <li><a href="#example-of-an-dependent-samples-t-test-in-r" id="toc-example-of-an-dependent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-dependent-samples-t-test-in-r">Example of an Dependent Samples t-Test in R</a></li>
+  <li><a href="#reshape-function" id="toc-reshape-function" class="nav-link" data-scroll-target="#reshape-function">reshape function</a></li>
+  </ul></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Module 5: Hypothesis Testing</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 9, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li>The goal of this lesson is to teach you how to conduct statistical inference with regards to hypothesis testing. In doing so, we will learn a few key hypothesis tests given t-distributions, including the one-sample t-test, the independent samples t-test, and the dependent samples t-test. We will continue to conduct hypothesis tests in the later modules as they are the cornerstone to conducting sound statistical inference.</li>
+</ul>
+<section id="at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
+<ul>
+<li>In order to succeed in this section, you will need to understand how to set up and test a hypothesis, knowing that we can reuse our logic of hypothesis testing for other types of models later on. Pay close attention to the idea of and the reason for the t-distribution with regards to one-sample, independent samples, and dependent samples hypothesis test. Additionally, note when the test is a two-tailed, a right-tailed, or a left-tailed test, and what that means for the interpretation of the results.</li>
+</ul>
+</section>
+<section id="lesson-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
+<ul>
+<li>Compare a sample mean to a population mean with a one-sample t-test.</li>
+<li>Compare two unrelated sample means with an independent-samples t-test.</li>
+<li>Compare two related sample means with a dependent-samples t-test.</li>
+<li>Compare and contrast the the three t-tests covered in this module: one-sample, independent samples, and dependent samples.</li>
+</ul>
+</section>
+<section id="consider-while-reading" class="level3">
+<h3 class="anchored" data-anchor-id="consider-while-reading">Consider While Reading</h3>
+<ul>
+<li>In this lesson, we learn more about hypothesis testing, which will continue throughout the rest of the term! We are still conducting inference analysis. As an analyst, I like to say that this starts the fun stuff.</li>
+<li>We cover three important t-tests. There are more examples on the our course management system with regards to setting up a two-tailed, right-tailed, or left-tailed test and adjusting the <span class="math inline">\(\mu\)</span> of interest.</li>
+<li>Make sure you understand the key differences between all the three t-tests presented in this module and their role in interpreting data and making inferences. All three tests are making comparisons: comparisons to a mean value, comparison to another population, or comparison to paired data like before and after results.</li>
+</ul>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<ul>
+<li>A hypothesis test resolves conflicts between two competing opinions (hypotheses).</li>
+<li>In a hypothesis test, we define the null hypothesis as <span class="math inline">\(H_0\)</span>, which is the presumed default state of nature or status quo. We define the alternative hypothesis as <span class="math inline">\(H_A\)</span>, <em>a contradiction of the</em> default state of nature or status quo.</li>
+<li>In statistics we use sample information to make inferences regarding the unknown population parameters of interest. We conduct hypothesis tests to determine if sample evidence contradicts <span class="math inline">\(H_0\)</span>.
+<ul>
+<li>On the basis of sample information, we either “Reject the null hypothesis” in which sample evidence is inconsistent with <span class="math inline">\(H_0\)</span>. This means that we show support for our alternative hypothesis, <span class="math inline">\(H_A\)</span>.</li>
+<li>Or we “Do not reject the null hypothesis.” in which the sample evidence is not inconsistent with <span class="math inline">\(H_0\)</span>; or we do not have enough evidence to “accept” <span class="math inline">\(H_0\)</span>. This means that there is no support for our alternative hypothesis, <span class="math inline">\(H_A\)</span>.</li>
+</ul></li>
+<li>General guidelines:
+<ul>
+<li>Null hypothesis, <span class="math inline">\(H_0\)</span>, states the status quo.</li>
+<li>Alternative hypothesis, <span class="math inline">\(H_A\)</span>, states whatever we wish to establish (i.e., contests the status quo).</li>
+</ul></li>
+<li>Use the following signs in hypothesis tests:
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(=\)</span> or <span class="math inline">\(&gt;=\)</span> or <span class="math inline">\(&lt;=\)</span> to specify status quo.</li>
+<li><span class="math inline">\(H_A\)</span>: <span class="math inline">\(\neq\)</span> or <span class="math inline">\(&lt;\)</span> or <span class="math inline">\(&gt;\)</span> to contradict <span class="math inline">\(H_0\)</span>.</li>
+</ul></li>
+<li>Where <span class="math inline">\(H_0\)</span> always contains the equality sign.</li>
+</ul>
+<section id="hypothesis-testing-covers-a-variety-of-tests" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-covers-a-variety-of-tests">Hypothesis Testing Covers a Variety of Tests</h3>
+<ul>
+<li>We will cover the following:</li>
+</ul>
+<ol type="1">
+<li>One-Sample t-test;</li>
+<li>Independent samples t-test;</li>
+<li>Dependent (or Paired) samples t-test.</li>
+</ol>
+</section>
+<section id="using-a-t-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="using-a-t-distribution">Using a t-Distribution</h3>
+<ul>
+<li>All of these hypothesis tests listed above use a t-distribution, which is like a z-distribution (i.e., z-score), but specifically accounts for some specific population information being unknown.
+<ul>
+<li>The z-distribution shows how many sample standard deviations (SD) some value is away from the mean.</li>
+<li>The t-distribution shows how many standard errors (SE) some value is away from the mean.</li>
+</ul></li>
+<li>All of these hypothesis tests in the assigned readings use the t.test() command to execute in R with different parameters set.</li>
+</ul>
+</section>
+<section id="approaches-to-hypothesis-testing" class="level3">
+<h3 class="anchored" data-anchor-id="approaches-to-hypothesis-testing">Approaches to Hypothesis Testing</h3>
+<ul>
+<li><p>All approaches to scientific hypothesis testing enable us to determine whether the sample evidence is inconsistent with what is hypothesized under the null hypothesis, <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>Basic principle: First assume that <span class="math inline">\(H_0\)</span> is true and then determine if sample evidence contradicts this assumption.</p></li>
+<li><p>This means that we can never assume our claim (against status quo) is supported without rejecting the null statistically through the scientific process.</p></li>
+<li><p>There are two general approaches to hypothesis testing:</p>
+<ul>
+<li>The Critical Value Approach</li>
+<li>The p-value Approach</li>
+</ul></li>
+</ul>
+<section id="the-critical-value-approach-not-used-here." class="level4">
+<h4 class="anchored" data-anchor-id="the-critical-value-approach-not-used-here.">The Critical Value Approach: Not used here.</h4>
+<ul>
+<li>In this approach, we calculate the test statistic, which is also based on the type of test conducted. We then see whether the test statistic is past the critical value either looked up in a table or computed directly from a function in R.</li>
+</ul>
+</section>
+<section id="the-p-value-approach-what-we-are-using-here." class="level4">
+<h4 class="anchored" data-anchor-id="the-p-value-approach-what-we-are-using-here.">The p-Value Approach: What we are using here.</h4>
+<ul>
+<li>In this approach, we still calculate the test statistic, which is still based on the type of test conducted. However, in the p-value approach, this test statistic corresponds directly to a p-value, or probability value, that we use to make a decision on whether the hypothesis is supported or not.
+<ul>
+<li>The <em>p-value</em> is the likelihood, or probability, of observing a sample mean that is at least as extreme as the one derived from the given sample, under the assumption that the null hypothesis is true.</li>
+<li>The calculation of the p-value depends on the specification of the alternative hypothesis.</li>
+<li>We set a decision rule to reject <span class="math inline">\(H_0\)</span> if p-value <span class="math inline">\(&lt; \alpha\)</span>, which is set apriori. Specifically, the p-value approach sets an <span class="math inline">\(\alpha\)</span> value (e.g., .05, .01, .001) and then determines if the p-value calculated is less than the set alpha value. The smaller the <span class="math inline">\(\alpha\)</span>, the more difficult it is to find significance in your alternative hypothesis, where you reject <span class="math inline">\(H_0\)</span>.
+<ul>
+<li>We typically set a <span class="math inline">\(\alpha &lt; .05\)</span> for a variety of tests.</li>
+<li>We can go lower (e.g.&nbsp;.01, .001), but we typically do not go higher than .05.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="why-use-the-p-value-approach" class="level4">
+<h4 class="anchored" data-anchor-id="why-use-the-p-value-approach">Why Use The p-Value Approach</h4>
+<ul>
+<li>The critical value approach has variance in the formulas and numbers looked up (based on distribution and sometimes degrees of freedom), while the p-value is used consistently, we reject the null if our p-value is less than an <span class="math inline">\(\alpha\)</span> set apriori.</li>
+</ul>
+</section>
+<section id="three-step-procedure-using-the-p-value-approach" class="level4">
+<h4 class="anchored" data-anchor-id="three-step-procedure-using-the-p-value-approach">Three Step Procedure Using The p-value Approach</h4>
+<ol type="1">
+<li>Specify null and alternative hypothesis.</li>
+<li>Compute the test statistic and calculate the p-value.<br>
+</li>
+<li>Interpret the probability and state the conclusion.</li>
+</ol>
+</section>
+</section>
+<section id="setting-up-hypotheses-tests" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-hypotheses-tests">Setting up Hypotheses Tests</h3>
+<ul>
+<li>There are three types of hypotheses tests that you can analyze:</li>
+</ul>
+<ol type="1">
+<li>Two-tailed test: <span class="math inline">\(H_0 =\)</span> vs <span class="math inline">\(H_A \neq\)</span></li>
+<li>Right-tailed test: <span class="math inline">\(H_0 &lt;=\)</span> vs <span class="math inline">\(H_A &gt;\)</span></li>
+<li>Left-tailed test: <span class="math inline">\(H_0 &gt;=\)</span> vs <span class="math inline">\(H_A &lt;\)</span></li>
+</ol>
+<ul>
+<li><p>In a two-tailed test, the null is set to the equality (<span class="math inline">\(H_0 =\)</span>) vs an alternate set to the inequality (<span class="math inline">\(H_A \neq\)</span>). In a right-tailed test, the null is set to less than or equal to (<span class="math inline">\(H_0 &lt;=\)</span>), while the alternative is set to greater than (<span class="math inline">\(H_A &gt;\)</span>). Finally, in a left-tailed test, the null is set to greater than or equal to (<span class="math inline">\(H_0 &gt;=\)</span>), while the alternative is set to less than (<span class="math inline">\(H_A &lt;\)</span>).</p></li>
+<li><p>In the figure below, the green area is the <em>Rejection region</em> where we reject <span class="math inline">\(H_0\)</span> and show support for our alternative hypothesis <span class="math inline">\(H_A\)</span>.</p>
+<ul>
+<li>The rest of the area under the curve is the <em>Failure to Reject</em> <span class="math inline">\(H_0\)</span> region in which we cannot show support for our alternative hypothesis <span class="math inline">\(H_A\)</span>.</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/HypTest.png" title="Hypothesis Test" class="img-fluid figure-img"></p>
+<figcaption>Hypothesis Test</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>In a hypothesis test, you have to decide if a claim is true or not. Before you can figure out if you have a left-tailed test or right-tailed test, you have to make sure you have a single tail to begin with. A tail in hypothesis testing refers to the tail at either end of a distribution curve.</p>
+<ul>
+<li>Step 1: Write your null hypothesis statement and your alternate hypothesis statement.</li>
+<li>Step 2: Draw a normal distribution curve.</li>
+<li>Step 3: Shade in the related area under the normal distribution curve. The area under a curve represents 100%, so shade the area accordingly. The number line goes from left to right, so the first 25% is on the left and the 75% mark would be at the right tail. <img src="Pictures/Ch6/Distribution.png" title="Setting Up Hypothesis Test" class="img-fluid" alt="Setting Up Hypothesis Test"></li>
+</ul></li>
+</ul>
+</section>
+<section id="hypothesis-testing-single-population-a-right-tailed-test" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-single-population-a-right-tailed-test">Hypothesis Testing: Single Population: A Right-Tailed Test</h3>
+<ul>
+<li>A right-tailed test is where your hypothesis statement contains a greater than (&gt;) symbol. In other words, the inequality points to the right.
+<ul>
+<li>For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is greater than the original 90 hours, your hypothesis statements might be:</li>
+<li>Null hypothesis: No change or less than (<span class="math inline">\(H_0\)</span> ≤ 90)</li>
+<li>Alternate hypothesis: Increased change (<span class="math inline">\(H_A\)</span> &gt; 90) <img src="Pictures/Ch6/RightTailedHTest.png" title="Right-Tailed Hypothesis Test" class="img-fluid" alt="Right-Tailed Hypothesis Test"></li>
+</ul></li>
+</ul>
+</section>
+<section id="hypothesis-testing-single-population-a-left-tailed-test" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-single-population-a-left-tailed-test">Hypothesis Testing: Single Population: A Left-Tailed Test</h3>
+<ul>
+<li>A left-tailed test is where your hypothesis statement contains a less than (&lt;) symbol. In other words, the inequality points to the left.
+<ul>
+<li>For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is less than 70 hours, your hypothesis statements might be:</li>
+<li>Null hypothesis: No change or greater than (<span class="math inline">\(H_0\)</span> ≥ 70)</li>
+<li>Alternate hypothesis: Decreased change (<span class="math inline">\(H_A\)</span> &lt; 70)</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/LeftTailedHTest.png" title="Left-Tailed Hypothesis Test" class="img-fluid figure-img"></p>
+<figcaption>Left-Tailed Hypothesis Test</figcaption>
+</figure>
+</div>
+</section>
+<section id="hypothesis-testing-single-population-a-two-tailed-test" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-single-population-a-two-tailed-test">Hypothesis Testing: Single Population: A Two-Tailed Test</h3>
+<ul>
+<li>The two-tailed test is called a two-tailed test because the rejection region can be in either tail.
+<ul>
+<li>For example, consider comparing the life of batteries before and after a manufacturing change. If you want to know whether the battery life is different from the mean value, your hypothesis statements might be:</li>
+<li>Null hypothesis: Equals mean (<span class="math inline">\(H_0 = \mu\)</span>).</li>
+<li>Alternate hypothesis: Not equal to mean (<span class="math inline">\(H_A \neq \mu\)</span>).</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/TwoTailedHTest.png" title="Two-Tailed Hypothesis Test" class="img-fluid figure-img"></p>
+<figcaption>Two-Tailed Hypothesis Test</figcaption>
+</figure>
+</div>
+</section>
+<section id="forming-a-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="forming-a-hypothesis">Forming a Hypothesis</h3>
+<ul>
+<li>When forming a hypothesis, we need to do the following first.
+<ol type="1">
+<li>Identify the relevant population parameter of interest (e.g., <span class="math inline">\(\mu\)</span>).</li>
+<li>Determine whether it is a one- or a two-tailed test.</li>
+<li>Include some form of the equality sign in <span class="math inline">\(H_0\)</span> and use <span class="math inline">\(H_A\)</span> to establish a claim.</li>
+</ol></li>
+<li>For an example in how to set up a hypothesis, we can look at a trade group that predicts that back-to-school spending will average $606.40 per family this year. The group uses this information to set an economic model in making predictions. A different economic model will be needed if the prediction is wrong.
+<ol type="1">
+<li>Parameter of interest is <span class="math inline">\(\mu\)</span> since we are interested in the average back-to-school spending.</li>
+<li>Since we want to determine if the population mean differs from 606.4 (i.e, <span class="math inline">\(\neq\)</span>), it is a two-tail test.</li>
+<li>The hypothesis test is as follows: <span class="math inline">\(H_0: \mu = 606.4\)</span> versus <span class="math inline">\(H_A: \mu \neq 606.4\)</span></li>
+</ol></li>
+</ul>
+</section>
+</section>
+<section id="t.test-command" class="level2">
+<h2 class="anchored" data-anchor-id="t.test-command">t.test() Command</h2>
+<ul>
+<li>The t.test() command can be used in a variety of ways to test many different kinds of hypotheses. It is important to look up that command in your help and see all the different arguments you can change. The following screenshot shows a snippet of this.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/tTest.png" title="t.test command" class="img-fluid figure-img"></p>
+<figcaption>t.test Command</figcaption>
+</figure>
+</div>
+<ul>
+<li>We use the default S3 method in conducting the t.test:
+<ul>
+<li>Default S3 method: t.test(x, y = NULL,alternative = c(“two.sided”, “less”, “greater”), mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95, …).</li>
+</ul></li>
+<li>We change arguments as needed to satisfy the type of test that we are conducting.</li>
+</ul>
+</section>
+<section id="one-sample-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="one-sample-t-test">One-Sample t-Test</h2>
+<ul>
+<li>A one-sample t-test compares a mean to a population or hypothesized value.</li>
+<li>A one-sample t-test requires a normal distribution; however, if underlying distribution is not normal, then by the rules outlined in central limit theorem (CLT), the sampling distribution is the approximately normal only if <span class="math inline">\(n &gt;= 30\)</span>.</li>
+</ul>
+<section id="t.test-command-for-one-sample-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="t.test-command-for-one-sample-t-test">t.test() Command for One-Sample t-Test</h3>
+<ul>
+<li>In base R, the t.test() command discussed above is useful for getting the t for a one-sample t-test. The command arguments include the name of the variable and the hypothesized or population value (<span class="math inline">\(\mu\)</span>) to compare it to. We can also include the alternative statement to signify a right-tailed, left-tailed, or two-tailed test.</li>
+</ul>
+</section>
+<section id="step-1-specify-null-and-alternative-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-specify-null-and-alternative-hypothesis">Step 1: Specify Null and Alternative Hypothesis</h3>
+<ul>
+<li>In order to set up the appropriate null and alternative hypothesis, we need to determine the type of test: two-tailed, right-tailed, or left-tailed.</li>
+</ul>
+<section id="two-tailed-test" class="level4">
+<h4 class="anchored" data-anchor-id="two-tailed-test">Two-Tailed Test</h4>
+<ul>
+<li><p>Reject <span class="math inline">\(H_0\)</span> on either side of the hypothesized value of the population parameter.</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu =\mu_0\)</span> versus <span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu \neq \mu_0\)</span>.</li>
+</ul></li>
+<li><p>The <span class="math inline">\(\neq\)</span> symbol in <span class="math inline">\(H_A\)</span> indicates that both tail areas in the distribution will be used to make the decision regarding the rejection of <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>A not equal to sign in the alternative signifies a two-tailed test.</p>
+<ul>
+<li>An example of a <em>two-tailed</em> problem: A Dean is interested if the hours of study time per week is different than 12 hours.</li>
+<li><span class="math inline">\(H_0\)</span>: Study hours is not different than 12 hours (<span class="math inline">\(=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: Study hours is different than 12 hours. (<span class="math inline">\(\neq\)</span>).</li>
+</ul></li>
+<li><p>Example of command in R:</p>
+<ul>
+<li><em>two.sided</em> for two-tailed. However, this is the default value so it could be left out of the statement for the same results.</li>
+<li><span class="math inline">\(\mu\)</span> of interest is 12.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>StudyHours <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/StudyHours.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(StudyHours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Hours      
+ Min.   : 4.00  
+ 1st Qu.:11.00  
+ Median :16.00  
+ Mean   :16.37  
+ 3rd Qu.:20.50  
+ Max.   :35.00  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OneSample <span class="ot">&lt;-</span> <span class="fu">t.test</span>(StudyHours<span class="sc">$</span>Hours, <span class="at">alterantive =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">12</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>OneSample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  StudyHours$Hours
+t = 3.5842, df = 34, p-value = 0.001047
+alternative hypothesis: true mean is not equal to 12
+95 percent confidence interval:
+ 13.89281 18.85005
+sample estimates:
+mean of x 
+ 16.37143 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is significant at the .01 level as indicated by the</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value of .001047.  We are 95% confident that our true mean lies</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># between 13.89281 and 18.85005</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul>
+</section>
+<section id="one-tailed-test" class="level4">
+<h4 class="anchored" data-anchor-id="one-tailed-test">One-Tailed Test</h4>
+<ul>
+<li><p>Reject <span class="math inline">\(H_0\)</span> only on one side of the hypothesized value of the population parameter.</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu &lt;=\mu_0\)</span> versus <span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu &gt; \mu_0\)</span> (right-tailed test).</li>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu &gt;=\mu_0\)</span> versus <span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu &lt; \mu_0\)</span> (left-tailed test).</li>
+</ul></li>
+<li><p>Note that the inequality in the alternative <span class="math inline">\(H_A\)</span> determines which tail area will be used to make the decision regarding the rejection of <span class="math inline">\(H_0\)</span>, right (&gt;) or left (&lt;).</p></li>
+<li><p>A greater than sign in the alternative signifies a right-tailed test.</p>
+<ul>
+<li><p>An example of a <em>right-tailed</em> problem: A Dean is interested if the hours of study time per week is greater than 10 hours.</p></li>
+<li><p><span class="math inline">\(H_0\)</span>: Study hours are less than or equal to than 10 hours a week. (<span class="math inline">\(&lt;=\)</span>) <span class="math inline">\(H_A\)</span>: Study hours are greater than 10 hours a week. (<span class="math inline">\(&gt;\)</span>)</p></li>
+<li><p>Example of right-tailed command in R:</p>
+<ul>
+<li><em>greater</em> for right-tailed.</li>
+<li><span class="math inline">\(\mu\)</span> of interest is 10 for 10 hours a week.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>OneSampleRight <span class="ot">&lt;-</span> <span class="fu">t.test</span>(StudyHours<span class="sc">$</span>Hours, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">mu =</span> <span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>OneSampleRight</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  StudyHours$Hours
+t = 5.224, df = 34, p-value = 4.398e-06
+alternative hypothesis: true mean is greater than 10
+95 percent confidence interval:
+ 14.3091     Inf
+sample estimates:
+mean of x 
+ 16.37143 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test statistic is 5.224 p-value is very small, close to 0. This</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># test is significant at the .001 level as indicated by the p-value</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of 4.398e-06.  Reject the null and find that the hours of study are</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># greater than 10 hours.  We are 95% confident that the true mean is</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># greater than 14.3091</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>A less than sign in the alternative signifies a left-tailed test.</p>
+<ul>
+<li><p>Example of a <em>left-tailed</em> problem: A Dean is interested if the hours of study time per week is less than 24 hours.</p></li>
+<li><p><span class="math inline">\(H_0\)</span>: Study hours are greater than or equal to than 24 hours a week. (<span class="math inline">\(&gt;=\)</span>)</p></li>
+<li><p><span class="math inline">\(H_A\)</span>: Study hours are less than 24 hours a week. (<span class="math inline">\(&lt;\)</span>)</p></li>
+<li><p>Example of left-tailed command in R:</p>
+<ul>
+<li><em>less</em> for left-tailed.</li>
+<li><span class="math inline">\(\mu\)</span> of interest is 24 for 24 hours a week.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>OneSampleLeft <span class="ot">&lt;-</span> <span class="fu">t.test</span>(StudyHours<span class="sc">$</span>Hours, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">mu =</span> <span class="dv">24</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>OneSampleLeft</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  StudyHours$Hours
+t = -6.2547, df = 34, p-value = 2.015e-07
+alternative hypothesis: true mean is less than 24
+95 percent confidence interval:
+     -Inf 18.43376
+sample estimates:
+mean of x 
+ 16.37143 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is significant at the .001 level as indicated by the</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value of 2.015e-07.  test statistic: -6.2547 p-value &lt; .001 which</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># means reject the null and find that true mean is less than 24 We</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># are 95% confident that the true mean is less than 18.43376</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="step-2.-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-2.-compute-the-test-statistic-and-calculate-the-p-value">Step 2. Compute the Test Statistic and calculate the p-value</h3>
+<ul>
+<li>When the population standard deviation <span class="math inline">\(\sigma\)</span> is unknown, the test statistic for testing the population mean <span class="math inline">\(\mu\)</span> is assumed to follow the <span class="math inline">\(t\)</span> distribution with a computed degrees of freedom (<span class="math inline">\(df\)</span>) based on whether population variances are assumed to be equal or not.</li>
+<li>Formula for the Test Statistic: <span class="math inline">\(t = (m_x-\mu_x)/(s_x/\sqrt(n_x))\)</span>
+<ul>
+<li>In the One-sample t-test, <span class="math inline">\(m_x\)</span> represents the mean of the variable <span class="math inline">\(x\)</span>, the variable to be tested, <span class="math inline">\(\mu_x\)</span> is the population mean or hypothesized value of the variable, <span class="math inline">\(s_x\)</span> is the sample standard deviation of <span class="math inline">\(s\)</span>, and <span class="math inline">\(n\)</span> is the sample size.</li>
+</ul></li>
+<li>R will compute the <span class="math inline">\(df\)</span> based on the parameters set in the t.test() command along with the test statistic, so we can rely on it to calculate this for us.</li>
+</ul>
+</section>
+<section id="step-3.-interpret-probability-and-results." class="level3">
+<h3 class="anchored" data-anchor-id="step-3.-interpret-probability-and-results.">Step 3. Interpret probability and results.</h3>
+<ul>
+<li>Set alpha (<span class="math inline">\(\alpha\)</span>) to a common level, like .05, and compare it to the calculated p-value from your output in R.</li>
+<li>Reject <span class="math inline">\(H_0\)</span> if p-value is less than <span class="math inline">\(\alpha\)</span> value. This means we show support for our alternative hypothesis <span class="math inline">\(H_A\)</span>, which is against status quo.</li>
+<li>Interpret the results in plain English.</li>
+</ul>
+</section>
+<section id="example-of-a-one-sample-t-test-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-one-sample-t-test-in-r">Example of a One-Sample t-Test in R</h3>
+<ul>
+<li>To conduct a one-sample t-Test in R, first, let’s read in a dataset nhanes2016.csv from your book files and go ahead and load the tidyverse. Tidyverse is loaded so that we can subset the dataset in the next example.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nhanes<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/nhanes2016.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Second, lets select a variable to test. We are going to compare the mean of variable BPXSY1 to 120, which makes it a two-tailed test (<span class="math inline">\(= vs \neq\)</span>) with the <span class="math inline">\(\mu\)</span> set to 120.</p></li>
+<li><p>Once we have our problem idea, we can go through the steps listed above.</p></li>
+<li><p>Step 1: Write null and alternative.</p>
+<ul>
+<li>H0: There is no difference between mean systolic BP and the cutoff for normal BP, 120 mmHG.</li>
+<li>HA: There is a difference between mean systolic BP and the cutoff for normal BP, 120 mmHG.</li>
+</ul></li>
+<li><p>Step 2: Calculating test-statistic and p-value.</p>
+<ul>
+<li>Again, the t.test() command does both, the statement and output are listed below.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> nhanes<span class="fl">.2016</span><span class="sc">$</span>BPXSY1, <span class="at">mu =</span> <span class="dv">120</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  nhanes.2016$BPXSY1
+t = 2.4491, df = 7144, p-value = 0.01435
+alternative hypothesis: true mean is not equal to 120
+95 percent confidence interval:
+ 120.1077 120.9711
+sample estimates:
+mean of x 
+ 120.5394 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">### p-value is 0.01435 At an alpha of .05 - we reject the null.  At</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="do">### an alpha of .01 or .001 - we fail to reject the null.</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## We are 95$ confident that our true mean is in between 120.1077 and</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 120.9711 sample mean of 120.5394</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Step 3: Interpret probability and results.</p>
+<ul>
+<li>We found a test statistic is 2.4491, and a corresponding p-value is .01435. If our alpha was set to .05, .01435 is smaller than that (p-value &lt; alpha) This indicates that we should reject the null (<span class="math inline">\(H_0\)</span>) and support the alternative (<span class="math inline">\(H_A\)</span>) that the true mean is not equal to 120. This is in regards to blood pressure.</li>
+<li>Therefore, the sample mean systolic BP not equal to 120, or more formally the mean systolic blood pressure in a sample of 7,145 people was 120.54 (sd = 18.62). And our one-sample t-test found this mean to be statistically significantly different from the hypothesized mean of 120 [t(7144) = 2.449; p = 0.01435].</li>
+</ul></li>
+<li><p>This indicates that the sample likely came from a population with a mean systolic blood pressure not equal to 120, signifying that the true population is likely not equal to 120.</p></li>
+<li><p>Take note that if we used a smaller alpha (like .01 or .001), we would not pass the test and instead fail to reject the null.</p></li>
+</ul>
+</section>
+<section id="example-of-a-one-sample-using-a-subset" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-one-sample-using-a-subset">Example of a One-Sample Using a Subset</h3>
+<ul>
+<li>Let’s do another example using a subset of the data. In this example, let’s create a subset of people 65+ years old to run the same two-tailed test. This allows us to see if the people 65 years and older had a different blood pressure than 120.</li>
+<li>In the command below, we use tidyverse to set up a new data frame object named nhanes.2016.65plus to save the filtered data.<br>
+</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nhanes.<span class="fl">2016.65</span>plus <span class="ot">&lt;-</span> nhanes<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(RIDAGEYR <span class="sc">&gt;=</span> <span class="dv">65</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 1: Write null and alternative.
+<ul>
+<li>H0: There is no difference between mean systolic BP and the cutoff for normal BP, 120 mmHG when people are 65 or over.</li>
+<li>HA: There is a difference between mean systolic BP and the cutoff for normal BP, 120 mmHG when people are 65 or over.</li>
+</ul></li>
+<li>Step 2: Calculating test-statistic and p-value.</li>
+<li>Again, we can use one t.test() command to handle steps 2 and 3.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> nhanes.<span class="fl">2016.65</span>plus<span class="sc">$</span>BPXSY1, <span class="at">mu =</span> <span class="dv">120</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  nhanes.2016.65plus$BPXSY1
+t = 29.238, df = 1232, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 120
+95 percent confidence interval:
+ 135.4832 137.7106
+sample estimates:
+mean of x 
+ 136.5969 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Reject Ho and find that Systolic BP is different for people 65</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">### and older.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 3: Interpret probability and results.
+<ul>
+<li>Based on our output, we found a test statistic is 29.238, and a corresponding p-value is .000. If our alpha was set to .05, .000 is smaller than that (p-value &lt; alpha). This indicates that we should reject the null and support the alternative that the true mean is not equal to 120 for people 65 and older. This again is in regards to blood pressure.</li>
+<li>The mean systolic blood pressure in a sample of 1233 NHANES participants who were age 65 and above was 136.60 (sd = 19.93). The mean systolic blood pressure was found to be statistically significantly different from the hypothesized mean of 120 via a one-sample t-test (t(1232) = 29.238, p &lt; 0.001). The true mean systolic blood pressure in the population of adults 65 and older is likely not equal to 120.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="independent-samples-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="independent-samples-t-test">Independent Samples t-Test</h2>
+<ul>
+<li>Independent samples t-test compares the means of two unrelated groups, so instead of just one population, we have 2 mutually exclusive groups.</li>
+<li>More formally, two (or more) random samples are considered independent if the process that generates one sample is completely separate from the process that generates the other sample.
+<ul>
+<li>The samples are clearly delineated.</li>
+<li><span class="math inline">\(\mu_1\)</span> is the mean of the first population.</li>
+<li><span class="math inline">\(\mu_2\)</span> is the mean of the second population.</li>
+</ul></li>
+<li>The sampling distribution is assumed to be normal and the linear combination of normally distributed random variables is also normally distributed.</li>
+<li>If underlying distribution is not normal, then by the CLT, the sampling distribution is approximately normal only if both <span class="math inline">\(n_1 &gt;= 30\)</span> and <span class="math inline">\(n_2 &gt;= 30\)</span>.</li>
+</ul>
+<section id="t.test-command-for-independent-samples-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="t.test-command-for-independent-samples-t-test">t.test() Command for Independent Samples t-Test</h3>
+<ul>
+<li><p>In base R, the t.test() command is useful for getting the t for the Independent samples t-test. This is the same t.test() command used above.</p></li>
+<li><p>The command needs to be altered to handle the second group. In the command, the arguments include a formula which is formatted as t.test(continuous_variable ~ grouping_variable) or t.test(population1, population2). Deciding on the correct format of the argument depends on the shape of the data discussed later on.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/Tilde.png" title="Choosing between Tilde and Comma" class="img-fluid figure-img"></p>
+<figcaption>Tilde or Comma</figcaption>
+</figure>
+</div>
+<ul>
+<li>Using the ~ symbol between variables: This method allows you to run the t-test without having to split the data manually if your data is not already split. You specify the numerical variable (your continuous measurement) on the left and the categorical variable (which identifies the two groups) on the right of the ~ symbol.</li>
+</ul>
+</section>
+<section id="step-1-specify-null-and-alternative-hypothesis-1" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-specify-null-and-alternative-hypothesis-1">Step 1: Specify Null and Alternative Hypothesis</h3>
+<ul>
+<li>When conducting hypothesis tests concerning <span class="math inline">\(\mu_1  - \mu_2\)</span> , the competing hypotheses will take one of the following forms:
+<ul>
+<li>Two-tailed Test: <span class="math inline">\(H_0: \mu_1  - \mu_2 =  d_0\)</span> versus <span class="math inline">\(H_A: \mu_1  - \mu_2 \neq  d_0\)</span></li>
+<li>Right-tailed Test: <span class="math inline">\(H_0: \mu_1  - \mu_2 &lt;=  d_0\)</span> versus <span class="math inline">\(H_A: \mu_1  - \mu_2 &gt;  d_0\)</span></li>
+<li>Left-tailed Test: <span class="math inline">\(H_0: \mu_1  - \mu_2 &gt;=  d_0\)</span> versus <span class="math inline">\(H_A: \mu_1  - \mu_2 &lt;  d_0\)</span></li>
+</ul></li>
+<li>Where <span class="math inline">\(d_0\)</span> is the hypothesized difference between <span class="math inline">\(\mu_1  - \mu_2\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/TableIndSamp.png" title="Independent Samples Table" class="img-fluid figure-img"></p>
+<figcaption>Independent Samples Table</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>A separate (<span class="math inline">\(d_0\)</span>) value can be set here under the (<span class="math inline">\(\mu\)</span>) parameter if the value is not equal to 0, however 0 is the most common which tests for differences between populations (i.e., is the mean of population 1 different than mean of population 2). The alternative statement can be set at “two.sided”, “greater”, or “less”.</p></li>
+<li><p>Example of a two-tailed test:</p></li>
+<li><p>Does spending differ between men and women?</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: No difference in spending between men and women. (<span class="math inline">\(=\)</span>).</p></li>
+<li><p><span class="math inline">\(H_A\)</span>: There is a difference in spending between men and women (<span class="math inline">\(\neq\)</span>).</p></li>
+<li><p>Example of a two-tailed command in R:</p>
+<ul>
+<li>The statement assumes that men’s spending and women’s spending are in 2 different columns in the data set. Therefore, the format t.test(var1, var2) should be used.</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Spend <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Spend.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Spend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    MenSpend        WomenSpend    
+ Min.   : 49.00   Min.   : 13.00  
+ 1st Qu.: 89.25   1st Qu.: 62.50  
+ Median : 99.00   Median : 84.00  
+ Mean   :100.90   Mean   : 87.23  
+ 3rd Qu.:117.75   3rd Qu.:100.50  
+ Max.   :140.00   Max.   :220.00  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Spend<span class="sc">$</span>MenSpend, Spend<span class="sc">$</span>WomenSpend, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Spend$MenSpend and Spend$WomenSpend
+t = 1.559, df = 45.469, p-value = 0.1259
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.984055 31.317388
+sample estimates:
+mean of x mean of y 
+100.90000  87.23333 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is not significant as indicated by a p-value = 0.1259</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># which is greater than .05.  95% confident that the true mean</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># difference is in between -3.984055 and 31.317388</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>The alternative <span class="math inline">\(H_A\)</span> and <span class="math inline">\(\mu\)</span> are not changed off their default values, so the statement above could be simplified from what is provided to the statement below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Spend<span class="sc">$</span>MenSpend, Spend<span class="sc">$</span>WomenSpend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Spend$MenSpend and Spend$WomenSpend
+t = 1.559, df = 45.469, p-value = 0.1259
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.984055 31.317388
+sample estimates:
+mean of x mean of y 
+100.90000  87.23333 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take note of the order of the means present in the t-test function.</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Spend<span class="sc">$</span>MenSpend)  <span class="co">#100.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(Spend<span class="sc">$</span>WomenSpend)  <span class="co">#87.23333</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 87.23333</code></pre>
+</div>
+</div>
+<ul>
+<li>Example of a right-tailed test: Is men’s spending (<span class="math inline">\(\bar{x}_1\)</span>) greater than that of women’s spending (<span class="math inline">\(\bar{x}_2\)</span>)?
+<ul>
+<li><span class="math inline">\(H_0\)</span>: Men’s spending is less than or equal to women’s spending (<span class="math inline">\(&lt;=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: Men’s spending is greater than women’s spending (<span class="math inline">\(&gt;\)</span>).</li>
+<li>Example of a right-tailed command in R:</li>
+</ul></li>
+<li>Again, the statement assumes that men’s spending and women’s spending are in 2 different columns in the data set. The alternative is changed off the default value, so the statement parameter is required.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Spend<span class="sc">$</span>MenSpend, Spend<span class="sc">$</span>WomenSpend, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Spend$MenSpend and Spend$WomenSpend
+t = 1.559, df = 45.469, p-value = 0.06296
+alternative hypothesis: true difference in means is greater than 0
+95 percent confidence interval:
+ -1.0521     Inf
+sample estimates:
+mean of x mean of y 
+100.90000  87.23333 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is not significant as indicated by a p-value = 0.06296</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># which is greater than .05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Example of a left-tailed test: Is men’s spending (<span class="math inline">\(\bar{x}_1\)</span>) less than that of women’s spending (<span class="math inline">\(\bar{x}_2\)</span>)?
+<ul>
+<li><span class="math inline">\(H_0\)</span>: Men’s spending is greater than or equal to women’s spending (<span class="math inline">\(&gt;=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: Men’s spending is less than women’s spending (<span class="math inline">\(&lt;\)</span>).</li>
+<li>Example of a left-tailed command in R:</li>
+</ul></li>
+<li>Again, the statement assumes that men’s spending and women’s spending are in 2 different columns in the data set. The alternative is changed off the default value, so the statement parameter is required.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Spend<span class="sc">$</span>MenSpend, Spend<span class="sc">$</span>WomenSpend, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Spend$MenSpend and Spend$WomenSpend
+t = 1.559, df = 45.469, p-value = 0.937
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+     -Inf 28.38543
+sample estimates:
+mean of x mean of y 
+100.90000  87.23333 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is not significant as indicated by a p-value = 0.937</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># which is greater than .05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-2-compute-the-test-statistic-and-calcuate-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calcuate-the-p-value">Step 2: Compute the Test Statistic and Calcuate the p-value</h3>
+<p>Formula for the Test Statistic: <span class="math inline">\(t = (m_1 - m_2)/\sqrt((s^2_1/n_1)+(s^2_2/n_2))\)</span></p>
+<ul>
+<li><p>In the independent samples t-test formula, <span class="math inline">\(m_1\)</span> is the mean of one group and <span class="math inline">\(m_2\)</span> is the mean of the other group; the difference between the means makes up the numerator. The larger the difference between the group means, the larger the numerator will be and the larger the t-statistic will be!</p></li>
+<li><p>The denominator includes the variances for the first group, <span class="math inline">\(s^2_1\)</span>, and the second group, <span class="math inline">\(s^2_2\)</span> along with the sample sizes for each group, <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>.</p></li>
+<li><p>Degrees of freedom are computed as n – k.</p></li>
+<li><p>There is a 95% confidence interval around the difference between the groups.</p></li>
+<li><p>Calculate the p-value and Compare it to a Predetermined Alpha level</p></li>
+</ul>
+</section>
+<section id="step-3-interpret-the-probability-and-write-a-conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-interpret-the-probability-and-write-a-conclusion">Step 3: Interpret the Probability and Write a Conclusion</h3>
+</section>
+<section id="example-of-an-independent-samples-t-test-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-an-independent-samples-t-test-in-r">Example of an Independent Samples t-Test in R</h3>
+<ul>
+<li>Using the nhanes data set, let’s bring over some code from the last section so that we can work this example. This includes reading in the data set and creating the subset for the ages 65 and over.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>nhanes<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/nhanes2016.csv"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>nhanes.<span class="fl">2016.65</span>plus <span class="ot">&lt;-</span> nhanes<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(RIDAGEYR <span class="sc">&gt;=</span> <span class="dv">65</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>When conducting independent samples, grouping variables are common, so you can see if there is a difference between groups. In this example, we can test for a difference in blood pressure by sex (Male vs Female). This is coded as 1 and 2 in the data set, so we need to recode it before we begin the official test.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>nhanes.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> nhanes<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">RIAGENDR =</span> <span class="fu">recode_factor</span>(<span class="at">.x =</span> RIAGENDR, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Male"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Female"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">sex =</span> RIAGENDR) <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">systolic =</span> BPXSY1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Step 1: Write null and alternative.</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: There is no difference between systolic blood pressure for males and females (<span class="math inline">\(=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: There is a difference between systolic blood pressure for males and females (<span class="math inline">\(\neq\)</span>).</li>
+<li>This is a two tailed test.</li>
+</ul></li>
+<li><p>Step 2: Calculating test-statistic and p-value.</p>
+<ul>
+<li>The statement below assumes that the grouping variable (sex) is in one column, and the continuous variable (systolic) is in another column. In this case, instead of a comma between the two columns of sex (like above), we write the statement as t.test(continuousVar ~ groupingVar) like below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All other parameters can be left at default values</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(nhanes.<span class="fl">2016.</span>cleaned<span class="sc">$</span>systolic <span class="sc">~</span> nhanes.<span class="fl">2016.</span>cleaned<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  nhanes.2016.cleaned$systolic by nhanes.2016.cleaned$sex
+t = 7.3135, df = 7143, p-value = 2.886e-13
+alternative hypothesis: true difference in means between group Male and group Female is not equal to 0
+95 percent confidence interval:
+ 2.347882 4.067432
+sample estimates:
+  mean in group Male mean in group Female 
+            122.1767             118.9690 </code></pre>
+</div>
+</div></li>
+<li><p>Step 3: Interpret probability and results.</p>
+<ul>
+<li>We found a test statistic is 7.3135, and a corresponding p-value is .000. If our alpha was set to .05, .000 is smaller than that (p-value &lt; alpha). This indicates that we should reject the null and support the alternative that the men and women had different systolic blood pressure. Thus, there is a statistically significant difference in the mean blood pressure of males and females in the 2016 data set (t(7143) = 7.3135, p = .000).</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-independent-t-test-using-a-subset" class="level3">
+<h3 class="anchored" data-anchor-id="example-independent-t-test-using-a-subset">Example Independent t-test Using a Subset</h3>
+<ul>
+<li>Create a subset of the data frame of people 65+ years old to run the same test on blood pressure (two-tailed test).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>nhanes.<span class="fl">2016.65</span>plus.clean <span class="ot">&lt;-</span> nhanes.<span class="fl">2016.65</span>plus <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(BPXSY1) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">recode_factor</span>(<span class="at">.x =</span> RIAGENDR, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Male"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Female"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">systolic =</span> BPXSY1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 1: Write null and alternative.
+<ul>
+<li><span class="math inline">\(H_0\)</span>: There is no difference between systolic blood pressure for males and females 65 years or older</li>
+<li><span class="math inline">\(H_A\)</span>: There is a difference between systolic blood pressure for males and females 65 years or older</li>
+<li>This is a two tailed test.</li>
+</ul></li>
+<li>Step 2: Calculating test-statistic and p-value.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(nhanes.<span class="fl">2016.65</span>plus.clean<span class="sc">$</span>systolic <span class="sc">~</span> nhanes.<span class="fl">2016.65</span>plus.clean<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  nhanes.2016.65plus.clean$systolic by nhanes.2016.65plus.clean$sex
+t = -2.0141, df = 1231, p-value = 0.04422
+alternative hypothesis: true difference in means between group Male and group Female is not equal to 0
+95 percent confidence interval:
+ -4.5080955 -0.0591939
+sample estimates:
+  mean in group Male mean in group Female 
+            135.4486             137.7323 </code></pre>
+</div>
+</div>
+<ul>
+<li>Step 3: Interpret probability and results.
+<ul>
+<li>We found a test statistic is -2.0141, and a corresponding p-value is 0.04422. If our alpha was set to .05, 0.04422 is smaller than that (p-value &lt; alpha). This indicates that we should reject the null and support the alternative that the men and women 65 or older had different systolic blood pressure. Thus, there is a statistically significant difference in the mean blood pressure of males and females over the age of 65 participating in the 2016 NHANES (t(1231) = -2.01, p = 0.044).</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="dependent-samples-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="dependent-samples-t-test">Dependent Samples t-Test</h2>
+<ul>
+<li>Dependent samples or a Paired samples t-test compares the means of two related groups.</li>
+<li>The <em>Dependent</em> means there is a deliberate Pairing, or more specifically <em>Matched Pairing</em> that generally come from 2 methods:
+<ul>
+<li>“Before” and “after” studies characterized by a measurement, some type of intervention, and another measurement, all on the same subject.
+<ul>
+<li>Example: Measuring the weight of clients before and after a diet plan.</li>
+</ul></li>
+<li>A pairing of observations, where it is not on the same subject that gets sampled twice.
+<ul>
+<li>Example: Matching 20 adjacent plots of land using a nonorganic fertilizer on one half of the plot and an organic fertilizer on the other.</li>
+</ul></li>
+</ul></li>
+<li>The parameter of interest is the mean difference D where <span class="math inline">\(D = x_1 - x_2\)</span> and the random variable <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are a matched pair.</li>
+<li>This works under the assumption regarding CLT that both <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are normally distributed or <span class="math inline">\(n &gt;= 30\)</span>.</li>
+</ul>
+<section id="t.test-command-for-dependent-samples-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="t.test-command-for-dependent-samples-t-test">t.test() Command for Dependent Samples t-Test</h3>
+<ul>
+<li>Option 1: Requires the <em>paired = TRUE</em> parameter: The default for the command is <em>paired=FALSE</em>, which is an independent samples t-test.</li>
+<li>Option 2: Can also calculate a formula instead of turning the paired argument to true and place in the first parameter.</li>
+<li>Summary: In a paired t-test, you’re comparing two related sets of observations, such as measurements taken from the same subjects under different conditions. The key is that each observation in one group has a corresponding observation in the other group. In R, you can perform a paired t-test by either specifying paired = TRUE in the t.test function or by directly calculating the differences between the paired observations and running the t-test on those differences. If you choose the second approach, you subtract one set of values from the other and then use that result as the first argument in the t.test function (essentially calculating the <span class="math inline">\(\mu_d\)</span>. This directly tests whether the mean of the differences is significantly different from zero, giving the same result as a paired t-test but with the differences calculated explicitly beforehand. Either method is fine.</li>
+</ul>
+</section>
+<section id="step-1-write-null-and-alternative-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-write-null-and-alternative-hypothesis">Step 1: Write Null and Alternative Hypothesis</h3>
+<ul>
+<li>When conducting hypothesis tests concerning <span class="math inline">\(\mu_d\)</span> , the competing hypotheses will take one of the following forms:
+<ul>
+<li>Two-tailed Test: <span class="math inline">\(H_0: \mu_d  = d_0\)</span> versus <span class="math inline">\(H_A: \mu_d \neq  d_0\)</span></li>
+<li>Right-tailed Test: <span class="math inline">\(H_0: \mu_d &lt;= d_0\)</span> versus <span class="math inline">\(H_A: \mu_d&gt;  d_0\)</span></li>
+<li>Left-tailed Test: <span class="math inline">\(H_0: \mu_d &gt;= d_0\)</span> versus <span class="math inline">\(H_A: \mu_d&lt; d_0\)</span></li>
+</ul></li>
+<li>Where <span class="math inline">\(d_0\)</span> typically is equal to 0, but not always. If <span class="math inline">\(d_0\)</span> is something other than 0, then you change the mu parameter in R in the t.test() command.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch6/TableDepSamp.png" title="Dependent Samples Table" class="img-fluid figure-img"></p>
+<figcaption>Dependent Samples Table</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Example of a two-tailed test:</p></li>
+<li><p>Is the weight before and after quitting smoking different from each other?</p>
+<ul>
+<li>The before and after signifies a paired test.</li>
+<li><span class="math inline">\(H_0\)</span>: No difference in weight before and after smoking (<span class="math inline">\(=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: There is a difference in weight before and after smoking (<span class="math inline">\(\neq\)</span>).</li>
+<li>Example of a two-tailed command in R for a paired test:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Smoke <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Smoke.csv"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Other default values are left off this statement. Assumes a mu at</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Smoke<span class="sc">$</span>After, Smoke<span class="sc">$</span>Before, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  Smoke$After and Smoke$Before
+t = 6.6072, df = 49, p-value = 2.695e-08
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 4.870942 9.129058
+sample estimates:
+mean difference 
+              7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is significant at the .001 level as indicated by the</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value of 2.695e-08.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Example of a right-tailed test:</p></li>
+<li><p>Is the weight after quitting smoking (<span class="math inline">\(\mu_1\)</span>) greater than the weight before (<span class="math inline">\(\mu_2\)</span>)?</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: Weight after smoking is less than or equal to the weight before (<span class="math inline">\(&lt;=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: Weight after smoking is greater the weight to before (<span class="math inline">\(&gt;\)</span>).</li>
+<li>Example of a right-tailed command in R for a paired test:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The paired statement is true (due to the before after) If we bring</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># WeightBeforeQuitting to the right side of the equation we get</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># WeightAfterQuitting &gt; WeightBeforeQuitting, which is what our</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># hypothesis wants.  Therefore, in the statement below, after comes</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># first as m1 followed by a comma, followed by the before as m2.  The</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative parameter is then set to 'greater' Other default values</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># are left off this statement</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Smoke<span class="sc">$</span>After, Smoke<span class="sc">$</span>Before, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  Smoke$After and Smoke$Before
+t = 6.6072, df = 49, p-value = 1.347e-08
+alternative hypothesis: true mean difference is greater than 0
+95 percent confidence interval:
+ 5.223767      Inf
+sample estimates:
+mean difference 
+              7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is significant at the .001 level as indicated by the</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value of 1.347e-08.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Example of a left-tailed test:</p></li>
+<li><p>Is the weight after quitting smoking (<span class="math inline">\(\mu_1\)</span>) less than the weight before (<span class="math inline">\(mu_2\)</span>)?</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: Weight after smoking is greater than or equal to the weight before (<span class="math inline">\(&gt;=\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: Weight after smoking is less to the weight before (<span class="math inline">\(&lt;\)</span>).</li>
+<li>Example of a left-tailed command in R for a paired test:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The alternative parameter switches to 'less' leaving all else the</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># same as above.  Again, other default values are left off this</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># statement</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Smoke<span class="sc">$</span>After, Smoke<span class="sc">$</span>Before, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  Smoke$After and Smoke$Before
+t = 6.6072, df = 49, p-value = 1
+alternative hypothesis: true mean difference is less than 0
+95 percent confidence interval:
+     -Inf 8.776233
+sample estimates:
+mean difference 
+              7 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is not significant as indicated by a p-value of 1, which</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is greater than .05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ul>
+</section>
+<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
+<p>Formula for the Test Statistic: <span class="math inline">\(t = (m_d-d_0)/\sqrt((s^2_d/n_d)\)</span></p>
+<ul>
+<li><p>Dependent samples t-test formula: The <span class="math inline">\(m_d\)</span> is the mean of the differences between the related measures, the <span class="math inline">\(s^2_d\)</span> is the variance of the mean difference between the measures, and <span class="math inline">\(n_d\)</span> is the sample size. The dependent samples t-test worked a little differently from the independent samples t-test. In this case, the formula uses the mean of the differences between the two related measures.</p></li>
+<li><p>Calculate the p-value and Compare it to a Predetermined Alpha level</p></li>
+</ul>
+</section>
+<section id="step-3-interpret-the-probability-and-write-a-conclusion-1" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-interpret-the-probability-and-write-a-conclusion-1">Step 3: Interpret the Probability and Write a Conclusion</h3>
+<ul>
+<li>The steps involved with setting up the null and alternative hypotheses and calculating the test statistic are based on different rules and formulas for all three t-tests, but the rest of the steps are the same.</li>
+</ul>
+</section>
+<section id="example-of-an-dependent-samples-t-test-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-an-dependent-samples-t-test-in-r">Example of an Dependent Samples t-Test in R</h3>
+<ul>
+<li><p>Given the nhanes.2016 dataset, let’s ask the following research question: Is there a difference between measure 1 and 2 for systolic BP?</p></li>
+<li><p>First, bring back in the data set from the last section.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>nhanes<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/nhanes2016.csv"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 1: Write null and alternative.
+<ul>
+<li><span class="math inline">\(H_0\)</span>: No difference between measures 1 and 2 for systolic BP. (<span class="math inline">\(=\)</span>)</li>
+<li><span class="math inline">\(H_A\)</span>: There is a difference between measures 1 and 2 for systolic BP. (<span class="math inline">\(\neq\)</span>).</li>
+<li>This is a two tailed test.</li>
+</ul></li>
+<li>Use the nhanes.2016.cleaned from above but be sure to rename BPXSY2 to systolic2 (two-tailed test).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>nhanes.<span class="fl">2016.</span>cleaned <span class="ot">&lt;-</span> nhanes<span class="fl">.2016</span> <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">RIAGENDR =</span> <span class="fu">recode_factor</span>(<span class="at">.x =</span> RIAGENDR, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Male"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Female"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">sex =</span> RIAGENDR) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">systolic =</span> BPXSY1) <span class="sc">%&gt;%</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">systolic2 =</span> BPXSY2) <span class="sc">%&gt;%</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">diff.syst =</span> systolic <span class="sc">-</span> systolic2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Step 2: Calculate test-statistic and p-value.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(nhanes.<span class="fl">2016.</span>cleaned<span class="sc">$</span>systolic, nhanes.<span class="fl">2016.</span>cleaned<span class="sc">$</span>systolic2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  nhanes.2016.cleaned$systolic and nhanes.2016.cleaned$systolic2
+t = 9.3762, df = 7100, p-value &lt; 2.2e-16
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.4310514 0.6589360
+sample estimates:
+mean difference 
+      0.5449937 </code></pre>
+</div>
+</div>
+<ul>
+<li>Step 3: Interpret probability and results
+<ul>
+<li>We found a test statistic is 9.3762, and a corresponding p-value is 0.000. If our alpha was set to .05, 0.000 is smaller than that (p-value &lt; alpha). This indicates that there is a difference in systolic blood pressure 1 and 2. Thus, there is a statistically significant difference in the mean blood pressure of reading 1 and 2 in the 2016 NHANES (t(7100) = 9.3762, p = 0.000).</li>
+</ul></li>
+</ul>
+</section>
+<section id="reshape-function" class="level3">
+<h3 class="anchored" data-anchor-id="reshape-function">reshape function</h3>
+<ul>
+<li>The reshape function allows you to restructure a data frame by specifying a timevar (The variable in the data that defines the different time points or conditions), and idvar (The variable that uniquely identifies each subject or observational unit), and a direction (“wide” or “long”)</li>
+<li>The syntax is as follows: reshape(data, timevar, idvar, direction, …)</li>
+<li>The direction of reshaping, either “wide” to spread the data across columns or “long” to gather the data into rows.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sleep"</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     extra        group        ID   
+ Min.   :-1.600   1:10   1      :2  
+ 1st Qu.:-0.025   2:10   2      :2  
+ Median : 0.950          3      :2  
+ Mean   : 1.540          4      :2  
+ 3rd Qu.: 3.400          5      :2  
+ Max.   : 5.500          6      :2  
+                         (Other):8  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>sleep2 <span class="ot">&lt;-</span> <span class="fu">reshape</span>(sleep, <span class="at">timevar =</span> <span class="st">"group"</span>, <span class="at">idvar =</span> <span class="st">"ID"</span>, <span class="at">direction =</span> <span class="st">"wide"</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleep2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ID       extra.1          extra.2      
+ 1      :1   Min.   :-1.600   Min.   :-0.100  
+ 2      :1   1st Qu.:-0.175   1st Qu.: 0.875  
+ 3      :1   Median : 0.350   Median : 1.750  
+ 4      :1   Mean   : 0.750   Mean   : 2.330  
+ 5      :1   3rd Qu.: 1.700   3rd Qu.: 4.150  
+ 6      :1   Max.   : 3.700   Max.   : 5.500  
+ (Other):4                                    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sleep2<span class="sc">$</span>extra<span class="fl">.1</span>, sleep2<span class="sc">$</span>extra<span class="fl">.2</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  sleep2$extra.1 and sleep2$extra.2
+t = -4.0621, df = 9, p-value = 0.002833
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -2.4598858 -0.7001142
+sample estimates:
+mean difference 
+          -1.58 </code></pre>
+</div>
+</div>
+<ul>
+<li>Using tidyverse, we could get the same effect using the filter, select, and rename functions which are a part of dplyr. This method involves dividing the dataset into two separate groups based on a categorical variable. You then run the t-test on these two groups. In the code below, we use filter to divide by group and then after selecting and renaming the columns we need, we join back together using a full_join.</li>
+<li>Using full_join ensures that all IDs are included in the resulting dataset, even if they only appear in one of the groups. This can be useful if your data might have missing group entries for some IDs.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sleep"</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     extra        group        ID   
+ Min.   :-1.600   1:10   1      :2  
+ 1st Qu.:-0.025   2:10   2      :2  
+ Median : 0.950          3      :2  
+ Mean   : 1.540          4      :2  
+ 3rd Qu.: 3.400          5      :2  
+ Max.   : 5.500          6      :2  
+                         (Other):8  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>group1 <span class="ot">&lt;-</span> sleep <span class="sc">%&gt;%</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(group <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, extra) <span class="sc">%&gt;%</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">extra.1 =</span> extra)</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>group2 <span class="ot">&lt;-</span> sleep <span class="sc">%&gt;%</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(group <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(ID, extra) <span class="sc">%&gt;%</span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">extra.2 =</span> extra)</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>sleep2 <span class="ot">&lt;-</span> group1 <span class="sc">%&gt;%</span></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">full_join</span>(group2, <span class="at">by =</span> <span class="st">"ID"</span>)</span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sleep2<span class="sc">$</span>extra<span class="fl">.1</span>, sleep2<span class="sc">$</span>extra<span class="fl">.2</span>, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  sleep2$extra.1 and sleep2$extra.2
+t = -4.0621, df = 9, p-value = 0.002833
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -2.4598858 -0.7001142
+sample estimates:
+mean difference 
+          -1.58 </code></pre>
+</div>
+</div>
+<ul>
+<li>In either case, we reject the null hypotheses and find that the type of drug does affect the sleep in patient</li>
+</ul>
+</section>
+</section>
+<section id="using-ai" class="level2">
+<h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
+<ul>
+<li><p>Use the following prompts on a generative AI, like chatGPT, to learn more about t.test’s and confidence intervals.</p></li>
+<li><p>Can you explain the difference between the null hypothesis and the alternative hypothesis, and why is it important to set up both correctly before conducting a t-test?</p></li>
+<li><p>What factors determine whether you should use a one-sample, independent samples, or dependent samples t-test, and how do the results differ based on the test chosen?</p></li>
+<li><p>When should I use a two-tailed t-test compared to a right- or left-tailed test, and how does the alternative hypothesis guide this decision?</p></li>
+<li><p>What are the key arguments in the t.test() function in R, and how do I modify these arguments to perform different types of t-tests, such as two-tailed or paired t-tests?</p></li>
+<li><p>How do I interpret the p-value in the context of hypothesis testing, and how does it relate to rejecting or failing to reject the null hypothesis?</p></li>
+<li><p>How does the confidence interval calculated during a t-test help in understanding the range of possible population parameters, and why is it important in hypothesis testing?</p></li>
+<li><p>What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used?</p></li>
+</ul>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ul>
+<li>In summary, we learned about the basic rules of hypothesis testing and how to set up a null and alternative hypothesis. We learned about two-tailed, right-tailed, and left-tailed hypotheses. We learned about 3 t.tests: the one-sample t-test, the independent samples t-test, and the dependent (or paired) samples t-test. Finally, we also learned how to interpret the results using the p-value approach.</li>
+<li>Take note that this lesson does not include the assumptions for t-tests. Assumptions are extremely important, but I will leave the discussion of them to another class.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./module4.html" class="pagination-link" aria-label="Module 4: Calculating Probability">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Module 4: Calculating Probability</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./module6.html" class="pagination-link" aria-label="Module 6: Analysis of Variance (ANOVA)">
+        <span class="nav-page-text"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="">
+<meta name="dcterms.date" content="2024-08-09">
+
+<title>Module 7: Correlation and Regression – OMSBA 512A: Probability And Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./module6.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-64b801fe9b6685c0a799f7172ecad621.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module7.html"><span class="chapter-title">Module 7: Correlation and Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">OMSBA 512A: Probability And Statistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 0: Software Know-How</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 1: Introduction to R and RStudio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 2: Descriptive Statistics and Data Prep</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 3: Data Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module4.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 4: Calculating Probability</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module5.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 5: Hypothesis Testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module7.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Module 7: Correlation and Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link active" data-scroll-target="#at-a-glance">At a Glance</a></li>
+  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
+  <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">Correlation</a>
+  <ul class="collapse">
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance">Covariance</a></li>
+  <li><a href="#correlation-coefficient" id="toc-correlation-coefficient" class="nav-link" data-scroll-target="#correlation-coefficient">Correlation Coefficient</a>
+  <ul class="collapse">
+  <li><a href="#rules-for-the-correlation-coefficient" id="toc-rules-for-the-correlation-coefficient" class="nav-link" data-scroll-target="#rules-for-the-correlation-coefficient">Rules for the Correlation Coefficient</a></li>
+  </ul></li>
+  <li><a href="#interpreting-the-direction-of-the-correlation" id="toc-interpreting-the-direction-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-direction-of-the-correlation">Interpreting the Direction of the Correlation</a>
+  <ul class="collapse">
+  <li><a href="#scatterplots-to-visualize-relationship" id="toc-scatterplots-to-visualize-relationship" class="nav-link" data-scroll-target="#scatterplots-to-visualize-relationship">Scatterplots to Visualize Relationship</a></li>
+  <li><a href="#interpreting-the-strength-of-the-correlation" id="toc-interpreting-the-strength-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-strength-of-the-correlation">Interpreting the Strength of the Correlation</a></li>
+  </ul></li>
+  <li><a href="#interpreting-the-significance-of-the-correlation" id="toc-interpreting-the-significance-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-significance-of-the-correlation">Interpreting the Significance of the Correlation</a></li>
+  <li><a href="#statistical-significance-answers-the-question-is-the-effect-real" id="toc-statistical-significance-answers-the-question-is-the-effect-real" class="nav-link" data-scroll-target="#statistical-significance-answers-the-question-is-the-effect-real">Statistical significance answers the question: “Is the effect real?“</a>
+  <ul class="collapse">
+  <li><a href="#cor.test-command" id="toc-cor.test-command" class="nav-link" data-scroll-target="#cor.test-command">cor.test() Command</a></li>
+  </ul></li>
+  <li><a href="#additional-examples" id="toc-additional-examples" class="nav-link" data-scroll-target="#additional-examples">Additional Examples</a></li>
+  <li><a href="#comparing-to-t.test-and-anova" id="toc-comparing-to-t.test-and-anova" class="nav-link" data-scroll-target="#comparing-to-t.test-and-anova">Comparing to t.test and ANOVA</a></li>
+  <li><a href="#limitations-of-correlation-analysis" id="toc-limitations-of-correlation-analysis" class="nav-link" data-scroll-target="#limitations-of-correlation-analysis">Limitations of Correlation Analysis</a></li>
+  </ul></li>
+  <li><a href="#the-linear-regression-model" id="toc-the-linear-regression-model" class="nav-link" data-scroll-target="#the-linear-regression-model">The Linear Regression Model</a>
+  <ul class="collapse">
+  <li><a href="#overview-of-the-linear-regression" id="toc-overview-of-the-linear-regression" class="nav-link" data-scroll-target="#overview-of-the-linear-regression">Overview of the Linear Regression</a></li>
+  <li><a href="#examples-of-independent-and-dependent-variables" id="toc-examples-of-independent-and-dependent-variables" class="nav-link" data-scroll-target="#examples-of-independent-and-dependent-variables">Examples of Independent and Dependent Variables</a></li>
+  <li><a href="#estimating-using-a-simple-linear-regression-model" id="toc-estimating-using-a-simple-linear-regression-model" class="nav-link" data-scroll-target="#estimating-using-a-simple-linear-regression-model">Estimating Using a Simple Linear Regression Model</a></li>
+  <li><a href="#inexact-relationships" id="toc-inexact-relationships" class="nav-link" data-scroll-target="#inexact-relationships">Inexact Relationships</a></li>
+  <li><a href="#regression-as-anova" id="toc-regression-as-anova" class="nav-link" data-scroll-target="#regression-as-anova">Regression as ANOVA</a></li>
+  <li><a href="#the-simple-linear-regression-model" id="toc-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#the-simple-linear-regression-model">The Simple Linear Regression Model</a></li>
+  <li><a href="#the-least-squares-estimates" id="toc-the-least-squares-estimates" class="nav-link" data-scroll-target="#the-least-squares-estimates">The Least Squares Estimates</a></li>
+  <li><a href="#goodness-of-fit" id="toc-goodness-of-fit" class="nav-link" data-scroll-target="#goodness-of-fit">Goodness of Fit</a></li>
+  <li><a href="#the-standard-error-of-the-estimate" id="toc-the-standard-error-of-the-estimate" class="nav-link" data-scroll-target="#the-standard-error-of-the-estimate">The Standard Error of the Estimate</a></li>
+  <li><a href="#the-coefficient-of-determination-r2" id="toc-the-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#the-coefficient-of-determination-r2">The Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</a></li>
+  <li><a href="#the-adjusted-r2" id="toc-the-adjusted-r2" class="nav-link" data-scroll-target="#the-adjusted-r2">The Adjusted <span class="math inline">\(R^2\)</span></a></li>
+  <li><a href="#example-of-simple-linear-regression-in-r" id="toc-example-of-simple-linear-regression-in-r" class="nav-link" data-scroll-target="#example-of-simple-linear-regression-in-r">Example of Simple Linear Regression in R</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">Multiple Regression</a>
+  <ul class="collapse">
+  <li><a href="#example-of-multiple-linear-regression-in-r" id="toc-example-of-multiple-linear-regression-in-r" class="nav-link" data-scroll-target="#example-of-multiple-linear-regression-in-r">Example of Multiple Linear Regression in R</a></li>
+  <li><a href="#examining-the-goodness-of-fit-measures-1" id="toc-examining-the-goodness-of-fit-measures-1" class="nav-link" data-scroll-target="#examining-the-goodness-of-fit-measures-1">Examining the Goodness of Fit Measures</a></li>
+  <li><a href="#examining-the-f-test-statistic-1" id="toc-examining-the-f-test-statistic-1" class="nav-link" data-scroll-target="#examining-the-f-test-statistic-1">Examining the F-Test Statistic</a></li>
+  <li><a href="#examining-the-hypotheses" id="toc-examining-the-hypotheses" class="nav-link" data-scroll-target="#examining-the-hypotheses">Examining the Hypotheses</a></li>
+  <li><a href="#interpreting-the-hypothesis-1" id="toc-interpreting-the-hypothesis-1" class="nav-link" data-scroll-target="#interpreting-the-hypothesis-1">Interpreting the Hypothesis</a></li>
+  </ul></li>
+  <li><a href="#the-p-value-method" id="toc-the-p-value-method" class="nav-link" data-scroll-target="#the-p-value-method">The P-value Method</a></li>
+  <li><a href="#multicollinerity" id="toc-multicollinerity" class="nav-link" data-scroll-target="#multicollinerity">Multicollinerity</a></li>
+  </ul></li>
+  <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Module 7: Correlation and Regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 9, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li>The main goal of this lesson is to underst&nbsp;and, conduct, and interpret both correlation and regression analyses. We will examine Pearson’s <span class="math inline">\(r\)</span> correlation coefficient and learn how to conduct and interpret an inferential statistical test using this common statistic. Additionally, we will explore regression models and their components, including computing the slope and intercept for simple linear regression and the multiple slopes and intercept for multiple linear regression. Finally, we will learn how to interpret the regression output from R, tying together these key analytical techniques.</li>
+</ul>
+<section id="at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
+<ul>
+<li>In order to succeed at this lesson, you will use a statistical model, called linear regression, that helps us understand an outcome variable and also allows us to make predictions for future instances, or the next occurrence. A linear regression model is quite commonly used in many fields and is often the foundation for future more advanced analysis like machine learning. Linear regression can be a fairly easy way to design and test a research model, and in doing so allows us to gauge helpful predictor variables in understanding a phenomenon. Not only can we understand a research model, but we can also make stronger predictions on the future.</li>
+</ul>
+</section>
+<section id="lesson-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
+<ul>
+<li>Compute and interpret Pearson’s r correlation coefficient.</li>
+<li>Conduct an inferential statistical test for Pearson’s r correlation coefficient.</li>
+<li>Explore the statistical model for a line.</li>
+<li>Compute the slope and intercept in a simple linear regression.</li>
+<li>Interpret a regression model significance and model fit.</li>
+</ul>
+</section>
+<section id="consider-while-reading" class="level3">
+<h3 class="anchored" data-anchor-id="consider-while-reading">Consider While Reading</h3>
+<ul>
+<li>In this lesson, we will focus on inference for correlation and regression analysis, learning how to conduct a correlation test as well as single and multiple linear regression tests. This builds on the scatterplots introduced in the Data Visualization lesson, which help us visually describe relationships between variables. By revisiting those concepts, we will explore how visualizations can aid in making inferences alongside regression and correlation results. Additionally, we will differentiate between ANOVA, which examines differences between means in categorical data, and linear regression, which focuses on estimating responses or predictions while forming a regression line.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="correlation" class="level1">
+<h1>Correlation</h1>
+<section id="covariance" class="level2">
+<h2 class="anchored" data-anchor-id="covariance">Covariance</h2>
+<ul>
+<li>Covariance (<span class="math inline">\(s_{xy}\)</span> or <span class="math inline">\(cov_{xy}\)</span>) is a numerical measure that describes the direction of the linear relationship between two variables, x and y and reveals the direction of that linear relationship.</li>
+<li>The formula for covariance is as follows:
+<ul>
+<li><span class="math inline">\(cov_{xy} = \sum^n_{i=1}(x_i-m_x)*(y_i-m_y)/(n-1)\)</span></li>
+<li>Where <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span> are the observed values for each observation, <span class="math inline">\(m_x\)</span> and <span class="math inline">\(m_y\)</span> are the mean values for each variable, <span class="math inline">\(i\)</span> represents an individual observation, and <span class="math inline">\(n\)</span> represents the sample size.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">8</span>, <span class="dv">4</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>devX <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>devY <span class="ot">&lt;-</span> y <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>covXY <span class="ot">&lt;-</span> <span class="fu">sum</span>(devX <span class="sc">*</span> devY)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>covXY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.333333</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cov() function in R.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.333333</code></pre>
+</div>
+</div>
+</section>
+<section id="correlation-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-coefficient">Correlation Coefficient</h2>
+<ul>
+<li>A correlation coefficient (<span class="math inline">\(r_{xy}\)</span>) describes both the direction and strength of the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. <span class="math inline">\(r_{xy} = cov_{sy}/(s_xs_y)\)</span> or using the standardized formula in the book:
+<ul>
+<li><span class="math inline">\(r_{xy} = \sum^n_{i=1}(z_x*z_y)/(n-1)\)</span></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculated manually</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>covXY<span class="sc">/</span>(<span class="fu">sd</span>(x) <span class="sc">*</span> <span class="fu">sd</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7102387</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cor() function in R.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7102387</code></pre>
+</div>
+</div>
+<section id="rules-for-the-correlation-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="rules-for-the-correlation-coefficient">Rules for the Correlation Coefficient</h3>
+<ul>
+<li>The correlation coefficient has the same sign as the covariance; however, its value ranges between −1 and +1 whereas <span class="math inline">\(-1 \le r_{xy} \le +1\)</span>.</li>
+<li>The absolute value of the coefficient reflects the strength of the correlation. So a correlation of −.70 is stronger than a correlation of +.50.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch8/Correlation.png" title="Correlation Coefficient" class="img-fluid figure-img"></p>
+<figcaption>Correlation Coefficient</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="interpreting-the-direction-of-the-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-direction-of-the-correlation">Interpreting the Direction of the Correlation</h2>
+<ul>
+<li>Negative correlations occur when one variable goes up and the other goes down.</li>
+<li>No correlation happens when there is no discernible pattern in how two variables vary.</li>
+<li>Positive correlations occur when one variable goes up, and the other one also goes up (or when one goes down, the other one does too); both variables move together in the same direction.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch8/RelationshipScatter.png" title="Correlation Scatterplots" class="img-fluid figure-img"></p>
+<figcaption>Correlation Scatterplots</figcaption>
+</figure>
+</div>
+<section id="scatterplots-to-visualize-relationship" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplots-to-visualize-relationship">Scatterplots to Visualize Relationship</h3>
+<ul>
+<li><p>Let’s do an example to first visualize the data, and then to calculate the correlation coefficient.</p></li>
+<li><p>First, read in a .csv called <em>DebtPayments.csv</em>. This data set has 26 observations and 4 variables:</p>
+<ul>
+<li>A character variable with a bunch of metropolitan areas listed;</li>
+<li>An integer numeric debt;</li>
+<li>A numeric variable Income;</li>
+<li>A numeric variable Unemployment.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/DebtPayments.csv"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Debt_Payments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   26 obs. of  4 variables:
+ $ Metropolitan.area: chr  "Washington, D.C." "Seattle" "Baltimore" "Boston" ...
+ $ Debt             : int  1285 1135 1133 1133 1104 1098 1076 1045 1024 1017 ...
+ $ Income           : num  103.5 81.7 82.2 89.5 75.9 ...
+ $ Unemployment     : num  6.3 8.5 8.1 7.6 8.1 9.3 10.6 12.4 12.9 9.7 ...</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Next, plot the relationship between 2 continuous variables.</p>
+<ul>
+<li>There are a few ways to write the plot command using ggplot. We went over these in the Data Visualization lesson. Again we said:</li>
+<li>Layer 1: ggplot() command with aes() command directly inside of it pointing to x and y variables.</li>
+<li>Layer 2: geom_point() command to add the observations as indicators in the chart.</li>
+<li>Layer 3 or more: many other optional additions like labs() command (for labels) or stat_smooth() command to generate a regression line.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Income, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="Scatterplot Using ggplot2 Generated by R" width="672"></p>
+</figure>
+</div>
+</div>
+</div></li>
+<li><p>In the above plot, there is a strong positive relationship (upward trend) that should be confirmed with a correlation test.</p></li>
+<li><p>In a second example below, we look at Unemployment as the X variable. This scatterplot is much more difficult to use in determining whether the correlation will be significant. It looks negative, but there is not a strong linear trend to the data. This will also need to be confirmed with a correlation test.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Unemployment, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="Scatterplot Using ggplot2 Generated by R" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>In many scatterplots using big data, the observations are too numerous to see a good relationship. In that case, the statistical test can trump this visual aid. However, in a lot of cases the scatterplot does help visualize the relationship between 2 continuous variables.</li>
+</ul>
+</section>
+<section id="interpreting-the-strength-of-the-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-strength-of-the-correlation">Interpreting the Strength of the Correlation</h3>
+<ul>
+<li>Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between a .2 and .5 is considered weak.</li>
+<li>The following is consistent with what is most generally used:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch8/CorrelationStrength.png" title="Correlation Strength" class="img-fluid figure-img"></p>
+<figcaption>Correlation Strength</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="interpreting-the-significance-of-the-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-significance-of-the-correlation">Interpreting the Significance of the Correlation</h2>
+<ul>
+<li>Correlation values should be tested alongside a p-value to confirm whether or not there is a correlation. The null is tested using a t-distribution specifically testing whether <span class="math inline">\(r = 0\)</span> or not, like the one-sample t-test section from the lesson 6.</li>
+<li>The null and alternative are listed below.
+<ul>
+<li><span class="math inline">\(H_0\)</span>: There is no relationship between the two variables (<span class="math inline">\(r = 0\)</span>).</li>
+<li><span class="math inline">\(H_A\)</span>: There is a relationship between the two variables (<span class="math inline">\(r \neq 0\)</span>).</li>
+</ul></li>
+<li>Even small correlations can be significant: In large datasets, even a small correlation, like .1, can be statistically significant due to the increased power that comes with a high sample size. It’s important to interpret both the strength of the correlation and its practical significance in context.</li>
+</ul>
+</section>
+<section id="statistical-significance-answers-the-question-is-the-effect-real" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-significance-answers-the-question-is-the-effect-real">Statistical significance answers the question: “Is the effect real?“</h2>
+<ul>
+<li><p>Statistical Significance:</p></li>
+<li><p>A result is statistically significant if it is unlikely to have occurred by random chance, given a pre-defined threshold (usually p &lt; 0.05).</p></li>
+<li><p>With larger sample sizes, even very small effects can become statistically significant because larger samples reduce variability. For example, a correlation of 0.1 can be statistically significant with enough data.</p></li>
+<li><p>Practical Significance:</p></li>
+<li><p>Practical significance answers the question: “Is the effect meaningful?“</p></li>
+<li><p>Practical significance refers to the real-world importance or relevance of a result. It asks, “Does this effect matter in practice?“</p></li>
+<li><p>Even if a result is statistically significant, it may not be large enough to have a meaningful impact on business decisions or outcomes.</p></li>
+</ul>
+<section id="cor.test-command" class="level3">
+<h3 class="anchored" data-anchor-id="cor.test-command">cor.test() Command</h3>
+<ul>
+<li>The cor() command gives you just the correlation coefficient. This command can be useful if you are testing many correlations at one time. In the below statement, I can use <span class="math inline">\(cor(Variable1, Variable2)\)</span> to see the correlation between 2 continuous variables.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8675115</code></pre>
+</div>
+</div>
+<ul>
+<li>The cor.test() command tests the hypothesis whether <span class="math inline">\(r=0\)</span> or not. This command comes with a p-value and t-test statistic (along with the correlation coefficient).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Debt_Payments$Income and Debt_Payments$Debt
+t = 8.544, df = 24, p-value = 9.66e-09
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.7231671 0.9392464
+sample estimates:
+      cor 
+0.8675115 </code></pre>
+</div>
+</div>
+<ul>
+<li>This test shows a strong positive correlation of .8675 (&gt;.8) which is significant. Our p-value is 9.66e-09 or &lt; .001 alpha level. This suggests that we reject the null hypothesis and support the alternative that <span class="math inline">\(r \neq 0\)</span> which confirms a correlation is present.</li>
+<li>We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between .723 and .939.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Debt_Payments$Income and Debt_Payments$Unemployment
+t = -3.0965, df = 24, p-value = 0.004928
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7636089 -0.1852883
+sample estimates:
+       cor 
+-0.5342931 </code></pre>
+</div>
+</div>
+<ul>
+<li>This test shows a moderate negative correlation of -.534 (&lt;.5 and .8) which is significant. Our p-value is 0.004928 or &lt; .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that <span class="math inline">\(r \neq 0\)</span> which confirms a correlation is present.</li>
+<li>We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between -.765 and -.185. This confidence interval is wider than the one listed above. This is due to the noise in the relationship we noted in the scatterplot - the correlation is weaker, the relationship does not look as linear, the confidence decreases. Even though this is true, we must note that we still found a significant correlation.</li>
+</ul>
+</section>
+</section>
+<section id="additional-examples" class="level2">
+<h2 class="anchored" data-anchor-id="additional-examples">Additional Examples</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Credit"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ID            Income           Limit           Rating     
+ Min.   :  1.0   Min.   : 10.35   Min.   :  855   Min.   : 93.0  
+ 1st Qu.:100.8   1st Qu.: 21.01   1st Qu.: 3088   1st Qu.:247.2  
+ Median :200.5   Median : 33.12   Median : 4622   Median :344.0  
+ Mean   :200.5   Mean   : 45.22   Mean   : 4736   Mean   :354.9  
+ 3rd Qu.:300.2   3rd Qu.: 57.47   3rd Qu.: 5873   3rd Qu.:437.2  
+ Max.   :400.0   Max.   :186.63   Max.   :13913   Max.   :982.0  
+     Cards            Age          Education        Gender    Student  
+ Min.   :1.000   Min.   :23.00   Min.   : 5.00    Male :193   No :360  
+ 1st Qu.:2.000   1st Qu.:41.75   1st Qu.:11.00   Female:207   Yes: 40  
+ Median :3.000   Median :56.00   Median :14.00                         
+ Mean   :2.958   Mean   :55.67   Mean   :13.45                         
+ 3rd Qu.:4.000   3rd Qu.:70.00   3rd Qu.:16.00                         
+ Max.   :9.000   Max.   :98.00   Max.   :20.00                         
+ Married              Ethnicity      Balance       
+ No :155   African American: 99   Min.   :   0.00  
+ Yes:245   Asian           :102   1st Qu.:  68.75  
+           Caucasian       :199   Median : 459.50  
+                                  Mean   : 520.01  
+                                  3rd Qu.: 863.00  
+                                  Max.   :1999.00  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Credit)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Income)  <span class="co">#0.7913776 moderate and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Income
+t = 25.826, df = 398, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.751651 0.825383
+sample estimates:
+      cor 
+0.7913776 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Balance)  <span class="co">#0.8636252 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Balance
+t = 34.176, df = 398, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8363997 0.8865997
+sample estimates:
+      cor 
+0.8636252 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Limit)  <span class="co">#0.9968797 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Limit
+t = 251.95, df = 398, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.9962026 0.9974363
+sample estimates:
+      cor 
+0.9968797 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## almost perfectly linear</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Limit)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Education)  <span class="co">#-0.03013563 no correlation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Education
+t = -0.60148, df = 398, p-value = 0.5479
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.12780969  0.06811737
+sample estimates:
+        cor 
+-0.03013563 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Age)  <span class="co">#0.103165 - between -.2 and .2 - so no relationship even though p-value &lt; .05 -- p-value fails at .01 level. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Age
+t = 2.0692, df = 398, p-value = 0.03917
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.005165528 0.199201690
+sample estimates:
+     cor 
+0.103165 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Age)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Cards)  <span class="co">#0.05323903 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Rating and Cards
+t = 1.0636, df = 398, p-value = 0.2881
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.04504785  0.15050509
+sample estimates:
+       cor 
+0.05323903 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Cards)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-to-t.test-and-anova" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-to-t.test-and-anova">Comparing to t.test and ANOVA</h2>
+<ul>
+<li>A t-test examines if there is a significant difference in the means of two groups on a dependent variable. For example, whether males and females differ in their credit ratings, where a correlation measures the strength and direction of a linear relationship between two continuous variables, such as Rating and Income.</li>
+<li>An independent t-test requires a categorical independent variable (e.g., Gender) with two levels and a continuous dependent variable (e.g., Rating), where a correlation requires two continuous variables.</li>
+<li>Both can provide insights into relationships in the dataset, but they address different questions. An independent t-test evaluates mean differences (group comparisons), while correlation evaluates relationships (continuous covariation). * A significant t-test does not imply a strong correlation between the grouping variable and the dependent variable; the correlation would depend on the coding of the categorical variable and the distribution of data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of an independent t.test using same dataset</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Gender, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Rating by Gender
+t = -0.17703, df = 393.54, p-value = 0.8596
+alternative hypothesis: true difference in means between group  Male and group Female is not equal to 0
+95 percent confidence interval:
+ -33.26095  27.76582
+sample estimates:
+ mean in group  Male mean in group Female 
+            353.5181             356.2657 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Gender, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Married, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  Rating by Married
+t = -0.74241, df = 340.4, p-value = 0.4584
+alternative hypothesis: true difference in means between group No and group Yes is not equal to 0
+95 percent confidence interval:
+ -42.54190  19.22762
+sample estimates:
+ mean in group No mean in group Yes 
+         347.8000          359.4571 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Married, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>An ANOVA tests for significant differences in the means of three or more groups on a dependent variable. For example, whether credit ratings differ across ethnic groups, where a correlation examines the strength of the relationship between two continuous variables.</li>
+<li>An Anova requires a categorical independent variable (with three or more levels) and a continuous dependent variable, where a correlation requires two continuous variables.</li>
+<li>ANOVA focuses on group comparisons (e.g., Rating differences across Ethnicity), while correlation looks at how two variables change together.A significant ANOVA could suggest that the categorical grouping variable explains some variance in the dependent variable, but this variance is not quantified as a relationship strength (as correlation would provide).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of An ANOVA using same dataset</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>anova1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rating <span class="sc">~</span> Ethnicity, <span class="at">data =</span> Credit)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anova1)  <span class="co">#no group differences - no need for a post hoc test. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: Rating
+           Df  Sum Sq Mean Sq F value Pr(&gt;F)
+Ethnicity   2   19388  9694.1  0.4037 0.6681
+Residuals 397 9532496 24011.3               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Ethnicity, Rating, <span class="at">fill =</span> Ethnicity)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="limitations-of-correlation-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-correlation-analysis">Limitations of Correlation Analysis</h2>
+<ul>
+<li><p>Note that a correlation is the first step in understanding causality. Correlation and causality are closely related but fundamentally different concepts in data analysis. Correlation refers to the statistical relationship between two variables, indicating how changes in one variable are associated with changes in another. However, it does not imply that one variable causes the other to change. Causality, on the other hand, goes beyond mere association to establish a cause-and-effect relationship, where one variable directly influences the other. Determining causality requires meeting specific criteria, including significant association, temporal precedence (the cause precedes the effect), and ruling out alternative explanations or confounding variables. While correlation is often the first step in exploring potential relationships, additional analysis—such as experimental design or causal modeling—is necessary to confirm causality. This distinction highlights the importance of critical thinking when interpreting statistical results, as a strong correlation alone does not prove that one variable is the cause of another.</p></li>
+<li><p>To determine a causal model, you need the following:</p></li>
+</ul>
+<ol type="1">
+<li>Significant Correlation: Statistically significant relationship between the variables.</li>
+<li>Temporal Precedence: Causal variable occurred prior to the other variable.</li>
+<li>Eliminate Alternate Variables: No other factors can account for the cause.</li>
+</ol>
+<ul>
+<li>Some limitations are as follows:
+<ul>
+<li>The correlation coefficient captures only a linear relationship.</li>
+<li>The correlation coefficient may not be a reliable measure in the presence of outliers.</li>
+<li>Even if two variables are highly correlated, one does not necessarily cause the other.</li>
+</ul></li>
+<li>When interpreting results, note that lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.</li>
+</ul>
+</section>
+</section>
+<section id="the-linear-regression-model" class="level1">
+<h1>The Linear Regression Model</h1>
+<section id="overview-of-the-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="overview-of-the-linear-regression">Overview of the Linear Regression</h3>
+<ul>
+<li>Linear regression analysis is a predictive modelling technique used for building mathematical and statistical models that characterize relationships between a dependent (continuous) variable and one or more independent, or explanatory variables (continuous or categorical), all of which are numerical.</li>
+<li>This technique is useful in forecasting, time series modelling, and finding the causal effect between variables.</li>
+<li>Simple linear regression involves one <em>explanatory variable</em> and one <em>response variable</em>.
+<ul>
+<li>Explanatory variable: The variable used to explain the dependent variable, usually denoted by X. Also known as an independent variable or a predictor variable.</li>
+<li>Response variable: The variable we wish to explain, usually denoted by Y. Also known as a dependent variable or outcome variable.</li>
+</ul></li>
+<li>Multiple linear regression involves two or more <em>explanatory</em> variables, while still only one <em>response</em> variable.</li>
+</ul>
+</section>
+<section id="examples-of-independent-and-dependent-variables" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-independent-and-dependent-variables">Examples of Independent and Dependent Variables</h3>
+<ul>
+<li>Example Question: Does increasing the marketing budget lead to higher sales revenue?
+<ul>
+<li>Independent Variable: Marketing budget (how much money is spent on advertising and promotions).</li>
+<li>Dependent Variable: Sales revenue (how much income the business generates from sales).</li>
+</ul></li>
+<li>Example Question: Does additional training improve employee productivity?
+<ul>
+<li>Independent Variable: Hours of employee training.</li>
+<li>Dependent Variable: Employee productivity (e.g., units produced per hour or sales closed per month).</li>
+</ul></li>
+<li>Example Question: Does being a member of a loyalty program increase the frequency of repeat purchases?
+<ul>
+<li>Independent Variable: Participation in a loyalty program (whether a customer is a member or not).</li>
+<li>Dependent Variable: Number of repeat purchases by the customer.</li>
+</ul></li>
+</ul>
+</section>
+<section id="estimating-using-a-simple-linear-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-using-a-simple-linear-regression-model">Estimating Using a Simple Linear Regression Model</h3>
+<ul>
+<li>While the correlation coefficient may establish a linear relationship, it does not suggest that one variable <em>causes</em> the other.</li>
+<li>With regression analysis, we explicitly assume that the response variable is influenced by other explanatory variables.</li>
+<li>Using regression analysis, we may <em>predict</em> the response variable given values for our explanatory variables.</li>
+</ul>
+</section>
+<section id="inexact-relationships" class="level3">
+<h3 class="anchored" data-anchor-id="inexact-relationships">Inexact Relationships</h3>
+<ul>
+<li>If the value of the response variable is uniquely determined by the values of the explanatory variables, we say that the relationship is deterministic.
+<ul>
+<li>But if, as we find in most fields of research, that the relationship is inexact due to omission of relevant factors, we say that the relationship is inexact.</li>
+<li>In regression analysis, we include a stochastic error term, that acknowledges that the actual relationship between the response and explanatory variables is not deterministic.</li>
+</ul></li>
+</ul>
+</section>
+<section id="regression-as-anova" class="level3">
+<h3 class="anchored" data-anchor-id="regression-as-anova">Regression as ANOVA</h3>
+<ul>
+<li>ANOVA conducts an F - test to determine whether variation in Y is due to varying levels of X.</li>
+<li>ANOVA is used to test for significance of regression:
+<ul>
+<li><span class="math inline">\(H_0\)</span>: population slope coefficient <span class="math inline">\(\beta_1\)</span> <span class="math inline">\(=\)</span> 0</li>
+<li><span class="math inline">\(H_A\)</span>: population slope coefficient <span class="math inline">\(\beta_1\)</span> <span class="math inline">\(\neq\)</span> 0</li>
+</ul></li>
+<li>R reports the p-value (Significant F).</li>
+<li>Rejecting <span class="math inline">\(H_0\)</span> indicates that X explains variation in Y.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch9/LinearReg.png" title="Linear Regression Models" class="img-fluid figure-img"></p>
+<figcaption>Linear Regression Models</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-simple-linear-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-simple-linear-regression-model">The Simple Linear Regression Model</h3>
+<ul>
+<li>The simple linear regression model is defined as <span class="math inline">\(y= \beta_0+\beta_1 𝑥+\varepsilon_1\)</span>, where <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are the response and explanatory variables, respectively and <span class="math inline">\(\varepsilon_1\)</span> is the random error term. <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the unknown parameters to be estimated.</li>
+<li>By fitting our data to the model, we obtain the equation <span class="math inline">\(\hat{y} = b_0 + b_1*x\)</span>, where <span class="math inline">\(\hat{y}\)</span> is the estimated response variable, <span class="math inline">\(b_0\)</span> is the estimate of <span class="math inline">\(\beta_0\)</span> (Intercept) and <span class="math inline">\(b_1\)</span> is the estimate of <span class="math inline">\(\beta_1\)</span> (Slope).</li>
+<li>Sometimes, this equation can be represented using different variable names like <span class="math inline">\(y=mx+b\)</span> This is the same equation as above, but different notation.</li>
+<li>Since the predictions cannot be totally accurate, the difference between the predicted and actual value represents the residual <span class="math inline">\(e=y-\hat{y}\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch9/RegressEquation.png" title="Regression Equation" class="img-fluid figure-img"></p>
+<figcaption>Regression Equation</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-least-squares-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="the-least-squares-estimates">The Least Squares Estimates</h3>
+<ul>
+<li>The two parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are estimated by minimizing the sum of squared residuals.
+<ul>
+<li>The slope coefficient <span class="math inline">\(\beta_1\)</span> is estimated as <span class="math inline">\(b_1 = \sum(x_i-\bar{x}*y_i-\bar{y})/\sum(x_i-\bar{x})^2\)</span></li>
+<li>The intercept parameter <span class="math inline">\(\beta_0\)</span> is estimated as <span class="math inline">\(b_0 = \hat{y}-b_1*\bar{x}\)</span></li>
+<li>And we use this information to make the regression equation given the formula above: <span class="math inline">\(\hat{y} = b_0 + b_1*x\)</span>,</li>
+</ul></li>
+</ul>
+</section>
+<section id="goodness-of-fit" class="level3">
+<h3 class="anchored" data-anchor-id="goodness-of-fit">Goodness of Fit</h3>
+<ul>
+<li>Goodness of fit refers to how well the data fit the regression line. I will introduce three measures to judge how well the sample regression fits the data.
+<ol type="1">
+<li>Standard Error of the Estimate</li>
+<li>The Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</li>
+<li>The Adjusted <span class="math inline">\(R^2\)</span></li>
+</ol></li>
+<li>In order to make sense of the goodness of fit measures, we need to go back to the idea of explained and unexplained variance we learned in the ANOVA lesson. Variance can also be known as a difference.<br>
+</li>
+<li>Unexplained Variance = SSE or Sum of Squares Error: This equals the sum of squared difference between A and B, or between the sum of squares of the difference between observation (<span class="math inline">\(y_i\)</span>) and our predicted value of y (<span class="math inline">\(\hat{y}\)</span>).
+<ul>
+<li><span class="math inline">\(SSE = \sum^n_{i=1}(y_i - \hat{y})^2\)</span></li>
+</ul></li>
+<li>Explained Variance = SSR or Sum of Squares Regression: This equals the sum of squared difference between B and C, or between the sum of squares of the difference between our predicted value (<span class="math inline">\(\hat{y}\)</span>) and the mean of y (<span class="math inline">\(\bar{y}\)</span>).
+<ul>
+<li><span class="math inline">\(SSR = \sum^n_{i=1}(\hat{y} - \bar{y})^2\)</span></li>
+</ul></li>
+<li>Total Variance = SST or Total Sum of Squares: This equals the sum of squared difference between A and C, or between the sum of squares of the difference between observation (<span class="math inline">\(y_i\)</span>) and the mean of y (<span class="math inline">\(\bar{y}\)</span>).
+<ul>
+<li>The SST can be broken down into two components: the variation explained by the regression equation (the regression sum of squares or SSR) and the unexplained variation (the error sum of squares or SSE).</li>
+<li><span class="math inline">\(SST = \sum^n_{i=1}(y_i - \bar{y})^2\)</span></li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch9/SS.png" title="Visualization of Sum of Squares" class="img-fluid figure-img"></p>
+<figcaption>Visualization of Sum of Squares (SS)</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-standard-error-of-the-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="the-standard-error-of-the-estimate">The Standard Error of the Estimate</h3>
+<ul>
+<li>The Standard Error of the Estimate, also known as the Residual Standard Error (RSE) (and labelled such in R), is the variability between observed (<span class="math inline">\(y_i\)</span>) and predicted (<span class="math inline">\(\hat{y}\)</span>) values, targeting the unexplained variance in the figure above. This measure is a lack of fit of the model to the data.</li>
+<li>To compute the standard error of the estimate, we first compute the SSE and the MSE.
+<ul>
+<li>Sum of Squares Error: <span class="math inline">\(SSE = \sum^n_{i=1}e^2_i = \sum^n_{i=1}(y_i - \hat{y})^2\)</span></li>
+<li>Dividing SSE by the appropriate degrees of freedom, n – k – 1, yields the mean squared error:
+<ul>
+<li>Mean Squared Error: <span class="math inline">\(MSE = SSE/(n-k-1)\)</span></li>
+</ul></li>
+<li>The square root of the MSE is the standard error of the estimate, se.
+<ul>
+<li>Standard Error of Estimate: <span class="math inline">\(se = \sqrt(MSE) = \sqrt(SSE/(n-k-1))\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-coefficient-of-determination-r2" class="level3">
+<h3 class="anchored" data-anchor-id="the-coefficient-of-determination-r2">The Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</h3>
+<ul>
+<li><p>Coefficient of determination refers to the percentage of variance in one variable that is accounted for by another variable or by a group of variables.</p></li>
+<li><p>This measure of R-squared is a measure of the “fit” of the line to the data.</p></li>
+<li><p>The Coefficient of Determination, denoted as <span class="math inline">\(R^2\)</span>, is a statistical measure that indicates the proportion of variance in the dependent variable (<span class="math inline">\(y\)</span>) that is explained by the independent variable(s) (x) in a regression model. It is calculated as: SSR/SST or 1-SSE/SST. *<span class="math inline">\(R^2\)</span> ranges from 0 to 1:</p>
+<ul>
+<li><span class="math inline">\(R^2\)</span>=0: None of the variance in <span class="math inline">\(y\)</span> is explained by the model.</li>
+<li><span class="math inline">\(R^2\)</span>=1: The model explains all the variance in y. A higher <span class="math inline">\(R^2\)</span> indicates a better fit of the model to the data.</li>
+</ul></li>
+<li><p><span class="math inline">\(R^2\)</span> = 1-SSE/SST where <span class="math inline">\(SSE = \sum^n_{i=1}(y_i - \hat{y})^2\)</span> and <span class="math inline">\(SST = \sum^n_{i=1}(y_i - \bar{y})^2\)</span></p>
+<ul>
+<li><span class="math inline">\(R^2\)</span> can also be computed by SSR/SST, which provides the same answer as above.</li>
+<li>This measure of fit targets both the unexplained and the explained variance.</li>
+<li><span class="math inline">\(R^2\)</span> can also be calculated using the formula for Pearson’s r and squaring it. This gives us the same answer.</li>
+</ul></li>
+<li><p>Pearson’s <span class="math inline">\(r\)</span> is a statistic that indicates the strength and direction of the relationship between two numeric variables that meet certain assumptions.</p>
+<ul>
+<li>(Pearson’s <span class="math inline">\(r\)</span>)<span class="math inline">\(^2\)</span> = <span class="math inline">\(r^2_{xy} = (cov_{xy}/(s_x*s_y))^2\)</span>.</li>
+</ul></li>
+<li><p>You need to see how all these formulas relate to see why all these formulas give you the same answer.</p></li>
+</ul>
+<section id="interpreting-r2" class="level4">
+<h4 class="anchored" data-anchor-id="interpreting-r2">Interpreting (<span class="math inline">\(R^2\)</span>)</h4>
+<ul>
+<li>This measure is easier to interpret over standard error. In particular, the (<span class="math inline">\(R^2\)</span>) quantifies the fraction of variation in the response variable that is explained by changes in the explanatory variables.</li>
+<li>The (<span class="math inline">\(R^2\)</span>) gives you a score between 0 and 1. A score of 1 indicates that your Y variable is perfectly explained by your X variable or variables (where we only have one in simple regression).</li>
+<li>The <span class="math inline">\(R^2\)</span> measure has strength of determination like the correlation coefficient, only all measures are from 0 to 1.
+<ul>
+<li>The closer you get to one, the more <em>explained variance</em> we achieve.</li>
+<li>A score of 0 indicates that no variance is explained by the X variable or variables. In this case, the variable would not be a significant predictor variable of Y.</li>
+<li>Again, the strength of the relationship varies by field, but generally, a .2 to a .5 is considered weak, a .5 to a .8 is considered moderate, and above a .8 is considered strong.</li>
+</ul></li>
+</ul>
+</section>
+<section id="r-output" class="level4">
+<h4 class="anchored" data-anchor-id="r-output">R Output</h4>
+<ul>
+<li>We do see the <span class="math inline">\(R^2\)</span> in our R output labelled Multiple R-squared.</li>
+</ul>
+</section>
+<section id="limitations-of-the-coefficient-of-determination-r2" class="level4">
+<h4 class="anchored" data-anchor-id="limitations-of-the-coefficient-of-determination-r2">Limitations of The Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</h4>
+<ul>
+<li>More explanatory variables always result in a higher <span class="math inline">\(R^2\)</span>.</li>
+<li>But some of these variables may be unimportant and should not be in the model.</li>
+<li>This is only applicable with multiple regression, discussed below.</li>
+</ul>
+</section>
+</section>
+<section id="the-adjusted-r2" class="level3">
+<h3 class="anchored" data-anchor-id="the-adjusted-r2">The Adjusted <span class="math inline">\(R^2\)</span></h3>
+<ul>
+<li><p>The Adjusted Coefficient of Determination, denoted as Adjusted <span class="math inline">\(R^2\)</span> modifies <span class="math inline">\(R^2\)</span> to account for the number of predictors in the model relative to the number of data points. It is calculated as Adjusted <span class="math inline">\(R^2 = 1-(1-R^2)*((n-1)/(n-k-1))\)</span>, where where n is the sample size and p is the number of predictors.</p></li>
+<li><p>In simple linear regression, <span class="math inline">\(R^2\)</span> is generally more appropriate than Adjusted <span class="math inline">\(R^2\)</span> because there is only one predictor variable in the model.</p></li>
+<li><p>The Adjusted <span class="math inline">\(R^2\)</span> tries to balance the raw explanatory power against the desire to include only important predictors.</p>
+<ul>
+<li>Adjusted <span class="math inline">\(R^2 = 1-(1-R^2)*((n-1)/(n-k-1))\)</span>.</li>
+<li>The Adjusted <span class="math inline">\(R^2\)</span> penalizes the <span class="math inline">\(R^2\)</span> for adding additional explanatory variables.</li>
+</ul></li>
+</ul>
+<section id="r-output-1" class="level4">
+<h4 class="anchored" data-anchor-id="r-output-1">R Output</h4>
+<ul>
+<li>With our other goodness-of-fit measures, we typically allow the computer to compute the Adjusted <span class="math inline">\(R^2\)</span> using commands in R.<br>
+</li>
+<li>Therefore, we do see the Adjusted <span class="math inline">\(R^2\)</span> in our R output labelled Adjusted R-squared.</li>
+</ul>
+</section>
+</section>
+<section id="example-of-simple-linear-regression-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-simple-linear-regression-in-r">Example of Simple Linear Regression in R</h3>
+<ul>
+<li><p>The broad steps are the same as we used in Chapter 6 and 7 when setting up the t-tests and ANOVA hypothesis: 1. set up the hypothesis 2. compute the Test Statistic and calculate probability 3. interpret results and write a conclusion.</p></li>
+<li><p>Step 1: Set Up the Null and Alternative Hypothesis</p></li>
+<li><p><span class="math inline">\(H_0\)</span>: The slope of the line is equal to zero.</p></li>
+<li><p><span class="math inline">\(H_A\)</span>: The slope of the line is not equal to zero.</p></li>
+<li><p>Step 2: Compute the Test Statistic and Calculate Probability</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/DebtPayments.csv"</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>Simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(Debt <span class="sc">~</span> Income, <span class="at">data =</span> Debt_Payments)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Debt ~ Income, data = Debt_Payments)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-107.087  -38.767   -5.828   50.137  101.619 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  210.298     91.339   2.302   0.0303 *  
+Income        10.441      1.222   8.544 9.66e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 63.26 on 24 degrees of freedom
+Multiple R-squared:  0.7526,    Adjusted R-squared:  0.7423 
+F-statistic:    73 on 1 and 24 DF,  p-value: 9.66e-09</code></pre>
+</div>
+</div>
+<ul>
+<li>Step 3: Interpret the Probability and Write a Conclusion</li>
+<li>We interpret the probability and write a conclusion after looking at the following:</li>
+</ul>
+<ol type="1">
+<li>Goodness of Fit Measures</li>
+<li>The F-test statistic</li>
+<li>The p-value from the hypothesis</li>
+</ol>
+<ul>
+<li>We then can interpret the hypothesis and make the regression equation if needed to make predictions.</li>
+</ul>
+<section id="examining-the-goodness-of-fit-measures" class="level4">
+<h4 class="anchored" data-anchor-id="examining-the-goodness-of-fit-measures">Examining the Goodness of Fit Measures</h4>
+<ul>
+<li><p>Like the ANOVA, we need the summary() command to see the regression output.</p></li>
+<li><p>This output includes the following:</p>
+<ul>
+<li>Standard Error of Estimate at 63.26</li>
+<li>a <span class="math inline">\(R^2\)</span> of 0.7526.</li>
+<li>an Adjusted <span class="math inline">\(R^2\)</span> of 0.7423</li>
+</ul></li>
+<li><p>We do not really see a difference in <span class="math inline">\(R^2\)</span> and the Adjusted <span class="math inline">\(R^2\)</span> because we only have a simple linear regression, which includes one X. The other thing that could create a difference between these measures is having a small sample size. A small sample size could adjust the <span class="math inline">\(R^2\)</span> down (like it did a little here <span class="math inline">\(n=28\)</span>). In both cases, a score around .75 indicates that we are explaining about 75% of the variance in Debt Payments, which is specifically stated as 75.26% in the <span class="math inline">\(R^2\)</span> value.</p></li>
+<li><p>The Standard Error of Estimate - known in R as the RSE or Residual Standard Error at 63.26.</p></li>
+<li><p>The RSE represents the average amount by which the observed values deviate from the predicted values</p></li>
+<li><p>The RSE has the same units as the dependent variable y, making it directly interpretable in the context of the problem.</p>
+<ul>
+<li>The scale of income is in 1000s.</li>
+<li>Therefore, for every 1000 dollars difference in Income we could be off on our debt payments by 63.26 dollars.</li>
+</ul></li>
+<li><p>Again, most statisticians interpret the <span class="math inline">\(R^2\)</span> and the adjusted <span class="math inline">\(R^2\)</span> over the RSE.</p></li>
+</ul>
+</section>
+<section id="examining-the-f-test-statistic" class="level4">
+<h4 class="anchored" data-anchor-id="examining-the-f-test-statistic">Examining the F-Test Statistic</h4>
+<ul>
+<li>The F-statistic is a ratio of explained information (in the numerator) to unexplained information (in the denominator). If a model explains more than it leaves unexplained, the numerator is larger and the F-statistic is greater than 1. F-statistics that are much greater than 1 are explaining much more of the variation in the outcome than they leave unexplained. Large F-statistics are more likely to be statistically significant.</li>
+<li>We see a F-statistic in our output with a p-value of 9.66e-09, which is less than .05. This indicates that our overall model is significant, which in simple regression means that our one X predictor variable is also significant. If this F-statistic is significant, we can interpret the hypothesis.</li>
+</ul>
+</section>
+<section id="examining-the-hypothesis" class="level4">
+<h4 class="anchored" data-anchor-id="examining-the-hypothesis">Examining the Hypothesis</h4>
+<ul>
+<li>We see a p-value on the Income row of 9.66e-09 from a t-value. This is also significant at .05 level. This p-value is the same as the F-test statistic because we only have one X variable.</li>
+<li>This significance means our predictor variable does influence the Y variable and that we can reject the null hypothesis and show support for our alternative hypothesis.</li>
+<li>This means Income does influence Debt Payments.</li>
+</ul>
+</section>
+<section id="interpreting-the-hypothesis" class="level4">
+<h4 class="anchored" data-anchor-id="interpreting-the-hypothesis">Interpreting the Hypothesis</h4>
+<ul>
+<li>A <span class="math inline">\(b_1\)</span> estimate of 10.441 indicates that for 1000 dollars of Income (again our data is in 1000s), the payment of dept will increase by 10.441.</li>
+<li>A <span class="math inline">\(b_0\)</span> estimate of 210.298 indicates where the regression line will start given a Y at 0.
+<ul>
+<li>This gives us a regression equation at <span class="math inline">\(\hat{y} = 210.298 + 10.441*Income\)</span></li>
+<li>We can graph this regression line using the abline() command on our plot we did earlier.</li>
+<li>As you can see from the chart, there was no data at the Y intercept, but if I extend the chart out, it does hit the y axis at 210 like stated.</li>
+<li>Also from the chart, we note that for each unit of income we go to the right, we go up by 10.441 units in dept payments.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Debt <span class="sc">~</span> Income, <span class="at">data =</span> Debt_Payments, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">120</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1350</span>))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(Simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="Scatterplot of Debt_Payments" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="predictions" class="level3">
+<h3 class="anchored" data-anchor-id="predictions">Predictions</h3>
+<ul>
+<li>We can calculate this using the regression equation or use the predict() command in order to calculate different values of y given values of x based on our regression equation we got in the step above.</li>
+<li>The coef() function returns the model’s coefficients which are needed to make the regression equation.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What would be your debt payments if Income was 100 ( for 100,000)</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(Simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)      Income 
+  210.29768    10.44111 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fl">210.298</span> <span class="sc">+</span> <span class="fl">10.441</span> <span class="sc">*</span> (<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1254.398</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(Simple, <span class="fu">data.frame</span>(<span class="at">Income =</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+1254.408 </code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression">Multiple Regression</h2>
+<ul>
+<li><p>Multiple regression allows us to explore how several <em>explanatory</em> variables influence the <em>response</em> variable.</p></li>
+<li><p>Suppose there are <span class="math inline">\(k\)</span> explanatory variables. The multiple linear regression model is defined as: <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \ ⋯ + \beta_kx_k +\varepsilon\)</span></p></li>
+<li><p>Where:</p>
+<ul>
+<li><span class="math inline">\(y\)</span> is the dependent variable,</li>
+<li><span class="math inline">\(x_1, ⋯, x_k\)</span> are independent explanatory variables,</li>
+<li><span class="math inline">\(\beta_0\)</span> is the intercept term,</li>
+<li><span class="math inline">\(\beta_1 ⋯, \beta_k\)</span> are the regression coefficients for the independent variables,</li>
+<li><span class="math inline">\(varepsilon\)</span> is the random error term</li>
+</ul></li>
+<li><p>We estimate the regression coefficients—called partial regression coefficients — <span class="math inline">\(b_0, b_1, b_2,… b_k\)</span>, then use the model: <span class="math inline">\(\hat{y} = b_0 + b_1x_1 + b_2x_2 + \ ... + b_kx_k\)</span> .</p></li>
+<li><p>The partial regression coefficients represent the expected change in the dependent variable when the associated independent variable is increased by one unit while the values of all other independent variables are held constant.</p></li>
+<li><p>For example, if there are <span class="math inline">\(k = 3\)</span> explanatory variables, the value <span class="math inline">\(b_1\)</span> estimates how a change in <span class="math inline">\(x_1\)</span> will influence <span class="math inline">\(y\)</span> assuming <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span> are held constant.</p></li>
+</ul>
+<section id="example-of-multiple-linear-regression-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-multiple-linear-regression-in-r">Example of Multiple Linear Regression in R</h3>
+<ul>
+<li>The steps to multiple linear regression are the same as simple linear regression except we should have more than one hypothesis.</li>
+</ul>
+<ol type="1">
+<li>Step 1: Set up the null and alternative hypotheses</li>
+</ol>
+<ul>
+<li>Hypothesis 1: Income affects Debt Payments.
+<ul>
+<li><span class="math inline">\(H_0\)</span>: The slope of the line in regards to Income is equal to zero.</li>
+<li><span class="math inline">\(H_A\)</span>: The slope of the line in regards to Income is not equal to zero.</li>
+</ul></li>
+<li>Hypothesis 2: Unemployment affects Debt Payments.
+<ul>
+<li><span class="math inline">\(H_0\)</span>: The slope of the line in regards to Unemployment is equal to zero.</li>
+<li><span class="math inline">\(H_A\)</span>: The slope of the line in regards to Unemployment is not equal to zero.</li>
+</ul></li>
+</ul>
+<ol start="2" type="1">
+<li>Step 2: Compute the test statistic and calculate probability</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/DebtPayments.csv"</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>Multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(Debt <span class="sc">~</span> Income <span class="sc">+</span> Unemployment, <span class="at">data =</span> Debt_Payments)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Multiple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Debt ~ Income + Unemployment, data = Debt_Payments)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-110.456  -38.454   -5.836   51.156  102.121 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  198.9956   156.3619   1.273    0.216    
+Income        10.5122     1.4765   7.120 2.98e-07 ***
+Unemployment   0.6186     6.8679   0.090    0.929    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 64.61 on 23 degrees of freedom
+Multiple R-squared:  0.7527,    Adjusted R-squared:  0.7312 
+F-statistic:    35 on 2 and 23 DF,  p-value: 1.054e-07</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Step 3: Interpret the probability and write a conclusion</li>
+</ol>
+<ul>
+<li>We interpret the probability and write a conclusion after looking at the following:
+<ul>
+<li>Goodness of Fit Measures</li>
+<li>The F-test statistic</li>
+<li>The p-values from the hypotheses</li>
+</ul></li>
+<li>We then can interpret the hypotheses and make the regression equation if needed to make predictions.</li>
+</ul>
+</section>
+<section id="examining-the-goodness-of-fit-measures-1" class="level3">
+<h3 class="anchored" data-anchor-id="examining-the-goodness-of-fit-measures-1">Examining the Goodness of Fit Measures</h3>
+<ul>
+<li>Like the ANOVA, we need the summary() command to see the regression output.</li>
+<li>This output includes the following:
+<ul>
+<li>Standard error of estimate at 64.61 - was previously 63.26 with simple regression.</li>
+<li>a <span class="math inline">\(R^2\)</span> of 0.7527 - was previously 0.7526 with simple regression.</li>
+<li>an Adjusted <span class="math inline">\(R^2\)</span> of 0.7312 - was previously 0.7423 with simple regression.</li>
+</ul></li>
+<li>Looking at the goodness of fit indices, they suggest that we are not explaining anything more by adding the unemployment variable over what we had with the Income variable. Our RSE and <span class="math inline">\(R^2\)</span> are about the same, and our adjusted <span class="math inline">\(R^2\)</span> has gone down - again paying the price for including an unnecessary variable.</li>
+</ul>
+</section>
+<section id="examining-the-f-test-statistic-1" class="level3">
+<h3 class="anchored" data-anchor-id="examining-the-f-test-statistic-1">Examining the F-Test Statistic</h3>
+<ul>
+<li>We see a overall F-statistic in our output with a p-value of 1.054e-07, which is less than .05. This indicates that our overall model is significant - which in multiple regression means that <em>at least one</em> X predictor variable is significant. If this F-statistic is significant, we can interpret the hypotheses.</li>
+</ul>
+</section>
+<section id="examining-the-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="examining-the-hypotheses">Examining the Hypotheses</h3>
+<ul>
+<li>Hypothesis 1: The output shows a p-value on the Income row of 2.98e-07 from a t-value. This was significant in our simple regression model, and is still significant at .05 level here. This significance means our predictor variable does influence the Y variable and that we can reject the null hypothesis and show support for our alternative hypothesis.</li>
+<li>Hypothesis 2: The output shows a p-value on the Unemployment row of 0.929 from a t-value. This is <em>NOT</em> significant at any appropriate level of alpha. This lack of significance means our predictor variable does <em>NOT</em> influence the Y variable and that we fail to reject the null hypothesis that there is a slope.</li>
+</ul>
+</section>
+<section id="interpreting-the-hypothesis-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-hypothesis-1">Interpreting the Hypothesis</h3>
+<ul>
+<li>Because Unemployment is not significant, we should drop it from the model before creating the regression equation. The extra variable is only adding <em>noise</em> to our model and not adding anything useful in understanding debt payments.</li>
+</ul>
+</section>
+</section>
+<section id="the-p-value-method" class="level2">
+<h2 class="anchored" data-anchor-id="the-p-value-method">The P-value Method</h2>
+<ul>
+<li><p>When you have a lot of predictors, it can be difficult to come up with a good model.</p></li>
+<li><p>A common criteria is to remove based on the highest p-value.</p></li>
+<li><p>Remove indicators until all variables are significant, and none are insignificant.</p></li>
+<li><p>As we drop variables, we also want to keep an eye on the adjusted R-Squared to make sure it does not significantly decrease. It should stay about the same if we drop variables that are not helpful in understanding the model, and could improve because we are decreasing the number of variables being evaluated.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Credit"</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   400 obs. of  12 variables:
+ $ ID       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Income   : num  14.9 106 104.6 148.9 55.9 ...
+ $ Limit    : int  3606 6645 7075 9504 4897 8047 3388 7114 3300 6819 ...
+ $ Rating   : int  283 483 514 681 357 569 259 512 266 491 ...
+ $ Cards    : int  2 3 4 3 2 4 2 2 5 3 ...
+ $ Age      : int  34 82 71 36 68 77 37 87 66 41 ...
+ $ Education: int  11 15 11 11 16 10 12 9 13 19 ...
+ $ Gender   : Factor w/ 2 levels " Male","Female": 1 2 1 2 1 1 2 1 2 2 ...
+ $ Student  : Factor w/ 2 levels "No","Yes": 1 2 1 1 1 1 1 1 1 2 ...
+ $ Married  : Factor w/ 2 levels "No","Yes": 2 2 1 1 2 1 1 1 1 2 ...
+ $ Ethnicity: Factor w/ 3 levels "African American",..: 3 2 2 2 3 3 1 2 3 1 ...
+ $ Balance  : int  333 903 580 964 331 1151 203 872 279 1350 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Removing variables that are of no interest to the model based on</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="do">## what we have learned so far.  The following lines removes the</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="do">## categorical variables, Gender, Student, Married, and Ethnicity. It</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="do">## also removed the ID because that is not a helpful variable.</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>Credit <span class="ot">&lt;-</span> <span class="fu">select</span>(Credit, <span class="sc">-</span>Gender, <span class="sc">-</span>Student, <span class="sc">-</span>Married, <span class="sc">-</span>Ethnicity, <span class="sc">-</span>ID)</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>creditlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Balance <span class="sc">~</span> ., <span class="at">data =</span> Credit)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Balance ~ ., data = Credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-227.25 -113.15  -42.06   45.82  542.97 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -477.95809   55.06529  -8.680  &lt; 2e-16 ***
+Income        -7.55804    0.38237 -19.766  &lt; 2e-16 ***
+Limit          0.12585    0.05304   2.373  0.01813 *  
+Rating         2.06310    0.79426   2.598  0.00974 ** 
+Cards         11.59156    7.06670   1.640  0.10174    
+Age           -0.89240    0.47808  -1.867  0.06270 .  
+Education      1.99828    2.59979   0.769  0.44257    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 161.6 on 393 degrees of freedom
+Multiple R-squared:  0.8782,    Adjusted R-squared:  0.8764 
+F-statistic: 472.5 on 6 and 393 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple R-squared: 0.8782, Adjusted R-squared: 0.8764</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Education has the highest p-value, so it is removed from analysis. We use the minus sign to remove the variable in the lm function.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>creditlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Balance <span class="sc">~</span> . <span class="sc">-</span> Education, <span class="at">data =</span> Credit)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Balance ~ . - Education, data = Credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-231.37 -113.46  -39.55   41.66  544.35 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -449.36101   40.57409 -11.075   &lt;2e-16 ***
+Income        -7.56211    0.38214 -19.789   &lt;2e-16 ***
+Limit          0.12855    0.05289   2.430   0.0155 *  
+Rating         2.02240    0.79208   2.553   0.0110 *  
+Cards         11.55272    7.06285   1.636   0.1027    
+Age           -0.88832    0.47781  -1.859   0.0638 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 161.6 on 394 degrees of freedom
+Multiple R-squared:  0.8781,    Adjusted R-squared:  0.8765 
+F-statistic: 567.4 on 5 and 394 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple R-squared: 0.8781, Adjusted R-squared: 0.8765</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Cards has the next highest p-value, so it is removed from analysis using the - minus sign format.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>creditlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Balance <span class="sc">~</span> . <span class="sc">-</span> Education <span class="sc">-</span> Cards, <span class="at">data =</span> Credit)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Balance ~ . - Education - Cards, data = Credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-249.62 -110.89  -39.98   51.87  546.52 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -445.10477   40.57635 -10.970  &lt; 2e-16 ***
+Income        -7.61268    0.38169 -19.945  &lt; 2e-16 ***
+Limit          0.08183    0.04461   1.834   0.0674 .  
+Rating         2.73142    0.66435   4.111 4.79e-05 ***
+Age           -0.85612    0.47841  -1.789   0.0743 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 161.9 on 395 degrees of freedom
+Multiple R-squared:  0.8772,    Adjusted R-squared:  0.876 
+F-statistic: 705.6 on 4 and 395 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple R-squared: 0.8772, Adjusted R-squared: 0.876</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Age is next to be removed because it has the next highest p-value at .06270.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>creditlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Balance <span class="sc">~</span> . <span class="sc">-</span> Education <span class="sc">-</span> Cards <span class="sc">-</span> Age, <span class="at">data =</span> Credit)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Balance ~ . - Education - Cards - Age, data = Credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-260.93 -113.14  -36.27   49.35  554.23 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -489.72748   32.09892 -15.257  &lt; 2e-16 ***
+Income        -7.71931    0.37806 -20.418  &lt; 2e-16 ***
+Limit          0.08467    0.04471   1.894    0.059 .  
+Rating         2.69858    0.66594   4.052 6.11e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 162.4 on 396 degrees of freedom
+Multiple R-squared:  0.8762,    Adjusted R-squared:  0.8753 
+F-statistic: 934.6 on 3 and 396 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple R-squared: 0.8762, Adjusted R-squared: 0.8753</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Finally Limit is the next to be removed because it has the next highest (and still insignificant) p-value at .059.</p></li>
+<li><p>Age is next to be removed because it has the next highest p-value at .06270.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>creditlm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Balance <span class="sc">~</span> . <span class="sc">-</span> Education <span class="sc">-</span> Cards <span class="sc">-</span> Age <span class="sc">-</span> Limit, <span class="at">data =</span> Credit)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Balance ~ . - Education - Cards - Age - Limit, data = Credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-278.57 -112.69  -36.21   57.92  575.24 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -534.81215   21.60270  -24.76   &lt;2e-16 ***
+Income        -7.67212    0.37846  -20.27   &lt;2e-16 ***
+Rating         3.94926    0.08621   45.81   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 162.9 on 397 degrees of freedom
+Multiple R-squared:  0.8751,    Adjusted R-squared:  0.8745 
+F-statistic:  1391 on 2 and 397 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple R-squared: 0.8751,Adjusted R-squared: 0.8745</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>In our original model with non-helpful insignificant predictors, we had an adjusted R-Squared at 0.8764. After removing insignificant predictors, we are only down to .8745. This means we can explain someones Balance best by understanding Income and Rating.</li>
+<li>The interpretation is as follows:</li>
+<li>A one unit change in Income causes a negative 7.67 change in Balance.</li>
+<li>A one unit change in Rating causes a 3.949 change in Balance.</li>
+</ul>
+</section>
+<section id="multicollinerity" class="level2">
+<h2 class="anchored" data-anchor-id="multicollinerity">Multicollinerity</h2>
+<ul>
+<li>Multicollinearity refers to the situation in which two or more predictor variables are closely related to another.</li>
+<li>Collinearity can cause significant factors to be insignificant, or insignificant factors to seem significant. Both are problematic.</li>
+<li>If sample correlation coefficient between 2 explanatory variables is more than .80 or less than -.80, we could have severe multicollinearity. Seemingly wrong signs of estimated regression coefficients may also indicate multicollinearity. A good remedy may be to simply drop one of the collinear variables if we can justify it as redundant.</li>
+<li>Alternatively, we could try to increase our sample size.</li>
+<li>Another option would be to try to transform our variables so that they are no longer collinear.</li>
+<li>Last, especially if we are interested only in maintaining a high predictive power, it may make sense to do nothing.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Credit<span class="sc">$</span>Income, Credit<span class="sc">$</span>Rating)  <span class="do">##close to .8, but still under</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7913776</code></pre>
+</div>
+</div>
+<ul>
+<li>The second way to tell if there is multicollinearity is to use the vif() command from the car package.</li>
+<li>The vif() function in R is used to calculate the Variance Inflation Factor (VIF) for each predictor variable in a multiple regression model. The VIF quantifies how much the variance of a regression coefficient is inflated due to multicollinearity among the predictors. High VIF values indicate high multicollinearity, which can affect the stability and interpretability of the regression coefficients.</li>
+<li>We want all scores to be under 10 to indicate the absence of problematic multicollinerity in our model.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)  <span class="do">##need to have car package installed first. </span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Place regression model object in the function to see vif scores.</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(creditlm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Income  Rating 
+2.67579 2.67579 </code></pre>
+</div>
+</div>
+<ul>
+<li>While statisticians differ on what constitutes, the general consenses is that scores need to be under 5 or 10.</li>
+<li>Both scores are under 10, so we do have an absence of multicollinerity in our final model.
+<ul>
+<li>VIF = 1: No correlation between the predictor and the other predictors.</li>
+<li>1 &lt; VIF &lt; 5: Moderate correlation but not severe enough to require correction.</li>
+<li>5 &lt; VIF &lt; 10: High correlation, indicating potential multicollinearity problems.</li>
+<li>VIF &gt;= 10: High correlation, indicating multicollinearity problems.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="using-ai" class="level1">
+<h1>Using AI</h1>
+<ul>
+<li><p>Use the following prompts on a generative AI, like chatGPT, to learn more about regression analysis in R.</p></li>
+<li><p>Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?”</p></li>
+<li><p>What is covariance, and how does it describe the relationship between two variables? Provide an example with a simple dataset. Describe Pearson’s correlation coefficient. How do you calculate it, and what does it tell you about the relationship between two variables?</p></li>
+<li><p>Explain how to create a scatterplot using ggplot2 in R to visualize the relationship between two continuous variables. How can you add a regression line to assess the linearity of the relationship?</p></li>
+<li><p>How can you use the cor.test() function in R to conduct a hypothesis test for correlation? What do the p-value and confidence interval indicate in the context of correlation?</p></li>
+<li><p>How do you interpret the strength and direction of a correlation? What is considered a strong, moderate, or weak correlation in the context of business data?</p></li>
+<li><p>Explain the null and alternative hypotheses for correlation testing. How does the t-distribution play a role in testing the significance of a correlation coefficient?</p></li>
+<li><p>What are some challenges of visualizing relationships between variables when dealing with big data, and how can statistical tests help when scatterplots are not effective?</p></li>
+<li><p>Discuss the limitations of correlation analysis. Why is it important to be cautious when interpreting correlation as causation?</p></li>
+<li><p>What are the key differences between correlation and causation? How can you determine if a correlation implies causality?</p></li>
+<li><p>Explain how to perform simple linear regression in R. Use the lm() function and discuss how to interpret the slope, intercept, and R-squared values from the regression output.</p></li>
+<li><p>What is the coefficient of determination (R-squared) in regression analysis, and how does it relate to the goodness of fit? How can the residual standard error (RSE) and adjusted R-squared help in interpreting a model?</p></li>
+<li><p>Describe how to perform multiple linear regression in R using the lm() function. How do you interpret the coefficients for multiple predictors, and what do the p-values tell you about their significance?</p></li>
+<li><p>What does the F-statistic in a regression output indicate? How does it help in determining the significance of a regression model, and what role does it play when comparing multiple models?</p></li>
+<li><p>Explain how ANOVA is related to regression analysis. How can the F-test be used to assess the significance of regression models? What are residuals in a regression model, and how can analyzing them help assess model fit? How is the sum of squared errors (SSE) related to residual analysis?</p></li>
+<li><p>What is multicollinearity, and why is it problematic in multiple regression? How can you detect multicollinearity in R using the vif() function, and what steps can be taken to address it?</p></li>
+<li><p>How can you use a fitted regression model to make predictions for new data in R? Explain how the predict() function works and provide an example using both simple and multiple regression.</p></li>
+<li><p>Given the output from the summary() function for a regression model in R, explain how to interpret the coefficients, R-squared, adjusted R-squared, residual standard error, and p-values.</p></li>
+<li><p>Describe how to use the p-value method for variable selection in multiple regression. How do you iteratively remove insignificant predictors while monitoring the R-squared and adjusted R-squared values?</p></li>
+</ul>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<ul>
+<li>In this lesson, we explored the correlation coefficient, learning how to evaluate the strength and direction of a correlation (strong, moderate, weak; positive or negative) and how to visualize relationships using scatterplots. We also learned to test whether a correlation is statistically significant. Additionally, we delved into simple and multiple linear regression models, understanding how to write and interpret these models, assess goodness-of-fit measures, and test hypotheses by interpreting the summary output from the lm() command. Finally, we examined how regression can incorporate both continuous and categorical predictor variables.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./module6.html" class="pagination-link" aria-label="Module 6: Analysis of Variance (ANOVA)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
