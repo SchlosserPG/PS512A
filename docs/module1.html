@@ -288,7 +288,10 @@ window.Quarto = {
   <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data">Handling Missing Data</a>
   <ul class="collapse">
   <li><a href="#limitations-of-using-a-missing-data-technique" id="toc-limitations-of-using-a-missing-data-technique" class="nav-link" data-scroll-target="#limitations-of-using-a-missing-data-technique">Limitations of Using a Missing Data Technique</a></li>
-  <li><a href="#the-na.rm-parameter" id="toc-the-na.rm-parameter" class="nav-link" data-scroll-target="#the-na.rm-parameter">The na.rm Parameter</a></li>
+  <li><a href="#the-na.rm-parameter" id="toc-the-na.rm-parameter" class="nav-link" data-scroll-target="#the-na.rm-parameter">The na.rm Parameter</a>
+  <ul class="collapse">
+  <li><a href="#using-a-dataset" id="toc-using-a-dataset" class="nav-link" data-scroll-target="#using-a-dataset">Using a dataset</a></li>
+  </ul></li>
   <li><a href="#is.na" id="toc-is.na" class="nav-link" data-scroll-target="#is.na">is.na()</a></li>
   <li><a href="#using-na_if" id="toc-using-na_if" class="nav-link" data-scroll-target="#using-na_if">Using na_if()</a></li>
   <li><a href="#na.omit-vs.-drop_na" id="toc-na.omit-vs.-drop_na" class="nav-link" data-scroll-target="#na.omit-vs.-drop_na">na.omit() vs.&nbsp;drop_na()</a></li>
@@ -1459,6 +1462,7 @@ window.Quarto = {
 <li>To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.</li>
 <li>The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.</li>
 <li>It allows you to map old values to new ones in a simple and readable manner.</li>
+<li>We will break down the mutate() function and the piping operator a more in the next module. For now, here is an example of how to recode data into numerical values.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -1501,16 +1505,13 @@ window.Quarto = {
 <section id="numerical-data-types" class="level3">
 <h3 class="anchored" data-anchor-id="numerical-data-types">Numerical data types:</h3>
 <ul>
-<li><p>A numerical data type is a vector of numbers (Real or Integer)</p></li>
-<li><p>Continuous (Real) variables can take any value along some continuum, hence continuous.</p>
-<ul>
-<li>We can force a variable into a numerical data type by using the as.numeric() command.</li>
-<li>For example, we could collect information on a participants age, height, weight, or distance traveled.</li>
-</ul></li>
-<li><p>Two ways to create:</p>
+<li>The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning. This function is essential when working with datasets where numeric values are stored as characters or factors and need to be transformed for analysis.</li>
+<li>A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.</li>
+<li>Two ways to create:
 <ul>
 <li>We can create a numeric variable by ensuring our value we assign is a number!</li>
 <li>We can force a variable into an real number data type by using the as.numeric() command.</li>
+</ul></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Rhode Island limit for medical marijuana in ounces per</span></span>
@@ -1521,13 +1522,9 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
-</div></li>
-<li><p>Discrete (Integer) Variables:</p>
+</div>
 <ul>
-<li>Discrete variables can only take a countable number of distinct values.</li>
-<li>We can force a variable into an integer data type by using the as.integer() command.</li>
-</ul></li>
-<li><p>For example, we could collect information on the number of children in a family or number of points scored in a basketball game.</p></li>
+<li>Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x &lt;- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant. Understanding their properties ensures accurate and efficient data processing in R.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
@@ -1548,9 +1545,10 @@ window.Quarto = {
 <section id="character-data-type" class="level3">
 <h3 class="anchored" data-anchor-id="character-data-type">Character data type</h3>
 <ul>
-<li>Wrapped in either single or double quotation marks.
+<li>The character data type in R is used to store text or string data, making it essential for handling names, labels, descriptions, or any non-numeric information. Character data is represented as sequences of characters enclosed in quotes (e.g., “hello” or ‘world’).</li>
+<li>Character data types can be wrapped in either single or double quotation marks (e.g, “hello” or ‘hello’).</li>
+<li>Character data types can include letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
 <ul>
-<li>Includes letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).</li>
 <li>A quick example is below that shows how to assign a character value to a variable.</li>
 </ul></li>
 </ul>
@@ -1574,10 +1572,10 @@ window.Quarto = {
 <section id="logical-data-type" class="level3">
 <h3 class="anchored" data-anchor-id="logical-data-type">Logical data type</h3>
 <ul>
-<li><p>Values of TRUE and FALSE</p></li>
-<li><p>Result of some expression.</p>
+<li><p>Logical data types in R represent values that are either TRUE or FALSE, often used for conditional operations and data filtering. Logical values can be the result of comparisons (e.g., x &gt; 10) or explicitly assigned. Logical vectors are particularly useful in subsetting data; for instance, data[data$column &gt; 5, ] selects rows where the column values are greater than 5. Logical operators like &amp; (and), | (or), and ! (not) allow for more complex conditions. Logical data is also essential in control structures such as if, else, and loops. By enabling dynamic and conditional programming, logical types play a key role in efficient data manipulation and analysis.</p>
 <ul>
 <li>A quick example is below that shows how to assign a logical value to a variable.</li>
+</ul></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the result of 6 &gt; 8 in a constant called kSixEight</span></span>
@@ -1592,13 +1590,12 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "logical"</code></pre>
 </div>
-</div></li>
-</ul>
+</div>
 </section>
 <section id="date-data-type" class="level3">
 <h3 class="anchored" data-anchor-id="date-data-type">Date data type</h3>
 <ul>
-<li>A variable that should be a date.</li>
+<li>The date data type in R is used to represent calendar dates, allowing for accurate storage and manipulation of time-related data. Dates in R are typically stored as objects of class Date, which internally represent the number of days since January 1, 1970. This format facilitates arithmetic operations, such as calculating differences between dates or adding/subtracting days. Dates can be created and manipulated using functions like as.Date() for converting character strings to date objects, or Sys.Date() for retrieving the current date. Handling dates correctly is essential in time series analysis, scheduling, and any task involving chronological data, as improper formatting or assumptions can lead to errors in analysis.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
@@ -1610,7 +1607,7 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li>lubridate is a package specifically for converting dates. This package makes dates a lot easier to work with.</li>
+<li>The lubridate package provides additional tools for working with dates, such as parsing and extracting components like year, month, and day. This package makes dates a lot easier to work with.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using lubridate</span></span>
@@ -1741,37 +1738,43 @@ window.Quarto = {
 <section id="handling-missing-data" class="level1">
 <h1>Handling Missing Data</h1>
 <ul>
-<li>After a data set is loaded, there are two common strategies for dealing with missing values.</li>
+<li><p>Missing data is a common issue in data analysis and can arise for various reasons, such as data collection errors, non-responses in surveys, or data corruption. In R, handling missing data is crucial to ensure accurate and reliable analysis. Missing values are typically represented by NA (Not Available) in R.</p></li>
+<li><p>Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.</p></li>
+<li><p>Missing data needs to be closely evaluated to see if the missing value is meaningful or not. If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.</p></li>
+<li><p>After a data set is loaded, there are three common strategies for dealing with missing values.</p></li>
 </ul>
 <ol type="1">
 <li><p>The omission strategy recommends that observations with missing values be excluded from subsequent analysis.</p></li>
-<li><p>The imputation strategy recommends that the missing values be replaced with some reasonable imputed values.</p>
+<li><p>The imputation strategy recommends that the missing values be replaced with some reasonable imputed values. For example, imputing missing values using techniques like mean/median substitution or regression models can be considered.</p>
 <ul>
 <li>Numeric variables: replace with the average.</li>
 <li>Categorical variables: replace with the predominant category.</li>
 </ul></li>
+<li><p>Ignore your missing data if the function works without it.</p>
+<ul>
+<li>When you ignore missing data because your function works without it, the missing values are typically excluded from the calculations by default. In R, many functions, such as mean(), sum(), or lm(), have arguments like na.rm = TRUE to explicitly remove missing values during computation. Ignoring missing data can simplify the analysis, but it comes with potential consequences.</li>
+</ul></li>
 </ol>
+<ul>
+<li>The choice of approach depends on the nature of the missingness, which can be categorized as Missing Completely at Random, Missing at Random, or Missing Not at Random. Addressing missing data appropriately is essential to maintain the validity of statistical analyses and avoid biases.</li>
+</ul>
 <section id="limitations-of-using-a-missing-data-technique" class="level2">
 <h2 class="anchored" data-anchor-id="limitations-of-using-a-missing-data-technique">Limitations of Using a Missing Data Technique</h2>
 <ul>
-<li>Recommended Closer Evaluation of Missing Data</li>
-<li>There are limitations of both techniques listed above (omission and imputation).
-<ul>
-<li>If a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.</li>
-<li>Removing missing values could also significantly reduce your data set size.</li>
-<li>Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.</li>
-<li>If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.</li>
-</ul></li>
-<li>Missing data needs to be closely evaluated to see if the missing value is meaningful or not.
-<ul>
-<li>For instance, getting data on how many pregnancies would only be applicable to people born of women gender, and blank value for people born of male gender, who are unable to have children, would be expected. In taking this example further, if variable 1 targeted the question, “how many pregnancies have you have had,” we would expect missing data or NAs for all the men. If comparing that variable to a second variable “Incubated from COVID-19: Yes/No” we would not want to omit all the blanks in the dataset because then we would eliminate analysis of an entire gender. Thus a different technique should be chosen besides omitting the blanks to be able to evaluate more concisely.<br>
-</li>
-</ul></li>
-<li>If a value is not blank and is considered missing, data needs to be mutated to be consistent with the technique of coding true missing values.</li>
+<li><p>Always recommend a closer evaluation of missing data.</p></li>
+<li><p>There are limitations of the techniques listed above (omission, imputation, and ignore).</p></li>
+<li><p>Reduction in Sample Size: Ignoring missing data leads to a smaller effective sample size, which may reduce the power of your analysis and the reliability of the results.</p></li>
+<li><p>Bias: If the missing data are not Missing Completely at Random, ignoring them may introduce bias. For example, if specific groups or patterns are overrepresented in the remaining data, the results may not generalize to the full dataset.</p></li>
+<li><p>Distorted Metrics: Calculations that ignore missing values (e.g., averages, sums) might not reflect the true population parameters, especially if the missing data are systematically different from the observed data. In addition, if a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.</p></li>
+<li><p>Incorrect Inferences: Ignoring missing data without considering its nature could lead to incorrect conclusions, as the analysis only reflects the subset of available data.</p></li>
+<li><p>Consider a dataset used to predict factors that lead to intubation due to COVID-19. Suppose one variable, “Number of pregnancies,” contains missing data (NAs) for all men, as the question is not applicable to them. If we were to compare this variable with another, “Intubated due to COVID-19: Yes/No,” simply omitting the rows with blanks (NAs) could lead to the exclusion of an entire gender, distorting the analysis. In this case, a different approach to handling missing data would be more appropriate to ensure the dataset remains representative. Additionally, if a value is not blank but is considered missing for analysis purposes, the data should be consistently processed (e.g., mutated or recoded) to align with the chosen technique for handling true missing values.</p></li>
 </ul>
 </section>
 <section id="the-na.rm-parameter" class="level2">
 <h2 class="anchored" data-anchor-id="the-na.rm-parameter">The na.rm Parameter</h2>
+<ul>
+<li>The na.rm parameter in R is a convenient way to handle missing values (NA) within functions that perform calculations on datasets. The parameter stands for “NA remove” and, when set to TRUE, instructs the function to exclude missing values from the computation.</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">NA</span>)</span>
 <span id="cb168-2"><a href="#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="co"># These lines runs, but do not give you anything useful.</span></span>
@@ -1785,9 +1788,8 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li><p>Many functions in R include parameters that will ignore NAs for you.</p>
-<ul>
-<li>sum() and mean() are examples of this, and most summary statistics like median() and var() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.</li>
+<li><p>Many functions in R include parameters that will ignore NAs for you.</p></li>
+<li><p>sum() and mean() are examples of this, and most summary statistics like median() and var() and max() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1801,8 +1803,31 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit removes the NAs from the vector of dataset. Here, it works</span></span>
 <span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for removing NAs from the vector.</span></span>
 <span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
+</div>
+<section id="using-a-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="using-a-dataset">Using a dataset</h3>
+<ul>
+<li>Using a dataset, we need the _data<span class="math inline">\(variable_ format, like mean(data\)</span>column, na.rm = TRUE) calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>gig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/gig.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">""</span>)</span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   EmployeeID         Wage               Industry           Job     
+ Min.   :  1.0   Min.   :24.28   Automotive  :190   Engineer  :191  
+ 1st Qu.:151.8   1st Qu.:34.19   Construction:366   Other     : 88  
+ Median :302.5   Median :41.88   Tech        : 38   Accountant: 83  
+ Mean   :302.5   Mean   :40.08   NA's        : 10   Programmer: 80  
+ 3rd Qu.:453.2   3rd Qu.:45.87                      Sales Rep : 77  
+ Max.   :604.0   Max.   :51.00                      (Other)   : 69  
+                                                    NA's      : 16  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gig<span class="sc">$</span>Wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 40.0828</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="is.na" class="level2">
 <h2 class="anchored" data-anchor-id="is.na">is.na()</h2>
@@ -1811,21 +1836,6 @@ window.Quarto = {
 <li>To conduct an example, read in the data set called gig.csv from your working directory.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>gig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/gig.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">""</span>)</span>
-<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(gig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 604   4</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  EmployeeID  Wage     Industry        Job
-1          1 32.81 Construction    Analyst
-2          2 46.00   Automotive   Engineer
-3          3 43.13 Construction  Sales Rep
-4          4 48.09   Automotive      Other
-5          5 43.62   Automotive Accountant
-6          6 46.98 Construction   Engineer</code></pre>
-</div>
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of all NA values in the entire dataset</span></span>
 <span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>CountAllBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig))</span>
 <span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a>CountAllBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1899,14 +1909,13 @@ window.Quarto = {
 <ul>
 <li><p>Both functions return a new object with the rows containing missing values removed.</p></li>
 <li><p>na.omit() is a base R function, so it doesn’t require any additional package installation where drop_na() requires loading the tidyr package, which is part of the tidyverse ecosystem.</p></li>
-<li></li>
+<li><p>drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.</p></li>
 </ul>
-<pre><code>    drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('Amelia')</span></span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
-<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
-<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('Amelia')</span></span>
+<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
+<span id="cb193-4"><a href="#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl        
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.400  
@@ -1925,18 +1934,18 @@ window.Quarto = {
  Max.   :134.11   Max.   :0.6667   Max.   :11825390  
  NA's   :5                                           </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>gdp_pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>gdp_pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   376.0   513.8  1035.5  1058.4  1244.8  2723.0       2 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>trade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>trade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   24.35   38.52   59.59   62.60   81.16  134.11       5 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a>africa1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(africa)</span>
-<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a>africa1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(africa)</span>
+<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl       
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  
@@ -1953,10 +1962,10 @@ window.Quarto = {
  3rd Qu.: 81.16   3rd Qu.:0.3333   3rd Qu.: 7383000  
  Max.   :134.11   Max.   :0.6667   Max.   :11825390  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="do">## to drop all at once.</span></span>
-<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a>africa2 <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span></span>
-<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
-<span id="cb202-4"><a href="#cb202-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="do">## to drop all at once.</span></span>
+<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a>africa2 <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span></span>
+<span id="cb201-3"><a href="#cb201-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
+<span id="cb201-4"><a href="#cb201-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl       
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  

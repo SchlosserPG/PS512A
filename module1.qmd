@@ -791,7 +791,7 @@ tapply(ChickWeight$weight,ChickWeight$Diet, mean)
 -   To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.
 -   The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.
 -   It allows you to map old values to new ones in a simple and readable manner.
-
+* We will break down the mutate() function and the piping operator a more in the next module. For now, here is an example of how to recode data into numerical values. 
 ```{r, tidy=FALSE}
 library(tidyverse)
 # Take a vector representing evaluation scores, named evaluate 
@@ -818,32 +818,20 @@ data
 -   If we use the read.csv() command, we can sometimes do this by setting an argument $stringsAsFactors=TRUE$. We will do this later in the lesson.
 
 ### Numerical data types:
+* The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c("1", "2", "3")) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric("abc")), it results in NA with a warning. This function is essential when working with datasets where numeric values are stored as characters or factors and need to be transformed for analysis.
+-   A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers. 
+* Two ways to create:
+     + We can create a numeric variable by ensuring our value we assign is a number!
+     + We can force a variable into an real number data type by using the as.numeric() command.
 
--   A numerical data type is a vector of numbers (Real or Integer)
+```{r}
+# Assign Rhode Island limit for medical marijuana in ounces per person
+kOuncesRhode <- 2.5
+#Identify the data type 
+class(x = kOuncesRhode) 
+```
 
--   Continuous (Real) variables can take any value along some continuum, hence continuous.
-
-    -   We can force a variable into a numerical data type by using the as.numeric() command.
-    -   For example, we could collect information on a participants age, height, weight, or distance traveled.
-
--   Two ways to create:
-
-    -   We can create a numeric variable by ensuring our value we assign is a number!
-    -   We can force a variable into an real number data type by using the as.numeric() command.
-
-    ```{r}
-    # Assign Rhode Island limit for medical marijuana in ounces per person
-    kOuncesRhode <- 2.5
-    #Identify the data type 
-    class(x = kOuncesRhode) 
-    ```
-
--   Discrete (Integer) Variables:
-
-    -   Discrete variables can only take a countable number of distinct values.
-    -   We can force a variable into an integer data type by using the as.integer() command.
-
--   For example, we could collect information on the number of children in a family or number of points scored in a basketball game.
+* Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x <- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant. Understanding their properties ensures accurate and efficient data processing in R.
 
 ```{r}
 # Assign the value of 4 to a constant called kTestInteger and set as an integer
@@ -856,9 +844,9 @@ Trunc <- as.integer(kOuncesRhode); Trunc
 ```
 
 ### Character data type
-
--   Wrapped in either single or double quotation marks.
-    -   Includes letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
+* The character data type in R is used to store text or string data, making it essential for handling names, labels, descriptions, or any non-numeric information. Character data is represented as sequences of characters enclosed in quotes (e.g., "hello" or 'world'). 
+* Character data types can be wrapped in either single or double quotation marks (e.g, "hello" or 'hello'). 
+* Character data types can include letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
     -   A quick example is below that shows how to assign a character value to a variable.
 
 ```{r}
@@ -873,25 +861,21 @@ class(x = kZipCode)
 ```
 
 ### Logical data type
-
--   Values of TRUE and FALSE
-
--   Result of some expression.
+* Logical data types in R represent values that are either TRUE or FALSE, often used for conditional operations and data filtering. Logical values can be the result of comparisons (e.g., x > 10) or explicitly assigned. Logical vectors are particularly useful in subsetting data; for instance, data[data$column > 5, ] selects rows where the column values are greater than 5. Logical operators like & (and), | (or), and ! (not) allow for more complex conditions. Logical data is also essential in control structures such as if, else, and loops. By enabling dynamic and conditional programming, logical types play a key role in efficient data manipulation and analysis.
 
     -   A quick example is below that shows how to assign a logical value to a variable.
 
-    ```{r}
-    # Store the result of 6 > 8 in a constant called kSixEight
-    kSixEight <- 6 > 8 
-    # Can use comparison tests with the following == >= <= > < <> != 
-    kSixEight # Print kSixEight
-    # Determine the data type of kSixEight
-    class(x = kSixEight)
-    ```
+```{r}
+# Store the result of 6 > 8 in a constant called kSixEight
+kSixEight <- 6 > 8 
+# Can use comparison tests with the following == >= <= > < <> != 
+kSixEight # Print kSixEight
+# Determine the data type of kSixEight
+class(x = kSixEight)
+```
 
 ### Date data type
-
--   A variable that should be a date.
+* The date data type in R is used to represent calendar dates, allowing for accurate storage and manipulation of time-related data. Dates in R are typically stored as objects of class Date, which internally represent the number of days since January 1, 1970. This format facilitates arithmetic operations, such as calculating differences between dates or adding/subtracting days. Dates can be created and manipulated using functions like as.Date() for converting character strings to date objects, or Sys.Date() for retrieving the current date. Handling dates correctly is essential in time series analysis, scheduling, and any task involving chronological data, as improper formatting or assumptions can lead to errors in analysis.
 
 ```{r}
 # Convert date info in format 'mm/dd/yyyy' using as.Date
@@ -900,7 +884,7 @@ dates <- as.Date(strDates, "%m/%d/%Y")
 str(dates)
 ```
 
--   lubridate is a package specifically for converting dates. This package makes dates a lot easier to work with.
+* The lubridate package provides additional tools for working with dates, such as parsing and extracting components like year, month, and day. This package makes dates a lot easier to work with.
 
 ```{r}
 # Convert date info in format 'mm/dd/yyyy' using lubridate
@@ -927,9 +911,6 @@ str(dates)
 ```
 
 ```{r}
-
-
-
 UseDates <- read.csv("data/Lubridate.csv")
 UseDates$Date <- ym(UseDates$Date)
 
@@ -990,30 +971,41 @@ summary(gss.2016) #Conduct final check confirming correct data types
 ```
 
 # Handling Missing Data
+* Missing data is a common issue in data analysis and can arise for various reasons, such as data collection errors, non-responses in surveys, or data corruption. In R, handling missing data is crucial to ensure accurate and reliable analysis. Missing values are typically represented by NA (Not Available) in R. 
+* Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.
+* Missing data needs to be closely evaluated to see if the missing value is meaningful or not. If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.
 
--   After a data set is loaded, there are two common strategies for dealing with missing values.
+
+-   After a data set is loaded, there are three common strategies for dealing with missing values.
 
 1.  The omission strategy recommends that observations with missing values be excluded from subsequent analysis.
 
-2.  The imputation strategy recommends that the missing values be replaced with some reasonable imputed values.
+2.  The imputation strategy recommends that the missing values be replaced with some reasonable imputed values. For example, imputing missing values using techniques like mean/median substitution or regression models can be considered.
 
     -   Numeric variables: replace with the average.
     -   Categorical variables: replace with the predominant category.
 
+3. Ignore your missing data if the function works without it. 
+     + When you ignore missing data because your function works without it, the missing values are typically excluded from the calculations by default. In R, many functions, such as mean(), sum(), or lm(), have arguments like na.rm = TRUE to explicitly remove missing values during computation. Ignoring missing data can simplify the analysis, but it comes with potential consequences. 
+
+* The choice of approach depends on the nature of the missingness, which can be categorized as Missing Completely at Random, Missing at Random, or Missing Not at Random. Addressing missing data appropriately is essential to maintain the validity of statistical analyses and avoid biases.
+
 ## Limitations of Using a Missing Data Technique
 
--   Recommended Closer Evaluation of Missing Data
--   There are limitations of both techniques listed above (omission and imputation).
-    -   If a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.
-    -   Removing missing values could also significantly reduce your data set size.
-    -   Missing data needs to be closely evaluated and verified within each variable whether the data is truly blank, has no answer, or is marked with a character value such as the text N/A.
-    -   If the variable that has many missing values is deemed unimportant or can be represented using a proxy variable that does not have missing values, the variable may be excluded from the analysis.
--   Missing data needs to be closely evaluated to see if the missing value is meaningful or not.
-    -   For instance, getting data on how many pregnancies would only be applicable to people born of women gender, and blank value for people born of male gender, who are unable to have children, would be expected. In taking this example further, if variable 1 targeted the question, "how many pregnancies have you have had," we would expect missing data or NAs for all the men. If comparing that variable to a second variable "Incubated from COVID-19: Yes/No" we would not want to omit all the blanks in the dataset because then we would eliminate analysis of an entire gender. Thus a different technique should be chosen besides omitting the blanks to be able to evaluate more concisely.\
--   If a value is not blank and is considered missing, data needs to be mutated to be consistent with the technique of coding true missing values.
+-   Always recommend a closer evaluation of missing data. 
+-   There are limitations of the techniques listed above (omission, imputation, and ignore).
+
+* Reduction in Sample Size: Ignoring missing data leads to a smaller effective sample size, which may reduce the power of your analysis and the reliability of the results.
+* Bias: If the missing data are not Missing Completely at Random, ignoring them may introduce bias. For example, if specific groups or patterns are overrepresented in the remaining data, the results may not generalize to the full dataset.
+* Distorted Metrics: Calculations that ignore missing values (e.g., averages, sums) might not reflect the true population parameters, especially if the missing data are systematically different from the observed data. In addition, if a large number of values are missing, mean imputation will likely distort the relationships among variables, leading to biased results.
+* Incorrect Inferences: Ignoring missing data without considering its nature could lead to incorrect conclusions, as the analysis only reflects the subset of available data.
+
+  
+* Consider a dataset used to predict factors that lead to intubation due to COVID-19. Suppose one variable, "Number of pregnancies," contains missing data (NAs) for all men, as the question is not applicable to them. If we were to compare this variable with another, "Intubated due to COVID-19: Yes/No," simply omitting the rows with blanks (NAs) could lead to the exclusion of an entire gender, distorting the analysis. In this case, a different approach to handling missing data would be more appropriate to ensure the dataset remains representative. Additionally, if a value is not blank but is considered missing for analysis purposes, the data should be consistently processed (e.g., mutated or recoded) to align with the chosen technique for handling true missing values.
+
 
 ## The na.rm Parameter
-
+* The na.rm parameter in R is a convenient way to handle missing values (NA) within functions that perform calculations on datasets. The parameter stands for "NA remove" and, when set to TRUE, instructs the function to exclude missing values from the computation. 
 ```{r}
 y <- c(1, 2, NA, 3, 4, NA)
 # These lines runs, but do not give you anything useful.
@@ -1023,14 +1015,24 @@ mean(y)
 
 -   Many functions in R include parameters that will ignore NAs for you.
 
-    -   sum() and mean() are examples of this, and most summary statistics like median() and var() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.
+* sum() and mean() are examples of this, and most summary statistics like median() and var() and max() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.
 
-    ```{r}
-    sum(y, na.rm=TRUE) 
-    mean(y, na.rm=TRUE)
-    # na.omit removes the NAs from the vector of dataset. Here, it works for removing NAs from the vector.  
-    y <- na.omit(y) 
-    ```
+```{r}
+sum(y, na.rm=TRUE) 
+mean(y, na.rm=TRUE)
+# na.omit removes the NAs from the vector of dataset. Here, it works for removing NAs from the vector.  
+y <- na.omit(y) 
+```
+
+### Using a dataset
+* Using a dataset, we need the _data$variable_ format, like mean(data$column, na.rm = TRUE) calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.
+
+```{r}
+gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings="")
+summary(gig)
+mean(gig$Wage, na.rm=TRUE)
+```
+  
 
 ## is.na()
 
@@ -1038,9 +1040,7 @@ mean(y)
 -   To conduct an example, read in the data set called gig.csv from your working directory.
 
 ```{r}
-gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings="")
-dim(gig)
-head(gig)
+
 #Counts the number of all NA values in the entire dataset
 CountAllBlanks <- sum(is.na(gig)); CountAllBlanks 
 
@@ -1077,11 +1077,7 @@ head(TurnNA)
 
 -   na.omit() is a base R function, so it doesn't require any additional package installation where drop_na() requires loading the tidyr package, which is part of the tidyverse ecosystem.
 
--   
-
-```         
-    drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.
-```
+* drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.
 
 ```{r}
 #install.packages("Amelia")
