@@ -1427,8 +1427,8 @@ window.Quarto = {
 <section id="evaluating-data-types" class="level1">
 <h1>Evaluating Data Types</h1>
 <ul>
-<li>There are a number of data types in R that are common to programming and statistical analysis.</li>
-<li>A data type of a variable specifies the type of data that is stored inside that variable. Sometimes when you read in data it is in the correct type, and other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
+<li>A data type of a variable specifies the type of data that is stored inside that variable. Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object’s class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data. Misinterpretation of data types, such as treating characters as numbers or vice versa, can lead to errors or misleading results.</li>
+<li>There are a number of data types in R that are common to programming and statistical analysis.
 <ul>
 <li>Factor (Nominal or Ordinal)</li>
 <li>Numeric (Real or Discrete (Integer))</li>
@@ -1440,15 +1440,19 @@ window.Quarto = {
 <section id="coercing-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="coercing-data-types">Coercing Data Types</h2>
 <ul>
-<li><p>In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, “A”), which results in c(“1”, “A”). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.</p></li>
-<li><p>To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as “numeric” or “factor”. Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like “Male” and “Female” would be a categorical (factor) variable.</p></li>
+<li>In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, “A”), which results in c(“1”, “A”). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.</li>
+<li>To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as “numeric” or “factor”. Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like “Male” and “Female” would be a categorical (factor) variable.</li>
+<li>Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.</li>
 </ul>
 <section id="factor-data-type" class="level3">
 <h3 class="anchored" data-anchor-id="factor-data-type">Factor data type:</h3>
 <ul>
-<li><p>Ordinal: Contain categories that have some logical order (e.g.&nbsp;categories of age).</p></li>
-<li><p>Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).</p></li>
-<li><p>R will treat each unique value of a factor as a different level.</p></li>
+<li>Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., “low,” “medium,” “high”), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., “red,” “blue,” “green”). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
+<ul>
+<li>Ordinal: Contain categories that have some logical order (e.g.&nbsp;categories of age).</li>
+<li>Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).</li>
+</ul></li>
+<li>R will treat each unique value of a factor as a different level.</li>
 </ul>
 <section id="ordinal-variable" class="level4">
 <h4 class="anchored" data-anchor-id="ordinal-variable">Ordinal Variable</h4>
@@ -1505,7 +1509,7 @@ window.Quarto = {
 <section id="numerical-data-types" class="level3">
 <h3 class="anchored" data-anchor-id="numerical-data-types">Numerical data types:</h3>
 <ul>
-<li>The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning. This function is essential when working with datasets where numeric values are stored as characters or factors and need to be transformed for analysis.</li>
+<li>The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning.</li>
 <li>A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.</li>
 <li>Two ways to create:
 <ul>
@@ -1524,7 +1528,8 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li>Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x &lt;- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant. Understanding their properties ensures accurate and efficient data processing in R.</li>
+<li>Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x &lt;- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.</li>
+<li>For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
