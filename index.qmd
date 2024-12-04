@@ -178,8 +178,10 @@ output: html_document
 library(ggplot2) ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 ```{r}
+
 library(ggplot2)
 ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
+
 ```
 
 ## Summary
