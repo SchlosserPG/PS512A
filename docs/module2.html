@@ -446,9 +446,10 @@ C           2         0.2        10              1.0</code></pre>
 <section id="using-the-mean" class="level4">
 <h4 class="anchored" data-anchor-id="using-the-mean">Using the Mean</h4>
 <ul>
-<li><p>The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.</p></li>
+<li><p>The mean() function in R is a versatile tool for calculating the arithmetic average of a numeric vector. The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.</p></li>
 <li><p>The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).</p></li>
 <li><p><span class="math inline">\(m_x = (\sum_{i=1}^{n} x_{i})/n\)</span></p></li>
+<li><p>One of the mean functions key features is the na.rm parameter, which stands for “remove NAs.” We discussed this in module 1 under “Handling Missng Data”. This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.</p></li>
 <li><p>Consider the salaries of employees at a company: <img src="Pictures/Ch2/Salaries.png" title="Salary Data" class="img-fluid" alt="Salary Data"></p></li>
 <li><p>We can use the mean() command to calculate the mean in R.</p></li>
 </ul>
@@ -566,12 +567,15 @@ C           2         0.2        10              1.0</code></pre>
 <h4 class="anchored" data-anchor-id="example-of-function-with-salary-variable">Example of Function with Salary Variable</h4>
 <ul>
 <li>Consider the salary of employees presented earlier. The mode is $40,000 since this value appears most often.</li>
+<li>While this is a small vector, when working with a large dataset and a function like sort(x = table(salaries), decreasing = TRUE), appending [1:5] is a way to focus on the top results after the frequencies have been computed and sorted. Specifically, table(salaries) calculates the frequency of each unique salary, sort(…, decreasing = TRUE) orders these frequencies from highest to lowest, and [1:5] selects the first five entries in the sorted list. This is useful when the dataset contains many unique values, as it allows you to quickly identify and extract the top 5 most frequent salaries, providing a concise summary without being overwhelmed by the full distribution.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try this command with and without it.</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">sort</span>(<span class="at">x =</span> <span class="fu">table</span>(salaries), <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="at">x =</span> <span class="fu">table</span>(salaries), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "40000"  "65000"  "90000"  "145000" "150000" "550000"</code></pre>
+<pre><code>salaries
+ 40000  65000  90000 145000 150000 
+     2      1      1      1      1 </code></pre>
 </div>
 </div>
 <ul>
@@ -582,14 +586,14 @@ C           2         0.2        10              1.0</code></pre>
 <h4 class="anchored" data-anchor-id="finding-no-mode">Finding No Mode</h4>
 <ul>
 <li>Look at the sort(table()) commands with the GrowthFund Vector we made earlier.</li>
-<li>I added a [1:3] at the end of the statement to produce the 3 highest frequencies found in the vector.</li>
+<li>I added a [1:5] at the end of the statement to produce the 3 highest frequencies found in the vector.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(GrowthFund), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(GrowthFund), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GrowthFund
--38.32   1.71   3.17 
-     1      1      1 </code></pre>
+-38.32   1.71   3.17   5.99  12.56 
+     1      1      1      1      1 </code></pre>
 </div>
 </div>
 <ul>

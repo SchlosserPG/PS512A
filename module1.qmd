@@ -849,14 +849,11 @@ Trunc <- as.integer(kOuncesRhode); Trunc
     -   A quick example is below that shows how to assign a character value to a variable.
 
 ```{r}
-# Make constants 
-kFirstName <- "Pamela"
-kLastName <- "Schlosser"
+# Make string constants 
+Q1 <- "A"
+Q2 <- 'B'
 # Check the data type
-class(x = kFirstName)
-# Create a zip code constant and check the data type
-kZipCode <- "23185"
-class(x = kZipCode)
+class(x = Q1)
 ```
 
 ### Logical data type
