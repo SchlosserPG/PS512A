@@ -1,5 +1,9 @@
-# Module 0: Software Know-How
-
+---
+title: "Module 0: Software Know-How"
+author: ""
+date: "2024-08-09"
+output: html_document
+---
 # Installing R
 
 ## Installing R on Windows
