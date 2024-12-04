@@ -492,7 +492,6 @@ semTools::skew(customers$Orders) ##skewed right
     -   Summarizing
     -   Grouping Data
 
-
 ## Common dplyr Functions
 
 ### Arrange
@@ -670,7 +669,6 @@ gig %>%
      count()
 ## 83 Accountants
 ```
-
 
 ### Summarize
 
@@ -1064,11 +1062,9 @@ Use the following prompts on a generative AI, like chatGPT, to learn more about 
 
 -   How would you compare and contrast the roles of skewness and kurtosis in identifying the shape and behavior of a distribution?
 
-
 -   How can you use the filter() function to subset a dataset based on multiple conditions using & and \| in R?
 
 -   How does subsetting using square brackets \[\] differ from using the filter() function in R?
-
 
 -   How does the mutate() function help in transforming and creating new variables, and what are some practical examples?"
 
