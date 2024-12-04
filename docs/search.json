@@ -868,5 +868,135 @@
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Summary</span>"
     ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "",
+    "text": "Module 0: Software Know-How",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#installing-r-on-windows",
+    "href": "index.html#installing-r-on-windows",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Installing R on Windows",
+    "text": "Installing R on Windows\n\nOpen an internet browser and go to https://www.r-project.org/.\nClick CRAN hyperlink underneath Download on the left.\nSelect a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: https://cloud.r-project.org/\nClick on the “Download R for Windows” link at the top of the page if you have a Windows computer.\n\nClick on the “install R for the first time” link at the top of the page.\nClick “Download R for Windows” and save the executable file somewhere on your computer.\nRun the .exe file\nAccept all defaults and follow the installation instructions\nNow that R is installed, you need to download and install RStudio.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#installing-r-on-a-mac",
+    "href": "index.html#installing-r-on-a-mac",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Installing R on a Mac",
+    "text": "Installing R on a Mac\n\nOpen an internet browser and go to https://www.r-project.org/.\nClick CRAN hyperlink underneath Download on the left.\nSelect a CRAN location (a mirror site) and click the corresponding link. I selected O-cloud. This brings you to the following link: https://cloud.r-project.org/\nClick on the “Download R for (Mac) OS X” link at the top of the page.\nClick on the file containing the latest version of R under “Files.”\nSave the .pkg file, double-click it to open, and follow the installation instructions.\nAccept the license agreement and all subsequent defaults\nWhen the installation completes, click Close.\nNow that R is installed, you need to download and install RStudio.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#downloading-rstudio-for-mac-or-pc",
+    "href": "index.html#downloading-rstudio-for-mac-or-pc",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Downloading RStudio For Mac or PC",
+    "text": "Downloading RStudio For Mac or PC\n\nGo to the following URL: https://posit.co/download/rstudio-desktop/.\nClick the Download button for Install RStudio.\nIt should recognize your operating system. If you see different an Installers for Supported Platforms section, click the version that is appropriate for your operating system. When the download is complete, run the install program, accepting all defaults.\nNote, RStudio might conflict with some Mac antivirus programs. Ensure your antivirus is not blocking it from installing. Only worry about this if you have difficulty installing the program.\n\n\n\n\nRStudio",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#setting-options-to-your-liking",
+    "href": "index.html#setting-options-to-your-liking",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Setting Options to Your Liking",
+    "text": "Setting Options to Your Liking\n\nYou have many options to customize R Studio.\nGo to Tools &gt; Global Options to see the list of options for you to customize.\nA few are listed below.\n\nYou can set your general information including your default working directory (when not in a project).\nYou can customize the appearance to a theme that accommodates your learning style and visual preferences.\nYou can turn on a spell check.\n\n\n\n\n\nTools &gt; Global Options.R",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#quick-keys-in-r",
+    "href": "index.html#quick-keys-in-r",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Quick Keys in R",
+    "text": "Quick Keys in R\n\nThere are a lot of quick keys in R to make you able to use it faster and more effectively. You may look over these and try on your own.\n\n\n\n\nConsole Quick Keys\n\n\n\n\n\nSource Quick Keys\n\n\n\n\n\nEditing Quick Keys",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-help-in-r",
+    "href": "index.html#getting-help-in-r",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Getting Help in R",
+    "text": "Getting Help in R\n\nThere are lots of ways to get help in R.\nIn R, use the help search box to find information on a function, parameter, or package.\n\n?mean\nhelp.search(‘swirl’)\nhelp(package = ‘MASS’)\n?install.packages\n\n\n\n\n\nGetting Help\n\n\n\nYou should try to look up the tapply command to see what it does.\n\nUse ?tapply in your .R file to pull up tapply() command or type tapply in the Help box. * Formally, you should see that the command applies a function to each cell of a ragged array, that is to each (non-empty) group of values given by a unique combination of the levels of certain factors. This means that the command does some math calculation (mean, sum, etc.) on a continuous variable after dividing the data by group.\n\nThe format is tapply(x, index, and fun), where x is a continuous variable, index is a grouping variable or factor, and fun is a function like mean.\nMore on that function later in the first lessons.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#yaml-header",
+    "href": "index.html#yaml-header",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "yaml Header",
+    "text": "yaml Header\n\nThe YAML header is located at the beginning of the RMD file and contains metadata about the document, such as the title, author, date, and output format. Here is an example of a YAML header:\n\n\n\n\nYAML Header Example",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#markdown-text",
+    "href": "index.html#markdown-text",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "markdown Text",
+    "text": "markdown Text\n\nMarkdown is a lightweight markup language with plain text formatting syntax. In an RMD file, you use Markdown to format the text, create lists, headers, links, and more. For example:\n\n\n\n\nStyles Example",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#code-chunks",
+    "href": "index.html#code-chunks",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Code Chunks",
+    "text": "Code Chunks\n\nCode chunks allow you to embed R (or other languages) code within the document. These chunks are executed when the document is rendered, and their output is included in the final document. Code chunks are defined with triple backticks and the language, like this:\n\n\n\n\nCode Chunk Example\n\n\n\nChunk output can be customized with knitr options, arguments set in the {} of a chunk header.\n\ninclude = FALSE prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.\necho = FALSE prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.\nmessage = FALSE prevents messages that are generated by code from appearing in the finished file.\nwarning = FALSE prevents warnings that are generated by code from appearing in the finished.\nfig.cap = “…” adds a caption to graphical results.\n\n\n\n\n\nArguments of Chunk",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#output-formats",
+    "href": "index.html#output-formats",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Output Formats",
+    "text": "Output Formats\n\nRMD files can be rendered into various output formats including HTML, PDF, and Word documents. The output format is specified in the YAML header. To generate the final document, you use the knit function in RStudio or call rmarkdown::render() in your R script.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#visualization-and-plots",
+    "href": "index.html#visualization-and-plots",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Visualization and Plots",
+    "text": "Visualization and Plots\n\nRMD files can include visualizations and plots. For example, you can create and embed a plot using the ggplot2 package.\n\nlibrary(ggplot2) ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()\n\nlibrary(ggplot2)\nggplot(mpg, aes(x=displ, y=hwy)) + geom_point()",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#summary",
+    "href": "index.html#summary",
+    "title": "OMSBA 512A: Probability And Statistics",
+    "section": "Summary",
+    "text": "Summary\n\nAt the end of this section, you should have downloaded and browsed R in RStudio. You should have looked at the quick keys in R to make editing your R documents easier. You should set up a project folder for the course where you want to on your computer, and made your first .R script file located in that project folder. You should have tried a line of code or two as presented. Finally, you should have looked around the RStudio environment and found the help tab.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Module 0: Software Know-How</span>"
+    ]
   }
 ]
