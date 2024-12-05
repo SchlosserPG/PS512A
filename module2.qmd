@@ -482,7 +482,7 @@ semTools::skew(customers$Orders) ##skewed right
 
 -   We often spend a considerable amount of time inspecting and preparing the data for the subsequent analysis. This includes the following:
     -   Evaluating Data Types
-    -   Sorting Data
+    -   Arranging Data
     -   Selecting Variables
     -   Filtering Data
     -   Counting Data
@@ -523,9 +523,9 @@ sortTidyDesc <- arrange(gig, desc(Wage))
 head(sortTidyDesc)
 ```
 
-### Subsetting or Filtering
+### Filtering
 
--   Subsetting or filtering a data frame is the process of indexing, or extracting a portion of the data set that is relevant for subsequent statistical analysis. Subsetting allows you to work with a subset of your data, which is essential for data analysis and manipulation. One of the most common ways to subset in R is by using square brackets \[\]. We can also use the filter() function from tidyverse.
+-   Filtering or subsetting a data frame is the process of indexing, or extracting a portion of the data set that is relevant for subsequent statistical analysis. Subsetting allows you to work with a subset of your data, which is essential for data analysis and manipulation. One of the most common ways to subset in R is by using square brackets \[\]. We can also use the filter() function from tidyverse.
 
 -   We use subsets to do the following:
 

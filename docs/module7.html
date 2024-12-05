@@ -258,7 +258,9 @@ window.Quarto = {
   <li><a href="#estimating-using-a-simple-linear-regression-model" id="toc-estimating-using-a-simple-linear-regression-model" class="nav-link" data-scroll-target="#estimating-using-a-simple-linear-regression-model">Estimating Using a Simple Linear Regression Model</a></li>
   <li><a href="#inexact-relationships" id="toc-inexact-relationships" class="nav-link" data-scroll-target="#inexact-relationships">Inexact Relationships</a></li>
   <li><a href="#regression-as-anova" id="toc-regression-as-anova" class="nav-link" data-scroll-target="#regression-as-anova">Regression as ANOVA</a></li>
-  <li><a href="#the-simple-linear-regression-model" id="toc-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#the-simple-linear-regression-model">The Simple Linear Regression Model</a></li>
+  </ul></li>
+  <li><a href="#the-simple-linear-regression-model" id="toc-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#the-simple-linear-regression-model">The Simple Linear Regression Model</a>
+  <ul class="collapse">
   <li><a href="#the-least-squares-estimates" id="toc-the-least-squares-estimates" class="nav-link" data-scroll-target="#the-least-squares-estimates">The Least Squares Estimates</a></li>
   <li><a href="#goodness-of-fit" id="toc-goodness-of-fit" class="nav-link" data-scroll-target="#goodness-of-fit">Goodness of Fit</a></li>
   <li><a href="#the-standard-error-of-the-estimate" id="toc-the-standard-error-of-the-estimate" class="nav-link" data-scroll-target="#the-standard-error-of-the-estimate">The Standard Error of the Estimate</a></li>
@@ -266,6 +268,7 @@ window.Quarto = {
   <li><a href="#the-adjusted-r2" id="toc-the-adjusted-r2" class="nav-link" data-scroll-target="#the-adjusted-r2">The Adjusted <span class="math inline">\(R^2\)</span></a></li>
   <li><a href="#example-of-simple-linear-regression-in-r" id="toc-example-of-simple-linear-regression-in-r" class="nav-link" data-scroll-target="#example-of-simple-linear-regression-in-r">Example of Simple Linear Regression in R</a></li>
   <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  </ul></li>
   <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">Multiple Regression</a>
   <ul class="collapse">
   <li><a href="#example-of-multiple-linear-regression-in-r" id="toc-example-of-multiple-linear-regression-in-r" class="nav-link" data-scroll-target="#example-of-multiple-linear-regression-in-r">Example of Multiple Linear Regression in R</a></li>
@@ -273,9 +276,21 @@ window.Quarto = {
   <li><a href="#examining-the-f-test-statistic-1" id="toc-examining-the-f-test-statistic-1" class="nav-link" data-scroll-target="#examining-the-f-test-statistic-1">Examining the F-Test Statistic</a></li>
   <li><a href="#examining-the-hypotheses" id="toc-examining-the-hypotheses" class="nav-link" data-scroll-target="#examining-the-hypotheses">Examining the Hypotheses</a></li>
   <li><a href="#interpreting-the-hypothesis-1" id="toc-interpreting-the-hypothesis-1" class="nav-link" data-scroll-target="#interpreting-the-hypothesis-1">Interpreting the Hypothesis</a></li>
-  </ul></li>
   <li><a href="#the-p-value-method" id="toc-the-p-value-method" class="nav-link" data-scroll-target="#the-p-value-method">The P-value Method</a></li>
   <li><a href="#multicollinerity" id="toc-multicollinerity" class="nav-link" data-scroll-target="#multicollinerity">Multicollinerity</a></li>
+  </ul></li>
+  <li><a href="#regression-with-categorical-variables" id="toc-regression-with-categorical-variables" class="nav-link" data-scroll-target="#regression-with-categorical-variables">Regression with Categorical Variables</a>
+  <ul class="collapse">
+  <li><a href="#dummy-variables-with-more-than-2-categories" id="toc-dummy-variables-with-more-than-2-categories" class="nav-link" data-scroll-target="#dummy-variables-with-more-than-2-categories">Dummy Variables with More than 2 Categories</a></li>
+  <li><a href="#example-using-dummy-variables" id="toc-example-using-dummy-variables" class="nav-link" data-scroll-target="#example-using-dummy-variables">Example Using Dummy Variables</a></li>
+  <li><a href="#example-using-a-continuous-and-categorical-variable" id="toc-example-using-a-continuous-and-categorical-variable" class="nav-link" data-scroll-target="#example-using-a-continuous-and-categorical-variable">Example Using a Continuous and Categorical Variable</a></li>
+  <li><a href="#coffee-example" id="toc-coffee-example" class="nav-link" data-scroll-target="#coffee-example">Coffee Example</a>
+  <ul class="collapse">
+  <li><a href="#visualizing" id="toc-visualizing" class="nav-link" data-scroll-target="#visualizing">Visualizing</a></li>
+  <li><a href="#categories" id="toc-categories" class="nav-link" data-scroll-target="#categories">2 Categories</a></li>
+  <li><a href="#using-more-than-2-categories" id="toc-using-more-than-2-categories" class="nav-link" data-scroll-target="#using-more-than-2-categories">Using More Than 2 Categories</a></li>
+  </ul></li>
+  <li><a href="#adding-in-a-numerical-variable" id="toc-adding-in-a-numerical-variable" class="nav-link" data-scroll-target="#adding-in-a-numerical-variable">Adding in a Numerical Variable</a></li>
   </ul></li>
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
@@ -311,7 +326,7 @@ window.Quarto = {
 
 
 <ul>
-<li>The main goal of this lesson is to underst&nbsp;and, conduct, and interpret both correlation and regression analyses. We will examine Pearson’s <span class="math inline">\(r\)</span> correlation coefficient and learn how to conduct and interpret an inferential statistical test using this common statistic. Additionally, we will explore regression models and their components, including computing the slope and intercept for simple linear regression and the multiple slopes and intercept for multiple linear regression. Finally, we will learn how to interpret the regression output from R, tying together these key analytical techniques.</li>
+<li>The main goal of this lesson is to understand, conduct, and interpret both correlation and regression analyses. We will examine Pearson’s <span class="math inline">\(r\)</span> correlation coefficient and learn how to conduct and interpret an inferential statistical test using this common statistic. Additionally, we will explore regression models and their components, including computing the slope and intercept for simple linear regression and the multiple slopes and intercept for multiple linear regression. Finally, we will learn how to interpret the regression output from R, tying together these key analytical techniques.</li>
 </ul>
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
@@ -888,8 +903,9 @@ Residuals 397 9532496 24011.3               </code></pre>
 </figure>
 </div>
 </section>
-<section id="the-simple-linear-regression-model" class="level3">
-<h3 class="anchored" data-anchor-id="the-simple-linear-regression-model">The Simple Linear Regression Model</h3>
+</section>
+<section id="the-simple-linear-regression-model" class="level1">
+<h1>The Simple Linear Regression Model</h1>
 <ul>
 <li>The simple linear regression model is defined as <span class="math inline">\(y= \beta_0+\beta_1 𝑥+\varepsilon_1\)</span>, where <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are the response and explanatory variables, respectively and <span class="math inline">\(\varepsilon_1\)</span> is the random error term. <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the unknown parameters to be estimated.</li>
 <li>By fitting our data to the model, we obtain the equation <span class="math inline">\(\hat{y} = b_0 + b_1*x\)</span>, where <span class="math inline">\(\hat{y}\)</span> is the estimated response variable, <span class="math inline">\(b_0\)</span> is the estimate of <span class="math inline">\(\beta_0\)</span> (Intercept) and <span class="math inline">\(b_1\)</span> is the estimate of <span class="math inline">\(\beta_1\)</span> (Slope).</li>
@@ -902,7 +918,6 @@ Residuals 397 9532496 24011.3               </code></pre>
 <figcaption>Regression Equation</figcaption>
 </figure>
 </div>
-</section>
 <section id="the-least-squares-estimates" class="level3">
 <h3 class="anchored" data-anchor-id="the-least-squares-estimates">The Least Squares Estimates</h3>
 <ul>
@@ -1170,8 +1185,9 @@ F-statistic:    73 on 1 and 24 DF,  p-value: 9.66e-09</code></pre>
 </div>
 </div>
 </section>
-<section id="multiple-regression" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-regression">Multiple Regression</h2>
+</section>
+<section id="multiple-regression" class="level1">
+<h1>Multiple Regression</h1>
 <ul>
 <li><p>Multiple regression allows us to explore how several <em>explanatory</em> variables influence the <em>response</em> variable.</p></li>
 <li><p>Suppose there are <span class="math inline">\(k\)</span> explanatory variables. The multiple linear regression model is defined as: <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \ ⋯ + \beta_kx_k +\varepsilon\)</span></p></li>
@@ -1280,7 +1296,6 @@ F-statistic:    35 on 2 and 23 DF,  p-value: 1.054e-07</code></pre>
 <ul>
 <li>Because Unemployment is not significant, we should drop it from the model before creating the regression equation. The extra variable is only adding <em>noise</em> to our model and not adding anything useful in understanding debt payments.</li>
 </ul>
-</section>
 </section>
 <section id="the-p-value-method" class="level2">
 <h2 class="anchored" data-anchor-id="the-p-value-method">The P-value Method</h2>
@@ -1512,10 +1527,689 @@ F-statistic:  1391 on 2 and 397 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Both scores are under 10, so we do have an absence of multicollinerity in our final model.
 <ul>
 <li>VIF = 1: No correlation between the predictor and the other predictors.</li>
-<li>1 &lt; VIF &lt; 5: Moderate correlation but not severe enough to require correction.</li>
-<li>5 &lt; VIF &lt; 10: High correlation, indicating potential multicollinearity problems.</li>
-<li>VIF &gt;= 10: High correlation, indicating multicollinearity problems.</li>
+<li>1 &lt; VIF &lt; 5: Moderate correlation but not severe enough to require correction. Scores less than 5 pass assumption.</li>
+<li>5 &lt; VIF &lt; 10: High correlation, indicating potential multicollinearity problems. We keep an eye on this issue, but pass the assumption.</li>
+<li>VIF &gt;= 10: High correlation, indicating multicollinearity problems. Fail assumption.</li>
 </ul></li>
+</ul>
+<section id="section" class="level41">
+<p class="heading"></p>
+</section>
+</section>
+</section>
+<section id="regression-with-categorical-variables" class="level1">
+<h1>Regression with Categorical Variables</h1>
+<ul>
+<li><p>Simple and multiple regression both require a continuous dependent variable (y). However, the predictor variables (x) can be categorical or continuous. If you were to have a y/x pairing with a continuous y and a categorical x, you might as well choose to run an ANOVA from the last module or a t-test if there are only 2 categories. However, if you have a more complex model, or need to try a variety of models, multiple regression allows for you to seamlessly add and delete predictor variables (both categorical and continuous).</p></li>
+<li><p>We often have categorical predictors in modeling settings. And it might not make sense to think about a “one unit increase” in a categorical variable. In regression settings, we can account for categorical variables by creating dummy variables, which are indicator variables for certain conditions happening. When considering categorical variables, one variable is taken to be the baseline or reference value. All other categories will be compared to it.</p></li>
+<li><p>Regression analysis requires numerical data.</p></li>
+<li><p>Ordinal variables can be represented by a number in one column when there is even distance between the categories.</p>
+<ul>
+<li>From strongly disagree to disagree to N/A to agree to strongly agree. Each 1 unit change considers the same distance between points.</li>
+<li>A weighted scale would go from strongly disagree to neither to agree to strongly agree to agree all the time.</li>
+<li>Need to manually code these and coerce into a number.</li>
+<li>Some ordinal variables need to use dummy coding in R (i.e., Seasonality). Need to always check rationale before blindly recoding to numbers, or using numbers that were provided.</li>
+</ul></li>
+<li><p>Nominal categorical data can be included as independent variables, but must be coded numeric using dummy variables.</p>
+<ul>
+<li>R will create the dummy variables automatically in a regression using the lm() command.</li>
+<li>For variables with 2 categories, code as 0 and 1.</li>
+</ul></li>
+</ul>
+<section id="dummy-variables-with-more-than-2-categories" class="level2">
+<h2 class="anchored" data-anchor-id="dummy-variables-with-more-than-2-categories">Dummy Variables with More than 2 Categories</h2>
+<ul>
+<li>Like in an ANOVA test, a categorical variable may be defined by more than two categories.</li>
+<li>Use multiple dummy variables to capture all categories, one for each category.</li>
+<li>When a categorical variable has k &gt; 2 levels, we need to add k − 1 additional variables to the model.</li>
+<li>Given the intercept term, we exclude one of the dummy variables from the regression.
+<ul>
+<li>The excluded variable represents the reference category.</li>
+<li>Including all dummy variables creates perfect multicollinearity (which is an assumption discussed in your textbook).</li>
+</ul></li>
+<li>Example: mode of transportation with three categories
+<ul>
+<li>Public transportation, driving alone, or car pooling
+<ul>
+<li><span class="math inline">\(d_1=1\)</span> for public transportation and 0 otherwise</li>
+<li><span class="math inline">\(d_2=1\)</span> for driving alone and 0 otherwise</li>
+<li><span class="math inline">\(d_1=d_2=0\)</span> indicates car pooling</li>
+</ul></li>
+</ul></li>
+<li>Slope estimates of categorical data cannot be evaluated the same way. In the example below, since Gender is nominal, and because we are using regression, we should use dummy variables to process this factor in the regression instead of the method above. We can use this technique for ordinal variables to recode them into numeric. Again, R does this coding on our behalf using the lm() command.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a vector representing gender</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"MALE"</span>, <span class="st">"FEMALE"</span>, <span class="st">"FEMALE"</span>, <span class="st">"UNKNOWN"</span>, <span class="st">"MALE"</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="co"># One way is to convert the data into numerical in the column using</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ifelse statements.</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(gender <span class="sc">==</span> <span class="st">"MALE"</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(gender <span class="sc">==</span> <span class="st">"FEMALE"</span>, <span class="dv">2</span>, <span class="dv">99</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  2  2 99  1</code></pre>
+</div>
+</div>
+</section>
+<section id="example-using-dummy-variables" class="level2">
+<h2 class="anchored" data-anchor-id="example-using-dummy-variables">Example Using Dummy Variables</h2>
+<ul>
+<li>Suppose that we are forecasting and we want to account for the month as a predictor.</li>
+<li>Then the following dummy variables can be created the following way:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/months.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   132 obs. of  3 variables:
+ $ Month: Factor w/ 12 levels "Apr","Aug","Dec",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Year : int  2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+ $ Units: int  45420 44558 63844 39338 35000 45747 50923 46786 48696 55000 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Units)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" alt="Boxplot of Sales Data Generated by R" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>I produced a boxplot of the monthly data across units above. April (Apr) is the first month listed (not Jan for January). It alphabetizes it from there from left to right.</li>
+<li>Looking at the lm() command summary below, the hypotheses take on the format VariableCategory. So MonthAug corresponds to the Month variable with the Aug category, representing August. You will notice that there is no MonthApr listed. It is considered the referent category and held in the intercept.</li>
+<li>The interpretation of each of the coefficients associated with the dummy variables is that it is a measure of the effect of that category relative to the omitted or referent category.</li>
+<li>In the example to the left, the intercept coefficient is associated with April, so MonthAug measures the effect of August on the forecast variable (Units) compared to the effect of April.
+<ul>
+<li>Since the data represents the difference in Units sold in months, we can interpret the predicted units sold for April as 49,580.8.</li>
+<li>August was significantly different than April because there is a p-value less than .05. Specifically, we can expect about 7701.6 more units to be sold in August over April. December, January, June, and November also had significantly different Units sold.</li>
+<li>February, July, March, May, October, and September are not different than April because the p-value is &gt; .05.</li>
+</ul></li>
+<li>Never try to remove a categorical variable that is not significant because it means something else - that the category is not different than the referent category. More on this later.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Suppose that we are forecasting daily data and we want to account</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for the month as a predictor.  Then the following dummy variables</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co"># can be created.</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>lmSales <span class="ot">&lt;-</span> <span class="fu">lm</span>(Units <span class="sc">~</span> Month, <span class="at">data =</span> sales)</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmSales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Units ~ Month, data = sales)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12724.5  -4056.6    -36.3   3620.9  22066.5 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  49580.8     1749.6  28.339  &lt; 2e-16 ***
+MonthAug      7701.6     2474.2   3.113  0.00232 ** 
+MonthDec     25245.7     2474.2  10.203  &lt; 2e-16 ***
+MonthFeb     -3744.7     2474.2  -1.513  0.13279    
+MonthJan     -6939.5     2474.2  -2.805  0.00588 ** 
+MonthJul      1809.8     2474.2   0.731  0.46592    
+MonthJun      4971.5     2474.2   2.009  0.04675 *  
+MonthMar      3671.9     2474.2   1.484  0.14042    
+MonthMay      3652.1     2474.2   1.476  0.14255    
+MonthNov     14205.6     2474.2   5.741 7.21e-08 ***
+MonthOct      -125.4     2474.2  -0.051  0.95967    
+MonthSep       261.8     2474.2   0.106  0.91590    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5803 on 120 degrees of freedom
+Multiple R-squared:  0.6857,    Adjusted R-squared:  0.6569 
+F-statistic:  23.8 on 11 and 120 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Intercept absorbs the referent category and so in this case,</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="co"># April is alphabetically first and the referent category.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>We can reset the levels by using the factor() command. Shown below, I reset the levels of the month in order from month 1 (Jan) to month 12 (Dec). This puts “Jan” in the referent category when we rerun the regression. This allows us to compare Jan to other months and to specifically, test what months are different from Jan (+ increase in sales from Jan, - a decrease in sales from Jan).</li>
+<li>For example, March has 10612 more unit sales than Jan.&nbsp;If not significant, like MonthFeb, then you can interpret as not significantly different than the 42K in Jan.&nbsp;</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>sales<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(sales<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>,</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>))</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sales, <span class="fu">aes</span>(<span class="at">x =</span> Month, <span class="at">y =</span> Units)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>lmSales <span class="ot">&lt;-</span> <span class="fu">lm</span>(Units <span class="sc">~</span> Month, <span class="at">data =</span> sales)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmSales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Units ~ Month, data = sales)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12724.5  -4056.6    -36.3   3620.9  22066.5 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    42641       1750  24.373  &lt; 2e-16 ***
+MonthFeb        3195       2474   1.291 0.199106    
+MonthMar       10612       2474   4.289 3.65e-05 ***
+MonthApr        6940       2474   2.805 0.005877 ** 
+MonthMay       10592       2474   4.281 3.77e-05 ***
+MonthJun       11911       2474   4.814 4.36e-06 ***
+MonthJul        8749       2474   3.536 0.000578 ***
+MonthAug       14641       2474   5.917 3.17e-08 ***
+MonthSep        7201       2474   2.911 0.004302 ** 
+MonthOct        6814       2474   2.754 0.006803 ** 
+MonthNov       21145       2474   8.546 4.78e-14 ***
+MonthDec       32185       2474  13.008  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5803 on 120 degrees of freedom
+Multiple R-squared:  0.6857,    Adjusted R-squared:  0.6569 
+F-statistic:  23.8 on 11 and 120 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The interpretation of each of the coefficients associated with the</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dummy variables is that it is a measure of the effect of that</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co"># category relative to the omitted category. In the example to the</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co"># left, the intercept coefficient is associated with January, so</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co"># MonthFeb measures the effect of Feb on the forecast variable</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="co"># (Units) compared to the effect of Jan.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-using-a-continuous-and-categorical-variable" class="level2">
+<h2 class="anchored" data-anchor-id="example-using-a-continuous-and-categorical-variable">Example Using a Continuous and Categorical Variable</h2>
+<ul>
+<li>Let’s do an example with the GNP.csv data set to use GNP and quarterly data to predict Sales (in millions)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>GNP <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/GNP.csv"</span>)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(GNP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   40 obs. of  4 variables:
+ $ Year   : int  2007 2007 2007 2007 2008 2008 2008 2008 2009 2009 ...
+ $ Quarter: int  1 2 3 4 1 2 3 4 1 2 ...
+ $ Sales  : int  921266 1013371 1000151 1060394 950268 1028016 999824 957207 828677 905562 ...
+ $ GNP    : num  14302 14513 14718 14880 14849 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #1, 2, 3, 4 represent the quarter and we want that data as</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="co"># categorical</span></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>GNP<span class="sc">$</span>Quarter <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(GNP<span class="sc">$</span>Quarter)</span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Evaluate Quarterly data of GNP in a boxplot.</span></span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>GNP <span class="sc">%&gt;%</span></span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Quarter, <span class="at">y =</span> Sales)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" alt="Boxplot of GNP variable Generated by R" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the linear regression considering GNP and Quarterly data</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>lmGNP <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> GNP <span class="sc">+</span> Quarter, <span class="at">data =</span> GNP)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmGNP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Sales ~ GNP + Quarter, data = GNP)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-53748 -20083   -700  16341  52626 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -61669.572  52583.805  -1.173    0.249    
+GNP             65.055      3.215  20.234  &lt; 2e-16 ***
+Quarter2     78278.963  13576.443   5.766 1.57e-06 ***
+Quarter3     59960.212  13607.096   4.407 9.49e-05 ***
+Quarter4    108765.258  13638.197   7.975 2.21e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 30330 on 35 degrees of freedom
+Multiple R-squared:  0.9364,    Adjusted R-squared:  0.9291 
+F-statistic: 128.7 on 4 and 35 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate y, where y and x are Sales and GNP, and 2 is a quarter 2</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dummy, 3 is a Quarter 3 dummy, and 4 is a Quarter 4 dummy.</span></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All else equal, retail sales in quarter 1 are expected to be</span></span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="co"># approximately $108,765 million less than sales in quarter 4.</span></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the predicted sales in quarter 2 if GNP is $18,000 (in</span></span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># billions)?</span></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>Quarter2 <span class="ot">&lt;-</span> <span class="dv">18000</span></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmGNP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)          GNP     Quarter2     Quarter3     Quarter4 
+-61669.57208     65.05476  78278.96330  59960.21187 108765.25801 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using the equation</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fl">61669.57208</span> <span class="sc">+</span> <span class="fl">65.05476</span> <span class="sc">*</span> Quarter2 <span class="sc">+</span> <span class="fl">78278.963</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1187595</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When you use the predict() command with a categorical variable, you</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="co"># need to include the predictors with what they equal as shown below.</span></span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="co"># I pulled out the data.frame() command into a new variable named nd</span></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="co"># to simplify our predict() command later on.</span></span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">GNP =</span> <span class="dv">18000</span>, <span class="at">Quarter =</span> <span class="st">"2"</span>)</span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmGNP, nd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1 
+1187595 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can write the above 2 lines like shown below for the same</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="co"># answer.</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmGNP, <span class="fu">data.frame</span>(<span class="at">GNP =</span> <span class="dv">18000</span>, <span class="at">Quarter =</span> <span class="st">"2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1 
+1187595 </code></pre>
+</div>
+</div>
+<ul>
+<li>While you technically can keep adding categorical variables, you must be careful not to add too many because the intercept becomes increasingly difficult to interpret!</li>
+</ul>
+</section>
+<section id="coffee-example" class="level2">
+<h2 class="anchored" data-anchor-id="coffee-example">Coffee Example</h2>
+<section id="visualizing" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing">Visualizing</h3>
+<ul>
+<li>Let’s try a bigger example with the coffee dataset.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/coffee.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coffee)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1311 obs. of  31 variables:
+ $ X                   : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Species             : Factor w/ 1 level "Arabica": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Owner               : Factor w/ 306 levels "","acacia hills ltd",..: 206 206 125 302 206 154 137 95 95 75 ...
+ $ Country.of.Origin   : Factor w/ 37 levels "","Brazil","Burundi",..: 10 10 11 10 10 2 26 10 10 10 ...
+ $ Farm.Name           : Factor w/ 558 levels "","-","1","200 farms",..: 374 374 441 526 374 1 1 19 19 510 ...
+ $ ICO.Number          : Factor w/ 843 levels "","-","??","0",..: 455 455 1 1 455 1 1 98 98 454 ...
+ $ Company             : Factor w/ 271 levels "","ac la laja sa de cv",..: 169 169 1 264 169 1 208 1 1 88 ...
+ $ Number.of.Bags      : int  300 300 5 320 300 100 100 300 300 50 ...
+ $ Bag.Weight          : Factor w/ 56 levels "0 kg","0 lbs",..: 47 47 3 47 47 32 51 47 47 47 ...
+ $ Harvest.Year        : Factor w/ 47 levels "","08/09 crop",..: 16 16 1 16 16 14 13 41 41 16 ...
+ $ Processing.Method   : Factor w/ 6 levels "","Natural / Dry",..: 6 6 1 2 6 2 6 1 1 2 ...
+ $ Color               : Factor w/ 5 levels "","Blue-Green",..: 4 4 1 4 4 3 3 1 1 4 ...
+ $ Aroma               : num  8.67 8.75 8.42 8.17 8.25 8.58 8.42 8.25 8.67 8.08 ...
+ $ Flavor              : num  8.83 8.67 8.5 8.58 8.5 8.42 8.5 8.33 8.67 8.58 ...
+ $ Aftertaste          : num  8.67 8.5 8.42 8.42 8.25 8.42 8.33 8.5 8.58 8.5 ...
+ $ Acidity             : num  8.75 8.58 8.42 8.42 8.5 8.5 8.5 8.42 8.42 8.5 ...
+ $ Body                : num  8.5 8.42 8.33 8.5 8.42 8.25 8.25 8.33 8.33 7.67 ...
+ $ Balance             : num  8.42 8.42 8.42 8.25 8.33 8.33 8.25 8.5 8.42 8.42 ...
+ $ Uniformity          : num  10 10 10 10 10 10 10 10 9.33 10 ...
+ $ Clean.Cup           : num  10 10 10 10 10 10 10 10 10 10 ...
+ $ Sweetness           : num  10 10 10 10 10 10 10 9.33 9.33 10 ...
+ $ Cupper.Points       : num  8.75 8.58 9.25 8.67 8.58 8.33 8.5 9 8.67 8.5 ...
+ $ Moisture            : num  0.12 0.12 0 0.11 0.12 0.11 0.11 0.03 0.03 0.1 ...
+ $ Category.One.Defects: int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Quakers             : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Category.Two.Defects: int  0 1 0 2 2 1 0 0 0 4 ...
+ $ unit_of_measurement : Factor w/ 2 levels "ft","m": 2 2 2 2 2 2 2 2 2 2 ...
+ $ altitude_low_meters : num  1950 1950 1600 1800 1950 ...
+ $ altitude_high_meters: num  2200 2200 1800 2200 2200 NA NA 1700 1700 1850 ...
+ $ altitude_mean_meters: num  2075 2075 1700 2000 2075 ...
+ $ TotalScore          : num  90.6 89.9 89.8 89 88.8 ...</code></pre>
+</div>
+</div>
+<ul>
+<li>Sometimes, we are only interested in 2 or 3 category values. In the following example, I am filtering by Processing Method and creating a ggplot only holding the methods of interest to me.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">%&gt;%</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Processing.Method <span class="sc">==</span> <span class="st">"Natural / Dry"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Washed / Wet"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span> <span class="st">"Other"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Processing.Method, <span class="at">y =</span> TotalScore)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">color =</span> <span class="fu">rainbow</span>(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Does not look like large group differences, good indication into what we will find.</li>
+<li>In the next visualization, lets add in a scatterplot to show the difference between 2 continuous variables (Flavor and TotalScore) using Processing Method method as the color.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="sc">%&gt;%</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Processing.Method <span class="sc">==</span> <span class="st">"Natural / Dry"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Washed / Wet"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span> <span class="st">"Other"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Flavor, <span class="at">y =</span> TotalScore, <span class="at">color =</span> Processing.Method)) <span class="sc">+</span></span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Processing.Method))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="module7_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>In the chart above, flavor almost looks like a perfect predictor, strong and positive.</li>
+</ul>
+</section>
+<section id="categories" class="level3">
+<h3 class="anchored" data-anchor-id="categories">2 Categories</h3>
+<ul>
+<li>Suppose there are only 2 processing methods for coffee beans: Wet/Washed and Natural/Dry.<br>
+R takes Natural/Dry as the referent category value. Then we can create one dummy variable. A Dummy Variable is then assigned as either a 0 or 1. Let’s save the filtering of 2 methods into a new smaller dataset first and then running the lm model.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>coffee2cat <span class="ot">&lt;-</span> <span class="fu">filter</span>(coffee, Processing.Method <span class="sc">==</span> <span class="st">"Natural / Dry"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Washed / Wet"</span>)</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coffee2cat<span class="sc">$</span>Processing.Method)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Washed / Wet  Washed / Wet  Natural / Dry Washed / Wet  Natural / Dry
+[6] Washed / Wet 
+6 Levels:  Natural / Dry Other ... Washed / Wet</code></pre>
+</div>
+</div>
+<ul>
+<li>Next, lets run a lm model using the newly filtered data.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>lmModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalScore <span class="sc">~</span> Processing.Method, <span class="at">data =</span> coffee2cat)</span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmModel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = TotalScore ~ Processing.Method, data = coffee2cat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-22.1346  -0.9944   0.4554   1.5354   8.6154 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                    82.3541     0.1704 483.193   &lt;2e-16 ***
+Processing.MethodWashed / Wet  -0.3895     0.1950  -1.997    0.046 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.7 on 1061 degrees of freedom
+Multiple R-squared:  0.003746,  Adjusted R-squared:  0.002807 
+F-statistic:  3.99 on 1 and 1061 DF,  p-value: 0.04603</code></pre>
+</div>
+</div>
+<ul>
+<li>We can make a prediction of Washed/Wet.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmModel, <span class="fu">data.frame</span>(<span class="at">Processing.Method =</span> <span class="st">"Washed / Wet"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+81.96462 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmModel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  (Intercept) Processing.MethodWashed / Wet 
+                   82.3541434                    -0.3895252 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fl">82.3541</span> <span class="sc">-</span> <span class="fl">0.3895</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 81.9646</code></pre>
+</div>
+</div>
+</section>
+<section id="using-more-than-2-categories" class="level3">
+<h3 class="anchored" data-anchor-id="using-more-than-2-categories">Using More Than 2 Categories</h3>
+<ul>
+<li><p>A categorical variable may be defined by more than two categories.</p></li>
+<li><p>Like mentioned above, we use multiple dummy variables to capture all categories, one for each category.</p></li>
+<li><p>When a categorical variable has k &gt; 2 levels, we need to add k − 1 additional variables to the model.</p></li>
+<li><p>Given the intercept term, we exclude one of the dummy variables from the regression.</p></li>
+<li><p>The excluded variable represents the reference category. Example: Processing.Time Filtering by 3 categories: “Natural / Dry” “Washed / Wet“ or Other”) <span class="math inline">\(d_1=1\)</span> for Other and 0 otherwise <span class="math inline">\(d_2=1\)</span> for Washed/Wet and 0 otherwise <span class="math inline">\(d_1=d_2=0\)</span> indicates Natural/Dry referent category</p></li>
+<li><p><span class="math inline">\(Score_i=β_0+β_1(I(Other)_i)+β_2(I(Wet)_i)+ϵ_I\)</span> <span class="math inline">\(β_0\)</span> represents the expected score for a coffee with 0 for the two dummy variables. That is, if it was a dry process coffee <span class="math inline">\(β_1\)</span> represents the expected difference in score for coffee with an Other roasting process, compared to the baseline level (dry process) <span class="math inline">\(β_2\)</span> represents the expected difference in score for Washed/Wet process coffee compared to dry process coffee. We have to estimate multiple “slopes” for this one variable - one corresponding to each non-reference level.</p></li>
+<li><p>We can refilter the data to include the third category value.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>coffee3cat <span class="ot">&lt;-</span> <span class="fu">filter</span>(coffee, Processing.Method <span class="sc">==</span> <span class="st">"Natural / Dry"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span></span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Washed / Wet"</span> <span class="sc">|</span> Processing.Method <span class="sc">==</span> <span class="st">"Other"</span>)</span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coffee3cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X Species               Owner Country.of.Origin
+1 1 Arabica           metad plc          Ethiopia
+2 2 Arabica           metad plc          Ethiopia
+3 4 Arabica yidnekachew dabessa          Ethiopia
+4 5 Arabica           metad plc          Ethiopia
+5 6 Arabica           ji-ae ahn            Brazil
+6 7 Arabica       hugo valdivia              Peru
+                              Farm.Name ICO.Number
+1                             metad plc  2014/2015
+2                             metad plc  2014/2015
+3 yidnekachew dabessa coffee plantation           
+4                             metad plc  2014/2015
+5                                                 
+6                                                 
+                                Company Number.of.Bags Bag.Weight Harvest.Year
+1     metad agricultural developmet plc            300      60 kg         2014
+2     metad agricultural developmet plc            300      60 kg         2014
+3 yidnekachew debessa coffee plantation            320      60 kg         2014
+4     metad agricultural developmet plc            300      60 kg         2014
+5                                                  100      30 kg         2013
+6 richmond investment-coffee department            100      69 kg         2012
+  Processing.Method        Color Aroma Flavor Aftertaste Acidity Body Balance
+1      Washed / Wet        Green  8.67   8.83       8.67    8.75 8.50    8.42
+2      Washed / Wet        Green  8.75   8.67       8.50    8.58 8.42    8.42
+3     Natural / Dry        Green  8.17   8.58       8.42    8.42 8.50    8.25
+4      Washed / Wet        Green  8.25   8.50       8.25    8.50 8.42    8.33
+5     Natural / Dry Bluish-Green  8.58   8.42       8.42    8.50 8.25    8.33
+6      Washed / Wet Bluish-Green  8.42   8.50       8.33    8.50 8.25    8.25
+  Uniformity Clean.Cup Sweetness Cupper.Points Moisture Category.One.Defects
+1         10        10        10          8.75     0.12                    0
+2         10        10        10          8.58     0.12                    0
+3         10        10        10          8.67     0.11                    0
+4         10        10        10          8.58     0.12                    0
+5         10        10        10          8.33     0.11                    0
+6         10        10        10          8.50     0.11                    0
+  Quakers Category.Two.Defects unit_of_measurement altitude_low_meters
+1       0                    0                   m                1950
+2       0                    1                   m                1950
+3       0                    2                   m                1800
+4       0                    2                   m                1950
+5       0                    1                   m                  NA
+6       0                    0                   m                  NA
+  altitude_high_meters altitude_mean_meters TotalScore
+1                 2200                 2075      90.58
+2                 2200                 2075      89.92
+3                 2200                 2000      89.00
+4                 2200                 2075      88.83
+5                   NA                   NA      88.83
+6                   NA                   NA      88.75</code></pre>
+</div>
+</div>
+<ul>
+<li>We can make our new model object with the lm function.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>lmModel2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalScore <span class="sc">~</span> Processing.Method, <span class="at">data =</span> coffee3cat)</span>
+<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmModel2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = TotalScore ~ Processing.Method, data = coffee3cat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-22.1346  -0.9646   0.4554   1.5354   8.6154 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                    82.3541     0.1728 476.694   &lt;2e-16 ***
+Processing.MethodOther         -1.0757     0.5639  -1.908   0.0567 .  
+Processing.MethodWashed / Wet  -0.3895     0.1977  -1.971   0.0490 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.737 on 1086 degrees of freedom
+Multiple R-squared:  0.005435,  Adjusted R-squared:  0.003603 
+F-statistic: 2.967 on 2 and 1086 DF,  p-value: 0.05186</code></pre>
+</div>
+</div>
+<ul>
+<li>The overall model is not significant here, but one group still shows differences. Means poor predictor, but that there are still group differences (even if small) between Washed/Wet and Natural/Dry</li>
+<li>Finally, we can make our new prediction of what the score would be in the Processing.Method was Other.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmModel2, <span class="fu">data.frame</span>(<span class="at">Processing.Method =</span> <span class="st">"Other"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+81.27846 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmModel2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  (Intercept)        Processing.MethodOther 
+                   82.3541434                    -1.0756819 
+Processing.MethodWashed / Wet 
+                   -0.3895252 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fl">82.3541434</span> <span class="sc">-</span> <span class="fl">1.0756819</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 81.27846</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="adding-in-a-numerical-variable" class="level2">
+<h2 class="anchored" data-anchor-id="adding-in-a-numerical-variable">Adding in a Numerical Variable</h2>
+<ul>
+<li>We can add in another variable like Flavor. Flavor is a much stronger predictor.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>lmModel3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalScore <span class="sc">~</span> Flavor <span class="sc">+</span> Processing.Method, <span class="at">data =</span> coffee3cat)</span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmModel3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = TotalScore ~ Flavor + Processing.Method, data = coffee3cat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16.6648  -0.3555   0.2157   0.7248   5.7972 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                    31.4116     1.0691  29.380  &lt; 2e-16 ***
+Flavor                          6.7151     0.1403  47.849  &lt; 2e-16 ***
+Processing.MethodOther         -0.1274     0.3205  -0.398  0.69108    
+Processing.MethodWashed / Wet   0.2931     0.1130   2.593  0.00964 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.553 on 1085 degrees of freedom
+Multiple R-squared:  0.6802,    Adjusted R-squared:  0.6793 
+F-statistic: 769.3 on 3 and 1085 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmModel3, <span class="fu">data.frame</span>(<span class="at">Flavor =</span> <span class="dv">10</span>, <span class="at">Processing.Method =</span> <span class="st">"Other"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+98.43565 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmModel3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  (Intercept)                        Flavor 
+                   31.4116160                     6.7151441 
+       Processing.MethodOther Processing.MethodWashed / Wet 
+                   -0.1274019                     0.2931262 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fl">31.411616</span> <span class="sc">+</span> <span class="fl">6.7151441</span> <span class="sc">*</span> <span class="dv">10</span> <span class="sc">+</span> <span class="sc">-</span><span class="fl">0.1274019</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 98.43566</code></pre>
+</div>
+</div>
+<ul>
+<li>After adjusting for aroma, and flavor, is there sufficient evidence to suggest a difference in mean score between dry vs.&nbsp;wet process beans? Explain, using a formal hypothesis test. $H_0: Processing.Method_{Washed / Wet} = Processing.Method_{Dry} $ $H_A: Processing.Method_{Washed / Wet}Processing.Method_{Dry} $</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>lmModel4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalScore <span class="sc">~</span> Aroma <span class="sc">+</span> Flavor <span class="sc">+</span> Processing.Method, <span class="at">data =</span> coffee2cat)</span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmModel4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = TotalScore ~ Aroma + Flavor + Processing.Method, 
+    data = coffee2cat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-17.5344  -0.2720   0.2208   0.7122   4.7629 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                    28.1650     1.1482  24.530  &lt; 2e-16 ***
+Aroma                           1.6013     0.2134   7.502 1.32e-13 ***
+Flavor                          5.5406     0.1987  27.884  &lt; 2e-16 ***
+Processing.MethodWashed / Wet   0.2337     0.1079   2.166   0.0306 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.479 on 1059 degrees of freedom
+Multiple R-squared:  0.7017,    Adjusted R-squared:  0.7009 
+F-statistic: 830.6 on 3 and 1059 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p>We find evidence that there is a difference between Washed/Wet processed coffee beans and dry processed beans as evident by the significant p-value &lt; .05.</p></li>
+<li><p>Adjusting for aroma, flavor, and process, which country has the highest expected score? The lowest?</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="do">## calculate the predicted scores in the dataset</span></span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>predicted_scores <span class="ot">&lt;-</span> <span class="fu">predict</span>(lmModel4, <span class="at">newdata =</span> coffee2cat)</span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new dataframe with Country and predicted scores</span></span>
+<span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a>predicted_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Country =</span> coffee2cat<span class="sc">$</span>Country, <span class="at">Predicted_Score =</span> predicted_scores)</span>
+<span id="cb139-6"><a href="#cb139-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-7"><a href="#cb139-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the country with the highest expected score</span></span>
+<span id="cb139-8"><a href="#cb139-8" aria-hidden="true" tabindex="-1"></a>highest_expected_score <span class="ot">&lt;-</span> <span class="fu">filter</span>(predicted_data, Predicted_Score <span class="sc">==</span> <span class="fu">max</span>(Predicted_Score))</span>
+<span id="cb139-9"><a href="#cb139-9" aria-hidden="true" tabindex="-1"></a>highest_expected_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Country Predicted_Score
+1 Ethiopia        91.20569</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the country with the lowest expected score</span></span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>lowest_expected_score <span class="ot">&lt;-</span> <span class="fu">filter</span>(predicted_data, Predicted_Score <span class="sc">==</span> <span class="fu">min</span>(Predicted_Score))</span>
+<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>lowest_expected_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Country Predicted_Score
+990 Guatemala        73.56705</code></pre>
+</div>
+</div>
+<ul>
+<li><p>We find that Ethiopia has the highest predicted score and Guatemala has the lowest predicted score based on Aroma, Flavor, and Processing Method.</p></li>
+<li><p>What percentage of the variability in the total score is explained by a linear relationship with the predictors in your model?</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lmModel4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.702         0.701  1.48      831. 1.35e-277     3 -1922. 3854. 3879.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>We can look at the R-squared value of .693 and adjusted R-squared value of .692 and state that about 69% of the variable in total score is explained by a linear relationship with the predictors in our model.</li>
 </ul>
 </section>
 </section>
