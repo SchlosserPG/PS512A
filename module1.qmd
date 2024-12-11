@@ -96,6 +96,8 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
      + Automatically sets the working directory to the project folder.
      + Simplifies managing file paths ("data/myfile.csv" instead of a full path).
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zqlWLLKuaqU?si=6uE_zcaNPKINe40J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 -   Start by creating a project for our class. Projects are great because they aid in your organization technique.
 -   You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!
@@ -672,6 +674,9 @@ sd(Insurance$Claims) #provides the standard deviation of all Claims in the Insur
     -   Easier collaboration when sharing code and project files.
 -   Cons
     -   Requires setting the working directory correctly (getwd() and setwd() can help).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NOQjajlAFAA?si=t5xTnjGejoE8ghro" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 ## Setting up a Working Directory
 
