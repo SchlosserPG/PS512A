@@ -242,8 +242,7 @@ window.Quarto = {
   <li><a href="#scatterplots-to-visualize-relationship" id="toc-scatterplots-to-visualize-relationship" class="nav-link" data-scroll-target="#scatterplots-to-visualize-relationship">Scatterplots to Visualize Relationship</a></li>
   <li><a href="#interpreting-the-strength-of-the-correlation" id="toc-interpreting-the-strength-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-strength-of-the-correlation">Interpreting the Strength of the Correlation</a></li>
   </ul></li>
-  <li><a href="#interpreting-the-significance-of-the-correlation" id="toc-interpreting-the-significance-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-significance-of-the-correlation">Interpreting the Significance of the Correlation</a></li>
-  <li><a href="#statistical-significance-answers-the-question-is-the-effect-real" id="toc-statistical-significance-answers-the-question-is-the-effect-real" class="nav-link" data-scroll-target="#statistical-significance-answers-the-question-is-the-effect-real">Statistical significance answers the question: “Is the effect real?“</a>
+  <li><a href="#interpreting-the-significance-of-the-correlation" id="toc-interpreting-the-significance-of-the-correlation" class="nav-link" data-scroll-target="#interpreting-the-significance-of-the-correlation">Interpreting the Significance of the Correlation</a>
   <ul class="collapse">
   <li><a href="#cor.test-command" id="toc-cor.test-command" class="nav-link" data-scroll-target="#cor.test-command">cor.test() Command</a></li>
   </ul></li>
@@ -518,9 +517,8 @@ window.Quarto = {
 </ul></li>
 <li>Even small correlations can be significant: In large datasets, even a small correlation, like .1, can be statistically significant due to the increased power that comes with a high sample size. It’s important to interpret both the strength of the correlation and its practical significance in context.</li>
 </ul>
-</section>
-<section id="statistical-significance-answers-the-question-is-the-effect-real" class="level2">
-<h2 class="anchored" data-anchor-id="statistical-significance-answers-the-question-is-the-effect-real">Statistical significance answers the question: “Is the effect real?“</h2>
+<section id="statistical-significance-answers-the-question-is-the-effect-real" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-significance-answers-the-question-is-the-effect-real">Statistical significance answers the question: “Is the effect real?“</h4>
 <ul>
 <li><p>Statistical Significance:</p></li>
 <li><p>A result is statistically significant if it is unlikely to have occurred by random chance, given a pre-defined threshold (usually p &lt; 0.05).</p></li>
@@ -530,6 +528,7 @@ window.Quarto = {
 <li><p>Practical significance refers to the real-world importance or relevance of a result. It asks, “Does this effect matter in practice?“</p></li>
 <li><p>Even if a result is statistically significant, it may not be large enough to have a meaningful impact on business decisions or outcomes.</p></li>
 </ul>
+</section>
 <section id="cor.test-command" class="level3">
 <h3 class="anchored" data-anchor-id="cor.test-command">cor.test() Command</h3>
 <ul>
@@ -1671,7 +1670,7 @@ F-statistic:  23.8 on 11 and 120 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <ul>
 <li>We can reset the levels by using the factor() command. Shown below, I reset the levels of the month in order from month 1 (Jan) to month 12 (Dec). This puts “Jan” in the referent category when we rerun the regression. This allows us to compare Jan to other months and to specifically, test what months are different from Jan (+ increase in sales from Jan, - a decrease in sales from Jan).</li>
-<li>For example, March has 10612 more unit sales than Jan.&nbsp;If not significant, like MonthFeb, then you can interpret as not significantly different than the 42K in Jan.&nbsp;</li>
+<li>For example, March has 10612 more unit sales than Jan.&nbsp;If not significant, like MonthFeb, then you can interpret as not significantly different than the 42K in Jan.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>sales<span class="sc">$</span>Month <span class="ot">&lt;-</span> <span class="fu">factor</span>(sales<span class="sc">$</span>Month, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>,</span>

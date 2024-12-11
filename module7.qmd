@@ -141,7 +141,7 @@ Debt_Payments %>% ggplot(aes(Unemployment, Debt))+
     -   $H_A$: There is a relationship between the two variables ($r \neq 0$).
 -   Even small correlations can be significant: In large datasets, even a small correlation, like .1, can be statistically significant due to the increased power that comes with a high sample size. It's important to interpret both the strength of the correlation and its practical significance in context.
 
-## Statistical significance answers the question: "Is the effect real?“
+#### Statistical significance answers the question: "Is the effect real?“
 
 -   Statistical Significance:
 
@@ -662,38 +662,42 @@ vif(creditlm)
     -   5 \< VIF \< 10: High correlation, indicating potential multicollinearity problems. We keep an eye on this issue, but pass the assumption.
     -   VIF \>= 10: High correlation, indicating multicollinearity problems. Fail assumption.
 
-
-#########################################
+######################################### 
 
 # Regression with Categorical Variables
-* Simple and multiple regression both require a continuous dependent variable (y). However, the predictor variables (x) can be categorical or continuous. If you were to have a y/x pairing with a continuous y and a categorical x, you might as well choose to run an ANOVA from the last module or a t-test if there are only 2 categories. However, if you have a more complex model, or need to try a variety of models, multiple regression allows for you to seamlessly add and delete predictor variables (both categorical and continuous). 
 
-* We often have categorical predictors in modeling settings. And it might not make sense to think about a "one unit increase" in a categorical variable. In regression settings, we can account for categorical variables by creating dummy variables, which are indicator variables for certain conditions happening. When considering categorical variables, one variable is taken to be the baseline or reference value. All other categories will be compared to it.
+-   Simple and multiple regression both require a continuous dependent variable (y). However, the predictor variables (x) can be categorical or continuous. If you were to have a y/x pairing with a continuous y and a categorical x, you might as well choose to run an ANOVA from the last module or a t-test if there are only 2 categories. However, if you have a more complex model, or need to try a variety of models, multiple regression allows for you to seamlessly add and delete predictor variables (both categorical and continuous).
 
-* Regression analysis requires numerical data.
-* Ordinal variables can be represented by a number in one column when there is even distance between the categories. 
-  + From strongly disagree to disagree to N/A to agree to strongly agree. Each 1 unit change considers the same distance between points. 
-  + A weighted scale would go from strongly disagree to neither to agree to strongly agree to agree all the time. 
-  + Need to manually code these and coerce into a number. 
-  + Some ordinal variables need to use dummy coding in R (i.e., Seasonality). Need to always check rationale before blindly recoding to numbers, or using numbers that were provided. 
-* Nominal categorical data can be included as independent variables, but must be coded numeric using dummy variables.
-  + R will create the dummy variables automatically in a regression using the lm() command.
-  + For variables with 2 categories, code as 0 and 1.
+-   We often have categorical predictors in modeling settings. And it might not make sense to think about a "one unit increase" in a categorical variable. In regression settings, we can account for categorical variables by creating dummy variables, which are indicator variables for certain conditions happening. When considering categorical variables, one variable is taken to be the baseline or reference value. All other categories will be compared to it.
+
+-   Regression analysis requires numerical data.
+
+-   Ordinal variables can be represented by a number in one column when there is even distance between the categories.
+
+    -   From strongly disagree to disagree to N/A to agree to strongly agree. Each 1 unit change considers the same distance between points.
+    -   A weighted scale would go from strongly disagree to neither to agree to strongly agree to agree all the time.
+    -   Need to manually code these and coerce into a number.
+    -   Some ordinal variables need to use dummy coding in R (i.e., Seasonality). Need to always check rationale before blindly recoding to numbers, or using numbers that were provided.
+
+-   Nominal categorical data can be included as independent variables, but must be coded numeric using dummy variables.
+
+    -   R will create the dummy variables automatically in a regression using the lm() command.
+    -   For variables with 2 categories, code as 0 and 1.
 
 ## Dummy Variables with More than 2 Categories
-* Like in an ANOVA test, a categorical variable may be defined by more than two categories.
-* Use multiple dummy variables to capture all categories, one for each category.
-* When a categorical variable has k > 2 levels, we need to add k − 1 additional variables to the model.
-* Given the intercept term, we exclude one of the dummy variables from the regression. 
-  + The excluded variable represents the reference category.
-  + Including all dummy variables creates perfect multicollinearity (which is an assumption discussed in your textbook).
-* Example: mode of transportation with three categories
-  + Public transportation, driving alone, or car pooling
-    + $d_1=1$ for public transportation and 0 otherwise
-    + $d_2=1$ for driving alone and 0 otherwise
-    + $d_1=d_2=0$ indicates car pooling
 
-* Slope estimates of categorical data cannot be evaluated the same way. In the example below, since Gender is nominal, and because we are using regression, we should use dummy variables to process this factor in the regression instead of the method above. We can use this technique for ordinal variables to recode them into numeric. Again, R does this coding on our behalf using the lm() command.
+-   Like in an ANOVA test, a categorical variable may be defined by more than two categories.
+-   Use multiple dummy variables to capture all categories, one for each category.
+-   When a categorical variable has k \> 2 levels, we need to add k − 1 additional variables to the model.
+-   Given the intercept term, we exclude one of the dummy variables from the regression.
+    -   The excluded variable represents the reference category.
+    -   Including all dummy variables creates perfect multicollinearity (which is an assumption discussed in your textbook).
+-   Example: mode of transportation with three categories
+    -   Public transportation, driving alone, or car pooling
+        -   $d_1=1$ for public transportation and 0 otherwise
+        -   $d_2=1$ for driving alone and 0 otherwise
+        -   $d_1=d_2=0$ indicates car pooling
+-   Slope estimates of categorical data cannot be evaluated the same way. In the example below, since Gender is nominal, and because we are using regression, we should use dummy variables to process this factor in the regression instead of the method above. We can use this technique for ordinal variables to recode them into numeric. Again, R does this coding on our behalf using the lm() command.
 
 ```{r}
 # Take a vector representing gender 
@@ -703,8 +707,9 @@ ifelse(gender == "MALE", 1, ifelse(gender == "FEMALE", 2, 99))
 ```
 
 ## Example Using Dummy Variables
-* Suppose that we are forecasting and we want to account for the month as a predictor. 
-* Then the following dummy variables can be created the following way: 
+
+-   Suppose that we are forecasting and we want to account for the month as a predictor.
+-   Then the following dummy variables can be created the following way:
 
 ```{r}
 sales <- read.csv("data/months.csv", stringsAsFactors = TRUE)
@@ -719,15 +724,15 @@ library(tidyverse)
 ggplot(sales, aes(x=Month, y=Units))+geom_boxplot() 
 ```
 
-* I produced a boxplot of the monthly data across units above. April (Apr) is the first month listed (not Jan for January). It alphabetizes it from there from left to right. 
-* Looking at the lm() command summary below, the hypotheses take on the format VariableCategory. So MonthAug corresponds to the Month variable with the Aug category, representing August. You will notice that there is no MonthApr listed. It is considered the referent category and held in the intercept. 
-* The interpretation of each of the coefficients associated with the dummy variables is that it is a measure of the effect of that category relative to the omitted or referent category.
-* In the example to the left, the intercept coefficient is associated with April, so MonthAug measures the effect of August on the forecast variable (Units) compared to the effect of April. 
-  + Since the data represents the difference in Units sold in months, we can interpret the predicted units sold for April as 49,580.8. 
-  + August was significantly different than April because there is a p-value less than .05. Specifically, we can expect about 7701.6 more units to be sold in August over April. December, January, June, and November also had significantly different Units sold. 
-  + February, July, March, May, October, and September are not different than April because the p-value is > .05.
-    
-* Never try to remove a categorical variable that is not significant because it means something else - that the category is not different than the referent category. More on this later. 
+-   I produced a boxplot of the monthly data across units above. April (Apr) is the first month listed (not Jan for January). It alphabetizes it from there from left to right.
+-   Looking at the lm() command summary below, the hypotheses take on the format VariableCategory. So MonthAug corresponds to the Month variable with the Aug category, representing August. You will notice that there is no MonthApr listed. It is considered the referent category and held in the intercept.
+-   The interpretation of each of the coefficients associated with the dummy variables is that it is a measure of the effect of that category relative to the omitted or referent category.
+-   In the example to the left, the intercept coefficient is associated with April, so MonthAug measures the effect of August on the forecast variable (Units) compared to the effect of April.
+    -   Since the data represents the difference in Units sold in months, we can interpret the predicted units sold for April as 49,580.8.
+    -   August was significantly different than April because there is a p-value less than .05. Specifically, we can expect about 7701.6 more units to be sold in August over April. December, January, June, and November also had significantly different Units sold.
+    -   February, July, March, May, October, and September are not different than April because the p-value is \> .05.
+-   Never try to remove a categorical variable that is not significant because it means something else - that the category is not different than the referent category. More on this later.
+
 ```{r}
 #Suppose that we are forecasting daily data and we want to account for the month as a predictor. 
 ##Then the following dummy variables can be created.
@@ -735,8 +740,9 @@ lmSales<-lm(Units~Month, data=sales)
 summary(lmSales)
 # The Intercept absorbs the referent category and so in this case, April is alphabetically first and the referent category.  
 ```
-* We can reset the levels by using the factor() command. Shown below, I reset the levels of the month in order from month 1 (Jan) to month 12 (Dec). This puts "Jan" in the referent category when we rerun the regression. This allows us to compare Jan to other months and to specifically, test what months are different from Jan (+ increase in sales from Jan, - a decrease in sales from Jan). 
-* For example, March has 10612 more unit sales than Jan. If not significant, like MonthFeb, then you can interpret as not significantly different than the 42K in Jan. 
+
+-   We can reset the levels by using the factor() command. Shown below, I reset the levels of the month in order from month 1 (Jan) to month 12 (Dec). This puts "Jan" in the referent category when we rerun the regression. This allows us to compare Jan to other months and to specifically, test what months are different from Jan (+ increase in sales from Jan, - a decrease in sales from Jan).
+-   For example, March has 10612 more unit sales than Jan. If not significant, like MonthFeb, then you can interpret as not significantly different than the 42K in Jan.
 
 ```{r}
 sales$Month<-factor(sales$Month,levels=c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))
@@ -746,10 +752,9 @@ summary(lmSales)
 # The interpretation of each of the coefficients associated with the dummy variables is that it is a measure of the effect of that category relative to the omitted category. In the example to the left, the intercept coefficient is associated with January, so MonthFeb measures the effect of Feb on the forecast variable (Units) compared to the effect of Jan. 
 ```
 
-
 ## Example Using a Continuous and Categorical Variable
 
-* Let's do an example with the GNP.csv data set to use GNP and quarterly data to predict Sales (in millions)
+-   Let's do an example with the GNP.csv data set to use GNP and quarterly data to predict Sales (in millions)
 
 ```{r, fig.alt="Boxplot of GNP variable Generated by R"}
 GNP<-read.csv("data/GNP.csv")
@@ -784,12 +789,13 @@ predict(lmGNP, nd)
 predict(lmGNP, data.frame(GNP=18000, Quarter="2"))
 ```
 
-* While you technically can keep adding categorical variables, you must be careful not to add too many because the intercept becomes increasingly difficult to interpret! 
-
+-   While you technically can keep adding categorical variables, you must be careful not to add too many because the intercept becomes increasingly difficult to interpret!
 
 ## Coffee Example
-### Visualizing 
-* Let's try a bigger example with the coffee dataset. 
+
+### Visualizing
+
+-   Let's try a bigger example with the coffee dataset.
 
 ```{r}
 library(tidyverse)
@@ -799,7 +805,7 @@ coffee <- read.csv("data/coffee.csv", stringsAsFactors = TRUE)
 str(coffee)
 ```
 
-* Sometimes, we are only interested in 2 or 3 category values. In the following example, I am filtering by Processing Method and creating a ggplot only holding the methods of interest to me. 
+-   Sometimes, we are only interested in 2 or 3 category values. In the following example, I am filtering by Processing Method and creating a ggplot only holding the methods of interest to me.
 
 ```{r}
 coffee %>%
@@ -807,8 +813,8 @@ coffee %>%
      ggplot(aes(x=Processing.Method, y=TotalScore))+geom_boxplot(color=rainbow(3))
 ```
 
-* Does not look like large group differences, good indication into what we will find.
-* In the next visualization, lets add in a scatterplot to show the difference between 2 continuous variables (Flavor and TotalScore) using Processing Method method as the color. 
+-   Does not look like large group differences, good indication into what we will find.
+-   In the next visualization, lets add in a scatterplot to show the difference between 2 continuous variables (Flavor and TotalScore) using Processing Method method as the color.
 
 ```{r}
 coffee %>%
@@ -816,23 +822,27 @@ coffee %>%
      ggplot(aes(x=Flavor, y=TotalScore, color=Processing.Method)) + geom_point(aes(fill=Processing.Method))
 ```
 
-* In the chart above, flavor almost looks like a perfect predictor, strong and positive. 
+-   In the chart above, flavor almost looks like a perfect predictor, strong and positive.
 
 ### 2 Categories
-* Suppose there are only 2 processing methods for coffee beans: Wet/Washed and Natural/Dry.  
-R takes Natural/Dry as the referent category value. Then we can create one dummy variable. 
-A Dummy Variable is then assigned as either a 0 or 1. Let's save the filtering of 2 methods into a new smaller dataset first and then running the lm model. 
+
+-   Suppose there are only 2 processing methods for coffee beans: Wet/Washed and Natural/Dry.\
+    R takes Natural/Dry as the referent category value. Then we can create one dummy variable. A Dummy Variable is then assigned as either a 0 or 1. Let's save the filtering of 2 methods into a new smaller dataset first and then running the lm model.
+
 ```{r}
 coffee2cat <- filter(coffee, Processing.Method == "Natural / Dry" | Processing.Method=="Washed / Wet")
 head(coffee2cat$Processing.Method)
 ```
-* Next, lets run a lm model using the newly filtered data. 
+
+-   Next, lets run a lm model using the newly filtered data.
+
 ```{r}
 lmModel <- lm(TotalScore~Processing.Method, data=coffee2cat)   
 summary(lmModel)
 ```
 
-* We can make a prediction of Washed/Wet. 
+-   We can make a prediction of Washed/Wet.
+
 ```{r}
 predict(lmModel, data.frame(Processing.Method="Washed / Wet"))
 coef(lmModel)
@@ -840,45 +850,46 @@ coef(lmModel)
 ```
 
 ### Using More Than 2 Categories
-* A categorical variable may be defined by more than two categories.
-* Like mentioned above, we use multiple dummy variables to capture all categories, one for each category.
-* When a categorical variable has k > 2 levels, we need to add k − 1 additional variables to the model.
-* Given the intercept term, we exclude one of the dummy variables from the regression. 
-* The excluded variable represents the reference category.
-Example: Processing.Time
-Filtering by 3 categories: "Natural / Dry" "Washed / Wet“ or Other") 
-$d_1=1$ for Other and 0 otherwise
-$d_2=1$ for Washed/Wet and 0 otherwise
-$d_1=d_2=0$ indicates Natural/Dry referent category
 
-* $Score_i=β_0+β_1(I(Other)_i)+β_2(I(Wet)_i)+ϵ_I$
-$β_0$ represents the expected score for a coffee with 0 for the two dummy variables. That is, if it was a dry process coffee
-$β_1$ represents the expected difference in score for coffee with an Other roasting process, compared to the baseline level (dry process)
-$β_2$ represents the expected difference in score for Washed/Wet process coffee compared to dry process coffee.
-We have to estimate multiple "slopes" for this one variable - one corresponding to each non-reference level.
+-   A categorical variable may be defined by more than two categories.
 
-* We can refilter the data to include the third category value. 
+-   Like mentioned above, we use multiple dummy variables to capture all categories, one for each category.
+
+-   When a categorical variable has k \> 2 levels, we need to add k − 1 additional variables to the model.
+
+-   Given the intercept term, we exclude one of the dummy variables from the regression.
+
+-   The excluded variable represents the reference category. Example: Processing.Time Filtering by 3 categories: "Natural / Dry" "Washed / Wet“ or Other") $d_1=1$ for Other and 0 otherwise $d_2=1$ for Washed/Wet and 0 otherwise $d_1=d_2=0$ indicates Natural/Dry referent category
+
+-   $Score_i=β_0+β_1(I(Other)_i)+β_2(I(Wet)_i)+ϵ_I$ $β_0$ represents the expected score for a coffee with 0 for the two dummy variables. That is, if it was a dry process coffee $β_1$ represents the expected difference in score for coffee with an Other roasting process, compared to the baseline level (dry process) $β_2$ represents the expected difference in score for Washed/Wet process coffee compared to dry process coffee. We have to estimate multiple "slopes" for this one variable - one corresponding to each non-reference level.
+
+-   We can refilter the data to include the third category value.
+
 ```{r}
 coffee3cat <- filter(coffee, Processing.Method == "Natural / Dry" | Processing.Method=="Washed / Wet"| Processing.Method=="Other")
 head(coffee3cat)
 ```
 
-* We can make our new model object with the lm function. 
+-   We can make our new model object with the lm function.
+
 ```{r}
 lmModel2 <- lm(TotalScore~Processing.Method, data=coffee3cat)   
 summary(lmModel2)
 ```
 
-* The overall model is not significant here, but one group still shows differences. Means poor predictor, but that there are still group differences (even if small) between Washed/Wet and Natural/Dry
-* Finally, we can make our new prediction of what the score would be in the Processing.Method was Other. 
+-   The overall model is not significant here, but one group still shows differences. Means poor predictor, but that there are still group differences (even if small) between Washed/Wet and Natural/Dry
+-   Finally, we can make our new prediction of what the score would be in the Processing.Method was Other.
 
 ```{r}
 predict(lmModel2, data.frame(Processing.Method="Other"))
 coef(lmModel2)
 82.3541434 -1.0756819 
 ```
+
 ## Adding in a Numerical Variable
-* We can add in another variable like Flavor. Flavor is a much stronger predictor. 
+
+-   We can add in another variable like Flavor. Flavor is a much stronger predictor.
+
 ```{r}
 lmModel3 <- lm(TotalScore~Flavor + Processing.Method, data=coffee3cat)   
 summary(lmModel3)
@@ -890,17 +901,17 @@ coef(lmModel3)
 31.4116160 + 6.7151441 * 10 + -0.1274019 
 ```
 
-* After adjusting for aroma, and flavor, is there sufficient evidence to suggest a difference in mean score between dry vs. wet process beans? Explain, using a formal hypothesis test.
-$H_0: Processing.Method_{Washed / Wet} = Processing.Method_{Dry} $
-$H_A: Processing.Method_{Washed / Wet}\neq Processing.Method_{Dry} $
+-   After adjusting for aroma, and flavor, is there sufficient evidence to suggest a difference in mean score between dry vs. wet process beans? Explain, using a formal hypothesis test. \$H_0: Processing.Method\_{Washed / Wet} = Processing.Method\_{Dry} \$ \$H_A: Processing.Method\_{Washed / Wet}\neq Processing.Method\_{Dry} \$
+
 ```{r}
 lmModel4 <- lm(TotalScore~Aroma + Flavor + Processing.Method, data=coffee2cat)   
 summary(lmModel4)
 ```
 
-* We find evidence that there is a difference between Washed/Wet processed coffee beans and dry processed beans as evident by the significant p-value < .05.   
+-   We find evidence that there is a difference between Washed/Wet processed coffee beans and dry processed beans as evident by the significant p-value \< .05.
 
-* Adjusting for aroma, flavor, and process, which country has the highest expected score? The lowest?
+-   Adjusting for aroma, flavor, and process, which country has the highest expected score? The lowest?
+
 ```{r}
 ##calculate the predicted scores in the dataset
 predicted_scores <- predict(lmModel4, newdata = coffee2cat)
@@ -915,17 +926,17 @@ highest_expected_score <- filter(predicted_data, Predicted_Score == max(Predicte
 lowest_expected_score <- 
   filter(predicted_data, Predicted_Score == min(Predicted_Score)); lowest_expected_score
 ```
-* We find that Ethiopia has the highest predicted score and Guatemala has the lowest predicted score based on Aroma, Flavor, and Processing Method.
 
-* What percentage of the variability in the total score is explained by a linear relationship with the predictors in your model?
+-   We find that Ethiopia has the highest predicted score and Guatemala has the lowest predicted score based on Aroma, Flavor, and Processing Method.
+
+-   What percentage of the variability in the total score is explained by a linear relationship with the predictors in your model?
 
 ```{r}
 library(broom)
 glance(lmModel4)
 ```
 
-* We can look at the R-squared value of .693 and adjusted R-squared value of .692 and state that about 69% of the variable in total score is explained by a linear relationship with the predictors in our model. 
-
+-   We can look at the R-squared value of .693 and adjusted R-squared value of .692 and state that about 69% of the variable in total score is explained by a linear relationship with the predictors in our model.
 
 # Using AI
 
