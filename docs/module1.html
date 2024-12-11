@@ -270,7 +270,17 @@ window.Quarto = {
   <li><a href="#creating-a-matrix" id="toc-creating-a-matrix" class="nav-link" data-scroll-target="#creating-a-matrix">Creating a Matrix</a></li>
   <li><a href="#creating-a-data-frame" id="toc-creating-a-data-frame" class="nav-link" data-scroll-target="#creating-a-data-frame">Creating a Data Frame</a></li>
   <li><a href="#importing-a-data-frame-into-r" id="toc-importing-a-data-frame-into-r" class="nav-link" data-scroll-target="#importing-a-data-frame-into-r">Importing a Data Frame into R</a></li>
-  <li><a href="#summarize-data" id="toc-summarize-data" class="nav-link" data-scroll-target="#summarize-data">Summarize Data</a></li>
+  </ul></li>
+  <li><a href="#working-directories" id="toc-working-directories" class="nav-link" data-scroll-target="#working-directories">Working Directories</a>
+  <ul class="collapse">
+  <li><a href="#absolute-file-paths" id="toc-absolute-file-paths" class="nav-link" data-scroll-target="#absolute-file-paths">Absolute File Paths</a></li>
+  <li><a href="#relative-file-paths" id="toc-relative-file-paths" class="nav-link" data-scroll-target="#relative-file-paths">Relative File Paths</a></li>
+  <li><a href="#setting-up-a-working-directory" id="toc-setting-up-a-working-directory" class="nav-link" data-scroll-target="#setting-up-a-working-directory">Setting up a Working Directory</a></li>
+  </ul></li>
+  <li><a href="#reading-in-data-from-.csv" id="toc-reading-in-data-from-.csv" class="nav-link" data-scroll-target="#reading-in-data-from-.csv">Reading in Data from .csv</a>
+  <ul class="collapse">
+  <li><a href="#read.csv-function" id="toc-read.csv-function" class="nav-link" data-scroll-target="#read.csv-function">read.csv() function</a></li>
+  <li><a href="#using-tidyverse-to-load-data-read_csv-function" id="toc-using-tidyverse-to-load-data-read_csv-function" class="nav-link" data-scroll-target="#using-tidyverse-to-load-data-read_csv-function">Using tidyverse to load data: read_csv function</a></li>
   </ul></li>
   <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a>
   <ul class="collapse">
@@ -296,6 +306,8 @@ window.Quarto = {
   <li><a href="#using-na_if" id="toc-using-na_if" class="nav-link" data-scroll-target="#using-na_if">Using na_if()</a></li>
   <li><a href="#na.omit-vs.-drop_na" id="toc-na.omit-vs.-drop_na" class="nav-link" data-scroll-target="#na.omit-vs.-drop_na">na.omit() vs.&nbsp;drop_na()</a></li>
   </ul></li>
+  <li><a href="#summarize-data" id="toc-summarize-data" class="nav-link" data-scroll-target="#summarize-data">Summarize Data</a></li>
+  <li><a href="#explicit-use-of-libraries" id="toc-explicit-use-of-libraries" class="nav-link" data-scroll-target="#explicit-use-of-libraries">Explicit Use of Libraries</a></li>
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
@@ -1255,8 +1267,59 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="setting-up-a-working-directory" class="level4">
-<h4 class="anchored" data-anchor-id="setting-up-a-working-directory">Setting up a Working Directory</h4>
+</section>
+</section>
+<section id="working-directories" class="level1">
+<h1>Working Directories</h1>
+<ul>
+<li><p>In R, when working with data files stored on your computer, it’s important to understand the difference between absolute and relative file paths. An <strong>absolute reference</strong> gives the complete path to the file, starting from the root directory. This path is specific to your system, and it doesn’t change regardless of where the R script is located. For example, on a Windows machine, you might use something like <code>read.csv("C:/Users/username/Documents/data.csv")</code>. This path will always point to the same file, but it can make your code less portable since it only works on your machine or if others have the exact same file structure.</p></li>
+<li><p>On the other hand, a <strong>relative reference</strong> specifies the file’s path relative to the location of your R script or working directory. It is more flexible because it assumes the file is located in a directory relative to the current project or script. For example, if your script and data file are in the same folder, you could use <code>read.csv("data.csv")</code>. If the file is in a subdirectory, you would reference it relatively like <code>read.csv("data/data.csv")</code>. Relative paths make your code more portable and easier to share since it will work as long as the folder structure remains consistent.</p></li>
+<li><p>Using relative paths is often a best practice, especially in collaborative projects or when sharing code. You can check your current working directory in R with <code>getwd()</code> and set it with <code>setwd()</code>.</p></li>
+</ul>
+<section id="absolute-file-paths" class="level2">
+<h2 class="anchored" data-anchor-id="absolute-file-paths">Absolute File Paths</h2>
+<ul>
+<li>Absolute vs.&nbsp;Relative Links</li>
+<li>An absolute file path provides the complete location of a file, starting from the root directory of your computer.
+<ul>
+<li>Always points to the same file.</li>
+<li>Independent of the script’s location.</li>
+<li>Example: <code>read.csv("C:/Users/username/Documents/data.csv")</code></li>
+</ul></li>
+<li>Pro
+<ul>
+<li>Reliable for your system</li>
+<li>No Ambiguity in locating files</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Not portable; requires the same file structure across systems.</li>
+<li>Harder to share code with collaborators.</li>
+</ul></li>
+</ul>
+</section>
+<section id="relative-file-paths" class="level2">
+<h2 class="anchored" data-anchor-id="relative-file-paths">Relative File Paths</h2>
+<ul>
+<li>A relative file path specifies the file location based on the working directory of your R project or script.
+<ul>
+<li>Changes based on the working directory.</li>
+<li>Often starts from the project folder.</li>
+<li>Example: <code>read.csv("data/myfile.csv")</code></li>
+</ul></li>
+<li>Pros
+<ul>
+<li>More portable; works across systems if the project structure is consistent.</li>
+<li>Easier collaboration when sharing code and project files.</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>Requires setting the working directory correctly (getwd() and setwd() can help).</li>
+</ul></li>
+</ul>
+</section>
+<section id="setting-up-a-working-directory" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-a-working-directory">Setting up a Working Directory</h2>
 <ul>
 <li><p>You should have the data files from our LMS in a data folder on your computer. Your project folder would contain that data folder.</p></li>
 <li><p>Before importing and manipulating data, you must find and edit your working directory to directly connect to your project folder!</p></li>
@@ -1280,21 +1343,19 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="reading-in-data-from-.csv" class="level4">
-<h4 class="anchored" data-anchor-id="reading-in-data-from-.csv">Reading in Data from .csv</h4>
+</section>
+<section id="reading-in-data-from-.csv" class="level1">
+<h1>Reading in Data from .csv</h1>
 <ul>
 <li>Reading in a .csv file is extremely popular way to read in data.</li>
 <li>There are a few functions to read in .csv files. And these functions would change based on the file type you are importing.</li>
 </ul>
-<section id="read.csv-function" class="level5">
-<h5 class="anchored" data-anchor-id="read.csv-function">read.csv() function</h5>
+<section id="read.csv-function" class="level2">
+<h2 class="anchored" data-anchor-id="read.csv-function">read.csv() function</h2>
 <ul>
 <li><p>Extremely popular way to read in data.</p></li>
 <li><p>read.csv() is a base R function that comes built-in with R: No library necessary</p></li>
 <li><p>All your datasets should be in a data folder in your working directory so that you and I have the same working directory. This creates a relative path to our working directory.</p></li>
-<li><p>In R, when working with data files stored on your computer, it’s important to understand the difference between absolute and relative file paths. An <strong>absolute reference</strong> gives the complete path to the file, starting from the root directory. This path is specific to your system, and it doesn’t change regardless of where the R script is located. For example, on a Windows machine, you might use something like <code>read.csv("C:/Users/username/Documents/data.csv")</code>. This path will always point to the same file, but it can make your code less portable since it only works on your machine or if others have the exact same file structure.</p></li>
-<li><p>On the other hand, a <strong>relative reference</strong> specifies the file’s path relative to the location of your R script or working directory. It is more flexible because it assumes the file is located in a directory relative to the current project or script. For example, if your script and data file are in the same folder, you could use <code>read.csv("data.csv")</code>. If the file is in a subdirectory, you would reference it relatively like <code>read.csv("data/data.csv")</code>. Relative paths make your code more portable and easier to share since it will work as long as the folder structure remains consistent.</p></li>
-<li><p>Using relative paths is often a best practice, especially in collaborative projects or when sharing code. You can check your current working directory in R with <code>getwd()</code> and set it with <code>setwd()</code>.</p></li>
 <li><p>The structure of the function is <em>datasetName &lt;- read.csv(“data/dataset.csv”).</em></p></li>
 </ul>
 <div class="cell">
@@ -1319,11 +1380,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-</section>
-<section id="using-tidyverse-to-load-data" class="level4">
-<h4 class="anchored" data-anchor-id="using-tidyverse-to-load-data">Using tidyverse to load data</h4>
-<section id="read_csv-function" class="level5">
-<h5 class="anchored" data-anchor-id="read_csv-function">read_csv function</h5>
+<section id="using-tidyverse-to-load-data-read_csv-function" class="level2">
+<h2 class="anchored" data-anchor-id="using-tidyverse-to-load-data-read_csv-function">Using tidyverse to load data: read_csv function</h2>
 <ul>
 <li>In R, both <code>read.csv()</code> and <code>read_csv()</code> are used to read CSV files, but they come from different packages and have important differences. <code>read.csv()</code> is part of base R and is widely used for loading CSV files into data frames, as in <code>data &lt;- read.csv("data/data.csv")</code>. It can be slower with large datasets and automatically converts strings to factors unless <code>stringsAsFactors = FALSE</code>.</li>
 <li><code>read_csv()</code>, from the <strong>readr</strong> package in the tidyverse, is faster and better suited for large datasets. You’d use it like <code>data &lt;- readr::read_csv("data/data.csv")</code>. It doesn’t convert strings to factors by default and provides clearer error messages.<code>read_csv()</code> is often preferred for performance and better handling of data types, especially in larger datasets or tidyverse projects.</li>
@@ -1342,86 +1400,6 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now open the data file to evaluate with tidyverse</span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span>b <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="summarize-data" class="level3">
-<h3 class="anchored" data-anchor-id="summarize-data">Summarize Data</h3>
-<ul>
-<li><p>In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.</p></li>
-<li><p>In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %&gt;% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.</p></li>
-<li><p>Use the summary() function to examine the contents of the file.</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    grass               age           
- Length:2867        Length:2867       
- Class :character   Class :character  
- Mode  :character   Mode  :character  </code></pre>
-</div>
-</div>
-<ul>
-<li>Again, we can eliminate the object = because it is the first argument and is required.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    grass               age           
- Length:2867        Length:2867       
- Class :character   Class :character  
- Mode  :character   Mode  :character  </code></pre>
-</div>
-</div>
-<section id="explicit-use-of-libraries" class="level4">
-<h4 class="anchored" data-anchor-id="explicit-use-of-libraries">Explicit Use of Libraries</h4>
-<ul>
-<li><p>You can activate a library one time using library::function() format</p></li>
-<li><p>For example, we can use the summarize() function from dplyr which is part of tidyverse installed earlier.</p></li>
-<li><p>Since dplyr is part of tidyverse, there is actually no need to activate it when we have already activated tidyverse in this session, however, it does help when conflicts are present. More on that later.</p>
-<ul>
-<li>The line below says to take the the gss.2016 data object and summarize the length of age using the dplyr library.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  length.age
-1       2867</code></pre>
-</div>
-</div></li>
-<li><p>In the line of code above, we see package::function(). If we initiate the library like below, we do not need the beginning of the statement. The code below provides the same answer as the way written above.</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  length.age
-1       2867</code></pre>
-</div>
-</div>
-<ul>
-<li>You try to access the ChickWeight dataset from the MASS package and summarize it generally using summary() and str() functions.</li>
-<li>Earlier, we looked up the tapply() function in the help bar and found that the format is tapply(x, index, and fun), where x is a continuous variable, index is a grouping variable or factor, and fun is a function like mean. Use the tapply() function to take the mean weight of Chicks based on Diet. See the answer below.</li>
-<li>While there are a few ways to get group means in R. I like the tapply() function which is used to apply a function over subsets of a vector. The function splits the data into subsets based on a given factor or factors, applies a specified function to each subset, and then returns the results in a convenient form. Here, we are applying the mean function.</li>
-<li>To access a variable, use dataset$variable or you can also attach a dataset to your code so you can just use the variable name later on. So use ChickWeight$weight and ChickWeight$Diet appropriately in the function alongside the FUN mean.</li>
-</ul>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>     weight           Time           Chick     Diet   
- Min.   : 35.0   Min.   : 0.00   13     : 12   1:220  
- 1st Qu.: 63.0   1st Qu.: 4.00   9      : 12   2:120  
- Median :103.0   Median :10.00   20     : 12   3:120  
- Mean   :121.8   Mean   :10.72   10     : 12   4:118  
- 3rd Qu.:163.8   3rd Qu.:16.00   17     : 12          
- Max.   :373.0   Max.   :21.00   19     : 12          
-                                 (Other):506          </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       1        2        3        4 
-102.6455 122.6167 142.9500 135.2627 </code></pre>
-</div>
-</div>
-</section>
 </section>
 </section>
 <section id="evaluating-data-types" class="level1">
@@ -1469,18 +1447,18 @@ window.Quarto = {
 <li>We will break down the mutate() function and the piping operator a more in the next module. For now, here is an example of how to recode data into numerical values.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a vector representing evaluation scores, named evaluate </span></span>
-<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>evaluate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"excellent"</span>, <span class="st">"good"</span>, <span class="st">"fair"</span>, <span class="st">"poor"</span>, <span class="st">"excellent"</span>, <span class="st">"good"</span>)</span>
-<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(evaluate)</span>
-<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">evaluate =</span> <span class="fu">recode</span>(evaluate,</span>
-<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"excellent"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
-<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"good"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
-<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"fair"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
-<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"poor"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
-<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a vector representing evaluation scores, named evaluate </span></span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>evaluate <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"excellent"</span>, <span class="st">"good"</span>, <span class="st">"fair"</span>, <span class="st">"poor"</span>, <span class="st">"excellent"</span>, <span class="st">"good"</span>)</span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(evaluate)</span>
+<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">evaluate =</span> <span class="fu">recode</span>(evaluate,</span>
+<span id="cb116-8"><a href="#cb116-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">"excellent"</span> <span class="ot">=</span> <span class="dv">4</span>,</span>
+<span id="cb116-9"><a href="#cb116-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"good"</span> <span class="ot">=</span> <span class="dv">3</span>,</span>
+<span id="cb116-10"><a href="#cb116-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"fair"</span> <span class="ot">=</span> <span class="dv">2</span>,</span>
+<span id="cb116-11"><a href="#cb116-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"poor"</span> <span class="ot">=</span> <span class="dv">1</span>))</span>
+<span id="cb116-12"><a href="#cb116-12" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  evaluate
 1        4
@@ -1518,11 +1496,11 @@ window.Quarto = {
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Rhode Island limit for medical marijuana in ounces per</span></span>
-<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="co"># person</span></span>
-<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>kOuncesRhode <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
-<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the data type</span></span>
-<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kOuncesRhode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Rhode Island limit for medical marijuana in ounces per</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="co"># person</span></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>kOuncesRhode <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the data type</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kOuncesRhode)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
@@ -1532,16 +1510,16 @@ window.Quarto = {
 <li>For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
-<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co"># an integer</span></span>
-<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>kTestInteger <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">4</span>)</span>
-<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(kTestInteger)  <span class="co">#Confirm the data type is an integer </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the value of 4 to a constant called kTestInteger and set as</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="co"># an integer</span></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>kTestInteger <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="dv">4</span>)</span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(kTestInteger)  <span class="co">#Confirm the data type is an integer </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use as.integer() to truncate the variable ouncesRhode</span></span>
-<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>Trunc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(kOuncesRhode)</span>
-<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>Trunc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use as.integer() to truncate the variable ouncesRhode</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>Trunc <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(kOuncesRhode)</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>Trunc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -1558,11 +1536,11 @@ window.Quarto = {
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make string constants</span></span>
-<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
-<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>Q2 <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
-<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the data type</span></span>
-<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> Q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make string constants</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>Q2 <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the data type</span></span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> Q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
@@ -1577,15 +1555,15 @@ window.Quarto = {
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the result of 6 &gt; 8 in a constant called kSixEight</span></span>
-<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>kSixEight <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">&gt;</span> <span class="dv">8</span></span>
-<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Can use comparison tests with the following == &gt;= &lt;= &gt; &lt; &lt;&gt; !=</span></span>
-<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a>kSixEight  <span class="co"># Print kSixEight</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the result of 6 &gt; 8 in a constant called kSixEight</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>kSixEight <span class="ot">&lt;-</span> <span class="dv">6</span> <span class="sc">&gt;</span> <span class="dv">8</span></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Can use comparison tests with the following == &gt;= &lt;= &gt; &lt; &lt;&gt; !=</span></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>kSixEight  <span class="co"># Print kSixEight</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine the data type of kSixEight</span></span>
-<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kSixEight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine the data type of kSixEight</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="at">x =</span> kSixEight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "logical"</code></pre>
 </div>
@@ -1597,10 +1575,10 @@ window.Quarto = {
 <li>The date data type in R is used to represent calendar dates, allowing for accurate storage and manipulation of time-related data. Dates in R are typically stored as objects of class Date, which internally represent the number of days since January 1, 1970. This format facilitates arithmetic operations, such as calculating differences between dates or adding/subtracting days. Dates can be created and manipulated using functions like as.Date() for converting character strings to date objects, or Sys.Date() for retrieving the current date. Handling dates correctly is essential in time series analysis, scheduling, and any task involving chronological data, as improper formatting or assumptions can lead to errors in analysis.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
-<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
-<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
-<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
 </div>
@@ -1609,11 +1587,11 @@ window.Quarto = {
 <li>The lubridate package provides additional tools for working with dates, such as parsing and extracting components like year, month, and day. This package makes dates a lot easier to work with.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using lubridate</span></span>
-<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
-<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">mdy</span>(strDates)</span>
-<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using lubridate</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">mdy</span>(strDates)</span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
 </div>
@@ -1622,83 +1600,83 @@ window.Quarto = {
 <li>If you are only given a year and a month, you can use the ym() command to turn it to a date. But take note that it will add a day to the value as a placeholder.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'yyyymm' using lubridate</span></span>
-<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a>stryyyymm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"202201"</span>, <span class="st">"202003"</span>, <span class="st">"202204"</span>)</span>
-<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">ym</span>(stryyyymm)</span>
-<span id="cb144-4"><a href="#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'yyyymm' using lubridate</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>stryyyymm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"202201"</span>, <span class="st">"202003"</span>, <span class="st">"202204"</span>)</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">ym</span>(stryyyymm)</span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Date[1:3], format: "2022-01-01" "2020-03-01" "2022-04-01"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
-<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
-<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
-<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date info in format 'mm/dd/yyyy' using as.Date</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>strDates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01/05/1965"</span>, <span class="st">"08/16/1975"</span>)</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(strDates, <span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Date[1:2], format: "1965-01-05" "1975-08-16"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Lubridate.csv"</span>)</span>
-<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">ym</span>(UseDates<span class="sc">$</span>Date)</span>
-<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co"># You can use the month or year function to access the month or year</span></span>
-<span id="cb148-5"><a href="#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="co"># from the date</span></span>
-<span id="cb148-6"><a href="#cb148-6" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(UseDates<span class="sc">$</span>Date)</span>
-<span id="cb148-7"><a href="#cb148-7" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(UseDates<span class="sc">$</span>Date)</span>
-<span id="cb148-8"><a href="#cb148-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb148-9"><a href="#cb148-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Now, you can access months or year numerically</span></span>
-<span id="cb148-10"><a href="#cb148-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/Lubridate.csv"</span>)</span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">ym</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="co"># You can use the month or year function to access the month or year</span></span>
+<span id="cb138-5"><a href="#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="co"># from the date</span></span>
+<span id="cb138-6"><a href="#cb138-6" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb138-7"><a href="#cb138-7" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(UseDates<span class="sc">$</span>Date)</span>
+<span id="cb138-8"><a href="#cb138-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-9"><a href="#cb138-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Now, you can access months or year numerically</span></span>
+<span id="cb138-10"><a href="#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   1.000   4.000   7.000   6.538   9.000  12.000 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    2019    2020    2021    2021    2021    2022 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could code the seasons using a mutate function making a new</span></span>
-<span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="do">## variable 'season'</span></span>
-<span id="cb152-3"><a href="#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb152-4"><a href="#cb152-4" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> UseDates <span class="sc">%&gt;%</span></span>
-<span id="cb152-5"><a href="#cb152-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">case_when</span>(month <span class="sc">%in%</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">~</span> <span class="st">"Spring"</span>, month <span class="sc">%in%</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">8</span> <span class="sc">~</span></span>
-<span id="cb152-6"><a href="#cb152-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Summer"</span>, month <span class="sc">%in%</span> <span class="dv">9</span><span class="sc">:</span><span class="dv">11</span> <span class="sc">~</span> <span class="st">"Fall"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Winter"</span>))</span>
-<span id="cb152-7"><a href="#cb152-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb152-8"><a href="#cb152-8" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>season <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(UseDates<span class="sc">$</span>season)</span>
-<span id="cb152-9"><a href="#cb152-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could code the seasons using a mutate function making a new</span></span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="do">## variable 'season'</span></span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a>UseDates <span class="ot">&lt;-</span> UseDates <span class="sc">%&gt;%</span></span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">season =</span> <span class="fu">case_when</span>(month <span class="sc">%in%</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span> <span class="sc">~</span> <span class="st">"Spring"</span>, month <span class="sc">%in%</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">8</span> <span class="sc">~</span></span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Summer"</span>, month <span class="sc">%in%</span> <span class="dv">9</span><span class="sc">:</span><span class="dv">11</span> <span class="sc">~</span> <span class="st">"Fall"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Winter"</span>))</span>
+<span id="cb142-7"><a href="#cb142-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-8"><a href="#cb142-8" aria-hidden="true" tabindex="-1"></a>UseDates<span class="sc">$</span>season <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(UseDates<span class="sc">$</span>season)</span>
+<span id="cb142-9"><a href="#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UseDates<span class="sc">$</span>season)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Fall Spring Summer Winter 
      9      9     12      9 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could use a filter statement to select a particular year.  In</span></span>
-<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the example below, I save the filtered data into a new data frame</span></span>
-<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="do">## UseDate2022.</span></span>
-<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a>UseDate2022 <span class="ot">&lt;-</span> <span class="fu">filter</span>(UseDates, year <span class="sc">==</span> <span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="do">## You could use a filter statement to select a particular year.  In</span></span>
+<span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="do">## the example below, I save the filtered data into a new data frame</span></span>
+<span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="do">## UseDate2022.</span></span>
+<span id="cb144-4"><a href="#cb144-4" aria-hidden="true" tabindex="-1"></a>UseDate2022 <span class="ot">&lt;-</span> <span class="fu">filter</span>(UseDates, year <span class="sc">==</span> <span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="nominal-example-with-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="nominal-example-with-dataset">Nominal Example with Dataset</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span> <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/gss2016.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the variable types with summary and class functions.</span></span>
-<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the variable types with summary and class functions.</span></span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    grass               age           
  Length:2867        Length:2867       
  Class :character   Class :character  
  Mode  :character   Mode  :character  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Check the data type.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Check the data type.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Turn to a factor.</span></span>
-<span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Confirming it is now correct.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>grass <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Turn to a factor.</span></span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>grass)  <span class="co">#Confirming it is now correct.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
@@ -1711,15 +1689,15 @@ window.Quarto = {
 <li>Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode '89 OR OLDER' into just '89'</span></span>
-<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)</span>
-<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to numeric data type</span></span>
-<span id="cb164-4"><a href="#cb164-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span>
-<span id="cb164-5"><a href="#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)  <span class="co">#Conduct final check confirming correct data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode '89 OR OLDER' into just '89'</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">recode</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age, <span class="st">`</span><span class="at">89 OR OLDER</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"89"</span>)</span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to numeric data type</span></span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a>gss<span class="fl">.2016</span><span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gss<span class="fl">.2016</span><span class="sc">$</span>age)</span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)  <span class="co">#Conduct final check confirming correct data types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       grass           age       
  DK       : 110   Min.   :18.00  
@@ -1775,13 +1753,13 @@ window.Quarto = {
 <li>The na.rm parameter in R is a convenient way to handle missing values (NA) within functions that perform calculations on datasets. The parameter stands for “NA remove” and, when set to TRUE, instructs the function to exclude missing values from the computation.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">NA</span>)</span>
-<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="co"># These lines runs, but do not give you anything useful.</span></span>
-<span id="cb166-3"><a href="#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="cn">NA</span>)</span>
+<span id="cb156-2"><a href="#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="co"># These lines runs, but do not give you anything useful.</span></span>
+<span id="cb156-3"><a href="#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
@@ -1791,17 +1769,17 @@ window.Quarto = {
 <li><p>sum() and mean() are examples of this, and most summary statistics like median() and var() and max() also use the na.rm parameter to ignore the NAs. Always check the help to determine if na.rm is a parameter.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb172"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb172-1"><a href="#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.5</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit removes the NAs from the vector of dataset. Here, it works</span></span>
-<span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for removing NAs from the vector.</span></span>
-<span id="cb174-3"><a href="#cb174-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb164"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb164-1"><a href="#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit removes the NAs from the vector of dataset. Here, it works</span></span>
+<span id="cb164-2"><a href="#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for removing NAs from the vector.</span></span>
+<span id="cb164-3"><a href="#cb164-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="using-a-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="using-a-dataset">Using a dataset</h3>
@@ -1809,8 +1787,8 @@ window.Quarto = {
 <li>Using a dataset, we need the _data<span class="math inline">\(variable_ format, like mean(data\)</span>column, na.rm = TRUE) calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>gig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/gig.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">""</span>)</span>
-<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>gig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/gig.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="st">""</span>)</span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   EmployeeID         Wage               Industry           Job     
  Min.   :  1.0   Min.   :24.28   Automotive  :190   Engineer  :191  
@@ -1821,7 +1799,7 @@ window.Quarto = {
  Max.   :604.0   Max.   :51.00                      (Other)   : 69  
                                                     NA's      : 16  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gig<span class="sc">$</span>Wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gig<span class="sc">$</span>Wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 40.0828</code></pre>
 </div>
@@ -1835,23 +1813,23 @@ window.Quarto = {
 <li>To conduct an example, read in the data set called gig.csv from your working directory.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of all NA values in the entire dataset</span></span>
-<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>CountAllBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig))</span>
-<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>CountAllBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of all NA values in the entire dataset</span></span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a>CountAllBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig))</span>
+<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a>CountAllBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 26</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gives the observation number of the observations that include NA</span></span>
-<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="co"># values</span></span>
-<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gives the observation number of the observations that include NA</span></span>
+<span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co"># values</span></span>
+<span id="cb171-3"><a href="#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  24 139 361 378 441 446 479 500 531 565</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produces a dataset with observations that have NA values in the</span></span>
-<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field.</span></span>
-<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(Industry))</span>
-<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Produces a dataset with observations that have NA values in the</span></span>
+<span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field.</span></span>
+<span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
+<span id="cb173-4"><a href="#cb173-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(Industry))</span>
+<span id="cb173-5"><a href="#cb173-5" aria-hidden="true" tabindex="-1"></a>ShowBlankObservations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   EmployeeID  Wage Industry        Job
 1          24 42.58     &lt;NA&gt;  Sales Rep
@@ -1865,19 +1843,19 @@ window.Quarto = {
 9         531 43.13     &lt;NA&gt;   Engineer
 10        565 38.98     &lt;NA&gt; Accountant</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the</span></span>
-<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field. Industry is categorical, so we can count values</span></span>
-<span id="cb185-3"><a href="#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="co"># based on it.</span></span>
-<span id="cb185-4"><a href="#cb185-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span>
-<span id="cb185-5"><a href="#cb185-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the</span></span>
+<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry field. Industry is categorical, so we can count values</span></span>
+<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="co"># based on it.</span></span>
+<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Industry))</span>
+<span id="cb175-5"><a href="#cb175-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the Wage</span></span>
-<span id="cb187-3"><a href="#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="co"># field.</span></span>
-<span id="cb187-4"><a href="#cb187-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Wage))</span>
-<span id="cb187-5"><a href="#cb187-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts the number of observations that have NA values in the Wage</span></span>
+<span id="cb177-3"><a href="#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="co"># field.</span></span>
+<span id="cb177-4"><a href="#cb177-4" aria-hidden="true" tabindex="-1"></a>CountBlanks <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(gig<span class="sc">$</span>Wage))</span>
+<span id="cb177-5"><a href="#cb177-5" aria-hidden="true" tabindex="-1"></a>CountBlanks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
@@ -1889,9 +1867,9 @@ window.Quarto = {
 <li>The na_if() function in tidyr is used to replace specific values in a column with NA (missing) values. This function can be particularly useful when you want to standardize missing values across a dataset or when you want to replace certain values with NA for further data processing</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>TurnNA <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
-<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Job =</span> <span class="fu">na_if</span>(Job, <span class="st">"Other"</span>))</span>
-<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(TurnNA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a>TurnNA <span class="ot">&lt;-</span> gig <span class="sc">%&gt;%</span></span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Job =</span> <span class="fu">na_if</span>(Job, <span class="st">"Other"</span>))</span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(TurnNA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  EmployeeID  Wage     Industry        Job
 1          1 32.81 Construction    Analyst
@@ -1911,10 +1889,10 @@ window.Quarto = {
 <li><p>drop_na() fits well into tidyverse pipelines, making it easy to integrate with other tidyverse functions where na.omit() can also be used in pipelines but might require additional steps to fit seamlessly.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('Amelia')</span></span>
-<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
-<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
-<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('Amelia')</span></span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Amelia)</span>
+<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"africa"</span>)</span>
+<span id="cb181-4"><a href="#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl        
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.400  
@@ -1933,18 +1911,18 @@ window.Quarto = {
  Max.   :134.11   Max.   :0.6667   Max.   :11825390  
  NA's   :5                                           </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>gdp_pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>gdp_pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   376.0   513.8  1035.5  1058.4  1244.8  2723.0       2 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>trade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa<span class="sc">$</span>trade)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
   24.35   38.52   59.59   62.60   81.16  134.11       5 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a>africa1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(africa)</span>
-<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a>africa1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(africa)</span>
+<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl       
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  
@@ -1961,10 +1939,10 @@ window.Quarto = {
  3rd Qu.: 81.16   3rd Qu.:0.3333   3rd Qu.: 7383000  
  Max.   :134.11   Max.   :0.6667   Max.   :11825390  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="do">## to drop all at once.</span></span>
-<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a>africa2 <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span></span>
-<span id="cb199-3"><a href="#cb199-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
-<span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="do">## to drop all at once.</span></span>
+<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>africa2 <span class="ot">&lt;-</span> africa <span class="sc">%&gt;%</span></span>
+<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
+<span id="cb189-4"><a href="#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(africa2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      year              country       gdp_pc            infl       
  Min.   :1972   Burkina Faso:20   Min.   : 376.0   Min.   : -8.40  
@@ -2029,6 +2007,96 @@ window.Quarto = {
 </div></li>
 </ul>
 </section>
+</section>
+<section id="summarize-data" class="level1">
+<h1>Summarize Data</h1>
+<ul>
+<li><p>In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.</p></li>
+<li><p>In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %&gt;% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.</p></li>
+<li><p>Use the summary() function to examine the contents of the file.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="at">object =</span> gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       grass           age       
+ DK       : 110   Min.   :18.00  
+ IAP      : 911   1st Qu.:34.00  
+ LEGAL    :1126   Median :49.00  
+ NOT LEGAL: 717   Mean   :49.16  
+ NA's     :   3   3rd Qu.:62.00  
+                  Max.   :89.00  
+                  NA's   :10     </code></pre>
+</div>
+</div>
+<ul>
+<li>Again, we can eliminate the object = because it is the first argument and is required.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gss<span class="fl">.2016</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       grass           age       
+ DK       : 110   Min.   :18.00  
+ IAP      : 911   1st Qu.:34.00  
+ LEGAL    :1126   Median :49.00  
+ NOT LEGAL: 717   Mean   :49.16  
+ NA's     :   3   3rd Qu.:62.00  
+                  Max.   :89.00  
+                  NA's   :10     </code></pre>
+</div>
+</div>
+</section>
+<section id="explicit-use-of-libraries" class="level1">
+<h1>Explicit Use of Libraries</h1>
+<ul>
+<li><p>You can activate a library one time using library::function() format</p></li>
+<li><p>For example, we can use the summarize() function from dplyr which is part of tidyverse installed earlier.</p></li>
+<li><p>Since dplyr is part of tidyverse, there is actually no need to activate it when we have already activated tidyverse in this session, however, it does help when conflicts are present. More on that later.</p>
+<ul>
+<li>The line below says to take the the gss.2016 data object and summarize the length of age using the dplyr library.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  length.age
+       &lt;int&gt;
+1       2867</code></pre>
+</div>
+</div></li>
+<li><p>In the line of code above, we see package::function(). If we initiate the library like below, we do not need the beginning of the statement. The code below provides the same answer as the way written above.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gss<span class="fl">.2016</span>, <span class="at">length.age =</span> <span class="fu">length</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  length.age
+       &lt;int&gt;
+1       2867</code></pre>
+</div>
+</div>
+<ul>
+<li>You try to access the ChickWeight dataset from the MASS package and summarize it generally using summary() and str() functions.</li>
+<li>Earlier, we looked up the tapply() function in the help bar and found that the format is tapply(x, index, and fun), where x is a continuous variable, index is a grouping variable or factor, and fun is a function like mean. Use the tapply() function to take the mean weight of Chicks based on Diet. See the answer below.</li>
+<li>While there are a few ways to get group means in R. I like the tapply() function which is used to apply a function over subsets of a vector. The function splits the data into subsets based on a given factor or factors, applies a specified function to each subset, and then returns the results in a convenient form. Here, we are applying the mean function.</li>
+<li>To access a variable, use dataset$variable or you can also attach a dataset to your code so you can just use the variable name later on. So use ChickWeight$weight and ChickWeight$Diet appropriately in the function alongside the FUN mean.</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     weight           Time           Chick     Diet   
+ Min.   : 35.0   Min.   : 0.00   13     : 12   1:220  
+ 1st Qu.: 63.0   1st Qu.: 4.00   9      : 12   2:120  
+ Median :103.0   Median :10.00   20     : 12   3:120  
+ Mean   :121.8   Mean   :10.72   10     : 12   4:118  
+ 3rd Qu.:163.8   3rd Qu.:16.00   17     : 12          
+ Max.   :373.0   Max.   :21.00   19     : 12          
+                                 (Other):506          </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1        2        3        4 
+102.6455 122.6167 142.9500 135.2627 </code></pre>
+</div>
+</div>
 </section>
 <section id="using-ai" class="level1">
 <h1>Using AI</h1>
