@@ -86,21 +86,24 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 -   We can change a variable’s data type if we want, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
 
-### Creating a Project for Our Class
+### Project Files
 
--   The RStudio project file is a file that sits in the root directory, with the extension .Rproj. When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
-    -   R projects are a type of file which function with RStudio.
-    -   They have the .Rproj file extension.
-    -   R projects are each associated with a directory.
-    -   They are useful when working with many files for one purpose, hence the name “project”
-    -   A great feature is that they “know” which files are relevant to a project, when you open the project RStudio will load those files automatically.
+* A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
+     + The RStudio project file sits in the root directory, with the extension .Rproj. 
+     + When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
+* Key Features
+     + Keeps all related files in one folder.
+     + Automatically sets the working directory to the project folder.
+     + Simplifies managing file paths ("data/myfile.csv" instead of a full path).
+
+
 -   Start by creating a project for our class. Projects are great because they aid in your organization technique.
 -   You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!
 -   To create a project click $File > New Project - New Directory > New Project$ and save your project to a place on your computer (not the cloud).
 
 ![CreateProject](Pictures/Ch0/CreateProject.png "Screenshot of Create Project in R Studio")
 
-## Using R Script Files
+## R Script Files
 
 -   Using R Script Files:
     -   A .R script is simply a text file containing a set of commands and comments. The script can be saved and used later to rerun the code. The script can also be documented with comments and edited again and again to suit your needs.

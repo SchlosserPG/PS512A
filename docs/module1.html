@@ -237,9 +237,9 @@ window.Quarto = {
   <li><a href="#setting-up-r" id="toc-setting-up-r" class="nav-link" data-scroll-target="#setting-up-r">Setting up R</a>
   <ul class="collapse">
   <li><a href="#why-r" id="toc-why-r" class="nav-link" data-scroll-target="#why-r">Why R?</a></li>
-  <li><a href="#creating-a-project-for-our-class" id="toc-creating-a-project-for-our-class" class="nav-link" data-scroll-target="#creating-a-project-for-our-class">Creating a Project for Our Class</a></li>
+  <li><a href="#project-files" id="toc-project-files" class="nav-link" data-scroll-target="#project-files">Project Files</a></li>
   </ul></li>
-  <li><a href="#using-r-script-files" id="toc-using-r-script-files" class="nav-link" data-scroll-target="#using-r-script-files">Using R Script Files</a>
+  <li><a href="#r-script-files" id="toc-r-script-files" class="nav-link" data-scroll-target="#r-script-files">R Script Files</a>
   <ul class="collapse">
   <li><a href="#create-a-new-r-script-file-chapter1.r" id="toc-create-a-new-r-script-file-chapter1.r" class="nav-link" data-scroll-target="#create-a-new-r-script-file-chapter1.r">Create a New R Script File: Chapter1.R</a></li>
   <li><a href="#using-a-prolog" id="toc-using-a-prolog" class="nav-link" data-scroll-target="#using-a-prolog">Using a Prolog</a></li>
@@ -434,16 +434,19 @@ window.Quarto = {
 <li><p>We can change a variable’s data type if we want, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.</p></li>
 </ul>
 </section>
-<section id="creating-a-project-for-our-class" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-project-for-our-class">Creating a Project for Our Class</h3>
+<section id="project-files" class="level3">
+<h3 class="anchored" data-anchor-id="project-files">Project Files</h3>
 <ul>
-<li>The RStudio project file is a file that sits in the root directory, with the extension .Rproj. When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
+<li>A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
 <ul>
-<li>R projects are a type of file which function with RStudio.</li>
-<li>They have the .Rproj file extension.</li>
-<li>R projects are each associated with a directory.</li>
-<li>They are useful when working with many files for one purpose, hence the name “project”</li>
-<li>A great feature is that they “know” which files are relevant to a project, when you open the project RStudio will load those files automatically.</li>
+<li>The RStudio project file sits in the root directory, with the extension .Rproj.</li>
+<li>When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.</li>
+</ul></li>
+<li>Key Features
+<ul>
+<li>Keeps all related files in one folder.</li>
+<li>Automatically sets the working directory to the project folder.</li>
+<li>Simplifies managing file paths (“data/myfile.csv” instead of a full path).</li>
 </ul></li>
 <li>Start by creating a project for our class. Projects are great because they aid in your organization technique.</li>
 <li>You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!</li>
@@ -457,8 +460,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="using-r-script-files" class="level2">
-<h2 class="anchored" data-anchor-id="using-r-script-files">Using R Script Files</h2>
+<section id="r-script-files" class="level2">
+<h2 class="anchored" data-anchor-id="r-script-files">R Script Files</h2>
 <ul>
 <li>Using R Script Files:
 <ul>
