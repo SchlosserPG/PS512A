@@ -93,33 +93,16 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 -   Take note that nothing prints in the console after running a comment.
 
 ### A Prolog
-
--   We should include a prolog to introduce each R Script File during the course.
--   A prolog is a set of comments at the top of a code file that provides information about what is in the file.
--   Including a prolog is considered coding best practice.
--   It also names the files and resources used that facilitates identification.
+-   A prolog is a set of comments at the top of a code file that provides information about what is in the file. It also names the files and resources used that facilitates identification. Including a prolog is considered coding best practice.
+-   On your own R Script File, add your own prolog following the template as shown.
 -   An informal prolog is below:
-
-```{r, tidy=FALSE}
-####################################
-# Project name: 
-# Project purpose: 
-# Code author name: 
-# Date last edited: 
-# Data used: 
-# Libraries used: 
-####################################
-```
-
--   On your R Script File, add your own prolog following the template as shown.
--   I like to add a line for *Data used* and *Libraries used* so we know what all we used in the script.
 
 ```{r, tidy=FALSE}
 
 ####################################
 # Project name: Module 1
 # Project purpose: To create an R script file to learn about R. 
-# Code author name: Pamela Schlosser
+# Code author name: [Enter Your Name]
 # Date last edited: [Enter Date Here]
 # Data used: NA
 # Libraries used: NA
@@ -167,7 +150,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ## R is an Interactive Calculator
 
 -   An important facet of R is that it should serve as your sole calculator.
--   Try these commands in your .R file by typing them in and clicking Ctr + Enter on each line for a pc and Cmd + Return on a Mac computer.
+-   Try these commands in your .R file by typing them in and clicking Ctr + Enter on each line for a PC and Cmd + Return on a Mac computer.
 
 ```{r}
 3+4
@@ -176,12 +159,15 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 3+4*100^2
 ```
 
--   Take note that order of operations holds in R: PEMDAS
+-   Take note that order of operations holds in R: 
+
+* The order of operations in R, as in mathematics, determines the sequence in which expressions are evaluated. This follows the standard rules often remembered by the acronym PEMDAS: Parentheses, Exponents, Multiplication and Division, and Addition and Subtraction (from left to right). Parentheses have the highest precedence and are used to group expressions, ensuring they are evaluated first. Operators with the same level of precedence, like multiplication and division, are evaluated from left to right. When in doubt, use parentheses to make the evaluation order explicit and improve the readability of your code.
     -   Parentheses ()
     -   Exponents \^ and $**$
     -   Division $/$, Multiplication $*$, modulo, and integer division
     -   Addition + and Subtraction -
--   Note that modulo and integer division have the same priority level as multiplication and division, where modulo is just the remainder.
+-   * In R, modulo (%%) and integer division (%/%) also follow the order of operations, with both being evaluated after multiplication, division, and exponentiation, but before addition and subtraction.
+* This means that modulo and integer division have the same priority level as multiplication and division, where modulo is just the remainder.
 
 ```{r}
 2 + 3 * 5 - 7^2 %% 4 + (5 / 2)
@@ -725,7 +711,7 @@ gss.2016b <- read_csv(file = "data/gss2016.csv")
     -   Logical
     -   Date
 
-# Coercing Data Types
+## Coercing Data Types
 
 -   In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, "A"), which results in c("1", "A"). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.
 -   To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as "numeric" or "factor". Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like "Male" and "Female" would be a categorical (factor) variable.
@@ -968,7 +954,7 @@ summary(gss.2016) #Conduct final check confirming correct data types
 
 -   Consider a dataset used to predict factors that lead to intubation due to COVID-19. Suppose one variable, "Number of pregnancies," contains missing data (NAs) for all men, as the question is not applicable to them. If we were to compare this variable with another, "Intubated due to COVID-19: Yes/No," simply omitting the rows with blanks (NAs) could lead to the exclusion of an entire gender, distorting the analysis. In this case, a different approach to handling missing data would be more appropriate to ensure the dataset remains representative. Additionally, if a value is not blank but is considered missing for analysis purposes, the data should be consistently processed (e.g., mutated or recoded) to align with the chosen technique for handling true missing values.
 
-## The na.rm Parameter
+## na.rm
 
 -   The na.rm parameter in R is a convenient way to handle missing values (NA) within functions that perform calculations on datasets. The parameter stands for "NA remove" and, when set to TRUE, instructs the function to exclude missing values from the computation.
 
@@ -990,7 +976,7 @@ mean(y, na.rm=TRUE)
 y <- na.omit(y) 
 ```
 
-### Using a dataset
+### na.rm in a dataset
 
 -   Using a dataset, we need the \_data$variable_ format, like mean(data$column, na.rm = TRUE) calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.
 
@@ -1027,7 +1013,7 @@ CountBlanks <- sum(is.na(gig$Wage)); CountBlanks
 
 ```
 
-## Using na_if()
+## na_if()
 
 -   The na_if() function in tidyr is used to replace specific values in a column with NA (missing) values. This function can be particularly useful when you want to standardize missing values across a dataset or when you want to replace certain values with NA for further data processing
 
