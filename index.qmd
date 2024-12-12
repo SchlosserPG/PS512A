@@ -28,15 +28,6 @@ output: html_document
 
 -   R's community is vast, and you can always seek information from the community to try to help you with a R related issue.
 
--   R is Called a Dynamically Typed Language
-
--   In R, a variable itself is not declared of any data type.
-
--   Rather it receives the data type of the R object that is assigned to it.
-
--   We can change a variable’s data type if we want, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
-
-
 
 # Installing R
 

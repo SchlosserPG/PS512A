@@ -287,8 +287,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#coercing-data-types" id="toc-coercing-data-types" class="nav-link" data-scroll-target="#coercing-data-types">Coercing Data Types</a>
   <ul class="collapse">
-  <li><a href="#factor-data-type" id="toc-factor-data-type" class="nav-link" data-scroll-target="#factor-data-type">Factor data type:</a></li>
-  <li><a href="#numerical-data-types" id="toc-numerical-data-types" class="nav-link" data-scroll-target="#numerical-data-types">Numerical data types:</a></li>
+  <li><a href="#factor-data-type" id="toc-factor-data-type" class="nav-link" data-scroll-target="#factor-data-type">Factor data type</a></li>
+  <li><a href="#numerical-data-type" id="toc-numerical-data-type" class="nav-link" data-scroll-target="#numerical-data-type">Numerical data type</a></li>
   <li><a href="#character-data-type" id="toc-character-data-type" class="nav-link" data-scroll-target="#character-data-type">Character data type</a></li>
   <li><a href="#logical-data-type" id="toc-logical-data-type" class="nav-link" data-scroll-target="#logical-data-type">Logical data type</a></li>
   <li><a href="#date-data-type" id="toc-date-data-type" class="nav-link" data-scroll-target="#date-data-type">Date data type</a></li>
@@ -1354,7 +1354,8 @@ window.Quarto = {
 <section id="evaluating-data-types" class="level1">
 <h1>Evaluating Data Types</h1>
 <ul>
-<li>A data type of a variable specifies the type of data that is stored inside that variable. Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object’s class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data. Misinterpretation of data types, such as treating characters as numbers or vice versa, can lead to errors or misleading results.</li>
+<li>A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.</li>
+<li>Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object’s class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data.</li>
 <li>There are a number of data types in R that are common to programming and statistical analysis.
 <ul>
 <li>Factor (Nominal or Ordinal)</li>
@@ -1372,7 +1373,7 @@ window.Quarto = {
 <li>Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.</li>
 </ul>
 <section id="factor-data-type" class="level3">
-<h3 class="anchored" data-anchor-id="factor-data-type">Factor data type:</h3>
+<h3 class="anchored" data-anchor-id="factor-data-type">Factor data type</h3>
 <ul>
 <li>Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., “low,” “medium,” “high”), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., “red,” “blue,” “green”). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
 <ul>
@@ -1433,10 +1434,13 @@ window.Quarto = {
 </ul>
 </section>
 </section>
-<section id="numerical-data-types" class="level3">
-<h3 class="anchored" data-anchor-id="numerical-data-types">Numerical data types:</h3>
+<section id="numerical-data-type" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-data-type">Numerical data type</h3>
+<section id="real-number" class="level4">
+<h4 class="anchored" data-anchor-id="real-number">Real Number</h4>
 <ul>
-<li>The as.numeric() function in R is used to convert data into numeric format, allowing for mathematical and statistical operations. It takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning.</li>
+<li>In R, a real number refers to any numerical value that includes both integers and decimals, as opposed to categorical or character data. The as.numeric() function is used to explicitly convert data into numeric format, allowing R to treat it as a real number for calculations. However, if the input to as.numeric() cannot be logically converted (e.g., non-numeric characters), R will return NA with a warning, highlighting the importance of ensuring the input is suitable for numeric conversion.</li>
+<li>The as.numeric() function takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c(“1”, “2”, “3”)) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric(“abc”)), it results in NA with a warning.</li>
 <li>A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.</li>
 <li>Two ways to create:
 <ul>
@@ -1454,6 +1458,9 @@ window.Quarto = {
 <pre><code>[1] "numeric"</code></pre>
 </div>
 </div>
+</section>
+<section id="integer-number" class="level4">
+<h4 class="anchored" data-anchor-id="integer-number">Integer Number</h4>
 <ul>
 <li>Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x &lt;- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.</li>
 <li>For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.</li>
@@ -1473,6 +1480,7 @@ window.Quarto = {
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="character-data-type" class="level3">
 <h3 class="anchored" data-anchor-id="character-data-type">Character data type</h3>
