@@ -89,7 +89,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 # This is a comment for documentation or annotation
 ```
 
--   Add the code above to your R file and run each line using Ctl + Enter or select all lines and click Run.
+-   Add the code above to your R file and run each line using Ctl + Enter (PC) or Cmd + Return (MAC) or select all lines and click Run.
 -   Take note that nothing prints in the console after running a comment.
 
 ### A Prolog

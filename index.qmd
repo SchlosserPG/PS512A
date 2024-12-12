@@ -234,6 +234,6 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 ```
 
-## Summary
+# Summary
 
 -   At the end of this section, you should have downloaded and browsed R in RStudio. You should have looked at the quick keys in R to make editing your R documents easier. You should set up a project folder for the course where you want to on your computer, and made your first .R script file located in that project folder. You should have tried a line of code or two as presented. Finally, you should have looked around the RStudio environment and found the help tab.
