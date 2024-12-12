@@ -226,7 +226,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#installing-r" id="toc-installing-r" class="nav-link active" data-scroll-target="#installing-r">Installing R</a>
+  <li><a href="#why-r" id="toc-why-r" class="nav-link active" data-scroll-target="#why-r">Why R?</a></li>
+  <li><a href="#installing-r" id="toc-installing-r" class="nav-link" data-scroll-target="#installing-r">Installing R</a>
   <ul class="collapse">
   <li><a href="#installing-r-on-windows" id="toc-installing-r-on-windows" class="nav-link" data-scroll-target="#installing-r-on-windows">Installing R on Windows</a></li>
   <li><a href="#installing-r-on-a-mac" id="toc-installing-r-on-a-mac" class="nav-link" data-scroll-target="#installing-r-on-a-mac">Installing R on a Mac</a></li>
@@ -236,8 +237,8 @@ window.Quarto = {
   <li><a href="#downloading-rstudio-for-mac-or-pc" id="toc-downloading-rstudio-for-mac-or-pc" class="nav-link" data-scroll-target="#downloading-rstudio-for-mac-or-pc">Downloading RStudio For Mac or PC</a></li>
   </ul></li>
   <li><a href="#take-your-first-look-at-r" id="toc-take-your-first-look-at-r" class="nav-link" data-scroll-target="#take-your-first-look-at-r">Take Your First Look at R</a></li>
-  <li><a href="#creating-a-project-for-our-class" id="toc-creating-a-project-for-our-class" class="nav-link" data-scroll-target="#creating-a-project-for-our-class">Creating a Project for Our Class</a></li>
-  <li><a href="#r-script-files-myfirstrscript.r" id="toc-r-script-files-myfirstrscript.r" class="nav-link" data-scroll-target="#r-script-files-myfirstrscript.r">R Script files (MyFirstRscript.R)</a></li>
+  <li><a href="#project-files" id="toc-project-files" class="nav-link" data-scroll-target="#project-files">Project Files</a></li>
+  <li><a href="#r-script-files" id="toc-r-script-files" class="nav-link" data-scroll-target="#r-script-files">R Script files</a></li>
   <li><a href="#using-r-more-effectively" id="toc-using-r-more-effectively" class="nav-link" data-scroll-target="#using-r-more-effectively">Using R More Effectively</a>
   <ul class="collapse">
   <li><a href="#setting-options-to-your-liking" id="toc-setting-options-to-your-liking" class="nav-link" data-scroll-target="#setting-options-to-your-liking">Setting Options to Your Liking</a></li>
@@ -285,6 +286,32 @@ window.Quarto = {
 </header>
 
 
+<section id="why-r" class="level1">
+<h1>Why R?</h1>
+<ul>
+<li><p>In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.</p></li>
+<li><p>R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.</p></li>
+<li><p>Easily installed, state-of-the-art, and it is free and open source and supported by a well-established R Community.</p></li>
+<li><p>R can be used with RStudio, which is a graphical user interface that allows you to do the following:</p>
+<ul>
+<li>write, edit, and execute code;</li>
+<li>generate, view, and store plots;</li>
+<li>manage files, objects and data frames;</li>
+<li>integrate with version control systems.</li>
+</ul></li>
+<li><p>R comes with community that helps in the development of R resources.</p>
+<ul>
+<li>A package is developed by R users to do one specific thing or a set of related things that could store a collection of functions, data, and code.</li>
+<li>A library is the place where the package is located on your computer.</li>
+</ul></li>
+<li><p>A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R’s main repository with over 18,000 packages available.</p></li>
+<li><p>R’s community is vast, and you can always seek information from the community to try to help you with a R related issue.</p></li>
+<li><p>R is Called a Dynamically Typed Language</p></li>
+<li><p>In R, a variable itself is not declared of any data type.</p></li>
+<li><p>Rather it receives the data type of the R object that is assigned to it.</p></li>
+<li><p>We can change a variable’s data type if we want, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.</p></li>
+</ul>
+</section>
 <section id="installing-r" class="level1">
 <h1>Installing R</h1>
 <section id="installing-r-on-windows" class="level2">
@@ -358,13 +385,26 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="creating-a-project-for-our-class" class="level1">
-<h1>Creating a Project for Our Class</h1>
+<section id="project-files" class="level1">
+<h1>Project Files</h1>
 <ul>
-<li>The RStudio project file is a file that sits in the root directory, with the extension .Rproj. When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.</li>
-<li>Open up R Studio and Let’s Take a look around.</li>
-<li>Start by creating a project for our class. Projects are great because they aid in your organization technique.</li>
-<li>You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this class, so it is good practice to keep everything organized!</li>
+<li>A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
+<ul>
+<li>The RStudio project file sits in the root directory, with the extension .Rproj.</li>
+<li>When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.</li>
+</ul></li>
+<li>Key Features
+<ul>
+<li>Keeps all related files in one folder.</li>
+<li>Automatically sets the working directory to the project folder.</li>
+<li>Simplifies managing file paths (“data/myfile.csv” instead of a full path).</li>
+</ul></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oe4o3xJGJgI?si=7h-tMOlRwRFDbBQT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
+<ul>
+<li>Creating a project for our class. Projects are great because they aid in your organization technique.</li>
+<li>You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!</li>
 <li>To create a project click <span class="math inline">\(File &gt; New Project - New Directory &gt; New Project\)</span> and save your project to a place on your computer (not the cloud).</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
@@ -374,8 +414,8 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="r-script-files-myfirstrscript.r" class="level1">
-<h1>R Script files (MyFirstRscript.R)</h1>
+<section id="r-script-files" class="level1">
+<h1>R Script files</h1>
 <ul>
 <li>Entering and running code at the R command line is effective and simple. However, each time you want to execute a set of commands, you have to re-enter them at the command line. Nothing saves for later.</li>
 <li>Complex commands are particularly difficult causing you to re-entering the code to fix any errors typographical or otherwise. Fortunately, you can make a .R script file to solve this issue.</li>

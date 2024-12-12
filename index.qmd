@@ -4,6 +4,40 @@ author: ""
 date: "2024-08-09"
 output: html_document
 ---
+
+# Why R?
+* In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
+
+-   R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.
+
+-   Easily installed, state-of-the-art, and it is free and open source and supported by a well-established R Community.
+
+-   R can be used with RStudio, which is a graphical user interface that allows you to do the following:
+
+    -   write, edit, and execute code;
+    -   generate, view, and store plots;
+    -   manage files, objects and data frames;
+    -   integrate with version control systems.
+
+-   R comes with community that helps in the development of R resources.
+
+    -   A package is developed by R users to do one specific thing or a set of related things that could store a collection of functions, data, and code.
+    -   A library is the place where the package is located on your computer.
+
+-   A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R's main repository with over 18,000 packages available.
+
+-   R's community is vast, and you can always seek information from the community to try to help you with a R related issue.
+
+-   R is Called a Dynamically Typed Language
+
+-   In R, a variable itself is not declared of any data type.
+
+-   Rather it receives the data type of the R object that is assigned to it.
+
+-   We can change a variable’s data type if we want, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
+
+
+
 # Installing R
 
 ## Installing R on Windows
@@ -52,17 +86,26 @@ output: html_document
 
 ![Console](Pictures/Ch0/Console.png "Screenshot of Console")
 
-# Creating a Project for Our Class
+# Project Files
+* A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
+     + The RStudio project file sits in the root directory, with the extension .Rproj. 
+     + When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
+* Key Features
+     + Keeps all related files in one folder.
+     + Automatically sets the working directory to the project folder.
+     + Simplifies managing file paths ("data/myfile.csv" instead of a full path).
 
--   The RStudio project file is a file that sits in the root directory, with the extension .Rproj. When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
--   Open up R Studio and Let’s Take a look around.
--   Start by creating a project for our class. Projects are great because they aid in your organization technique.
--   You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this class, so it is good practice to keep everything organized!
+     
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oe4o3xJGJgI?si=7h-tMOlRwRFDbBQT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+-   Creating a project for our class. Projects are great because they aid in your organization technique.
+-   You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!
 -   To create a project click $File > New Project - New Directory > New Project$ and save your project to a place on your computer (not the cloud).
 
 ![CreateProject](Pictures/Ch0/CreateProject.png "Screenshot of Create Project in R Studio")
 
-# R Script files (MyFirstRscript.R)
+# R Script files
 
 -   Entering and running code at the R command line is effective and simple. However, each time you want to execute a set of commands, you have to re-enter them at the command line. Nothing saves for later.
 -   Complex commands are particularly difficult causing you to re-entering the code to fix any errors typographical or otherwise. Fortunately, you can make a .R script file to solve this issue.
