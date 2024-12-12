@@ -404,9 +404,9 @@ rm(list=ls()) #Clears all variables from Global Environment
 
 ![Evalulating Your RStudio Environment](Pictures/Ch1/Environment.png "Evalulating Your RStudio Environment")
 
-## Entering and Loading Data
+# Entering Data in R
 
-### Creating a Vector
+## Creating a Vector
 
 -   A vector is the simplest type of data structure in R.
     -   A vector is a set of data elements that are saved together as the same type.
@@ -436,7 +436,7 @@ rep(x=1:3,times=4) #Repeat the elements of the vector 4 times
 rep(x=1:3, each=3) #Repeat the elements of a vector 3 times each
 ```
 
-### Creating a Matrix
+## Creating a Matrix
 
 -   A matrix is another type of object like a vector or a list.
 
@@ -459,7 +459,7 @@ rep(x=1:3, each=3) #Repeat the elements of a vector 3 times each
     matrix(x,3,3) 
     ```
 
-#### Setting More Arguments in a Matrix
+### Setting More Arguments in a Matrix
 
 -   The byrow argument fills the Matrix across the row
 -   Below, we can use the byrow statement and assign it to a variable m.
@@ -484,12 +484,12 @@ m2 <- matrix(1:25, nrow=5, byrow=TRUE)
 m2
 ```
 
-#### Differences between Data Frames and Matrices
+### Differences between Data Frames and Matrices
 
 -   In a data frame the columns contain different types of data, but in a matrix all the elements are the same type of data. A matrix is usually numbers.
 -   A matrix can be looked at as a vector with additional methods or dimensions, while a data frame is a list.
 
-### Creating a Data Frame
+## Creating a Data Frame
 
 
 -   A data frame is a table or a two-dimensional array-like structure in which each column contains values of one variable and each row contains one set of values from each column. In a data frame the rows are observations and columns are variables.
@@ -541,56 +541,7 @@ dim(pot.legal)
 
 
 
-### Importing a Data Frame into R
 
--   When importing data from outside sources, you can do the following:
-
-1.  You can import data from an R package using data() function.
-2.  You can also link directly to a file on the web.
-3.  You can import data through from your computer through common file extensions:
-    -   .csv: comma separated values;
-    -   .txt: text file;
-    -   .xls or .xlsx: Excel file;
-    -   .sav: SPSS file;
-    -   .sasb7dat: SAS file;
-    -   .xpt: SAS transfer file;
-    -   .dta: Stata file.
-
--   Each different file type requires a unique function to read in the file. With all the variety in file types, it is best to look it up in the R Community to help.
-
-#### Use data() function
-
--   All we need is the data() function to read in a data set that is part of R. R has many built in libraries now, so there are many data sets we can use for testing and learning statistics in R.
-
-```{r}
-#The mtcars data set is part of R, so no new package needs to be downloaded.
-data("mtcars")
-```
-
--   Load a data frame from a unique package in R.
-
-    -   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into your R one time. Then, each time you open R, you need to reload the library using the library() function.
-    -   When your run the install.packages() function, do not include the \# symbol. Then, after you run it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
-
-    ```{r, message=FALSE}
-    #install.packages("MASS") #only need to install package one time in R
-    library(MASS)
-    ```
-
-```{r}
-data("Insurance")
-head(Insurance)
-```
-
-#### Accessing Variables
-
--   You can directly access a variable from a dataset using the \$ symbol followed by the variable name.
--   The \$ symbol facilitates data manipulation operations by allowing easy access to variables for calculations, transformations, or other analyses. For example:
-
-```{r}
-head(Insurance$Claims) #lists the first 6 Claims in the Insurance dataset.
-sd(Insurance$Claims) #provides the standard deviation of all Claims in the Insurance dataset.
-```
 
 # Working Directories
 
@@ -656,9 +607,50 @@ getwd() #Alerts you to what folder you are currently set to as your working dire
 
 ![Setting Your Working Directory](Pictures/Ch1/WorkingDir.png "Setting Your Working Directory")
 
-# Reading in Data from .csv
+# Reading in Data
 
-* After your working directory is set up, then you can read in datasets into RStudio. 
+-   When importing data from outside sources, you can do the following:
+
+1.  You can import data from base R or an R package using data() function.
+2.  You can also link directly to a file on the web.
+3.  You can import data through from your computer through common file extensions:
+    -   .csv: comma separated values;
+    -   .txt: text file;
+    -   .xls or .xlsx: Excel file;
+    -   .sav: SPSS file;
+    -   .sasb7dat: SAS file;
+    -   .xpt: SAS transfer file;
+    -   .dta: Stata file.
+
+-   Each different file type requires a unique function to read in the file. With all the variety in file types, it is best to look it up in the R Community to help.
+
+## Use data() function
+
+-   All we need is the data() function to read in a data set that is part of R. R has many built in libraries now, so there are many data sets we can use for testing and learning statistics in R.
+
+```{r}
+#The mtcars data set is part of R, so no new package needs to be downloaded.
+data("mtcars")
+```
+
+### Load a data from a package
+
+    -   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into your R one time. Then, each time you open R, you need to reload the library using the library() function.
+    -   When your run the install.packages() function, do not include the \# symbol. Then, after you run it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
+
+```{r, message=FALSE}
+#install.packages("MASS") #only need to install package one time in R
+library(MASS)
+```
+
+```{r}
+data("Insurance")
+head(Insurance)
+```
+
+
+### Load data from outside sources. 
+* After your working directory is set up, then you can read in datasets into RStudio from outside sources.  
 
 -   Reading in a .csv file is extremely popular way to read in data.
 -   There are a few functions to read in .csv files. And these functions would change based on the file type you are importing.
@@ -701,6 +693,59 @@ library(tidyverse)
 gss.2016b <- read_csv(file = "data/gss2016.csv")
 ```
 
+
+### Accessing Variables
+
+-   You can directly access a variable from a dataset using the \$ symbol followed by the variable name.
+-   The \$ symbol facilitates data manipulation operations by allowing easy access to variables for calculations, transformations, or other analyses. For example:
+
+```{r}
+head(Insurance$Claims) #lists the first 6 Claims in the Insurance dataset.
+sd(Insurance$Claims) #provides the standard deviation of all Claims in the Insurance dataset.
+```
+
+# Summarize Data
+
+-   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
+-   In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %\>% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.
+
+-   Use the summary() function to examine the contents of the file for a dataset.
+
+```{r}
+summary(object = Insurance) 
+```
+
+-   Again, we can eliminate the object = because it is the first argument and is required.
+
+```{r}
+summary(Insurance)
+```
+
+# Explicit Use of Libraries
+
+-   You can activate a library one time using library::function() format
+
+-   For example, we can use the summarize() function from dplyr which is part of tidyverse installed earlier.
+
+-   Since dplyr is part of tidyverse, there is actually no need to activate it when we have already activated tidyverse in this session, however, it does help when conflicts are present. More on that later.
+
+    -   The line below says to take the the Insurance data object and summarize the Mean of the Holders variable using the dplyr library.
+
+```{r}
+dplyr::summarize(Insurance, mean(Holders))
+
+```
+
+-   In the line of code above, we see package::function(). If we initiate the library like below, we do not need the beginning of the statement. The code below provides the same answer as the way written above.
+
+```{r}
+library(dplyr)
+summarize(Insurance, mean(Holders))
+```
+
+
+
+
 # Evaluating Data Types
 
 -   A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
@@ -713,24 +758,20 @@ gss.2016b <- read_csv(file = "data/gss2016.csv")
     -   Date
 
 
-
-
-
-
-## Coercing Data Types
+# Coercing Data Types
 
 -   In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, "A"), which results in c("1", "A"). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.
 -   To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as "numeric" or "factor". Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like "Male" and "Female" would be a categorical (factor) variable.
 -   Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
 
-### Factor data type
+## Factor data type
 
 -   Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., "low," "medium," "high"), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., "red," "blue," "green"). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
     -   Ordinal: Contain categories that have some logical order (e.g. categories of age).
     -   Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).
 -   R will treat each unique value of a factor as a different level.
 
-#### Ordinal Variable
+### Ordinal Variable
 
 -   Ordinal data may be categorized and ranked with respect to some characteristic or trait.
     -   For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).
@@ -757,7 +798,7 @@ data
 
 ```
 
-#### Nominal Variable
+### Nominal Variable
 
 -   With nominal variables, data are simply categories for grouping.
 -   For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.
@@ -766,9 +807,9 @@ data
 -   We can force a variable into a factor data type using the as.factor() command.
 -   If we use the read.csv() command, we can sometimes do this by setting an argument $stringsAsFactors=TRUE$. We will do this later in the semester.
 
-### Numerical data type
+## Numerical data type
 
-#### Real Number
+### Real Number
 * In R, a real number refers to any numerical value that includes both integers and decimals, as opposed to categorical or character data. The as.numeric() function is used to explicitly convert data into numeric format, allowing R to treat it as a real number for calculations. However, if the input to as.numeric() cannot be logically converted (e.g., non-numeric characters), R will return NA with a warning, highlighting the importance of ensuring the input is suitable for numeric conversion. 
 -   The as.numeric() function takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c("1", "2", "3")) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric("abc")), it results in NA with a warning.
 -   A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.
@@ -783,7 +824,7 @@ kOuncesRhode <- 2.5
 class(x = kOuncesRhode) 
 ```
 
-#### Integer Number
+### Integer Number
 -   Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x \<- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.
 -   For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.
 
@@ -1072,55 +1113,6 @@ summary(africa2)
     summary(airqual)
     ```
 
-# Summarize Data
-
--   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
-
--   In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %\>% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.
-
--   Use the summary() function to examine the contents of the file.
-
-```{r}
-summary(object = gss.2016) 
-```
-
--   Again, we can eliminate the object = because it is the first argument and is required.
-
-```{r}
-summary(gss.2016)
-```
-
-# Explicit Use of Libraries
-
--   You can activate a library one time using library::function() format
-
--   For example, we can use the summarize() function from dplyr which is part of tidyverse installed earlier.
-
--   Since dplyr is part of tidyverse, there is actually no need to activate it when we have already activated tidyverse in this session, however, it does help when conflicts are present. More on that later.
-
-    -   The line below says to take the the gss.2016 data object and summarize the length of age using the dplyr library.
-
-    ```{r}
-    dplyr::summarize(gss.2016, length.age = length(age))
-    ```
-
--   In the line of code above, we see package::function(). If we initiate the library like below, we do not need the beginning of the statement. The code below provides the same answer as the way written above.
-
-```{r}
-library(dplyr)
-summarize(gss.2016, length.age = length(age))
-```
-
--   You try to access the ChickWeight dataset from the MASS package and summarize it generally using summary() and str() functions.
--   Earlier, we looked up the tapply() function in the help bar and found that the format is tapply(x, index, and fun), where x is a continuous variable, index is a grouping variable or factor, and fun is a function like mean. Use the tapply() function to take the mean weight of Chicks based on Diet. See the answer below.
--   While there are a few ways to get group means in R. I like the tapply() function which is used to apply a function over subsets of a vector. The function splits the data into subsets based on a given factor or factors, applies a specified function to each subset, and then returns the results in a convenient form. Here, we are applying the mean function.
--   To access a variable, use dataset\$variable or you can also attach a dataset to your code so you can just use the variable name later on. So use ChickWeight\$weight and ChickWeight\$Diet appropriately in the function alongside the FUN mean.
-
-```{r, echo=FALSE}
-data("ChickWeight")
-summary(ChickWeight)
-tapply(ChickWeight$weight,ChickWeight$Diet, mean)
-```
 
 # Using AI
 
