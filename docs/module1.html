@@ -281,10 +281,9 @@ window.Quarto = {
   <li><a href="#reading-in-data-from-.csv" id="toc-reading-in-data-from-.csv" class="nav-link" data-scroll-target="#reading-in-data-from-.csv">Reading in Data from .csv</a>
   <ul class="collapse">
   <li><a href="#read.csv-function" id="toc-read.csv-function" class="nav-link" data-scroll-target="#read.csv-function">read.csv() function</a></li>
-  <li><a href="#using-tidyverse-to-load-data-read_csv-function" id="toc-using-tidyverse-to-load-data-read_csv-function" class="nav-link" data-scroll-target="#using-tidyverse-to-load-data-read_csv-function">Using tidyverse to load data: read_csv function</a></li>
+  <li><a href="#read_csv-function" id="toc-read_csv-function" class="nav-link" data-scroll-target="#read_csv-function">read_csv() function</a></li>
   </ul></li>
-  <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a>
-  <ul class="collapse">
+  <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a></li>
   <li><a href="#coercing-data-types" id="toc-coercing-data-types" class="nav-link" data-scroll-target="#coercing-data-types">Coercing Data Types</a>
   <ul class="collapse">
   <li><a href="#factor-data-type" id="toc-factor-data-type" class="nav-link" data-scroll-target="#factor-data-type">Factor data type:</a></li>
@@ -294,7 +293,6 @@ window.Quarto = {
   <li><a href="#date-data-type" id="toc-date-data-type" class="nav-link" data-scroll-target="#date-data-type">Date data type</a></li>
   <li><a href="#nominal-example-with-dataset" id="toc-nominal-example-with-dataset" class="nav-link" data-scroll-target="#nominal-example-with-dataset">Nominal Example with Dataset</a></li>
   <li><a href="#numerical-example-with-dataset" id="toc-numerical-example-with-dataset" class="nav-link" data-scroll-target="#numerical-example-with-dataset">Numerical Example with Dataset</a></li>
-  </ul></li>
   </ul></li>
   <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data">Handling Missing Data</a>
   <ul class="collapse">
@@ -447,13 +445,11 @@ window.Quarto = {
 <section id="comments" class="level3">
 <h3 class="anchored" data-anchor-id="comments">Comments</h3>
 <ul>
-<li><p>Another way to add text is to use comments.</p></li>
-<li><p>We use comments to organize and explain code in our R Script file.</p></li>
-<li><p>Be sure to write clear code that does not need a lot of comments.</p></li>
-<li><p>Include useful comments where needed so that anyone (including yourself in the future) can run and understand your code.</p></li>
-<li><p>If something does not work, don’t delete it yet. Instead, comment it out while you troubleshoot it or to try different alternatives.</p></li>
-<li><p>Notice the prolog above is in comments.</p></li>
-<li><p>Esentially, we add comments to our code to document our work and add notes to our self or to others.</p></li>
+<li><p>Use comments to organize and explain your code in R scripts by including 1 or more than 1 hashtag.</p></li>
+<li><p>Aim to write clear, self-explanatory code that minimizes the need for excessive comments.</p></li>
+<li><p>Add helpful comments where necessary to ensure anyone, including your future self, can understand and run the code.</p></li>
+<li><p>If something doesn’t work, avoid deleting it immediately. Instead, comment it out while troubleshooting or exploring alternatives.</p></li>
+<li><p>Essentially, we add comments to our code to document our work and add notes to our self or to others.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a comment for documentation or annotation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -509,7 +505,8 @@ window.Quarto = {
 <section id="string" class="level3">
 <h3 class="anchored" data-anchor-id="string">String</h3>
 <ul>
-<li>R can generally use single quotes or double quotes when marking text, or more formally a <em>string</em>. However, if you use a single quote to start, use a single quote to end. The same for double quotes - ensure the pairing is the same quote type.</li>
+<li>In R, a <em>string</em> is a sequence of characters enclosed in quotes, used to represent text data.</li>
+<li>R accepts single quotes or double quotes when marking a <em>string</em>. However, if you use a single quote to start, use a single quote to end. The same for double quotes - ensure the pairing is the same quote type.</li>
 <li>You sometimes need to be careful with nested quotes, but generally it does not matter which you use.</li>
 </ul>
 <div class="cell">
@@ -1343,8 +1340,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="using-tidyverse-to-load-data-read_csv-function" class="level2">
-<h2 class="anchored" data-anchor-id="using-tidyverse-to-load-data-read_csv-function">Using tidyverse to load data: read_csv function</h2>
+<section id="read_csv-function" class="level2">
+<h2 class="anchored" data-anchor-id="read_csv-function">read_csv() function</h2>
 <ul>
 <li><p>read_csv() is a function from the readr package, which is part of the tidyverse ecosystem.</p></li>
 <li><p>read_csv() is generally faster than read.csv() as it’s optimized for speed, making it more efficient, particularly for large datasets.</p></li>
@@ -1377,8 +1374,9 @@ window.Quarto = {
 <li>Date</li>
 </ul></li>
 </ul>
-<section id="coercing-data-types" class="level2">
-<h2 class="anchored" data-anchor-id="coercing-data-types">Coercing Data Types</h2>
+</section>
+<section id="coercing-data-types" class="level1">
+<h1>Coercing Data Types</h1>
 <ul>
 <li>In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, “A”), which results in c(“1”, “A”). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.</li>
 <li>To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as “numeric” or “factor”. Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like “Male” and “Female” would be a categorical (factor) variable.</li>
@@ -1442,7 +1440,7 @@ window.Quarto = {
 <li>Sometimes, R does this on our behalf depending on commands used.</li>
 </ul></li>
 <li>We can force a variable into a factor data type using the as.factor() command.</li>
-<li>If we use the read.csv() command, we can sometimes do this by setting an argument <span class="math inline">\(stringsAsFactors=TRUE\)</span>. We will do this later in the lesson.</li>
+<li>If we use the read.csv() command, we can sometimes do this by setting an argument <span class="math inline">\(stringsAsFactors=TRUE\)</span>. We will do this later in the semester.</li>
 </ul>
 </section>
 </section>
@@ -1671,7 +1669,6 @@ window.Quarto = {
                   NA's   :10     </code></pre>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section id="handling-missing-data" class="level1">
