@@ -113,14 +113,28 @@ output: html_document
 
 ## Customizing RStudio
 
-* Customizing RStudio through global options allows you to create a coding environment that aligns with your workflow and personal preferences. By tailoring settings such as appearance, pane layout, and editor behavior, you can improve productivity, enhance readability, and streamline your data analysis process. These adjustments not only make coding more efficient but also help you avoid common pitfalls, like workspace clutter or inconsistent settings. Remember, RStudio is highly flexible, so take the time to explore and experiment with its options to make the platform work best for you.
+* Customizing RStudio through global options allows you to create a coding environment that aligns with your workflow and personal preferences. By tailoring settings such as appearance, pane layout, and editor behavior, you can improve productivity, enhance readability, and streamline your data analysis process. These adjustments not only make coding more efficient but also help you avoid common pitfalls, like workspace clutter or inconsistent settings. RStudio is highly flexible, so take the time to explore and experiment with its options to make the platform work best for you.
 
--   You have many options to customize R Studio.
--   Go to Tools \> Global Options to see the list of options for you to customize.
--   A few are listed below.
-    -   You can set your general information including your default working directory (when not in a project).
-    -   You can customize the appearance to a theme that accommodates your learning style and visual preferences.
-    -   You can turn on a spell check.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cmg2q-mG1iI?si=arnYLqFAIH6oZ30U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+* What are Global Options
+     + Settings in RStudio that let you personalize the environment to suit your workflow.
+* Why change global options?
+     + Improve productivity by tailoring RStudio to your preferences.
+     + Enhance readability and usability of code and outputs.
+     + Create a consistent environment across projects.
+* Where to Find Global Options:
+     + Go to Tools > Global Options in the RStudio menu.
+
+
+* Key Settings to Adjust
+     + Global Options > General: 
+You can set your general information including your default working directory (when not in a project).Set your R Version if appropriate.
+     + Global Options > Code: Enable auto-complete, or soft-wrap for easier coding.
+     + Global Options > Appearance: 
+You can customize the appearance to a theme that accommodates your learning style and visual preferences.
+     + Global Options > Spelling: 
+You can turn on a spell check.
 
 ![Tools \> Global Options.R](Pictures/Ch0/Options.png "Tools > Global Options.R")
 
