@@ -163,7 +163,7 @@ output: html_document
 
 # Accessing Data Files for the Course
 
--   To download the data sets, go to our Blackboard datasets page and download them to your computer
+-   To download the data sets, go to our Canvas datasets page and download them to your computer
 -   Once downloaded, unzip the file by right-clicking and selecting "Extract All", and then move the subfolder named data to your working directory.
 -   In the example below, my project folder for the class is called BUAD512A and the subfolder that contains all the data files is called data. You can put your folder anywhere on the hard drive of your computer, but do not download it to places on the cloud like OneDrive.
 
@@ -232,8 +232,9 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 ```
 
 ## Using RMD for Homework 
-You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps:
-     + An .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory).
+* You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps:
+
+     + A .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory).
      + Inside the .Rmd file, you will see R chunks. This is where you will put your answers. Do not delete the …{r} or the … at the end of the chunk. Those characters signifies what type of chunk you have (an R chunk) and needs beginning characters and closing characters to work.
      + Once you complete your tasks, select knit to make the .pdf file.
      + After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included.

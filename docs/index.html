@@ -527,7 +527,7 @@ window.Quarto = {
 <section id="accessing-data-files-for-the-course" class="level1">
 <h1>Accessing Data Files for the Course</h1>
 <ul>
-<li>To download the data sets, go to our Blackboard datasets page and download them to your computer</li>
+<li>To download the data sets, go to our Canvas datasets page and download them to your computer</li>
 <li>Once downloaded, unzip the file by right-clicking and selecting “Extract All”, and then move the subfolder named data to your working directory.</li>
 <li>In the example below, my project folder for the class is called BUAD512A and the subfolder that contains all the data files is called data. You can put your folder anywhere on the hard drive of your computer, but do not download it to places on the cloud like OneDrive.</li>
 </ul>
@@ -640,9 +640,16 @@ window.Quarto = {
 </section>
 <section id="using-rmd-for-homework" class="level2">
 <h2 class="anchored" data-anchor-id="using-rmd-for-homework">Using RMD for Homework</h2>
-<p>You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps: + An .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory). + Inside the .Rmd file, you will see R chunks. This is where you will put your answers. Do not delete the …{r} or the … at the end of the chunk. Those characters signifies what type of chunk you have (an R chunk) and needs beginning characters and closing characters to work. + Once you complete your tasks, select knit to make the .pdf file. + After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included. + If your .Rmd file won’t knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.</p>
 <ul>
-<li>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.</li>
+<li><p>You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps:</p>
+<ul>
+<li>A .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory).</li>
+<li>Inside the .Rmd file, you will see R chunks. This is where you will put your answers. Do not delete the …{r} or the … at the end of the chunk. Those characters signifies what type of chunk you have (an R chunk) and needs beginning characters and closing characters to work.</li>
+<li>Once you complete your tasks, select knit to make the .pdf file.</li>
+<li>After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included.</li>
+<li>If your .Rmd file won’t knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.</li>
+</ul></li>
+<li><p>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.</p></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
