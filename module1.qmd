@@ -56,7 +56,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 # Setting up R
 
-
 ## R Script Files
 
 -   Using R Script Files:
@@ -75,16 +74,20 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 # Using R
 
-
 ## Text in R
 
 ### Comments
-* Use comments to organize and explain your code in R scripts by including 1 or more than 1 hashtag.
-* Aim to write clear, self-explanatory code that minimizes the need for excessive comments.
-* Add helpful comments where necessary to ensure anyone, including your future self, can understand and run the code.
-* If something doesn’t work, avoid deleting it immediately. Instead, comment it out while troubleshooting or exploring alternatives.
 
-* Essentially, we add comments to our code to document our work and add notes to our self or to others.
+-   Use comments to organize and explain your code in R scripts by including 1 or more than 1 hashtag.
+
+-   Aim to write clear, self-explanatory code that minimizes the need for excessive comments.
+
+-   Add helpful comments where necessary to ensure anyone, including your future self, can understand and run the code.
+
+-   If something doesn’t work, avoid deleting it immediately. Instead, comment it out while troubleshooting or exploring alternatives.
+
+-   Essentially, we add comments to our code to document our work and add notes to our self or to others.
+
 ```{r}
 # This is a comment for documentation or annotation
 ```
@@ -93,6 +96,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 -   Take note that nothing prints in the console after running a comment.
 
 ### A Prolog
+
 -   A prolog is a set of comments at the top of a code file that provides information about what is in the file. It also names the files and resources used that facilitates identification. Including a prolog is considered coding best practice.
 -   On your own R Script File, add your own prolog following the template as shown.
 -   An informal prolog is below:
@@ -112,12 +116,12 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 -   Then, as we work through our .R script and add data files or libraries to our code, we go back and edit the prolog.
 
-
 ![Chapter 1 R File](Pictures/Ch1/Chapter1Start.png "Chapter 1 .R File")
 
-### String 
--   In R, a _string_ is a sequence of characters enclosed in quotes, used to represent text data. 
-* R accepts single quotes or double quotes when marking a _string_. However, if you use a single quote to start, use a single quote to end. The same for double quotes - ensure the pairing is the same quote type.
+### String
+
+-   In R, a *string* is a sequence of characters enclosed in quotes, used to represent text data.
+-   R accepts single quotes or double quotes when marking a *string*. However, if you use a single quote to start, use a single quote to end. The same for double quotes - ensure the pairing is the same quote type.
 -   You sometimes need to be careful with nested quotes, but generally it does not matter which you use.
 
 ```{r}
@@ -134,7 +138,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 ![Reading our HTML file](Pictures/Ch1/ReadHTML.png "Reading our HTML file")
 
-
 ## Running Commands
 
 -   There are a few ways to run commands via your .R file.
@@ -145,7 +148,6 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ![Run Code](Pictures/Ch1/Run.png "Run Code")
 
 -   Now that I have asked you to add a couple lines of code, after this point, when R code is shown on this file, you should add it to your .R script file along with any notes you want. I won't explicitly say - "add this code."
-
 
 ## R is an Interactive Calculator
 
@@ -159,15 +161,20 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 3+4*100^2
 ```
 
--   Take note that order of operations holds in R: 
+-   Take note that order of operations holds in R:
 
-* The order of operations in R, as in mathematics, determines the sequence in which expressions are evaluated. This follows the standard rules often remembered by the acronym PEMDAS: Parentheses, Exponents, Multiplication and Division, and Addition and Subtraction (from left to right). Parentheses have the highest precedence and are used to group expressions, ensuring they are evaluated first. Operators with the same level of precedence, like multiplication and division, are evaluated from left to right. When in doubt, use parentheses to make the evaluation order explicit and improve the readability of your code.
+-   The order of operations in R, as in mathematics, determines the sequence in which expressions are evaluated. This follows the standard rules often remembered by the acronym PEMDAS: Parentheses, Exponents, Multiplication and Division, and Addition and Subtraction (from left to right). Parentheses have the highest precedence and are used to group expressions, ensuring they are evaluated first. Operators with the same level of precedence, like multiplication and division, are evaluated from left to right. When in doubt, use parentheses to make the evaluation order explicit and improve the readability of your code.
+
     -   Parentheses ()
     -   Exponents \^ and $**$
     -   Division $/$, Multiplication $*$, modulo, and integer division
     -   Addition + and Subtraction -
--   * In R, modulo (%%) and integer division (%/%) also follow the order of operations, with both being evaluated after multiplication, division, and exponentiation, but before addition and subtraction.
-* This means that modulo and integer division have the same priority level as multiplication and division, where modulo is just the remainder.
+
+-   
+
+    -   In R, modulo (%%) and integer division (%/%) also follow the order of operations, with both being evaluated after multiplication, division, and exponentiation, but before addition and subtraction.
+
+-   This means that modulo and integer division have the same priority level as multiplication and division, where modulo is just the remainder.
 
 ```{r}
 2 + 3 * 5 - 7^2 %% 4 + (5 / 2)
@@ -353,9 +360,6 @@ sort(y, decreasing=FALSE)
 
 ```
 
-
-
-
 ## Saving
 
 -   You can save your work in the file menu or the save shortcut using Ctrl + S or Cmd + S depending on your Operating System.
@@ -491,8 +495,8 @@ m2
 
 ## Creating a Data Frame
 
-
 -   A data frame is a table or a two-dimensional array-like structure in which each column contains values of one variable and each row contains one set of values from each column. In a data frame the rows are observations and columns are variables.
+
     -   Data frames are generic data objects to store tabular data.
     -   The column names should be non-empty.
     -   The row names should be unique.
@@ -502,9 +506,9 @@ m2
 
 -   Going back to the basics in statistics, we need to define an observation and variable so that we can know how to use them effectively in R in creating data frame objects.
 
-     + An *Observation* is a single row of data in a data frame that usually represents one person or other entity.
+    -   An *Observation* is a single row of data in a data frame that usually represents one person or other entity.
 
-     + A *Variable* is a measured characteristic of some entity (e.g., income, years of education, sex, height, blood pressure, smoking status, etc.).
+    -   A *Variable* is a measured characteristic of some entity (e.g., income, years of education, sex, height, blood pressure, smoking status, etc.).
 
 -   In data frames in R, the columns are variables that contain information about the observations (rows).
 
@@ -539,17 +543,11 @@ nrow(pot.legal)
 dim(pot.legal)
 ```
 
-
-
-
-
 # Working Directories
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Hem4uoChTfU?si=y6maq2PDItpJ-ufL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hem4uoChTfU?si=y6maq2PDItpJ-ufL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
+</iframe>
 
 -   In R, when working with data files stored on your computer, it's important to understand the difference between absolute and relative file paths. An **absolute reference** gives the complete path to the file, starting from the root directory. This path is specific to your system, and it doesn't change regardless of where the R script is located. For example, on a Windows machine, you might use something like `read.csv("C:/Users/username/Documents/data.csv")`. This path will always point to the same file, but it can make your code less portable since it only works on your machine or if others have the exact same file structure.
 
@@ -582,10 +580,6 @@ dim(pot.legal)
     -   Easier collaboration when sharing code and project files.
 -   Cons
     -   Requires setting the working directory correctly (getwd() and setwd() can help).
-
-
-
-
 
 ## Setting up a Working Directory
 
@@ -635,8 +629,10 @@ data("mtcars")
 
 ### Load a data from a package
 
-    -   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into your R one time. Then, each time you open R, you need to reload the library using the library() function.
-    -   When your run the install.packages() function, do not include the \# symbol. Then, after you run it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
+```         
+-   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into your R one time. Then, each time you open R, you need to reload the library using the library() function.
+-   When your run the install.packages() function, do not include the \# symbol. Then, after you run it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
+```
 
 ```{r, message=FALSE}
 #install.packages("MASS") #only need to install package one time in R
@@ -648,18 +644,19 @@ data("Insurance")
 head(Insurance)
 ```
 
+### Load data from outside sources.
 
-### Load data from outside sources. 
-* After your working directory is set up, then you can read in datasets into RStudio from outside sources.  
+-   After your working directory is set up, then you can read in datasets into RStudio from outside sources.
 
 -   Reading in a .csv file is extremely popular way to read in data.
+
 -   There are a few functions to read in .csv files. And these functions would change based on the file type you are importing.
 
 ## read.csv() function
 
 -   Extremely popular way to read in data.
 
--   read.csv() is a base R function that comes built-in with R: No library necessary. 
+-   read.csv() is a base R function that comes built-in with R: No library necessary.
 
 -   All your datasets should be in a data folder in your working directory so that you and I have the same working directory. This creates a relative path to our working directory.
 
@@ -676,10 +673,13 @@ summary(gss.2016)
 ```
 
 ## read_csv() function
-* read_csv() is a function from the readr package, which is part of the tidyverse ecosystem.
-* read_csv() is generally faster than read.csv() as it's optimized for speed, making it more efficient, particularly for large datasets.
+
+-   read_csv() is a function from the readr package, which is part of the tidyverse ecosystem.
+
+-   read_csv() is generally faster than read.csv() as it's optimized for speed, making it more efficient, particularly for large datasets.
 
 -   In R, both `read.csv()` and `read_csv()` are used to read in CSV files, but they come from different packages and have important differences. `read.csv()` is part of base R and is widely used for loading CSV files into data frames, as in `data <- read.csv("data/data.csv")`. It can be slower with large datasets and automatically converts strings to factors unless `stringsAsFactors = FALSE`.
+
 -   `read_csv()`, from the **readr** package in the tidyverse, is faster and better suited for large datasets. You'd use it like `data <- readr::read_csv("data/data.csv")`. It doesn't convert strings to factors by default and provides clearer error messages.`read_csv()` is often preferred for performance and better handling of data types, especially in larger datasets or tidyverse projects.
 
 ```{r, message=FALSE}
@@ -692,7 +692,6 @@ library(tidyverse)
 #Now open the data file to evaluate with tidyverse
 gss.2016b <- read_csv(file = "data/gss2016.csv")
 ```
-
 
 ### Accessing Variables
 
@@ -707,6 +706,7 @@ sd(Insurance$Claims) #provides the standard deviation of all Claims in the Insur
 # Summarize Data
 
 -   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
+
 -   In contrast, summarize() (or summarise()) is from the dplyr package and allows for custom summaries. For instance, mtcars %\>% summarize(avg_mpg = mean(mpg), max_hp = max(hp)) returns the average miles per gallon and the maximum horsepower. It’s more flexible and is often used with group_by() for grouped calculations. In conclusion, summary() gives automatic overviews, while summarize() is better for tailored summaries.
 
 -   Use the summary() function to examine the contents of the file for a dataset.
@@ -743,20 +743,16 @@ library(dplyr)
 summarize(Insurance, mean(Holders))
 ```
 
-
-
-
 # Evaluating Data Types
 
 -   A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
-* Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object's class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data. 
+-   Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object's class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data.
 -   There are a number of data types in R that are common to programming and statistical analysis.
     -   Factor (Nominal or Ordinal)
     -   Numeric (Real or Discrete (Integer))
     -   Character
     -   Logical
     -   Date
-
 
 # Coercing Data Types
 
@@ -810,7 +806,8 @@ data
 ## Numerical data type
 
 ### Real Number
-* In R, a real number refers to any numerical value that includes both integers and decimals, as opposed to categorical or character data. The as.numeric() function is used to explicitly convert data into numeric format, allowing R to treat it as a real number for calculations. However, if the input to as.numeric() cannot be logically converted (e.g., non-numeric characters), R will return NA with a warning, highlighting the importance of ensuring the input is suitable for numeric conversion. 
+
+-   In R, a real number refers to any numerical value that includes both integers and decimals, as opposed to categorical or character data. The as.numeric() function is used to explicitly convert data into numeric format, allowing R to treat it as a real number for calculations. However, if the input to as.numeric() cannot be logically converted (e.g., non-numeric characters), R will return NA with a warning, highlighting the importance of ensuring the input is suitable for numeric conversion.
 -   The as.numeric() function takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c("1", "2", "3")) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric("abc")), it results in NA with a warning.
 -   A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.
 -   Two ways to create:
@@ -825,6 +822,7 @@ class(x = kOuncesRhode)
 ```
 
 ### Integer Number
+
 -   Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x \<- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.
 -   For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.
 
@@ -1112,7 +1110,6 @@ summary(africa2)
     #153-111
     summary(airqual)
     ```
-
 
 # Using AI
 

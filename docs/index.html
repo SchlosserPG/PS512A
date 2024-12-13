@@ -253,6 +253,7 @@ window.Quarto = {
   <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks">Code Chunks</a></li>
   <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats">Output Formats</a></li>
   <li><a href="#visualization-and-plots" id="toc-visualization-and-plots" class="nav-link" data-scroll-target="#visualization-and-plots">Visualization and Plots</a></li>
+  <li><a href="#using-rmd-for-homework" id="toc-using-rmd-for-homework" class="nav-link" data-scroll-target="#using-rmd-for-homework">Using RMD for Homework</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
@@ -636,6 +637,33 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</section>
+<section id="using-rmd-for-homework" class="level2">
+<h2 class="anchored" data-anchor-id="using-rmd-for-homework">Using RMD for Homework</h2>
+<p>You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps: + An .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory). + Inside the .Rmd file, you will see R chunks. This is where you will put your answers. Do not delete the …{r} or the … at the end of the chunk. Those characters signifies what type of chunk you have (an R chunk) and needs beginning characters and closing characters to work. + Once you complete your tasks, select knit to make the .pdf file. + After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included. + If your .Rmd file won’t knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.</p>
+<ul>
+<li>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Pictures/Ch0/buad512a-m1-RMD-tasks.PNG" title="RMD Tasks" class="img-fluid figure-img"></p>
+<figcaption>Looking at the HW</figcaption>
+</figure>
+</div>
+<ul>
+<li>To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"formatR"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()  <span class="co"># Select Y when/if it asks down in the console.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.</p></li>
+<li><p>If you are having difficulty knitting to pdf, feel free to publish it in a .html and print the .html to a .pdf. I just ask that the final uploaded document with answers be a pdf. To do this, click the drop down arrow on the Knit option and select Knit to HTML.</p></li>
+<li><p>The videos on Canvas offer a walk through of how to use RMD files successfully in this course. Understanding how to use RMD files is essential to your success on assignments in this course. Please note that these videos will not show you the specific homework questions or specific answers. The files you will see in the following videos are for demonstration purposes only. Course homework assignments change regularly, so the specific contents of the files shown in the videos will likely differ from those you will see for your assignments.</p></li>
+</ul>
 </section>
 </section>
 <section id="summary" class="level1">

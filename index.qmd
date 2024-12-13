@@ -6,7 +6,8 @@ output: html_document
 ---
 
 # Why R?
-* In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
+
+-   In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
 
 -   R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.
 
@@ -27,7 +28,6 @@ output: html_document
 -   A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R's main repository with over 18,000 packages available.
 
 -   R's community is vast, and you can always seek information from the community to try to help you with a R related issue.
-
 
 # Installing R
 
@@ -78,17 +78,18 @@ output: html_document
 ![Console](Pictures/Ch0/Console.png "Screenshot of Console")
 
 # Project Files
-* A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
-     + The RStudio project file sits in the root directory, with the extension .Rproj. 
-     + When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
-* Key Features
-     + Keeps all related files in one folder.
-     + Automatically sets the working directory to the project folder.
-     + Simplifies managing file paths ("data/myfile.csv" instead of a full path).
 
-     
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Oe4o3xJGJgI?si=7h-tMOlRwRFDbBQT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+-   A RStudio project is a way to organize your work by creating a self-contained environment for your files, scripts, and outputs.
+    -   The RStudio project file sits in the root directory, with the extension .Rproj.
+    -   When your RStudio session is running through the project file (.Rproj), the current working directory points to the root folder where that .Rproj file is saved.
+-   Key Features
+    -   Keeps all related files in one folder.
+    -   Automatically sets the working directory to the project folder.
+    -   Simplifies managing file paths ("data/myfile.csv" instead of a full path).
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oe4o3xJGJgI?si=7h-tMOlRwRFDbBQT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+
+</iframe>
 
 -   Creating a project for our class. Projects are great because they aid in your organization technique.
 -   You will find that some professors are not insistent on making a project for their class, but it is helpful to still do to organize your materials. You will have a lot of code in this program!
@@ -113,28 +114,24 @@ output: html_document
 
 ## Customizing RStudio
 
-* Customizing RStudio through global options allows you to create a coding environment that aligns with your workflow and personal preferences. By tailoring settings such as appearance, pane layout, and editor behavior, you can improve productivity, enhance readability, and streamline your data analysis process. These adjustments not only make coding more efficient but also help you avoid common pitfalls, like workspace clutter or inconsistent settings. RStudio is highly flexible, so take the time to explore and experiment with its options to make the platform work best for you.
+-   Customizing RStudio through global options allows you to create a coding environment that aligns with your workflow and personal preferences. By tailoring settings such as appearance, pane layout, and editor behavior, you can improve productivity, enhance readability, and streamline your data analysis process. These adjustments not only make coding more efficient but also help you avoid common pitfalls, like workspace clutter or inconsistent settings. RStudio is highly flexible, so take the time to explore and experiment with its options to make the platform work best for you.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cmg2q-mG1iI?si=arnYLqFAIH6oZ30U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cmg2q-mG1iI?si=arnYLqFAIH6oZ30U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
 
-* What are Global Options
-     + Settings in RStudio that let you personalize the environment to suit your workflow.
-* Why change global options?
-     + Improve productivity by tailoring RStudio to your preferences.
-     + Enhance readability and usability of code and outputs.
-     + Create a consistent environment across projects.
-* Where to Find Global Options:
-     + Go to Tools > Global Options in the RStudio menu.
-
-
-* Key Settings to Adjust
-     + Global Options > General: 
-You can set your general information including your default working directory (when not in a project).Set your R Version if appropriate.
-     + Global Options > Code: Enable auto-complete, or soft-wrap for easier coding.
-     + Global Options > Appearance: 
-You can customize the appearance to a theme that accommodates your learning style and visual preferences.
-     + Global Options > Spelling: 
-You can turn on a spell check.
+-   What are Global Options
+    -   Settings in RStudio that let you personalize the environment to suit your workflow.
+-   Why change global options?
+    -   Improve productivity by tailoring RStudio to your preferences.
+    -   Enhance readability and usability of code and outputs.
+    -   Create a consistent environment across projects.
+-   Where to Find Global Options:
+    -   Go to Tools \> Global Options in the RStudio menu.
+-   Key Settings to Adjust
+    -   Global Options \> General: You can set your general information including your default working directory (when not in a project).Set your R Version if appropriate.
+    -   Global Options \> Code: Enable auto-complete, or soft-wrap for easier coding.
+    -   Global Options \> Appearance: You can customize the appearance to a theme that accommodates your learning style and visual preferences.
+    -   Global Options \> Spelling: You can turn on a spell check.
 
 ![Tools \> Global Options.R](Pictures/Ch0/Options.png "Tools > Global Options.R")
 
@@ -233,6 +230,35 @@ library(ggplot2)
 ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 ```
+
+## Using RMD for Homework 
+You will be asked to edit an RMarkdown (.Rmd) file to process your R assignments in this course. This requires you to answer the assignment questions in .R and copy your answer to the appropriate R chunk in the .Rmd file, or answer the questions directly in the .Rmd file. To complete this process successfully, follow these steps:
+     + An .Rmd file will be linked on each applicable assignment page in Canvas. These files contain the instructions for each individual the assessment. Using RStudio, open the .Rmd file (which can be downloaded from Canvas into your working directory).
+     + Inside the .Rmd file, you will see R chunks. This is where you will put your answers. Do not delete the …{r} or the … at the end of the chunk. Those characters signifies what type of chunk you have (an R chunk) and needs beginning characters and closing characters to work.
+     + Once you complete your tasks, select knit to make the .pdf file.
+     + After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included.
+     + If your .Rmd file won't knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.
+
+* RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R  file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.
+
+
+![Looking at the HW](Pictures/Ch0/buad512a-m1-RMD-tasks.PNG "RMD Tasks")
+
+
+* To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.
+
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+install.packages("knitr")
+install.packages("formatR")
+tinytex::install_tinytex()  # Select Y when/if it asks down in the console.
+```
+
+* You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.
+
+* If you are having difficulty knitting to pdf, feel free to publish it in a .html and print the .html to a .pdf. I just ask that the final uploaded document with answers be a pdf. To do this, click the drop down arrow on the Knit option and select Knit to HTML.
+
+* The videos on Canvas offer a walk through of how to use RMD files successfully in this course. Understanding how to use RMD files is essential to your success on assignments in this course. Please note that these videos will not show you the specific homework questions or specific answers. The files you will see in the following videos are for demonstration purposes only. Course homework assignments change regularly, so the specific contents of the files shown in the videos will likely differ from those you will see for your assignments. 
 
 # Summary
 
