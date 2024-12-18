@@ -186,7 +186,7 @@ output: html_document
     -   Code Chunks
     -   Output Formats
     -   Visualization and Plots
--   A full guide is available at <https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf>
+
 
 ## yaml Header
 
