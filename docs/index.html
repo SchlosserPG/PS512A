@@ -103,6 +103,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<!-- Google tag (gtag.js) -->
+
+     <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MST1J29YB"></script>
+
+          <script>
+
+          window.dataLayer = window.dataLayer || [];
+
+          function gtag(){dataLayer.push(arguments);}
+
+          gtag('js', new Date());
+
+          
+
+          gtag('config', 'G-4MST1J29YB');
+
+          </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -254,6 +271,8 @@ window.Quarto = {
   <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats">Output Formats</a></li>
   <li><a href="#visualization-and-plots" id="toc-visualization-and-plots" class="nav-link" data-scroll-target="#visualization-and-plots">Visualization and Plots</a></li>
   <li><a href="#using-rmd-for-homework" id="toc-using-rmd-for-homework" class="nav-link" data-scroll-target="#using-rmd-for-homework">Using RMD for Homework</a></li>
+  <li><a href="#packages-required-for-rmd-to-work" id="toc-packages-required-for-rmd-to-work" class="nav-link" data-scroll-target="#packages-required-for-rmd-to-work">Packages Required for RMD to Work</a></li>
+  <li><a href="#troubleshooting-rmd-files" id="toc-troubleshooting-rmd-files" class="nav-link" data-scroll-target="#troubleshooting-rmd-files">Troubleshooting RMD FIles</a></li>
   </ul></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
@@ -648,7 +667,12 @@ window.Quarto = {
 <li>After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included.</li>
 <li>If your .Rmd file won’t knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.</li>
 </ul></li>
-<li><p>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.</p></li>
+</ul>
+</section>
+<section id="packages-required-for-rmd-to-work" class="level2">
+<h2 class="anchored" data-anchor-id="packages-required-for-rmd-to-work">Packages Required for RMD to Work</h2>
+<ul>
+<li>RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -668,8 +692,35 @@ window.Quarto = {
 <ul>
 <li><p>You may only need to update one of these packages. However, since they are all connected, running these commands ensures that they are all up to date with minimal troubleshooting.</p></li>
 <li><p>If you are having difficulty knitting to pdf, feel free to publish it in a .html and print the .html to a .pdf. I just ask that the final uploaded document with answers be a pdf. To do this, click the drop down arrow on the Knit option and select Knit to HTML.</p></li>
-<li><p>The videos on Canvas offer a walk through of how to use RMD files successfully in this course. Understanding how to use RMD files is essential to your success on assignments in this course. Please note that these videos will not show you the specific homework questions or specific answers. The files you will see in the following videos are for demonstration purposes only. Course homework assignments change regularly, so the specific contents of the files shown in the videos will likely differ from those you will see for your assignments.</p></li>
 </ul>
+</section>
+<section id="troubleshooting-rmd-files" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-rmd-files">Troubleshooting RMD FIles</h2>
+<ul>
+<li><p>The videos on Canvas offer a walk through of how to use RMD files successfully in this course. Understanding how to use RMD files is essential to your success on assignments in this course. Please note that these videos will not show you the specific homework questions or specific answers. The files you will see in the following videos are for demonstration purposes only. Course homework assignments change regularly, so the specific contents of the files shown in the videos will likely differ from those you will see for your assignments.</p></li>
+<li><p>Lack of Syntax Errors:</p>
+<ul>
+<li>R Markdown files may fail to knit without providing clear syntax error messages.</li>
+<li>To troubleshoot, run each code chunk interactively in RStudio to identify and fix errors before knitting.</li>
+<li>Pay attention to any warnings or messages in the console as they may indicate potential issues.</li>
+</ul></li>
+<li><p>Using Relative Links to Datasets:</p>
+<ul>
+<li>If the .Rmd file relies on external datasets, ensure that file paths are specified using relative links.</li>
+<li>Relative links ensure portability, allowing the .Rmd file to work on different systems without modification.</li>
+<li>For example, if a dataset is in a subfolder, use a path like data &lt;- read.csv(“data/my_dataset.csv”).</li>
+<li>Always verify that the dataset exists in the specified location relative to the working directory.</li>
+</ul></li>
+<li><p>Including Necessary Libraries:</p>
+<ul>
+<li>Functions from external libraries will fail if the required libraries are not loaded.</li>
+<li>At the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).</li>
+<li>Ensure that all libraries used in the document are installed beforehand by running install.packages() if needed.</li>
+<li>Loading libraries early prevents errors during knitting and avoids confusing error messages.</li>
+</ul></li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0icaDnh52Wo?si=ePQX3Pk11EJ-tcTe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="">
+</iframe>
 </section>
 </section>
 <section id="summary" class="level1">

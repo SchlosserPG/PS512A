@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+include-in-header: custom-head.html
 
 book:
   title: "OMSBA 512A: Probability And Statistics"

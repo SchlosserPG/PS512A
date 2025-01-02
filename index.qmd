@@ -242,6 +242,7 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
     -   After you knit, you can find the .pdf file in your working directory. You can open it to verify that all of your answers are included.
     -   If your .Rmd file won't knit, you should submit your .Rmd file instead of the .pdf file. While this will cost you points on the assignment, it will still allow your instructor to evaluate the rest of the code.
 
+## Packages Required for RMD to Work
 -   RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.
 
 ![Looking at the HW](Pictures/Ch0/RMDTasks.png "RMD Tasks")
@@ -259,7 +260,26 @@ tinytex::install_tinytex()  # Select Y when/if it asks down in the console.
 
 -   If you are having difficulty knitting to pdf, feel free to publish it in a .html and print the .html to a .pdf. I just ask that the final uploaded document with answers be a pdf. To do this, click the drop down arrow on the Knit option and select Knit to HTML.
 
+## Troubleshooting RMD FIles
 -   The videos on Canvas offer a walk through of how to use RMD files successfully in this course. Understanding how to use RMD files is essential to your success on assignments in this course. Please note that these videos will not show you the specific homework questions or specific answers. The files you will see in the following videos are for demonstration purposes only. Course homework assignments change regularly, so the specific contents of the files shown in the videos will likely differ from those you will see for your assignments.
+
+* Lack of Syntax Errors:
+     + R Markdown files may fail to knit without providing clear syntax error messages.
+     + To troubleshoot, run each code chunk interactively in RStudio to identify and fix errors before knitting.
+     + Pay attention to any warnings or messages in the console as they may indicate potential issues.
+* Using Relative Links to Datasets:
+     + If the .Rmd file relies on external datasets, ensure that file paths are specified using relative links.
+     + Relative links ensure portability, allowing the .Rmd file to work on different systems without modification.
+     + For example, if a dataset is in a subfolder, use a path like data <- read.csv("data/my_dataset.csv").
+     + Always verify that the dataset exists in the specified location relative to the working directory.
+* Including Necessary Libraries:
+     + Functions from external libraries will fail if the required libraries are not loaded.
+     + At the beginning of the .Rmd file, load all necessary libraries explicitly using library() calls, e.g., library(tidyverse).
+     + Ensure that all libraries used in the document are installed beforehand by running install.packages() if needed.
+     + Loading libraries early prevents errors during knitting and avoids confusing error messages.     
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0icaDnh52Wo?si=ePQX3Pk11EJ-tcTe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 # Summary
 
