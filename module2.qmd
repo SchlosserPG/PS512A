@@ -104,6 +104,26 @@ TransposedData <- as.data.frame(TransposedData)
 TransposedData
 ```
 
+* When working with a dataset that’s already provided, there’s no need to create a new data frame in the initial steps.
+
+* The example below uses the built-in iris dataset and the Species variable, which is already properly coded as a categorical variable in R.
+
+* This example combines all the previous steps and creates a new data frame that includes the frequency, relative frequency, and cumulative values.
+
+```{r}
+data("iris")
+summary(iris$Species)
+
+frequencies <- table(iris$Species) 
+proportions <- prop.table(frequencies)
+cumulfreq <- cumsum(frequencies)
+cumulproportions<- cumsum(prop.table(frequencies))
+frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
+TransposedData <- t(frequency_table)
+TransposedData <- as.data.frame(TransposedData); TransposedData
+```
+
+
 ## Summarizing Quantitative Data
 
 ### Defining and Calculating Central Tendency
@@ -117,15 +137,19 @@ TransposedData
 -   Then we discuss a percentile: a measure of relative position.
 
 #### Using the Mean
-* The mean() function in R is a versatile tool for calculating the arithmetic average of a numeric vector. The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.
-* The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).
+
+-   The mean() function in R is a versatile tool for calculating the arithmetic average of a numeric vector. The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.
+
+-   The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).
 
 -   $m_x = (\sum_{i=1}^{n} x_{i})/n$
-*  One of the mean functions key features is the na.rm parameter, which stands for "remove NAs." We discussed this in module 1 under "Handling Missng Data". This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.
+
+-   One of the mean functions key features is the na.rm parameter, which stands for "remove NAs." We discussed this in module 1 under "Handling Missng Data". This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.
 
 -   Consider the salaries of employees at a company: ![Salary Data](Pictures/Ch2/Salaries.png "Salary Data")
 
 -   We can use the mean() command to calculate the mean in R.
+
 ```{r}
 # Create Vector of Salaries
 salaries <- c(40000, 40000, 65000, 90000, 145000, 150000, 550000)
@@ -204,7 +228,8 @@ mean(GrowthFund)
 #### Example of Function with Salary Variable
 
 -   Consider the salary of employees presented earlier. The mode is \$40,000 since this value appears most often.
-* While this is a small vector, when working with a large dataset and a function like sort(x = table(salaries), decreasing = TRUE), appending [1:5] is a way to focus on the top results after the frequencies have been computed and sorted. Specifically, table(salaries) calculates the frequency of each unique salary, sort(..., decreasing = TRUE) orders these frequencies from highest to lowest, and [1:5] selects the first five entries in the sorted list. This is useful when the dataset contains many unique values, as it allows you to quickly identify and extract the top 5 most frequent salaries, providing a concise summary without being overwhelmed by the full distribution.
+-   While this is a small vector, when working with a large dataset and a function like sort(x = table(salaries), decreasing = TRUE), appending \[1:5\] is a way to focus on the top results after the frequencies have been computed and sorted. Specifically, table(salaries) calculates the frequency of each unique salary, sort(..., decreasing = TRUE) orders these frequencies from highest to lowest, and \[1:5\] selects the first five entries in the sorted list. This is useful when the dataset contains many unique values, as it allows you to quickly identify and extract the top 5 most frequent salaries, providing a concise summary without being overwhelmed by the full distribution.
+
 ```{r}
 # Try this command with and without it. 
 sort(x = table(salaries), decreasing = TRUE)[1:5]
