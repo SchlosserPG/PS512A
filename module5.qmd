@@ -462,6 +462,8 @@ nhanes.2016.cleaned <- nhanes.2016 %>%
 
 * We can do a quick check of the mean values before we begin by either using a tapply or tidyverse. The means seem close here, but that does not mean that we won't find significance. We need to do the t-test to formally confirm whether a mean difference is present or not. 
 * The tapply uses tidyverse and the group_by uses tidyverse to calculate these mean differences. 
+* tapply() is a base R function used to apply a function, such as mean or sum, to subsets of a vector that are defined by one or more grouping factors. It takes three main arguments: the vector to be analyzed, the grouping factor(s), and the function to apply. This function is useful for performing quick, grouped summaries in base R. However, while tapply() is concise, it is less flexible than tidyverse tools like dplyr when handling more complex data manipulations or when working with data frames.
+* In the tidyverse, the group_by() and summarise() functions from the dplyr package are commonly used together to calculate summary statistics like the mean for different groups within a dataset. The group_by() function is used to define the grouping variable(s), essentially splitting the data into subsets based on the unique values of that variable. Once the data is grouped, summarise() is used to apply a summary function, such as mean(), to each group. 
 ```{r}
 tapply(nhanes.2016.cleaned$systolic, nhanes.2016.cleaned$sex, mean, na.rm=TRUE)
 
