@@ -457,7 +457,20 @@ nhanes.2016.cleaned <- nhanes.2016 %>%
      '2' = 'Female')) %>%
   rename(sex = RIAGENDR) %>%
   rename(systolic = BPXSY1)
+
 ```
+
+* We can do a quick check of the mean values before we begin by either using a tapply or tidyverse. The means seem close here, but that does not mean that we won't find significance. We need to do the t-test to formally confirm whether a mean difference is present or not. 
+* The tapply uses tidyverse and the group_by uses tidyverse to calculate these mean differences. 
+```{r}
+tapply(nhanes.2016.cleaned$systolic, nhanes.2016.cleaned$sex, mean, na.rm=TRUE)
+
+nhanes.2016.cleaned %>%
+  group_by(sex) %>%
+  summarise(mean_systolic = mean(systolic, na.rm = TRUE))
+
+```
+
 
 -   Step 1: Write null and alternative.
 
