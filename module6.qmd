@@ -387,7 +387,7 @@ summary(Anova2way)
 
 -   This means that we can conduct post-hoc tests on our Race variable. If we conduct any post-hoc tests on Instructor, we should find no differences in groups (which we already found in the ANOVA results above). This means additional testing the Instructor variable is an unnecessary step.
 
-### Step 4: If Model is Significant, Run Post-Hoc Tests
+### Step 4: If Model is Significant, Run Post-Hoc Tests 
 
 -   Using the pairwise.t.test() command, we can run a Bonferroni test on just race by using the command below. This result suggest that there are group differences between all groups. We can tell that because all p-values are less than alpha at .05.\
 
