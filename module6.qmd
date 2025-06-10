@@ -552,8 +552,7 @@ ggplot(corolla, aes(x = Fuel_Type, y = Price, color = Metallic, group = Metallic
   labs(title = "Interaction Effect of Fuel Type and Metallic Paint on Price",
        x = "Fuel Type",
        y = "Price",
-       color = "Metallic Paint") +
-  theme(legend.position = "top")
+       color = "Metallic Paint") 
 ```
 
 # choose() command
