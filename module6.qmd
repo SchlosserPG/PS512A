@@ -544,13 +544,13 @@ TukeyHSD(ANOVAInteraction)
 
 * Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction. 
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 ggplot(corolla, aes(x = Fuel_Type, y = Price, color = Metallic, group = Metallic)) +
   stat_summary(fun = mean, geom = "point", size = 3) + 
   stat_summary(fun = mean, geom = "line", aes(linetype = Metallic)) +
   theme_minimal() +
-  labs(title = "Interaction Effect of Fuel Type and Metallic Paint on Price",
+  labs(title = "Fuel Type and Metallic Paint on Price",
        x = "Fuel Type",
        y = "Price",
        color = "Metallic Paint") 
