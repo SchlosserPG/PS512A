@@ -306,8 +306,8 @@ window.Quarto = {
   <li><a href="#step-1-write-the-null-and-alternate-hypotheses" id="toc-step-1-write-the-null-and-alternate-hypotheses" class="nav-link" data-scroll-target="#step-1-write-the-null-and-alternate-hypotheses">Step 1: Write the null and alternate hypotheses</a></li>
   <li><a href="#step-2-compute-the-f-test-statistic-for-the-interaction-and-its-p-value." id="toc-step-2-compute-the-f-test-statistic-for-the-interaction-and-its-p-value." class="nav-link" data-scroll-target="#step-2-compute-the-f-test-statistic-for-the-interaction-and-its-p-value.">Step 2: Compute the F-test statistic for the interaction and its p-value.</a></li>
   <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion.-1" id="toc-step-3-interpret-the-probability-and-write-a-conclusion.-1" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion.-1">Step 3: Interpret the probability and write a conclusion.</a></li>
-  </ul></li>
   <li><a href="#step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests." id="toc-step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests." class="nav-link" data-scroll-target="#step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests.">Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#choose-command" id="toc-choose-command" class="nav-link" data-scroll-target="#choose-command">choose() command</a></li>
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
@@ -1115,9 +1115,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>There is a significant interaction between Fuel_Type and Metallic on Price (p-value &lt; .05).</p></li>
 </ul>
 </section>
-</section>
-<section id="step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests." class="level2">
-<h2 class="anchored" data-anchor-id="step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests.">Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.</h2>
+<section id="step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests." class="level3">
+<h3 class="anchored" data-anchor-id="step-4-if-the-interaction-is-significant-examine-simple-effects-or-conduct-post-hoc-tests.">Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.</h3>
 <ul>
 <li>If the interaction effect is significant, examine simple effects or run post-hoc tests.
 <ul>
@@ -1170,7 +1169,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li><p>Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corolla, <span class="fu">aes</span>(<span class="at">x =</span> Fuel_Type, <span class="at">y =</span> Price, <span class="at">color =</span> Metallic, <span class="at">group =</span> Metallic)) <span class="sc">+</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"line"</span>, <span class="fu">aes</span>(<span class="at">linetype =</span> Metallic)) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Interaction Effect of Fuel Type and Metallic Paint on Price"</span>,</span>
@@ -1183,6 +1182,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 <section id="choose-command" class="level1">

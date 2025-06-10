@@ -527,7 +527,7 @@ anova(ANOVAInteraction)
 * Metallic has a significant main effect on Price (p-value < .001).
 * There is a significant interaction between Fuel_Type and Metallic on Price (p-value < .05).
 
-## Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.
+### Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.
 
 -   If the interaction effect is significant, examine simple effects or run post-hoc tests.
     -   Conduct simple effects analysis, examining the effect of one factor at each level of the other factor.
@@ -536,6 +536,7 @@ anova(ANOVAInteraction)
 ```{r}
 TukeyHSD(ANOVAInteraction)
 ```
+
 * In the output, it looks like Fuel_Type is a weak variable. There were no group differences detected in the TukeyHSD. There is a group difference between Metallic paint (Yes vs No). There are many interaction groups significantly different as indicated by a significant p-value < .05. 
 
     -   Create interaction plots to visualize how the levels of one factor influence the effect of the other factor.
@@ -544,7 +545,7 @@ TukeyHSD(ANOVAInteraction)
 * Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction. 
 
 ```{r}
-library(ggplot2)
+library(tidyverse)
 ggplot(corolla, aes(x = Fuel_Type, y = Price, color = Metallic, group = Metallic)) +
   stat_summary(fun = mean, geom = "point", size = 3) + 
   stat_summary(fun = mean, geom = "line", aes(linetype = Metallic)) +
