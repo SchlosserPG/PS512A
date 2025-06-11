@@ -406,7 +406,6 @@ window.Quarto = {
 <h4 class="anchored" data-anchor-id="pertinent-parameters-to-the-geom_bar">Pertinent Parameters to the geom_bar()</h4>
 <ul>
 <li><strong>stat=“identity”</strong>: In ggplot2, the argument <em>stat=“identity”</em> is used inside the geom_bar when creating bar charts to specify that the actual values of the data should be plotted, rather than calculated summary statistics. By default, ggplot assumes that bar charts use stat=“count”, which counts the number of observations in each category. When you want to display the actual values in your dataset (e.g., sales numbers, average scores), you need to set stat=“identity” to ensure that the y-values are mapped directly from the data rather than being automatically counted.</li>
-<li>You only need to specify <em>stat=“identity”</em> if you have pre-calculated values to use in the barplot. In the example below, we do have pre-calculated numbers going into make the chart, so stat=“identity” is used. Here, we are using exact values, but we can also compute a dataset before graphing using a group_by() and a variety of counting function.</li>
 <li><strong>position=“dodge”</strong>: If we have more than one categorical variable, we might set the <em>position=“dodge”</em> argument. This argument controls how the bars are positioned relative to each other when you are plotting multiple categories within a bar chart. By default, bars in a bar chart are stacked, and setting position=“dodge” ensures that they are placed side-by-side. This is particularly useful when you are comparing multiple groups or categories within the same plot, as it allows for a clear visual distinction between each group. In the example below, we only have one variable, so position=“dodge” argument is not needed.<br>
 </li>
 <li>In combination, using <em>stat=“identity”</em> and <em>position=“dodge”</em> is common when you want to compare different categories or groups with specific values in a side-by-side manner, ensuring the chart is easy to interpret. For example, if you are comparing sales figures across different products for multiple years, this approach would give you a bar for each product in each year, clearly separated.</li>
@@ -1293,12 +1292,12 @@ TRUE </code></pre>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">skew</span>(mtcars<span class="sc">$</span>mpg)  <span class="co">#normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>skew (g1)        se         z         p 
-0.6723771 0.4330127 1.5527885 0.1204737 </code></pre>
+    0.672     0.433     1.553     0.120 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">kurtosis</span>(mtcars<span class="sc">$</span>mpg)  <span class="co">#mesokurtic</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Excess Kur (g2)              se               z               p 
-    -0.02200629      0.86602540     -0.02541068      0.97972740 </code></pre>
+         -0.022           0.866          -0.025           0.980 </code></pre>
 </div>
 </div>
 <ul>
