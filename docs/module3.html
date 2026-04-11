@@ -304,7 +304,7 @@ window.Quarto = {
 
 
 <ul>
-<li>The goal of this lesson are to be able to create visualizations which help to describe a variable or variables more easily (descriptive statistics) and to explore patterns in the data based on groups or between two or more variables (inferential statistics).</li>
+<li>The goal of this lesson is to be able to create visualizations that help describe a variable or variables more easily (descriptive statistics) and to explore patterns in the data based on groups or between two or more variables (exploratory data analysis).</li>
 </ul>
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
@@ -336,7 +336,7 @@ window.Quarto = {
 <li><p>It is extremely useful to graph data in R in order to visualize what the data is telling us.</p></li>
 <li><p>When making graphs, there are a lot of ways to visualize data correctly, but there are just as many to do it incorrectly. Be careful not to force the data into the story you want it to tell.</p></li>
 <li><p>Always be cautious when looking at visuals to make sure the data was handled properly.</p></li>
-<li><p>The lesson is arranged by first evaluating the variable or variables of interest by data type (quantitative or quantitative) and then giving some examples of visualizations where this is commonly used. It is essential to make sure the variable is in the right data type before you create a chart. We look at many charts in this lesson including bar charts, density plots, boxplots and scatterplots. A multiple boxplot helps us understand the relationship between a grouping variable and a numerical variable. The scatterplot helps us understand if there is a relationship between two numerical variables and it helps us determine whether that relationship is linear or nonlinear.</p></li>
+<li><p>The lesson is arranged by first evaluating the variable or variables of interest by data type (categorical or quantitative) and then giving some examples of visualizations where this is commonly used. It is essential to make sure the variable is in the right data type before you create a chart. We look at many charts in this lesson including bar charts, density plots, boxplots and scatterplots. A multiple boxplot helps us understand the relationship between a grouping variable and a numerical variable. The scatterplot helps us understand if there is a relationship between two numerical variables and it helps us determine whether that relationship is linear or nonlinear.</p></li>
 <li><p>A lot of graphs you can do in ggplot, you can also do with base R. However, ggplot has much more capability to customize a specific format for your graphic.</p>
 <ul>
 <li>Base R has many options to graph a variable or variables. If all you want is some insight into the data, this might be the way to go.</li>
@@ -1529,7 +1529,7 @@ TRUE </code></pre>
 </figure>
 </div>
 <ul>
-<li><p>Sometimes, it is really clear how to characterize the relationship. Other times, additional statistical tests are needed to confirm the relationship (which we will go over in later lessons). This is true especially with big data, where the plot window can look like a giant blog of observations.</p></li>
+<li><p>Sometimes, it is really clear how to characterize the relationship. Other times, additional statistical tests are needed to confirm the relationship (which we will go over in later lessons). This is true especially with big data, where the plot window can look like a giant blob of observations.</p></li>
 <li><p>Let’s work a clean example examining the relationship between income and the years of education one has had.</p></li>
 <li><p>This plot has a clear positive trend, meaning that as one has more years of education, we see higher income. And similarly, as we see higher income, we also see more years of education. This means that a scatter can help characterize the relationship, and does <em>not</em> state that one variable is causing another to occur.</p></li>
 </ul>
@@ -1623,7 +1623,7 @@ TRUE </code></pre>
 </div>
 </div>
 <ul>
-<li>We can change the type of trendline. The most common is the to develop the trendline using the lm method, which stands for the linear method that we are going to learn in the Regression lesson. For now, lets insert _method=“lm” into our geom_smooth() later to see the change.</li>
+<li>We can change the type of trendline. The most common is the to develop the trendline using the lm method, which stands for the linear method that we are going to learn in the Regression lesson. For now, let’s insert <code>method="lm"</code> into our <code>geom_smooth()</code> layer to see the change.</li>
 <li>The gray band on a scatter plot in R usually represents the confidence interval around a fitted line when you plot it using geom_smooth() in ggplot2. This gray area visualizes the uncertainty or variability of the estimated regression line, providing a sense of how confident we are about the predictions at different points along the line.</li>
 </ul>
 <div class="cell">
@@ -1906,9 +1906,9 @@ TRUE </code></pre>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>nhanes.clean <span class="sc">%&gt;%</span></span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(AUQ310) <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(AUQ320) <span class="sc">%&gt;%</span></span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(AUQ080) <span class="sc">%&gt;%</span></span>
-<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> AUQ310, <span class="at">fill =</span> AUQ080)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> AUQ320, <span class="at">fill =</span> AUQ080)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
 <span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Wear hearing protection when shooting"</span>, <span class="at">title =</span> <span class="st">"Hearing Shout Across Room vs. Use of Hearing Protection"</span>,</span>
 <span id="cb137-6"><a href="#cb137-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

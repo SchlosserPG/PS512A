@@ -272,7 +272,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#t.test-command-for-independent-samples-t-test" id="toc-t.test-command-for-independent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-independent-samples-t-test">t.test() Command for Independent Samples t-Test</a></li>
   <li><a href="#step-1-specify-null-and-alternative-hypothesis-1" id="toc-step-1-specify-null-and-alternative-hypothesis-1" class="nav-link" data-scroll-target="#step-1-specify-null-and-alternative-hypothesis-1">Step 1: Specify Null and Alternative Hypothesis</a></li>
-  <li><a href="#step-2-compute-the-test-statistic-and-calcuate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calcuate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calcuate-the-p-value">Step 2: Compute the Test Statistic and Calcuate the p-value</a></li>
+  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
   <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion" id="toc-step-3-interpret-the-probability-and-write-a-conclusion" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion">Step 3: Interpret the Probability and Write a Conclusion</a></li>
   <li><a href="#example-of-an-independent-samples-t-test-in-r" id="toc-example-of-an-independent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-independent-samples-t-test-in-r">Example of an Independent Samples t-Test in R</a></li>
   <li><a href="#example-independent-t-test-using-a-subset" id="toc-example-independent-t-test-using-a-subset" class="nav-link" data-scroll-target="#example-independent-t-test-using-a-subset">Example Independent t-test Using a Subset</a></li>
@@ -281,7 +281,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#t.test-command-for-dependent-samples-t-test" id="toc-t.test-command-for-dependent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-dependent-samples-t-test">t.test() Command for Dependent Samples t-Test</a></li>
   <li><a href="#step-1-write-null-and-alternative-hypothesis" id="toc-step-1-write-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-write-null-and-alternative-hypothesis">Step 1: Write Null and Alternative Hypothesis</a></li>
-  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
+  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value-1" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value-1" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value-1">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
   <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion-1" id="toc-step-3-interpret-the-probability-and-write-a-conclusion-1" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion-1">Step 3: Interpret the Probability and Write a Conclusion</a></li>
   <li><a href="#example-of-an-dependent-samples-t-test-in-r" id="toc-example-of-an-dependent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-dependent-samples-t-test-in-r">Example of an Dependent Samples t-Test in R</a></li>
   <li><a href="#reshape-function" id="toc-reshape-function" class="nav-link" data-scroll-target="#reshape-function">reshape function</a></li>
@@ -410,7 +410,8 @@ window.Quarto = {
 <section id="the-p-value-approach-what-we-are-using-here." class="level4">
 <h4 class="anchored" data-anchor-id="the-p-value-approach-what-we-are-using-here.">The p-Value Approach: What we are using here.</h4>
 <ul>
-<li>In this approach, we still calculate the test statistic, which is still based on the type of test conducted. However, in the p-value approach, this test statistic corresponds directly to a p-value, or probability value, that we use to make a decision on whether the hypothesis is supported or not.
+<li><p>The <strong>p-value</strong> is simply the probability of observing a result at least as extreme as the one we calculated, <em>assuming the null hypothesis is true</em>. A very small p-value means that what we observed would be very unlikely if the null were true — giving us reason to reject it. We compare the p-value to a pre-determined significance level (alpha, usually set at 0.05). If the p-value is less than alpha, we reject the null hypothesis. If it is greater than or equal to alpha, we fail to reject it. Note: failing to reject the null is <strong>not</strong> the same as proving it is true.</p></li>
+<li><p>In this approach, we still calculate the test statistic, which is still based on the type of test conducted. However, in the p-value approach, this test statistic corresponds directly to a p-value, or probability value, that we use to make a decision on whether the hypothesis is supported or not.</p>
 <ul>
 <li>The <em>p-value</em> is the likelihood, or probability, of observing a sample mean that is at least as extreme as the one derived from the given sample, under the assumption that the null hypothesis is true.</li>
 <li>The calculation of the p-value depends on the specification of the alternative hypothesis.</li>
@@ -600,7 +601,7 @@ window.Quarto = {
  3rd Qu.:20.50  
  Max.   :35.00  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OneSample <span class="ot">&lt;-</span> <span class="fu">t.test</span>(StudyHours<span class="sc">$</span>Hours, <span class="at">alterantive =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">12</span>)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>OneSample <span class="ot">&lt;-</span> <span class="fu">t.test</span>(StudyHours<span class="sc">$</span>Hours, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">12</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>OneSample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -992,13 +993,13 @@ mean of x mean of y
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># which is greater than .05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-2-compute-the-test-statistic-and-calcuate-the-p-value" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calcuate-the-p-value">Step 2: Compute the Test Statistic and Calcuate the p-value</h3>
+<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
 <p>Formula for the Test Statistic: <span class="math inline">\(t = (m_1 - m_2)/\sqrt((s^2_1/n_1)+(s^2_2/n_2))\)</span></p>
 <ul>
 <li><p>In the independent samples t-test formula, <span class="math inline">\(m_1\)</span> is the mean of one group and <span class="math inline">\(m_2\)</span> is the mean of the other group; the difference between the means makes up the numerator. The larger the difference between the group means, the larger the numerator will be and the larger the t-statistic will be!</p></li>
 <li><p>The denominator includes the variances for the first group, <span class="math inline">\(s^2_1\)</span>, and the second group, <span class="math inline">\(s^2_2\)</span> along with the sample sizes for each group, <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span>.</p></li>
-<li><p>Degrees of freedom are computed as n – k.</p></li>
+<li><p>For the independent samples t-test, degrees of freedom are approximated using the Welch-Satterthwaite equation (computed automatically by R).</p></li>
 <li><p>There is a 95% confidence interval around the difference between the groups.</p></li>
 <li><p>Calculate the p-value and Compare it to a Predetermined Alpha level</p></li>
 </ul>
@@ -1148,8 +1149,8 @@ sample estimates:
 <section id="t.test-command-for-dependent-samples-t-test" class="level3">
 <h3 class="anchored" data-anchor-id="t.test-command-for-dependent-samples-t-test">t.test() Command for Dependent Samples t-Test</h3>
 <ul>
-<li>Option 1: Requires the <em>paired = TRUE</em> parameter: The default for the command is <em>paired=FALSE</em>, which is an independent samples t-test.</li>
-<li>Option 2: Can also calculate a formula instead of turning the paired argument to true and place in the first parameter.</li>
+<li><strong>Option 1</strong>: Use the <code>paired = TRUE</code> parameter. The default for the command is <code>paired = FALSE</code>, which performs an independent samples t-test.</li>
+<li><strong>Option 2</strong>: Manually calculate the difference between the paired values and pass that as the single variable to <code>t.test()</code>. This is equivalent to the paired approach.</li>
 <li>Summary: In a paired t-test, you’re comparing two related sets of observations, such as measurements taken from the same subjects under different conditions. The key is that each observation in one group has a corresponding observation in the other group. In R, you can perform a paired t-test by either specifying paired = TRUE in the t.test function or by directly calculating the differences between the paired observations and running the t-test on those differences. If you choose the second approach, you subtract one set of values from the other and then use that result as the first argument in the t.test function (essentially calculating the <span class="math inline">\(\mu_d\)</span>. This directly tests whether the mean of the differences is significantly different from zero, giving the same result as a paired t-test but with the differences calculated explicitly beforehand. Either method is fine.</li>
 </ul>
 </section>
@@ -1233,7 +1234,7 @@ mean difference
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value of 1.347e-08.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
 <li><p>Example of a left-tailed test:</p></li>
-<li><p>Is the weight after quitting smoking (<span class="math inline">\(\mu_1\)</span>) less than the weight before (<span class="math inline">\(mu_2\)</span>)?</p>
+<li><p>Is the weight after quitting smoking (<span class="math inline">\(\mu_1\)</span>) less than the weight before (<span class="math inline">\(\mu_2\)</span>)?</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: Weight after smoking is greater than or equal to the weight before (<span class="math inline">\(&gt;=\)</span>).</li>
 <li><span class="math inline">\(H_A\)</span>: Weight after smoking is less to the weight before (<span class="math inline">\(&lt;\)</span>).</li>
@@ -1262,8 +1263,8 @@ mean difference
 </div></li>
 </ul>
 </section>
-<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
+<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value-1" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value-1">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
 <p>Formula for the Test Statistic: <span class="math inline">\(t = (m_d-d_0)/\sqrt((s^2_d/n_d)\)</span></p>
 <ul>
 <li><p>Dependent samples t-test formula: The <span class="math inline">\(m_d\)</span> is the mean of the differences between the related measures, the <span class="math inline">\(s^2_d\)</span> is the variance of the mean difference between the measures, and <span class="math inline">\(n_d\)</span> is the sample size. The dependent samples t-test worked a little differently from the independent samples t-test. In this case, the formula uses the mean of the differences between the two related measures.</p></li>

@@ -2,7 +2,7 @@
 title: "Module 7: Correlation and Regression"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
@@ -56,7 +56,7 @@ cov(x,y)
 
 ## Correlation Coefficient
 
--   A correlation coefficient ($r_{xy}$) describes both the direction and strength of the relationship between $x$ and $y$. $r_{xy} = cov_{sy}/(s_xs_y)$ or using the standardized formula in the book:
+-   A correlation coefficient ($r_{xy}$) describes both the direction and strength of the relationship between $x$ and $y$. $r_{xy} = cov_{xy}/(s_x s_y)$ or using the standardized formula in the book:
     -   $r_{xy} = \sum^n_{i=1}(z_x*z_y)/(n-1)$
 
 ```{r}
@@ -128,7 +128,7 @@ Debt_Payments %>% ggplot(aes(Unemployment, Debt))+
 
 ### Interpreting the Strength of the Correlation
 
--   Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between a .2 and .5 is considered weak.
+-   Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between .2 and .5 is considered weak.
 -   The following is consistent with what is most generally used:
 
 ![Correlation Strength](Pictures/Ch8/CorrelationStrength.png "Correlation Strength")
@@ -178,7 +178,7 @@ cor.test(Debt_Payments$Income, Debt_Payments$Debt)
 cor.test(Debt_Payments$Income, Debt_Payments$Unemployment)
 ```
 
--   This test shows a moderate negative correlation of -.534 (\<.5 and .8) which is significant. Our p-value is 0.004928 or \< .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
+-   This test shows a moderate negative correlation of -.534 (between .5 and .8 in absolute value), which is significant. Our p-value is 0.004928 or \< .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
 -   We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between -.765 and -.185. This confidence interval is wider than the one listed above. This is due to the noise in the relationship we noted in the scatterplot - the correlation is weaker, the relationship does not look as linear, the confidence decreases. Even though this is true, we must note that we still found a significant correlation.
 
 ## Additional Examples
@@ -390,7 +390,7 @@ ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legen
 
 -   The Adjusted Coefficient of Determination, denoted as Adjusted $R^2$ modifies $R^2$ to account for the number of predictors in the model relative to the number of data points. It is calculated as Adjusted $R^2 = 1-(1-R^2)*((n-1)/(n-k-1))$, where where n is the sample size and p is the number of predictors.
 
--   In simple linear regression, $R^2$ is generally more appropriate than Adjusted $R^2$ because there is only one predictor variable in the model.
+-   In simple linear regression, $R^2$ and Adjusted $R^2$ will be very similar since there is only one predictor variable. The Adjusted $R^2$ becomes more important in multiple regression, where adding more predictors can artificially inflate $R^2$.
 
 -   The Adjusted $R^2$ tries to balance the raw explanatory power against the desire to include only important predictors.
 
@@ -404,7 +404,7 @@ ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legen
 
 ### Example of Simple Linear Regression in R
 
--   The broad steps are the same as we used in Chapter 6 and 7 when setting up the t-tests and ANOVA hypothesis: 1. set up the hypothesis 2. compute the Test Statistic and calculate probability 3. interpret results and write a conclusion.
+-   The broad steps are the same as we used in the hypothesis testing and ANOVA modules: 1. Set up the hypothesis. 2. Compute the test statistic and calculate probability. 3. Interpret results and write a conclusion.
 
 -   Step 1: Set Up the Null and Alternative Hypothesis
 
@@ -496,6 +496,8 @@ predict(Simple, data.frame(Income=100))
 
 # Multiple Regression
 
+-   A key advantage of multiple regression over simple regression is that it allows us to *control* for other variables. When we include multiple predictors, each coefficient reflects the unique contribution of that variable *while holding all others constant*. This makes our model more realistic and our estimates more accurate — but it also means we need to be careful about which variables we include, since adding unnecessary predictors can introduce noise and obscure the relationships we care about.
+
 -   Multiple regression allows us to explore how several *explanatory* variables influence the *response* variable.
 
 -   Suppose there are $k$ explanatory variables. The multiple linear regression model is defined as: $y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \ ⋯ + \beta_kx_k +\varepsilon$
@@ -506,7 +508,7 @@ predict(Simple, data.frame(Income=100))
     -   $x_1, ⋯, x_k$ are independent explanatory variables,
     -   $\beta_0$ is the intercept term,
     -   $\beta_1 ⋯, \beta_k$ are the regression coefficients for the independent variables,
-    -   $varepsilon$ is the random error term
+    -   $\varepsilon$ is the random error term
 
 -   We estimate the regression coefficients—called partial regression coefficients — $b_0, b_1, b_2,… b_k$, then use the model: $\hat{y} = b_0 + b_1x_1 + b_2x_2 + \ ... + b_kx_k$ .
 

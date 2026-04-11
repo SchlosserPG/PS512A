@@ -2,14 +2,14 @@
 title: "Module 3: Data Visualization"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
--   The goal of this lesson are to be able to create visualizations which help to describe a variable or variables more easily (descriptive statistics) and to explore patterns in the data based on groups or between two or more variables (inferential statistics).
+-   The goal of this lesson is to be able to create visualizations that help describe a variable or variables more easily (descriptive statistics) and to explore patterns in the data based on groups or between two or more variables (exploratory data analysis).
 
 ### At a Glance
 
@@ -39,7 +39,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 -   Always be cautious when looking at visuals to make sure the data was handled properly.
 
--   The lesson is arranged by first evaluating the variable or variables of interest by data type (quantitative or quantitative) and then giving some examples of visualizations where this is commonly used. It is essential to make sure the variable is in the right data type before you create a chart. We look at many charts in this lesson including bar charts, density plots, boxplots and scatterplots. A multiple boxplot helps us understand the relationship between a grouping variable and a numerical variable. The scatterplot helps us understand if there is a relationship between two numerical variables and it helps us determine whether that relationship is linear or nonlinear.
+-   The lesson is arranged by first evaluating the variable or variables of interest by data type (categorical or quantitative) and then giving some examples of visualizations where this is commonly used. It is essential to make sure the variable is in the right data type before you create a chart. We look at many charts in this lesson including bar charts, density plots, boxplots and scatterplots. A multiple boxplot helps us understand the relationship between a grouping variable and a numerical variable. The scatterplot helps us understand if there is a relationship between two numerical variables and it helps us determine whether that relationship is linear or nonlinear.
 
 -   A lot of graphs you can do in ggplot, you can also do with base R. However, ggplot has much more capability to customize a specific format for your graphic.
 
@@ -825,7 +825,7 @@ no <- dataF %>% ggplot(aes(s, t))+
 
 ```
 
--   Sometimes, it is really clear how to characterize the relationship. Other times, additional statistical tests are needed to confirm the relationship (which we will go over in later lessons). This is true especially with big data, where the plot window can look like a giant blog of observations.
+-   Sometimes, it is really clear how to characterize the relationship. Other times, additional statistical tests are needed to confirm the relationship (which we will go over in later lessons). This is true especially with big data, where the plot window can look like a giant blob of observations.
 
 -   Let's work a clean example examining the relationship between income and the years of education one has had.
 
@@ -903,7 +903,7 @@ ggplot(Edu, aes(x=Education, y=Income)) +
     geom_smooth(color="#789F90")
 ```
 
--   We can change the type of trendline. The most common is the to develop the trendline using the lm method, which stands for the linear method that we are going to learn in the Regression lesson. For now, lets insert \_method="lm" into our geom_smooth() later to see the change.
+-   We can change the type of trendline. The most common is the to develop the trendline using the lm method, which stands for the linear method that we are going to learn in the Regression lesson. For now, let's insert `method="lm"` into our `geom_smooth()` layer to see the change.
 -   The gray band on a scatter plot in R usually represents the confidence interval around a fitted line when you plot it using geom_smooth() in ggplot2. This gray area visualizes the uncertainty or variability of the estimated regression line, providing a sense of how confident we are about the predictions at different points along the line.
 
 ```{r, fig.alt = "Scatterplot With geom_smooth lm method Generated from ggplot2 by R"}
@@ -1069,9 +1069,9 @@ nhanes.clean %>%
 
 
 nhanes.clean %>% 
-  drop_na(AUQ310)%>% 
+  drop_na(AUQ320)%>% 
   drop_na(AUQ080)%>% 
-  ggplot(aes(x=AUQ310, fill=AUQ080)) + geom_bar(position="dodge") + 
+  ggplot(aes(x=AUQ320, fill=AUQ080)) + geom_bar(position="dodge") + 
   labs(x="Wear hearing protection when shooting", title="Hearing Shout Across Room vs. Use of Hearing Protection", y="Frequency")
 ```
 

@@ -403,7 +403,7 @@ window.Quarto = {
 <section id="correlation-coefficient" class="level2">
 <h2 class="anchored" data-anchor-id="correlation-coefficient">Correlation Coefficient</h2>
 <ul>
-<li>A correlation coefficient (<span class="math inline">\(r_{xy}\)</span>) describes both the direction and strength of the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. <span class="math inline">\(r_{xy} = cov_{sy}/(s_xs_y)\)</span> or using the standardized formula in the book:
+<li>A correlation coefficient (<span class="math inline">\(r_{xy}\)</span>) describes both the direction and strength of the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. <span class="math inline">\(r_{xy} = cov_{xy}/(s_x s_y)\)</span> or using the standardized formula in the book:
 <ul>
 <li><span class="math inline">\(r_{xy} = \sum^n_{i=1}(z_x*z_y)/(n-1)\)</span></li>
 </ul></li>
@@ -512,7 +512,7 @@ window.Quarto = {
 <section id="interpreting-the-strength-of-the-correlation" class="level3">
 <h3 class="anchored" data-anchor-id="interpreting-the-strength-of-the-correlation">Interpreting the Strength of the Correlation</h3>
 <ul>
-<li>Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between a .2 and .5 is considered weak.</li>
+<li>Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between .2 and .5 is considered weak.</li>
 <li>The following is consistent with what is most generally used:</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
@@ -597,7 +597,7 @@ sample estimates:
 </div>
 </div>
 <ul>
-<li>This test shows a moderate negative correlation of -.534 (&lt;.5 and .8) which is significant. Our p-value is 0.004928 or &lt; .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that <span class="math inline">\(r \neq 0\)</span> which confirms a correlation is present.</li>
+<li>This test shows a moderate negative correlation of -.534 (between .5 and .8 in absolute value), which is significant. Our p-value is 0.004928 or &lt; .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that <span class="math inline">\(r \neq 0\)</span> which confirms a correlation is present.</li>
 <li>We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between -.765 and -.185. This confidence interval is wider than the one listed above. This is due to the noise in the relationship we noted in the scatterplot - the correlation is weaker, the relationship does not look as linear, the confidence decreases. Even though this is true, we must note that we still found a significant correlation.</li>
 </ul>
 </section>
@@ -1049,7 +1049,7 @@ Residuals 397 9532496 24011.3               </code></pre>
 <h3 class="anchored" data-anchor-id="the-adjusted-r2">The Adjusted <span class="math inline">\(R^2\)</span></h3>
 <ul>
 <li><p>The Adjusted Coefficient of Determination, denoted as Adjusted <span class="math inline">\(R^2\)</span> modifies <span class="math inline">\(R^2\)</span> to account for the number of predictors in the model relative to the number of data points. It is calculated as Adjusted <span class="math inline">\(R^2 = 1-(1-R^2)*((n-1)/(n-k-1))\)</span>, where where n is the sample size and p is the number of predictors.</p></li>
-<li><p>In simple linear regression, <span class="math inline">\(R^2\)</span> is generally more appropriate than Adjusted <span class="math inline">\(R^2\)</span> because there is only one predictor variable in the model.</p></li>
+<li><p>In simple linear regression, <span class="math inline">\(R^2\)</span> and Adjusted <span class="math inline">\(R^2\)</span> will be very similar since there is only one predictor variable. The Adjusted <span class="math inline">\(R^2\)</span> becomes more important in multiple regression, where adding more predictors can artificially inflate <span class="math inline">\(R^2\)</span>.</p></li>
 <li><p>The Adjusted <span class="math inline">\(R^2\)</span> tries to balance the raw explanatory power against the desire to include only important predictors.</p>
 <ul>
 <li>Adjusted <span class="math inline">\(R^2 = 1-(1-R^2)*((n-1)/(n-k-1))\)</span>.</li>
@@ -1068,7 +1068,7 @@ Residuals 397 9532496 24011.3               </code></pre>
 <section id="example-of-simple-linear-regression-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="example-of-simple-linear-regression-in-r">Example of Simple Linear Regression in R</h3>
 <ul>
-<li><p>The broad steps are the same as we used in Chapter 6 and 7 when setting up the t-tests and ANOVA hypothesis: 1. set up the hypothesis 2. compute the Test Statistic and calculate probability 3. interpret results and write a conclusion.</p></li>
+<li><p>The broad steps are the same as we used in the hypothesis testing and ANOVA modules: 1. Set up the hypothesis. 2. Compute the test statistic and calculate probability. 3. Interpret results and write a conclusion.</p></li>
 <li><p>Step 1: Set Up the Null and Alternative Hypothesis</p></li>
 <li><p><span class="math inline">\(H_0\)</span>: The slope of the line is equal to zero.</p></li>
 <li><p><span class="math inline">\(H_A\)</span>: The slope of the line is not equal to zero.</p></li>
@@ -1205,6 +1205,7 @@ F-statistic:    73 on 1 and 24 DF,  p-value: 9.66e-09</code></pre>
 <section id="multiple-regression" class="level1">
 <h1>Multiple Regression</h1>
 <ul>
+<li><p>A key advantage of multiple regression over simple regression is that it allows us to <em>control</em> for other variables. When we include multiple predictors, each coefficient reflects the unique contribution of that variable <em>while holding all others constant</em>. This makes our model more realistic and our estimates more accurate — but it also means we need to be careful about which variables we include, since adding unnecessary predictors can introduce noise and obscure the relationships we care about.</p></li>
 <li><p>Multiple regression allows us to explore how several <em>explanatory</em> variables influence the <em>response</em> variable.</p></li>
 <li><p>Suppose there are <span class="math inline">\(k\)</span> explanatory variables. The multiple linear regression model is defined as: <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \ ⋯ + \beta_kx_k +\varepsilon\)</span></p></li>
 <li><p>Where:</p>
@@ -1213,7 +1214,7 @@ F-statistic:    73 on 1 and 24 DF,  p-value: 9.66e-09</code></pre>
 <li><span class="math inline">\(x_1, ⋯, x_k\)</span> are independent explanatory variables,</li>
 <li><span class="math inline">\(\beta_0\)</span> is the intercept term,</li>
 <li><span class="math inline">\(\beta_1 ⋯, \beta_k\)</span> are the regression coefficients for the independent variables,</li>
-<li><span class="math inline">\(varepsilon\)</span> is the random error term</li>
+<li><span class="math inline">\(\varepsilon\)</span> is the random error term</li>
 </ul></li>
 <li><p>We estimate the regression coefficients—called partial regression coefficients — <span class="math inline">\(b_0, b_1, b_2,… b_k\)</span>, then use the model: <span class="math inline">\(\hat{y} = b_0 + b_1x_1 + b_2x_2 + \ ... + b_kx_k\)</span> .</p></li>
 <li><p>The partial regression coefficients represent the expected change in the dependent variable when the associated independent variable is increased by one unit while the values of all other independent variables are held constant.</p></li>

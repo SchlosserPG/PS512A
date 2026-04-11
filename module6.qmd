@@ -2,7 +2,7 @@
 title: "Module 6: Analysis of Variance (ANOVA)"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 ### At a Glance
 
--   In order to succeed in this section, you will need to apply what you learned about variable types (quantitative versus categorical) and hypothesis testing in earlier lessons We will learn how to conduct and interpret an ANOVA, which allows us to compare groups (from a categorical/factor variable) with respect to a continuous variable. Unlike the t-test that is limited to comparing two groups, the ANOVA is meant for three or more groups. We can also follow up a significant ANOVA with post-hoc tests to see which groups are different from each other in regards to the continuous variable.
+-   In order to succeed in this section, you will need to apply what you learned about variable types (quantitative versus categorical) and hypothesis testing in earlier lessons We will learn how to conduct and interpret an ANOVA, which allows us to compare groups (from a categorical/factor variable) with respect to a continuous variable. Unlike the independent samples t-test covered in Module 5, which is limited to comparing two groups, the ANOVA is meant for three or more groups. We can also follow up a significant ANOVA with post-hoc tests to see which groups are different from each other in regards to the continuous variable.
 
 ### Lesson Objectives
 
@@ -45,7 +45,9 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 ## ANOVA Methodology
 
-1.  We first compute the amount of variability between the sample means. This is known as the *between-treatments estimate*, which compares the sample means to the overall mean, sometimes called the grand mean, or the average pf all the values from the data set.
+-   The core idea behind ANOVA is to compare two sources of variability: how much the group means differ from each other (*between-group variability*) versus how much individual observations differ within their own groups (*within-group variability*). If the between-group variability is much larger than the within-group variability, it suggests that the group means are not all equal. This ratio forms the F-statistic.
+
+1.  We first compute the amount of variability between the sample means. This is known as the *between-treatments estimate*, which compares the sample means to the overall mean, sometimes called the grand mean, or the average of all the values in the data set.
 2.  Then, we measure how much variability there is within each sample. This is known as the *within-treatments estimate*, which is essentially a measure of error.
 3.  A ratio of the first quantity to the second forms our test statistic which follows the $F_{df1,df2}$ distribution, where the degrees of freedom are calculated from the number of groups - 1 ($df_1: k-1$) and the total number of observations minus the number of groups ($df_2: n_t-k$).
 

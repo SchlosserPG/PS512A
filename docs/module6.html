@@ -349,7 +349,7 @@ window.Quarto = {
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
 <ul>
-<li>In order to succeed in this section, you will need to apply what you learned about variable types (quantitative versus categorical) and hypothesis testing in earlier lessons We will learn how to conduct and interpret an ANOVA, which allows us to compare groups (from a categorical/factor variable) with respect to a continuous variable. Unlike the t-test that is limited to comparing two groups, the ANOVA is meant for three or more groups. We can also follow up a significant ANOVA with post-hoc tests to see which groups are different from each other in regards to the continuous variable.</li>
+<li>In order to succeed in this section, you will need to apply what you learned about variable types (quantitative versus categorical) and hypothesis testing in earlier lessons We will learn how to conduct and interpret an ANOVA, which allows us to compare groups (from a categorical/factor variable) with respect to a continuous variable. Unlike the independent samples t-test covered in Module 5, which is limited to comparing two groups, the ANOVA is meant for three or more groups. We can also follow up a significant ANOVA with post-hoc tests to see which groups are different from each other in regards to the continuous variable.</li>
 </ul>
 </section>
 <section id="lesson-objectives" class="level3">
@@ -393,8 +393,11 @@ window.Quarto = {
 </section>
 <section id="anova-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="anova-methodology">ANOVA Methodology</h2>
+<ul>
+<li>The core idea behind ANOVA is to compare two sources of variability: how much the group means differ from each other (<em>between-group variability</em>) versus how much individual observations differ within their own groups (<em>within-group variability</em>). If the between-group variability is much larger than the within-group variability, it suggests that the group means are not all equal. This ratio forms the F-statistic.</li>
+</ul>
 <ol type="1">
-<li>We first compute the amount of variability between the sample means. This is known as the <em>between-treatments estimate</em>, which compares the sample means to the overall mean, sometimes called the grand mean, or the average pf all the values from the data set.</li>
+<li>We first compute the amount of variability between the sample means. This is known as the <em>between-treatments estimate</em>, which compares the sample means to the overall mean, sometimes called the grand mean, or the average of all the values in the data set.</li>
 <li>Then, we measure how much variability there is within each sample. This is known as the <em>within-treatments estimate</em>, which is essentially a measure of error.</li>
 <li>A ratio of the first quantity to the second forms our test statistic which follows the <span class="math inline">\(F_{df1,df2}\)</span> distribution, where the degrees of freedom are calculated from the number of groups - 1 (<span class="math inline">\(df_1: k-1\)</span>) and the total number of observations minus the number of groups (<span class="math inline">\(df_2: n_t-k\)</span>).</li>
 </ol>

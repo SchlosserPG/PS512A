@@ -2,7 +2,7 @@
 title: "Module 4: Calculating Probability"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
@@ -26,8 +26,8 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 
 -   As you engage with the lesson, pay attention to the key concepts and how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.
 -   In this lesson, we move from simply describing data to making inferences. There are so many ways to calculate probability. The assigned readings focus on helping you learn and understand two of the most common distributions: the binomial distribution and the normal distribution. In doing so, we learn about random variables, sampling, and the importance of setting the seed. We also find z-scores, which will turn out to be very important for our future studies. Next, we focus on the utility of the transformation section, which allows us to use the rules and practices regarding a normal distribution, assuming that at least one transformation was successful into reshaping the quantitative variable into a normally-shaped distribution.
--   In this lesson, we move from simply describing data to making inferences. We learn about contingency tables in regards to calculating probability and are able to calculate and interpret the Chi-squared statistic for the test of independence.
--   As you read and listen to the materials for this lesson, pay attention to the concepts, and pay attention to how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.
+-   We also learn about contingency tables in regards to calculating probability, and are able to calculate and interpret the Chi-squared statistic for the test of independence.
+-   As you read and listen to the materials for this lesson, pay attention to the concepts and how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.
 
 ## Some Common Statistics Terms
 
@@ -79,7 +79,7 @@ data.frame(NumberOfCards, Percentage)
 
 -   When you produce a percentage, you multiple the calculated probability by 100, so instead of finding a value between 0 and 1, you find a percentage between 0% and 100%. This means that if you use the pnorm function to calculate a probability, you can multiple that probability by 100 to get the percentage.
 
--   When you produce the value given a probability calculation, you multiply the probability calculated by the sample size (n).
+-   When you want to convert a probability to an expected count, multiply the probability by the sample size (n).
 
 ### Random Variables
 
@@ -681,6 +681,8 @@ qnorm(.05, 32, 8)
 
 ## Central Limit Theorem (CLT)
 
+-   The Central Limit Theorem (CLT) is one of the most important concepts in statistics because it allows us to use the normal distribution to make inferences about populations — even when the underlying data is not normally distributed. In other words, as long as our sample is large enough (generally n ≥ 30), we can assume that the distribution of sample means will be approximately normal, regardless of the shape of the original data.
+
 -   CLT refers to the fact that, in many situations, when independent random variables are summed up, their properly normalized sum tends toward a normal distribution even if the original variables themselves are not normally distributed. Therefore, CLT suggests that for any population X with expected value $\mu$ and standard deviation $\sigma$ the sampling distribution of $X$ will be approximately normal if the sample size $n$ is sufficiently large.
 
 -   The CLT tells us that, regardless of the original distribution of a population, the sampling distribution of the sample mean approaches a normal distribution as the sample size gets larger. We use the CLT when we want to estimate population parameters (like the mean) from sample data and apply techniques that rely on normality, such as confidence intervals and hypothesis testing. This allows us to make inferences about the population using the normal distribution even when the population itself isn’t normally distributed.
@@ -1006,7 +1008,6 @@ table(gender.clean$PHYSHLTH)
 
 
 summary(gender.clean)
-qnorm(0.95, mean = 500, sd = 10)
 ```
 
 -   Once here, we graph PHYSHLTH.\
@@ -1306,7 +1307,7 @@ sdx <- sqrt(varx); sdx #18.12
 -   In order to account for situations when the observed and expected values are very large, which could result in extremely large differences between observed and expected, the squared differences are divided by the expected value in each cell.
 
 -   Visualizing the Chi-squared Distribution Chi-squared distribution has a single parameter, the degrees of freedom or $df$.\
-    $\sqrt(2*df)$ The degrees of freedom in a chi-squared test of independence are calculated as the Number of rows−1 multiplied by Number ofcolumns−1 or more formally: $df=(𝑟−1)∗(𝑐−1)$ The larger the contingency table, the more degrees of freedom, the wider the distribution and more normal it becomes.
+    The standard deviation of the chi-squared distribution is $\sqrt{2 \cdot df}$. The degrees of freedom in a chi-squared test of independence are calculated as the Number of rows−1 multiplied by Number ofcolumns−1 or more formally: $df=(𝑟−1)∗(𝑐−1)$ The larger the contingency table, the more degrees of freedom, the wider the distribution and more normal it becomes.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)

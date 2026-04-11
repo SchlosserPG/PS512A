@@ -2,7 +2,7 @@
 title: "Module 2: Descriptive Statistics and Data Prep"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
@@ -144,7 +144,7 @@ TransposedData <- as.data.frame(TransposedData); TransposedData
 
 -   $m_x = (\sum_{i=1}^{n} x_{i})/n$
 
--   One of the mean functions key features is the na.rm parameter, which stands for "remove NAs." We discussed this in module 1 under "Handling Missng Data". This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.
+-   One of the mean functions key features is the na.rm parameter, which stands for "remove NAs." We discussed this in module 1 under "Handling Missing Data". This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.
 
 -   Consider the salaries of employees at a company: ![Salary Data](Pictures/Ch2/Salaries.png "Salary Data")
 
@@ -286,6 +286,8 @@ sort(table(GrowthFund), decreasing = TRUE)[1:5]
     -   Adding together a set of values that includes a few very large or very small values like those on the far left of a left-skewed distribution or the far right of the right-skewed distribution will result in a large or small total value in the numerator of Equation and therefore the mean will be a large or small value relative to the actual middle of the data.
 
 #### Using skew() Command in R
+
+-   Skewness and kurtosis statistics alone do not tell us whether a distribution is problematically non-normal — we also need to evaluate whether those statistics are *statistically meaningful* given the sample size. The `semTools` package provides both the statistic and a z-score that accounts for sample size, making interpretation much more straightforward.
 
 -   The skew() command is from the semTools package. The install.packages() command is commented out below, but install it one time on your R before commenting it out.
 
@@ -457,8 +459,8 @@ kurtosis(HousePrice$HousePrice) #normal
 #-3.4245446445 is below -3.29 so kurtosis is present
 #Negative kurtosis value indicates platykurtic
 kurtosis(customers$Spending)
-geom_histogram(binwidth = 100, fill="pink", color="black")
-semTools::skew(customers$Spending)##normal indicating no skewness
+ggplot(customers, aes(Spending)) + geom_histogram(binwidth = 100, fill="pink", color="black")
+semTools::skew(customers$Spending) ##normal indicating no skewness
 
 #Normal: 2.977622119 is in between -3.29 and 3.29
 kurtosis(customers$Income) 
@@ -474,8 +476,8 @@ semTools::skew(customers$HHSize) #normal
 
 
 #Normal: -0.20056607 is in between -3.29 and 3.29 
-kurtosis(customers$Orders) 
-geom_histogram(binwidth = 5, fill="pink", color="black")
+kurtosis(customers$Orders)
+ggplot(customers, aes(Orders)) + geom_histogram(binwidth = 5, fill="pink", color="black")
 semTools::skew(customers$Orders) ##skewed right
 
 ```
@@ -630,7 +632,7 @@ head(smallData)
 -   The pipe operator takes the output of the expression on its left-hand side and passes it as the first argument to the function on its right-hand side. This enables you to chain multiple functions together, making the code easier to understand and debug.
 -   If we want to keep our code tidy, we can add the piping operator (%\>%) to help combine our lines of code into a new object or overwriting the same object.
 -   This operator allows us to pass the result of one function/argument to the other one in sequence.
--   The below example uses a select function to pull Income, Spending, and Orders variables fromt he customers dataset and save it as a new object called smallData. It is an identical request to the one directly above, but written with the piping operator.
+-   The below example uses a select function to pull Income, Spending, and Orders variables from the customers dataset and save it as a new object called smallData. It is an identical request to the one directly above, but written with the piping operator.
 
 ```{r}
 smallData <- customers %>% select(Income, Spending, Orders)
@@ -995,7 +997,7 @@ kurtosis(brfss.cleaned$PHYSHLTH)
 ```
 
 -   The skew results provide a z of 607.905 (6.079054e+02) which is much higher than 7 (for large datasets). This indicates a clear right skew which means the data is not normally distributed.
--   The kurtosis results are also very leptokurtic with a score of 478.063.
+-   The kurtosis results are also very leptokurtic. The z-score far exceeds the threshold of 7 for large samples, indicating extreme leptokurtosis (heavy tails). This is consistent with the right-skewed distribution seen in the histogram.
 
 #### Using Filters Example
 

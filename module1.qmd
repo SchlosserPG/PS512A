@@ -2,7 +2,7 @@
 title: "Module 1: Introduction to R and RStudio"
 author: ""
 date: "2024-08-09"
-output: html_document
+format: html
 ---
 
 -   The goal of this lesson is to introduce you to R and RStudio while teaching you how to perform data preparation using these tools. In this part, we will go over forming an understanding of statistics, learning about observations and variables, and being able to move around and get comfortable with R. I will also teach you how use and load data.
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
     -   A .R script is simply a text file containing a set of commands and comments. The script can be saved and used later to rerun the code. The script can also be documented with comments and edited again and again to suit your needs.
 -   Using the Console
     -   Entering and running code at the R command line is effective and simple. However, each time you want to execute a set of commands, you must re-enter them at the command line. Nothing saves for later.
--   Complex commands are particularly difficult causing you to re-entering the code to fix any errors typographical or otherwise.R script files help to solve this issue.
+-   Complex commands are particularly difficult, forcing you to re-enter the code to fix any errors — typographical or otherwise. R script files help to solve this issue.
 
 ### Create a New R Script File
 
@@ -367,13 +367,13 @@ sort(y, decreasing=FALSE)
 -   You can stop this from happening by setting the Tools \> Global Options \> Under Workspace changing this to Never.
 -   Be careful with this option because it won’t save what you don’t run.
 
-![Evalulating Your Environment](Pictures/Ch1/SaveOptions.png "Evalulating Your Environment")
+![Evaluating Your Environment](Pictures/Ch1/SaveOptions.png "Evaluating Your Environment")
 
 ## Calling a Library
 
 -   In R, a package is a collection of R functions, data and compiled code. The location where the packages are stored is called the library.
 -   Libraries need to be activated one time in each new R session.
--   You can access a function from a library one time using library::function()
+-   You can access a function from a library one time in a session using library::function()
 
 ```{r, message=FALSE}
 #Use to activate library in an R session. 
@@ -381,7 +381,7 @@ library(tidyverse)
 library(dplyr)
 ```
 
--   You can access a function from a library one time only using library::function()
+-   You can access a function from a specific library using the double-colon operator library::function()
     -   Useful if only using one function from the library.
 -   We will return to this in data prep.
 
@@ -406,7 +406,7 @@ rm(states) #Removes variable named states
 rm(list=ls()) #Clears all variables from Global Environment
 ```
 
-![Evalulating Your RStudio Environment](Pictures/Ch1/Environment.png "Evalulating Your RStudio Environment")
+![Evaluating Your RStudio Environment](Pictures/Ch1/Environment.png "Evaluating Your RStudio Environment")
 
 # Entering Data in R
 
@@ -629,10 +629,8 @@ data("mtcars")
 
 ### Load a data from a package
 
-```         
--   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into your R one time. Then, each time you open R, you need to reload the library using the library() function.
--   When your run the install.packages() function, do not include the \# symbol. Then, after you run it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
-```
+-   There are also a lot of packages that house data sets. It is fairly easy to make a package that contains data and load it into CRAN. These packages need to be installed into R one time. Then, each time you open R, you need to reload the library using the `library()` function.
+-   When you run the `install.packages()` function, do not include the `#` symbol. Then, after running it one time, comment it out. There is no need to run this code a second time unless something happens to your RStudio.
 
 ```{r, message=FALSE}
 #install.packages("MASS") #only need to install package one time in R
@@ -1026,7 +1024,7 @@ y <- na.omit(y)
 
 ### na.rm in a dataset
 
--   Using a dataset, we need the \_data$variable_ format, like mean(data$column, na.rm = TRUE) calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.
+-   Using a dataset, we need the `data$variable` format, like `mean(data$column, na.rm = TRUE)` calculates the mean of the non-missing values in the specified column or variable. This approach is straightforward and useful when the presence of missing values would otherwise cause an error or return an NA result.
 
 ```{r}
 gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings="")

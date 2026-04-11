@@ -371,8 +371,8 @@ window.Quarto = {
 <ul>
 <li>As you engage with the lesson, pay attention to the key concepts and how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.</li>
 <li>In this lesson, we move from simply describing data to making inferences. There are so many ways to calculate probability. The assigned readings focus on helping you learn and understand two of the most common distributions: the binomial distribution and the normal distribution. In doing so, we learn about random variables, sampling, and the importance of setting the seed. We also find z-scores, which will turn out to be very important for our future studies. Next, we focus on the utility of the transformation section, which allows us to use the rules and practices regarding a normal distribution, assuming that at least one transformation was successful into reshaping the quantitative variable into a normally-shaped distribution.</li>
-<li>In this lesson, we move from simply describing data to making inferences. We learn about contingency tables in regards to calculating probability and are able to calculate and interpret the Chi-squared statistic for the test of independence.</li>
-<li>As you read and listen to the materials for this lesson, pay attention to the concepts, and pay attention to how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.</li>
+<li>We also learn about contingency tables in regards to calculating probability, and are able to calculate and interpret the Chi-squared statistic for the test of independence.</li>
+<li>As you read and listen to the materials for this lesson, pay attention to the concepts and how those concepts are applied. There are rules for calculating and combining probabilities that are important for you to know to solve the problem sets and to solve real-life problems. Take note of the applicability of the normal distribution, which is a major cornerstone for statistical analysis.</li>
 </ul>
 </section>
 <section id="some-common-statistics-terms" class="level2">
@@ -430,7 +430,7 @@ window.Quarto = {
 </ul></li>
 <li><p>Because of the 2 characteristics of a probability distribution, sometimes there are a couple ways to calculate the correct answer, like we did above with either calculating probabilities associated with above a value, or beneath and equal to a value knowing that the total sum of all probabilities is 1.</p></li>
 <li><p>When you produce a percentage, you multiple the calculated probability by 100, so instead of finding a value between 0 and 1, you find a percentage between 0% and 100%. This means that if you use the pnorm function to calculate a probability, you can multiple that probability by 100 to get the percentage.</p></li>
-<li><p>When you produce the value given a probability calculation, you multiply the probability calculated by the sample size (n).</p></li>
+<li><p>When you want to convert a probability to an expected count, multiply the probability by the sample size (n).</p></li>
 </ul>
 <section id="random-variables" class="level3">
 <h3 class="anchored" data-anchor-id="random-variables">Random Variables</h3>
@@ -1312,6 +1312,7 @@ window.Quarto = {
 <section id="central-limit-theorem-clt" class="level2">
 <h2 class="anchored" data-anchor-id="central-limit-theorem-clt">Central Limit Theorem (CLT)</h2>
 <ul>
+<li><p>The Central Limit Theorem (CLT) is one of the most important concepts in statistics because it allows us to use the normal distribution to make inferences about populations — even when the underlying data is not normally distributed. In other words, as long as our sample is large enough (generally n ≥ 30), we can assume that the distribution of sample means will be approximately normal, regardless of the shape of the original data.</p></li>
 <li><p>CLT refers to the fact that, in many situations, when independent random variables are summed up, their properly normalized sum tends toward a normal distribution even if the original variables themselves are not normally distributed. Therefore, CLT suggests that for any population X with expected value <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> the sampling distribution of <span class="math inline">\(X\)</span> will be approximately normal if the sample size <span class="math inline">\(n\)</span> is sufficiently large.</p></li>
 <li><p>The CLT tells us that, regardless of the original distribution of a population, the sampling distribution of the sample mean approaches a normal distribution as the sample size gets larger. We use the CLT when we want to estimate population parameters (like the mean) from sample data and apply techniques that rely on normality, such as confidence intervals and hypothesis testing. This allows us to make inferences about the population using the normal distribution even when the population itself isn’t normally distributed.</p></li>
 <li><p>The Central Limit Theorem (CLT) holds true for continuous variables, regardless of whether they are normally distributed or not. Generally, the normal distribution approximation is justified when the sample size is sufficiently large, typically <span class="math inline">\(n≥30\)</span>. If the sample means are approximately normal, we can transform them into a standard normal form. The standard deviation of the sample means (also called the standard error) can be estimated using the population standard deviation and the sample size that makes up the distribution.</p></li>
@@ -1730,20 +1731,20 @@ window.Quarto = {
 <span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    TRNSGNDR        X_AGEG5YR          X_RACE         X_INCOMG    
- Min.   :1.00     Min.   : 1.000   Min.   :1.000   Min.   :1.000  
- 1st Qu.:4.00     1st Qu.: 5.000   1st Qu.:1.000   1st Qu.:3.000  
- Median :4.00     Median : 8.000   Median :1.000   Median :5.000  
- Mean   :4.06     Mean   : 7.822   Mean   :1.992   Mean   :4.481  
- 3rd Qu.:4.00     3rd Qu.:10.000   3rd Qu.:1.000   3rd Qu.:5.000  
- Max.   :9.00     Max.   :14.000   Max.   :9.000   Max.   :9.000  
+ Min.   :1.000    Min.   : 1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:4.000    1st Qu.: 5.000   1st Qu.:1.000   1st Qu.:3.000  
+ Median :4.000    Median : 8.000   Median :1.000   Median :5.000  
+ Mean   :4.059    Mean   : 7.822   Mean   :1.992   Mean   :4.481  
+ 3rd Qu.:4.000    3rd Qu.:10.000   3rd Qu.:1.000   3rd Qu.:5.000  
+ Max.   :9.000    Max.   :14.000   Max.   :9.000   Max.   :9.000  
  NA's   :310602                    NA's   :94                     
     X_EDUCAG        HLTHPLN1         HADMAM          X_AGE80     
- Min.   :1.000   Min.   :1.000   Min.   :1.00     Min.   :18.00  
- 1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.00     1st Qu.:44.00  
- Median :3.000   Median :1.000   Median :1.00     Median :58.00  
- Mean   :2.966   Mean   :1.108   Mean   :1.22     Mean   :55.49  
- 3rd Qu.:4.000   3rd Qu.:1.000   3rd Qu.:1.00     3rd Qu.:69.00  
- Max.   :9.000   Max.   :9.000   Max.   :9.00     Max.   :80.00  
+ Min.   :1.000   Min.   :1.000   Min.   :1.000    Min.   :18.00  
+ 1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000    1st Qu.:44.00  
+ Median :3.000   Median :1.000   Median :1.000    Median :58.00  
+ Mean   :2.966   Mean   :1.108   Mean   :1.215    Mean   :55.49  
+ 3rd Qu.:4.000   3rd Qu.:1.000   3rd Qu.:1.000    3rd Qu.:69.00  
+ Max.   :9.000   Max.   :9.000   Max.   :9.000    Max.   :80.00  
                                  NA's   :208322                  
     PHYSHLTH   
  Min.   : 1.0  
@@ -1788,19 +1789,15 @@ window.Quarto = {
  Max.   :30.000  
  NA's   :10299   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> <span class="dv">500</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 516.4485</code></pre>
-</div>
 </div>
 <ul>
 <li>Once here, we graph PHYSHLTH.<br>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a>gender.clean <span class="sc">%&gt;%</span></span>
-<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(PHYSHLTH)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of Days Sick"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a>gender.clean <span class="sc">%&gt;%</span></span>
+<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(PHYSHLTH)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of Days Sick"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1814,35 +1811,35 @@ window.Quarto = {
 <li><p>Next, we run the 4 calculations by mutating the variable and saving all 4 transformation under new variable names.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" aria-hidden="true" tabindex="-1"></a>genderTransform <span class="ot">&lt;-</span> gender.clean <span class="sc">%&gt;%</span></span>
-<span id="cb208-2"><a href="#cb208-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.cube.root =</span> PHYSHLTH<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb208-3"><a href="#cb208-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.log =</span> <span class="fu">log</span>(<span class="at">x =</span> PHYSHLTH)) <span class="sc">%&gt;%</span></span>
-<span id="cb208-4"><a href="#cb208-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.inverse =</span> <span class="dv">1</span><span class="sc">/</span>PHYSHLTH) <span class="sc">%&gt;%</span></span>
-<span id="cb208-5"><a href="#cb208-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.sqrt =</span> <span class="fu">sqrt</span>(<span class="at">x =</span> PHYSHLTH))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a>genderTransform <span class="ot">&lt;-</span> gender.clean <span class="sc">%&gt;%</span></span>
+<span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.cube.root =</span> PHYSHLTH<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.log =</span> <span class="fu">log</span>(<span class="at">x =</span> PHYSHLTH)) <span class="sc">%&gt;%</span></span>
+<span id="cb206-4"><a href="#cb206-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.inverse =</span> <span class="dv">1</span><span class="sc">/</span>PHYSHLTH) <span class="sc">%&gt;%</span></span>
+<span id="cb206-5"><a href="#cb206-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">phy.sqrt =</span> <span class="fu">sqrt</span>(<span class="at">x =</span> PHYSHLTH))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Next, we create the 4 graphs for each of the 4 transformations labelled above to see if one helps.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a>cuberoot <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
-<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.cube.root)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cube root"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
-<span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a>logged <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
-<span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.log)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="cb209-6"><a href="#cb209-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
-<span id="cb209-7"><a href="#cb209-7" aria-hidden="true" tabindex="-1"></a>inversed <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
-<span id="cb209-8"><a href="#cb209-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.inverse)) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>,</span>
-<span id="cb209-9"><a href="#cb209-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Inverse"</span>,</span>
-<span id="cb209-10"><a href="#cb209-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>)</span>
-<span id="cb209-11"><a href="#cb209-11" aria-hidden="true" tabindex="-1"></a>squareroot <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
-<span id="cb209-12"><a href="#cb209-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.sqrt)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
-<span id="cb209-13"><a href="#cb209-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Square root"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a>cuberoot <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.cube.root)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cube root"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a>logged <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.log)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb207-6"><a href="#cb207-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Log"</span>, <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb207-7"><a href="#cb207-7" aria-hidden="true" tabindex="-1"></a>inversed <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
+<span id="cb207-8"><a href="#cb207-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.inverse)) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>,</span>
+<span id="cb207-9"><a href="#cb207-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">binwidth =</span> <span class="fl">0.05</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Inverse"</span>,</span>
+<span id="cb207-10"><a href="#cb207-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">""</span>)</span>
+<span id="cb207-11"><a href="#cb207-11" aria-hidden="true" tabindex="-1"></a>squareroot <span class="ot">&lt;-</span> genderTransform <span class="sc">%&gt;%</span></span>
+<span id="cb207-12"><a href="#cb207-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> phy.sqrt)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"#7463AC"</span>, <span class="at">color =</span> <span class="st">"white"</span>,</span>
+<span id="cb207-13"><a href="#cb207-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Square root"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Finally, we plot the graphs using gridExtra so that we can see all 4.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(cuberoot, logged, inversed, squareroot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(cuberoot, logged, inversed, squareroot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1955,34 +1952,34 @@ window.Quarto = {
 <li>We could calculate the statistics in this contingency table a couple of ways. First, we could manually calculate it like below.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate Totals</span></span>
-<span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a>TotalUnder35 <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">90</span></span>
-<span id="cb211-3"><a href="#cb211-3" aria-hidden="true" tabindex="-1"></a>TotalUnder35  <span class="do">##Total under 35 age group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate Totals</span></span>
+<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>TotalUnder35 <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">90</span></span>
+<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>TotalUnder35  <span class="do">##Total under 35 age group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 396</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>Total35up <span class="ot">&lt;-</span> <span class="dv">54</span> <span class="sc">+</span> <span class="dv">72</span> <span class="sc">+</span> <span class="dv">78</span></span>
-<span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a>Total35up  <span class="do">## Total 35 and older</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a>Total35up <span class="ot">&lt;-</span> <span class="dv">54</span> <span class="sc">+</span> <span class="dv">72</span> <span class="sc">+</span> <span class="dv">78</span></span>
+<span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a>Total35up  <span class="do">## Total 35 and older</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 204</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a>TotalUA <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">54</span></span>
-<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a>TotalUA  <span class="do">## Total Under Armour</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>TotalUA <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">54</span></span>
+<span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a>TotalUA  <span class="do">## Total Under Armour</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 228</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a>TotalNike <span class="ot">&lt;-</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">72</span></span>
-<span id="cb217-2"><a href="#cb217-2" aria-hidden="true" tabindex="-1"></a>TotalNike  <span class="do">## Total Nike</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a>TotalNike <span class="ot">&lt;-</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">72</span></span>
+<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a>TotalNike  <span class="do">## Total Nike</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 204</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1" aria-hidden="true" tabindex="-1"></a>TotalAdidas <span class="ot">&lt;-</span> <span class="dv">90</span> <span class="sc">+</span> <span class="dv">78</span></span>
-<span id="cb219-2"><a href="#cb219-2" aria-hidden="true" tabindex="-1"></a>TotalAdidas  <span class="do">## Total Adidas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a>TotalAdidas <span class="ot">&lt;-</span> <span class="dv">90</span> <span class="sc">+</span> <span class="dv">78</span></span>
+<span id="cb217-2"><a href="#cb217-2" aria-hidden="true" tabindex="-1"></a>TotalAdidas  <span class="do">## Total Adidas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 168</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" aria-hidden="true" tabindex="-1"></a>Total <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">90</span> <span class="sc">+</span> <span class="dv">54</span> <span class="sc">+</span> <span class="dv">72</span> <span class="sc">+</span> <span class="dv">78</span></span>
-<span id="cb221-2"><a href="#cb221-2" aria-hidden="true" tabindex="-1"></a>Total  <span class="do">##Grand Total </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1" aria-hidden="true" tabindex="-1"></a>Total <span class="ot">&lt;-</span> <span class="dv">174</span> <span class="sc">+</span> <span class="dv">132</span> <span class="sc">+</span> <span class="dv">90</span> <span class="sc">+</span> <span class="dv">54</span> <span class="sc">+</span> <span class="dv">72</span> <span class="sc">+</span> <span class="dv">78</span></span>
+<span id="cb219-2"><a href="#cb219-2" aria-hidden="true" tabindex="-1"></a>Total  <span class="do">##Grand Total </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 600</code></pre>
 </div>
@@ -1991,60 +1988,60 @@ window.Quarto = {
 <li>Alternatively, we could make this a matrix and use the matrix command to help us calculate the answer. This gives us all the statistics with a couple of functions and allows us to interpret from there after selecting the right information from the output.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put observed values in a vector by row.</span></span>
-<span id="cb223-2"><a href="#cb223-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">132</span>, <span class="dv">90</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
-<span id="cb223-3"><a href="#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the vector into a matrix. In this case, we had 2 rows, 3</span></span>
-<span id="cb223-4"><a href="#cb223-4" aria-hidden="true" tabindex="-1"></a><span class="co"># columns, and entered the data by row.</span></span>
-<span id="cb223-5"><a href="#cb223-5" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="dv">2</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb223-6"><a href="#cb223-6" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Put observed values in a vector by row.</span></span>
+<span id="cb221-2"><a href="#cb221-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">132</span>, <span class="dv">90</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
+<span id="cb221-3"><a href="#cb221-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the vector into a matrix. In this case, we had 2 rows, 3</span></span>
+<span id="cb221-4"><a href="#cb221-4" aria-hidden="true" tabindex="-1"></a><span class="co"># columns, and entered the data by row.</span></span>
+<span id="cb221-5"><a href="#cb221-5" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="dv">2</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb221-6"><a href="#cb221-6" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]  174  132   90
 [2,]   54   72   78</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we could add the names of the columns and rows values using</span></span>
-<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimnames() command.</span></span>
-<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Under 35"</span>, <span class="st">"35 and Older"</span>), <span class="fu">c</span>(<span class="st">"Under Armour"</span>, <span class="st">"Nike"</span>,</span>
-<span id="cb225-4"><a href="#cb225-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adidas"</span>))</span>
-<span id="cb225-5"><a href="#cb225-5" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we could add the names of the columns and rows values using</span></span>
+<span id="cb223-2"><a href="#cb223-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the dimnames() command.</span></span>
+<span id="cb223-3"><a href="#cb223-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Under 35"</span>, <span class="st">"35 and Older"</span>), <span class="fu">c</span>(<span class="st">"Under Armour"</span>, <span class="st">"Nike"</span>,</span>
+<span id="cb223-4"><a href="#cb223-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adidas"</span>))</span>
+<span id="cb223-5"><a href="#cb223-5" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Under Armour Nike Adidas
 Under 35              174  132     90
 35 and Older           54   72     78</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can easily calculate the total from here.</span></span>
-<span id="cb227-2"><a href="#cb227-2" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(o)</span>
-<span id="cb227-3"><a href="#cb227-3" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can easily calculate the total from here.</span></span>
+<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(o)</span>
+<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 600</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" aria-hidden="true" tabindex="-1"></a>rowsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">1</span>)</span>
-<span id="cb229-2"><a href="#cb229-2" aria-hidden="true" tabindex="-1"></a>rowsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1" aria-hidden="true" tabindex="-1"></a>rowsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">1</span>)</span>
+<span id="cb227-2"><a href="#cb227-2" aria-hidden="true" tabindex="-1"></a>rowsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Under 35 35 and Older 
          396          204 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">2</span>)</span>
-<span id="cb231-2"><a href="#cb231-2" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">2</span>)</span>
+<span id="cb229-2"><a href="#cb229-2" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Under Armour         Nike       Adidas 
          228          204          168 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(o)</span>
-<span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>prob  <span class="co"># each cell represents a joint probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(o)</span>
+<span id="cb231-2"><a href="#cb231-2" aria-hidden="true" tabindex="-1"></a>prob  <span class="co"># each cell represents a joint probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Under Armour Nike Adidas
 Under 35             0.29 0.22   0.15
 35 and Older         0.09 0.12   0.13</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1" aria-hidden="true" tabindex="-1"></a>rowprob <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">1</span>)</span>
-<span id="cb235-2"><a href="#cb235-2" aria-hidden="true" tabindex="-1"></a>rowprob  <span class="co">#each value represents marginal probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a>rowprob <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">1</span>)</span>
+<span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>rowprob  <span class="co">#each value represents marginal probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Under 35 35 and Older 
         0.66         0.34 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a>colprob <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">2</span>)</span>
-<span id="cb237-2"><a href="#cb237-2" aria-hidden="true" tabindex="-1"></a>colprob  <span class="co">#each value represents marginal probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1" aria-hidden="true" tabindex="-1"></a>colprob <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">2</span>)</span>
+<span id="cb235-2"><a href="#cb235-2" aria-hidden="true" tabindex="-1"></a>colprob  <span class="co">#each value represents marginal probability</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Under Armour         Nike       Adidas 
         0.38         0.34         0.28 </code></pre>
@@ -2054,7 +2051,7 @@ Under 35             0.29 0.22   0.15
 <li>Take note that when subsetting from the matrix we created above, the dimnames do not serve as a column or row. so the first number is in row 1, column 1. This is distinct from data.frames, which typically have the 1st column designated for the labels.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">1</span>, <span class="dv">1</span>]  <span class="co">#corresponds to the joint probability value associated with Row 1 (Under 35), Col 1 (Under Armour)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">1</span>, <span class="dv">1</span>]  <span class="co">#corresponds to the joint probability value associated with Row 1 (Under 35), Col 1 (Under Armour)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.29</code></pre>
 </div>
@@ -2064,13 +2061,13 @@ Under 35             0.29 0.22   0.15
 <li><p>When looking up an answer to the question, it makes it easier to reference the tables to ensure you are subsetting correctly.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Under Armour Nike Adidas
 Under 35              174  132     90
 35 and Older           54   72     78</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a>prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" aria-hidden="true" tabindex="-1"></a>prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Under Armour Nike Adidas
 Under 35             0.29 0.22   0.15
@@ -2081,16 +2078,16 @@ Under 35             0.29 0.22   0.15
 <li>If a person is under 35, what is the probability they will select Under Armour? <span class="math display">\[P(UA|under35) = (P(UA \cap under35)/P(under35))\]</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a conditional probability question.</span></span>
-<span id="cb245-2"><a href="#cb245-2" aria-hidden="true" tabindex="-1"></a><span class="dv">174</span><span class="sc">/</span><span class="dv">396</span>  <span class="co">#or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a conditional probability question.</span></span>
+<span id="cb243-2"><a href="#cb243-2" aria-hidden="true" tabindex="-1"></a><span class="dv">174</span><span class="sc">/</span><span class="dv">396</span>  <span class="co">#or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4393939</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.29</span><span class="sc">/</span><span class="fl">0.66</span>  <span class="co">#or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.29</span><span class="sc">/</span><span class="fl">0.66</span>  <span class="co">#or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4393939</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">1</span>, <span class="dv">1</span>]<span class="sc">/</span>rowprob[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">1</span>, <span class="dv">1</span>]<span class="sc">/</span>rowprob[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Under 35 
 0.4393939 </code></pre>
@@ -2100,16 +2097,16 @@ Under 35             0.29 0.22   0.15
 <li>What is the probability of a person 35 or older randomly selecting Nike? <span class="math display">\[P(N|older35) = (P(N \cap older35)/P(older35))\]</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a conditional probability question.</span></span>
-<span id="cb251-2"><a href="#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="dv">72</span><span class="sc">/</span><span class="dv">204</span>  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a conditional probability question.</span></span>
+<span id="cb249-2"><a href="#cb249-2" aria-hidden="true" tabindex="-1"></a><span class="dv">72</span><span class="sc">/</span><span class="dv">204</span>  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3529412</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.12</span><span class="sc">/</span><span class="fl">0.34</span>  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fl">0.12</span><span class="sc">/</span><span class="fl">0.34</span>  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3529412</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">2</span>, <span class="dv">2</span>]<span class="sc">/</span>rowprob[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a>prob[<span class="dv">2</span>, <span class="dv">2</span>]<span class="sc">/</span>rowprob[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>35 and Older 
    0.3529412 </code></pre>
@@ -2119,12 +2116,12 @@ Under 35             0.29 0.22   0.15
 <li>If the chance the preference was the same regardless of condition, how many people would you expect to select Nike? <span class="math display">\[Ex(Nike)\]</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a expected value question.</span></span>
-<span id="cb257-2"><a href="#cb257-2" aria-hidden="true" tabindex="-1"></a>TotalNike  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a expected value question.</span></span>
+<span id="cb255-2"><a href="#cb255-2" aria-hidden="true" tabindex="-1"></a>TotalNike  <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 204</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1" aria-hidden="true" tabindex="-1"></a>colsums[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1" aria-hidden="true" tabindex="-1"></a>colsums[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Nike 
  204 </code></pre>
@@ -2134,33 +2131,33 @@ Under 35             0.29 0.22   0.15
 <li>We can calculate summary measures based on a variable category.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb261"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb261-1"><a href="#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="co"># E(X) of 35 Years or older (formula n*p)</span></span>
-<span id="cb261-2"><a href="#cb261-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> total</span>
-<span id="cb261-3"><a href="#cb261-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co">#600</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="co"># E(X) of 35 Years or older (formula n*p)</span></span>
+<span id="cb259-2"><a href="#cb259-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> total</span>
+<span id="cb259-3"><a href="#cb259-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co">#600</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 600</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb263"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> rowprob[<span class="dv">2</span>]</span>
-<span id="cb263-2"><a href="#cb263-2" aria-hidden="true" tabindex="-1"></a>p  <span class="co">#.34</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb261"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb261-1"><a href="#cb261-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> rowprob[<span class="dv">2</span>]</span>
+<span id="cb261-2"><a href="#cb261-2" aria-hidden="true" tabindex="-1"></a>p  <span class="co">#.34</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>35 and Older 
         0.34 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb265"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb265-1"><a href="#cb265-1" aria-hidden="true" tabindex="-1"></a>n <span class="sc">*</span> p  <span class="co">#Or simply the frequency for the column 35 and older</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb263"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb263-1"><a href="#cb263-1" aria-hidden="true" tabindex="-1"></a>n <span class="sc">*</span> p  <span class="co">#Or simply the frequency for the column 35 and older</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>35 and Older 
          204 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb267"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Var(X) (formula n*p*(1-p))</span></span>
-<span id="cb267-2"><a href="#cb267-2" aria-hidden="true" tabindex="-1"></a>varx <span class="ot">&lt;-</span> n <span class="sc">*</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb267-3"><a href="#cb267-3" aria-hidden="true" tabindex="-1"></a>varx  <span class="co">#134.64</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb265"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb265-1"><a href="#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Var(X) (formula n*p*(1-p))</span></span>
+<span id="cb265-2"><a href="#cb265-2" aria-hidden="true" tabindex="-1"></a>varx <span class="ot">&lt;-</span> n <span class="sc">*</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb265-3"><a href="#cb265-3" aria-hidden="true" tabindex="-1"></a>varx  <span class="co">#134.64</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>35 and Older 
       134.64 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb269"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb269-1"><a href="#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SD(X) (formula sqrt of variance)</span></span>
-<span id="cb269-2"><a href="#cb269-2" aria-hidden="true" tabindex="-1"></a>sdx <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varx)</span>
-<span id="cb269-3"><a href="#cb269-3" aria-hidden="true" tabindex="-1"></a>sdx  <span class="co">#11.60345 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb267"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb267-1"><a href="#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SD(X) (formula sqrt of variance)</span></span>
+<span id="cb267-2"><a href="#cb267-2" aria-hidden="true" tabindex="-1"></a>sdx <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varx)</span>
+<span id="cb267-3"><a href="#cb267-3" aria-hidden="true" tabindex="-1"></a>sdx  <span class="co">#11.60345 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>35 and Older 
     11.60345 </code></pre>
@@ -2180,9 +2177,9 @@ Under 35             0.29 0.22   0.15
 </figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb271"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb271-1"><a href="#cb271-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">197</span>, <span class="dv">388</span>, <span class="dv">230</span>, <span class="dv">103</span>, <span class="dv">137</span>, <span class="dv">98</span>, <span class="dv">20</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">13</span>, <span class="dv">58</span>, <span class="dv">45</span>)</span>
-<span id="cb271-2"><a href="#cb271-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="dv">4</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb271-3"><a href="#cb271-3" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb269"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb269-1"><a href="#cb269-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">197</span>, <span class="dv">388</span>, <span class="dv">230</span>, <span class="dv">103</span>, <span class="dv">137</span>, <span class="dv">98</span>, <span class="dv">20</span>, <span class="dv">18</span>, <span class="dv">18</span>, <span class="dv">13</span>, <span class="dv">58</span>, <span class="dv">45</span>)</span>
+<span id="cb269-2"><a href="#cb269-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="dv">4</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb269-3"><a href="#cb269-3" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]  197  388  230
@@ -2190,9 +2187,9 @@ Under 35             0.29 0.22   0.15
 [3,]   20   18   18
 [4,]   13   58   45</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb273"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Students"</span>, <span class="st">"Faculty/Staff"</span>, <span class="st">"Alumni"</span>, <span class="st">"Town Residents"</span>),</span>
-<span id="cb273-2"><a href="#cb273-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"Unlikely"</span>, <span class="st">"Moderately Likely"</span>, <span class="st">"Very Likely"</span>))</span>
-<span id="cb273-3"><a href="#cb273-3" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb271"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb271-1"><a href="#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Students"</span>, <span class="st">"Faculty/Staff"</span>, <span class="st">"Alumni"</span>, <span class="st">"Town Residents"</span>),</span>
+<span id="cb271-2"><a href="#cb271-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">"Unlikely"</span>, <span class="st">"Moderately Likely"</span>, <span class="st">"Very Likely"</span>))</span>
+<span id="cb271-3"><a href="#cb271-3" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Unlikely Moderately Likely Very Likely
 Students            197               388         230
@@ -2200,26 +2197,26 @@ Faculty/Staff       103               137          98
 Alumni               20                18          18
 Town Residents       13                58          45</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb275"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(o)</span>
-<span id="cb275-2"><a href="#cb275-2" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb273"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb273-1"><a href="#cb273-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">&lt;-</span> <span class="fu">sum</span>(o)</span>
+<span id="cb273-2"><a href="#cb273-2" aria-hidden="true" tabindex="-1"></a>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1325</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a>rowsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">1</span>)</span>
-<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a>rowsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb275"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb275-1"><a href="#cb275-1" aria-hidden="true" tabindex="-1"></a>rowsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">1</span>)</span>
+<span id="cb275-2"><a href="#cb275-2" aria-hidden="true" tabindex="-1"></a>rowsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Students  Faculty/Staff         Alumni Town Residents 
            815            338             56            116 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">2</span>)</span>
-<span id="cb279-2"><a href="#cb279-2" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(o, <span class="dv">2</span>)</span>
+<span id="cb277-2"><a href="#cb277-2" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Unlikely Moderately Likely       Very Likely 
               333               601               391 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets add the grand total to the colsums</span></span>
-<span id="cb281-2"><a href="#cb281-2" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">c</span>(colsums, total)</span>
-<span id="cb281-3"><a href="#cb281-3" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets add the grand total to the colsums</span></span>
+<span id="cb279-2"><a href="#cb279-2" aria-hidden="true" tabindex="-1"></a>colsums <span class="ot">&lt;-</span> <span class="fu">c</span>(colsums, total)</span>
+<span id="cb279-3"><a href="#cb279-3" aria-hidden="true" tabindex="-1"></a>colsums</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Unlikely Moderately Likely       Very Likely                   
               333               601               391              1325 </code></pre>
@@ -2229,8 +2226,8 @@ Town Residents       13                58          45</code></pre>
 <li>In this example, we can bind the data together so that it is a little easier to see. Examine the final table and compare that to the figure above.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb283"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">cbind</span>(o, rowsums)</span>
-<span id="cb283-2"><a href="#cb283-2" aria-hidden="true" tabindex="-1"></a>totals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">cbind</span>(o, rowsums)</span>
+<span id="cb281-2"><a href="#cb281-2" aria-hidden="true" tabindex="-1"></a>totals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Unlikely Moderately Likely Very Likely rowsums
 Students            197               388         230     815
@@ -2238,8 +2235,8 @@ Faculty/Staff       103               137          98     338
 Alumni               20                18          18      56
 Town Residents       13                58          45     116</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb285"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">rbind</span>(totals, colsums)</span>
-<span id="cb285-2"><a href="#cb285-2" aria-hidden="true" tabindex="-1"></a>totals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb283"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">rbind</span>(totals, colsums)</span>
+<span id="cb283-2"><a href="#cb283-2" aria-hidden="true" tabindex="-1"></a>totals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Unlikely Moderately Likely Very Likely rowsums
 Students            197               388         230     815
@@ -2259,8 +2256,8 @@ colsums             333               601         391    1325</code></pre>
 <li>Next, let’s calculate probabilities.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb287"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(o)</span>
-<span id="cb287-2"><a href="#cb287-2" aria-hidden="true" tabindex="-1"></a>prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb285"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(o)</span>
+<span id="cb285-2"><a href="#cb285-2" aria-hidden="true" tabindex="-1"></a>prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  Unlikely Moderately Likely Very Likely
 Students       0.148679245        0.29283019  0.17358491
@@ -2268,20 +2265,20 @@ Faculty/Staff  0.077735849        0.10339623  0.07396226
 Alumni         0.015094340        0.01358491  0.01358491
 Town Residents 0.009811321        0.04377358  0.03396226</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb289"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" aria-hidden="true" tabindex="-1"></a>TotalRowProb <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">1</span>)</span>
-<span id="cb289-2"><a href="#cb289-2" aria-hidden="true" tabindex="-1"></a>TotalRowProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb287"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1" aria-hidden="true" tabindex="-1"></a>TotalRowProb <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">1</span>)</span>
+<span id="cb287-2"><a href="#cb287-2" aria-hidden="true" tabindex="-1"></a>TotalRowProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Students  Faculty/Staff         Alumni Town Residents 
     0.61509434     0.25509434     0.04226415     0.08754717 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb291"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" aria-hidden="true" tabindex="-1"></a>TotalColProb <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">2</span>)</span>
-<span id="cb291-2"><a href="#cb291-2" aria-hidden="true" tabindex="-1"></a>TotalColProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb289"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1" aria-hidden="true" tabindex="-1"></a>TotalColProb <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(prob, <span class="dv">2</span>)</span>
+<span id="cb289-2"><a href="#cb289-2" aria-hidden="true" tabindex="-1"></a>TotalColProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Unlikely Moderately Likely       Very Likely 
         0.2513208         0.4535849         0.2950943 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb293"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" aria-hidden="true" tabindex="-1"></a>TotalColProb <span class="ot">&lt;-</span> <span class="fu">c</span>(TotalColProb, <span class="fu">sum</span>(TotalColProb))</span>
-<span id="cb293-2"><a href="#cb293-2" aria-hidden="true" tabindex="-1"></a>TotalColProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb291"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1" aria-hidden="true" tabindex="-1"></a>TotalColProb <span class="ot">&lt;-</span> <span class="fu">c</span>(TotalColProb, <span class="fu">sum</span>(TotalColProb))</span>
+<span id="cb291-2"><a href="#cb291-2" aria-hidden="true" tabindex="-1"></a>TotalColProb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Unlikely Moderately Likely       Very Likely                   
         0.2513208         0.4535849         0.2950943         1.0000000 </code></pre>
@@ -2291,8 +2288,8 @@ Town Residents 0.009811321        0.04377358  0.03396226</code></pre>
 <li>In this example, we can also bind the data together so that it is a little easier to see. Again, we are trying to get our R code in the best shape to be able to select the right information to calculate probability from it.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb295"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">cbind</span>(prob, TotalRowProb)</span>
-<span id="cb295-2"><a href="#cb295-2" aria-hidden="true" tabindex="-1"></a>proportions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb293"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">cbind</span>(prob, TotalRowProb)</span>
+<span id="cb293-2"><a href="#cb293-2" aria-hidden="true" tabindex="-1"></a>proportions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  Unlikely Moderately Likely Very Likely TotalRowProb
 Students       0.148679245        0.29283019  0.17358491   0.61509434
@@ -2300,8 +2297,8 @@ Faculty/Staff  0.077735849        0.10339623  0.07396226   0.25509434
 Alumni         0.015094340        0.01358491  0.01358491   0.04226415
 Town Residents 0.009811321        0.04377358  0.03396226   0.08754717</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb297"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">rbind</span>(proportions, TotalColProb)</span>
-<span id="cb297-2"><a href="#cb297-2" aria-hidden="true" tabindex="-1"></a>proportions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb295"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1" aria-hidden="true" tabindex="-1"></a>proportions <span class="ot">&lt;-</span> <span class="fu">rbind</span>(proportions, TotalColProb)</span>
+<span id="cb295-2"><a href="#cb295-2" aria-hidden="true" tabindex="-1"></a>proportions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  Unlikely Moderately Likely Very Likely TotalRowProb
 Students       0.148679245        0.29283019  0.17358491   0.61509434
@@ -2326,33 +2323,33 @@ TotalColProb   0.251320755        0.45358491  0.29509434   1.00000000</code></pr
 <span class="math inline">\(P_FS + P_VL - P_FS \cup P_VL = 0.25509434 + 0.2950943 − 0.07396226 = 0.4762264\)</span></p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb299"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># E(X) of Moderately Likely (formula n*p)</span></span>
-<span id="cb299-2"><a href="#cb299-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> total</span>
-<span id="cb299-3"><a href="#cb299-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co">#1325</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb297"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># E(X) of Moderately Likely (formula n*p)</span></span>
+<span id="cb297-2"><a href="#cb297-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> total</span>
+<span id="cb297-3"><a href="#cb297-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co">#1325</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1325</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb301"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb301-1"><a href="#cb301-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> TotalColProb[<span class="dv">2</span>]</span>
-<span id="cb301-2"><a href="#cb301-2" aria-hidden="true" tabindex="-1"></a>p  <span class="co">#.45358</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb299"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> TotalColProb[<span class="dv">2</span>]</span>
+<span id="cb299-2"><a href="#cb299-2" aria-hidden="true" tabindex="-1"></a>p  <span class="co">#.45358</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Moderately Likely 
         0.4535849 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb303"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb303-1"><a href="#cb303-1" aria-hidden="true" tabindex="-1"></a>n <span class="sc">*</span> p  <span class="co">#Or simply the frequency for the column Moderately Likely</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb301"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb301-1"><a href="#cb301-1" aria-hidden="true" tabindex="-1"></a>n <span class="sc">*</span> p  <span class="co">#Or simply the frequency for the column Moderately Likely</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Moderately Likely 
               601 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb305"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb305-1"><a href="#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Var(X) (formula n*p*(1-p))</span></span>
-<span id="cb305-2"><a href="#cb305-2" aria-hidden="true" tabindex="-1"></a>varx <span class="ot">&lt;-</span> n <span class="sc">*</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb305-3"><a href="#cb305-3" aria-hidden="true" tabindex="-1"></a>varx  <span class="co">#328.3955</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb303"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb303-1"><a href="#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Var(X) (formula n*p*(1-p))</span></span>
+<span id="cb303-2"><a href="#cb303-2" aria-hidden="true" tabindex="-1"></a>varx <span class="ot">&lt;-</span> n <span class="sc">*</span> p <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb303-3"><a href="#cb303-3" aria-hidden="true" tabindex="-1"></a>varx  <span class="co">#328.3955</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Moderately Likely 
          328.3955 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb307"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb307-1"><a href="#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SD(X) (formula sqrt of variance)</span></span>
-<span id="cb307-2"><a href="#cb307-2" aria-hidden="true" tabindex="-1"></a>sdx <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varx)</span>
-<span id="cb307-3"><a href="#cb307-3" aria-hidden="true" tabindex="-1"></a>sdx  <span class="co">#18.12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb305"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb305-1"><a href="#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SD(X) (formula sqrt of variance)</span></span>
+<span id="cb305-2"><a href="#cb305-2" aria-hidden="true" tabindex="-1"></a>sdx <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(varx)</span>
+<span id="cb305-3"><a href="#cb305-3" aria-hidden="true" tabindex="-1"></a>sdx  <span class="co">#18.12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Moderately Likely 
          18.12169 </code></pre>
@@ -2370,7 +2367,7 @@ TotalColProb   0.251320755        0.45358491  0.29509434   1.00000000</code></pr
 <li><p>Squaring the differences before adding them up will result in a positive value that is larger when there are larger differences and smaller when there are smaller differences. This value captures the magnitude of the difference between observed and expected values.</p></li>
 <li><p>In order to account for situations when the observed and expected values are very large, which could result in extremely large differences between observed and expected, the squared differences are divided by the expected value in each cell.</p></li>
 <li><p>Visualizing the Chi-squared Distribution Chi-squared distribution has a single parameter, the degrees of freedom or <span class="math inline">\(df\)</span>.<br>
-<span class="math inline">\(\sqrt(2*df)\)</span> The degrees of freedom in a chi-squared test of independence are calculated as the Number of rows−1 multiplied by Number ofcolumns−1 or more formally: <span class="math inline">\(df=(𝑟−1)∗(𝑐−1)\)</span> The larger the contingency table, the more degrees of freedom, the wider the distribution and more normal it becomes.</p></li>
+The standard deviation of the chi-squared distribution is <span class="math inline">\(\sqrt{2 \cdot df}\)</span>. The degrees of freedom in a chi-squared test of independence are calculated as the Number of rows−1 multiplied by Number ofcolumns−1 or more formally: <span class="math inline">\(df=(𝑟−1)∗(𝑐−1)\)</span> The larger the contingency table, the more degrees of freedom, the wider the distribution and more normal it becomes.</p></li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
@@ -2443,16 +2440,16 @@ TotalColProb   0.251320755        0.45358491  0.29509434   1.00000000</code></pr
 <li>First, we bring in the data manually from the table by column. We had 3 columns, so we need to make three vectors as shown below.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb309"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb309-1"><a href="#cb309-1" aria-hidden="true" tabindex="-1"></a>UA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">54</span>)</span>
-<span id="cb309-2"><a href="#cb309-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">132</span>, <span class="dv">72</span>)</span>
-<span id="cb309-3"><a href="#cb309-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">78</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb307"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb307-1"><a href="#cb307-1" aria-hidden="true" tabindex="-1"></a>UA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">54</span>)</span>
+<span id="cb307-2"><a href="#cb307-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">132</span>, <span class="dv">72</span>)</span>
+<span id="cb307-3"><a href="#cb307-3" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">78</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Then we convert these variables into a data frame. If you already have a data frame, you don’t have to do this step.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb310"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb310-1"><a href="#cb310-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(UA, N, A)</span>
-<span id="cb310-2"><a href="#cb310-2" aria-hidden="true" tabindex="-1"></a>M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb308"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb308-1"><a href="#cb308-1" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(UA, N, A)</span>
+<span id="cb308-2"><a href="#cb308-2" aria-hidden="true" tabindex="-1"></a>M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   UA   N  A
 1 174 132 90
@@ -2465,7 +2462,7 @@ TotalColProb   0.251320755        0.45358491  0.29509434   1.00000000</code></pr
 <li><p>Here, we run the chisq.test() command, which only includes the columns of interest.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb312"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb312-1"><a href="#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb310"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb310-1"><a href="#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(M)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -2486,18 +2483,18 @@ X-squared = 22.529, df = 2, p-value = 1.282e-05</code></pre>
 <li>In a Chi-squared test of independence, a matrix can be used to organize observed frequencies into categories along two dimensions. In the example, the matrix o contains data for different age groups (“Under 35” and “35 and older”) and their brand preferences (“Under Armour,” “Nike,” and “Adidas”). By setting up the matrix with these dimensions, the test evaluates whether there is a significant association between age group and brand preference. The test compares the observed counts with expected counts under the assumption that the two variables are independent.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb314"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">132</span>, <span class="dv">90</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
-<span id="cb314-2"><a href="#cb314-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb314-3"><a href="#cb314-3" aria-hidden="true" tabindex="-1"></a><span class="do">## add some dimnames to o</span></span>
-<span id="cb314-4"><a href="#cb314-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Under 35"</span>, <span class="st">"35 and older"</span>), <span class="fu">c</span>(<span class="st">"Under Armour"</span>, <span class="st">"Nike"</span>,</span>
-<span id="cb314-5"><a href="#cb314-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adidas"</span>))</span>
-<span id="cb314-6"><a href="#cb314-6" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb312"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb312-1"><a href="#cb312-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>, <span class="dv">132</span>, <span class="dv">90</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">78</span>)</span>
+<span id="cb312-2"><a href="#cb312-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(x, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb312-3"><a href="#cb312-3" aria-hidden="true" tabindex="-1"></a><span class="do">## add some dimnames to o</span></span>
+<span id="cb312-4"><a href="#cb312-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(o) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Under 35"</span>, <span class="st">"35 and older"</span>), <span class="fu">c</span>(<span class="st">"Under Armour"</span>, <span class="st">"Nike"</span>,</span>
+<span id="cb312-5"><a href="#cb312-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adidas"</span>))</span>
+<span id="cb312-6"><a href="#cb312-6" aria-hidden="true" tabindex="-1"></a>o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Under Armour Nike Adidas
 Under 35              174  132     90
 35 and older           54   72     78</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb316"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(o)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb314"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(o)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -2505,8 +2502,8 @@ Under 35              174  132     90
 data:  o
 X-squared = 22.529, df = 2, p-value = 1.282e-05</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb318"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="co"># \tPearson's Chi-squared test data: o X-squared = 22.529, df = 2,</span></span>
-<span id="cb318-2"><a href="#cb318-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value = 0.00001282</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb316"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="co"># \tPearson's Chi-squared test data: o X-squared = 22.529, df = 2,</span></span>
+<span id="cb316-2"><a href="#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value = 0.00001282</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>In either case, we should see the same result. The result includes the Chi-squared statistic (X-squared = 22.529), degrees of freedom (df = 2), and a very small p-value (0.00001282), indicating a strong association between age and brand preference.</li>
@@ -2524,8 +2521,8 @@ X-squared = 22.529, df = 2, p-value = 1.282e-05</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb319"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb319-1"><a href="#cb319-1" aria-hidden="true" tabindex="-1"></a>STEM <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/stem.csv"</span>)</span>
-<span id="cb319-2"><a href="#cb319-2" aria-hidden="true" tabindex="-1"></a>STEM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb317"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb317-1"><a href="#cb317-1" aria-hidden="true" tabindex="-1"></a>STEM <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/stem.csv"</span>)</span>
+<span id="cb317-2"><a href="#cb317-2" aria-hidden="true" tabindex="-1"></a>STEM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   STEM.field Female Male
 1    Sciences    120  100
@@ -2539,7 +2536,7 @@ X-squared = 22.529, df = 2, p-value = 1.282e-05</code></pre>
 <li>Again, we use Rs chisq.test() command to calculate the value of the test statistic, as well as the p-value. Within the chisq.test() function, we indicate that the relevant data are in columns 2 and 3 of the data frame.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb321"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb321-1"><a href="#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEM[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb319"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb319-1"><a href="#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEM[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -2547,12 +2544,12 @@ X-squared = 22.529, df = 2, p-value = 1.282e-05</code></pre>
 data:  STEM[, 2:3]
 X-squared = 66.795, df = 3, p-value = 2.072e-14</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb323"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb323-1"><a href="#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="do">## test statistic: 66.795 df: 3 --- 4 rows and 2 columns</span></span>
-<span id="cb323-2"><a href="#cb323-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span>)  <span class="co">#3 df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb321"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb321-1"><a href="#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="do">## test statistic: 66.795 df: 3 --- 4 rows and 2 columns</span></span>
+<span id="cb321-2"><a href="#cb321-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span>)  <span class="co">#3 df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb325"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb325-1"><a href="#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="do">## p-value is almost 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb323"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb323-1"><a href="#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="do">## p-value is almost 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>Step 3: If the probability that the null is true is very small, usually less than 5%, reject the null hypothesis versus If the probability that the null is true is not small, usually 5% or greater, retain the null hypothesis.</p></li>
@@ -2562,7 +2559,7 @@ X-squared = 66.795, df = 3, p-value = 2.072e-14</code></pre>
 <li><p>This is useful when you want to investigate the relationship between two particular variables, ignoring other columns that might be extraneous to the question you’re asking. Including or excluding columns is guided by the research hypothesis and the variables you want to test for independence.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb326"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb326-1"><a href="#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEM[, <span class="sc">-</span><span class="dv">1</span>])  <span class="do">### when we subset we use object[row, columns] --- so including the numbers 2:3 means we include variables in the 2nd and 3rd columns. Including the number -1 after the comma means that we exclude the first column. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb324"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb324-1"><a href="#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEM[, <span class="sc">-</span><span class="dv">1</span>])  <span class="do">### when we subset we use object[row, columns] --- so including the numbers 2:3 means we include variables in the 2nd and 3rd columns. Including the number -1 after the comma means that we exclude the first column. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -2611,17 +2608,17 @@ X-squared = 66.795, df = 3, p-value = 2.072e-14</code></pre>
 </p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb328"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb328-1"><a href="#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi Squared Test Goodness of Fit</span></span>
-<span id="cb328-2"><a href="#cb328-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">46</span>, <span class="dv">83</span>, <span class="dv">105</span>, <span class="dv">16</span>)</span>
-<span id="cb328-3"><a href="#cb328-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.3</span>, <span class="fl">0.45</span>, <span class="fl">0.1</span>)</span>
-<span id="cb328-4"><a href="#cb328-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb328-5"><a href="#cb328-5" aria-hidden="true" tabindex="-1"></a><span class="do">## quick check on p</span></span>
-<span id="cb328-6"><a href="#cb328-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(p)  <span class="do">##1: sum of all proportions should be 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb326"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb326-1"><a href="#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi Squared Test Goodness of Fit</span></span>
+<span id="cb326-2"><a href="#cb326-2" aria-hidden="true" tabindex="-1"></a>o <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">46</span>, <span class="dv">83</span>, <span class="dv">105</span>, <span class="dv">16</span>)</span>
+<span id="cb326-3"><a href="#cb326-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.3</span>, <span class="fl">0.45</span>, <span class="fl">0.1</span>)</span>
+<span id="cb326-4"><a href="#cb326-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-5"><a href="#cb326-5" aria-hidden="true" tabindex="-1"></a><span class="do">## quick check on p</span></span>
+<span id="cb326-6"><a href="#cb326-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(p)  <span class="do">##1: sum of all proportions should be 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb330"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb330-1"><a href="#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test</span></span>
-<span id="cb330-2"><a href="#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(o, <span class="at">p =</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb328"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb328-1"><a href="#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run the test</span></span>
+<span id="cb328-2"><a href="#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(o, <span class="at">p =</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Chi-squared test for given probabilities
@@ -2629,12 +2626,12 @@ X-squared = 66.795, df = 3, p-value = 2.072e-14</code></pre>
 data:  o
 X-squared = 6.52, df = 3, p-value = 0.08888</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb332"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb332-1"><a href="#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test statistic: 6.52 df: 3 ----- 4 proportions - 1 -- or</span></span>
-<span id="cb332-2"><a href="#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">-</span> <span class="dv">1</span>  <span class="do">##3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb330"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb330-1"><a href="#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test statistic: 6.52 df: 3 ----- 4 proportions - 1 -- or</span></span>
+<span id="cb330-2"><a href="#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="sc">-</span> <span class="dv">1</span>  <span class="do">##3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb334"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb334-1"><a href="#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value is 0.08888 &gt; .05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb332"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb332-1"><a href="#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value is 0.08888 &gt; .05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>Note that p= is required here because it is not the second argument in the chisq.test() command.</p></li>
@@ -2656,8 +2653,8 @@ X-squared = 6.52, df = 3, p-value = 0.08888</code></pre>
 <li>Then, again, we use Rs chisq.test function to calculate the value of the test statistic and the p-value. Within the chisq.test function, we use the option p to indicate the location of the hypothesized proportions.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1" aria-hidden="true" tabindex="-1"></a>STEMGOF <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/stemGOF.csv"</span>)</span>
-<span id="cb335-2"><a href="#cb335-2" aria-hidden="true" tabindex="-1"></a>STEMGOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb333"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb333-1"><a href="#cb333-1" aria-hidden="true" tabindex="-1"></a>STEMGOF <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/stemGOF.csv"</span>)</span>
+<span id="cb333-2"><a href="#cb333-2" aria-hidden="true" tabindex="-1"></a>STEMGOF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Major X2010Proportions RecentNumbers
 1        Business             0.19            80
@@ -2667,7 +2664,7 @@ X-squared = 6.52, df = 3, p-value = 0.08888</code></pre>
 5            STEM             0.08            55
 6           Other             0.30           140</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEMGOF<span class="sc">$</span>RecentNumbers, <span class="at">p =</span> STEMGOF<span class="sc">$</span>X2010Proportions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(STEMGOF<span class="sc">$</span>RecentNumbers, <span class="at">p =</span> STEMGOF<span class="sc">$</span>X2010Proportions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Chi-squared test for given probabilities
@@ -2675,10 +2672,10 @@ X-squared = 6.52, df = 3, p-value = 0.08888</code></pre>
 data:  STEMGOF$RecentNumbers
 X-squared = 21.526, df = 5, p-value = 0.0006441</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb339"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb339-1"><a href="#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi-squared test for given probabilities data:</span></span>
-<span id="cb339-2"><a href="#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="co"># stemGOF$RecentNumbers X-squared = 21.526, df = 5, p-value =</span></span>
-<span id="cb339-3"><a href="#cb339-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.0006441 df: 6 options so 6-1 is 5 test statistic is back high:</span></span>
-<span id="cb339-4"><a href="#cb339-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 21. 526</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi-squared test for given probabilities data:</span></span>
+<span id="cb337-2"><a href="#cb337-2" aria-hidden="true" tabindex="-1"></a><span class="co"># stemGOF$RecentNumbers X-squared = 21.526, df = 5, p-value =</span></span>
+<span id="cb337-3"><a href="#cb337-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0.0006441 df: 6 options so 6-1 is 5 test statistic is back high:</span></span>
+<span id="cb337-4"><a href="#cb337-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 21. 526</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Step 3: If the probability that the null is true is very small, usually less than 5%, reject the null hypothesis versus If the probability that the null is true is not small, usually 5% or greater, retain the null hypothesis.</li>
