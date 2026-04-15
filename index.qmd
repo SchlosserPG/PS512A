@@ -242,7 +242,7 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 -   RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.
 
-![Looking at the HW](Pictures/RMDTasks.png)
+![Looking at the HW](Pictures/RMD/RMDTasks.png)
 
 -   To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.
 
