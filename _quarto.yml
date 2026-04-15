@@ -17,10 +17,7 @@ book:
     - module6.qmd
     - module7.qmd
     - summary.qmd
-  navbar:
-    right:
-      - text: "Course Assistant"
-        href: chat.html
+
 
 format:
   html:
