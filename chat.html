@@ -386,7 +386,7 @@
   const WORKER_URL = 'https://statchat.pamela-schlosser.workers.dev/';
   // ================================================================
 
-  if (WORKER_URL === 'https://statchat.pamela-schlosser.workers.dev/') {
+  if (WORKER_URL === 'YOUR_WORKER_URL') {
     document.getElementById('config-banner').classList.add('visible');
   }
 
@@ -466,7 +466,7 @@
   async function sendMessage() {
     if (isLoading) return;
 
-    if (WORKER_URL === 'https://statchat.pamela-schlosser.workers.dev/') {
+    if (WORKER_URL === 'YOUR_WORKER_URL') {
       appendMessage('error', '**Not configured yet.** Set WORKER_URL in chat.html to your Cloudflare Worker URL.');
       return;
     }
