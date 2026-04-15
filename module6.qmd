@@ -181,6 +181,20 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 -   A p-value is computed from that statistic mathematically by using the correct command in R.
     -   $F_{k-1,n_t-k} = MSTR/MSE$
 
+## Subsetting Data for ANOVA
+
+-   When running an ANOVA on a subset of your data (e.g., only certain regions or categories), it is important to use `droplevels()` after subsetting to remove any unused factor levels. If you do not, the ANOVA output — and post-hoc tests like TukeyHSD — may attempt to test groups that no longer have any observations, which causes errors or misleading results.
+
+-   You can use `droplevels()` directly on the subsetted data frame, or use it inside a `mutate()` call on a specific column. For example:
+
+```{r, eval=FALSE}
+# After filtering to a subset of groups:
+subset_data <- filter(data, Region %in% c("West", "East")) %>%
+  mutate(Region = droplevels(Region))
+```
+
+-   This was introduced in Module 2 in the context of cleaning factor variables, and the same logic applies here before running an ANOVA on a subsetted dataset.
+
 ## Example of a One-Way ANOVA
 
 -   Like the t-test, a one-way ANOVA follows 3 steps, and then includes an optional 4th step after significance is found and confirmed in step 3.
@@ -346,6 +360,16 @@ TukeyHSD(Anova1way)
     -   $F1_{c-1,n_t-c-r+1 }= MSB/MSE$
     -   $F2_{r-1,n_t-c-r+1 }= MSA/MSE$
 
+## Using factor() Inline in ANOVA Formulas
+
+-   In a two-way ANOVA, you can convert a variable to a factor directly inside the `aov()` formula using `factor()`. For example, if `year` is stored as a numeric variable but you want to treat it as a categorical grouping variable, you can write:
+
+```{r, eval=FALSE}
+aov(Outcome ~ GroupA * factor(year), data = mydata)
+```
+
+-   This is equivalent to converting `year` to a factor first using `as.factor()` and then passing it to `aov()`. The inline approach is convenient when you want to test a numeric variable as a categorical factor without permanently changing the variable in your dataset.
+
 ## Example of a Two-way ANOVA
 
 -   Let's run an example to compare SAT scores to see if they are comparable from different instructors {Instructor 1, 2, and 3} and across 4 races {Asian.American, Black, Mexican.American, and White}.
@@ -389,7 +413,7 @@ summary(Anova2way)
 
 -   This means that we can conduct post-hoc tests on our Race variable. If we conduct any post-hoc tests on Instructor, we should find no differences in groups (which we already found in the ANOVA results above). This means additional testing the Instructor variable is an unnecessary step.
 
-### Step 4: If Model is Significant, Run Post-Hoc Tests 
+### Step 4: If Model is Significant, Run Post-Hoc Tests
 
 -   Using the pairwise.t.test() command, we can run a Bonferroni test on just race by using the command below. This result suggest that there are group differences between all groups. We can tell that because all p-values are less than alpha at .05.\
 
@@ -505,8 +529,7 @@ corolla <- read.csv("data/corolla.csv", stringsAsFactors = TRUE)
 -   For Interaction:
     -   Null Hypothesis ($H_o$): There is no interaction between the two factors (i.e., the effect of one factor does not depend on the level of the other factor).
     -   Alternative Hypothesis ($H_a$): There is an interaction between the two factors (i.e., the effect of one factor depends on the level of the other factor).
-
-* In the dataset, let's make a hypothesis between Fuel_Type and Metallic paint on Price. We would make two individual hypotheses and one interaction hypothesis between Fuel_Type and Metallic. 
+-   In the dataset, let's make a hypothesis between Fuel_Type and Metallic paint on Price. We would make two individual hypotheses and one interaction hypothesis between Fuel_Type and Metallic.
 
 ### Step 2: Compute the F-test statistic for the interaction and its p-value.
 
@@ -518,16 +541,19 @@ ANOVAInteraction <- aov(Price~Fuel_Type * Metallic, data=corolla)
 anova(ANOVAInteraction)
 ```
 
-
 ### Step 3: Interpret the probability and write a conclusion.
 
 -   If the p-value for an effect is small (typically \< 0.05), reject the null hypothesis and conclude that the effect is significant.
+
 -   If the interaction effect is significant, this means the relationship between Factor A and the dependent variable depends on the level of Factor B (or vice versa). This interaction may change how the main effects should be interpreted.
+
 -   If the interaction is not significant, the main effects can be interpreted independently.
 
-* Fuel Type has a significant main effect on Price (p-value < .05). 
-* Metallic has a significant main effect on Price (p-value < .001).
-* There is a significant interaction between Fuel_Type and Metallic on Price (p-value < .05).
+-   Fuel Type has a significant main effect on Price (p-value \< .05).
+
+-   Metallic has a significant main effect on Price (p-value \< .001).
+
+-   There is a significant interaction between Fuel_Type and Metallic on Price (p-value \< .05).
 
 ### Step 4: If the interaction is significant, examine simple effects or conduct post-hoc tests.
 
@@ -539,12 +565,11 @@ anova(ANOVAInteraction)
 TukeyHSD(ANOVAInteraction)
 ```
 
-* In the output, it looks like Fuel_Type is a weak variable. There were no group differences detected in the TukeyHSD. There is a group difference between Metallic paint (Yes vs No). There are many interaction groups significantly different as indicated by a significant p-value < .05. 
+-   In the output, it looks like Fuel_Type is a weak variable. There were no group differences detected in the TukeyHSD. There is a group difference between Metallic paint (Yes vs No). There are many interaction groups significantly different as indicated by a significant p-value \< .05.
 
     -   Create interaction plots to visualize how the levels of one factor influence the effect of the other factor.
 
-
-* Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction. 
+-   Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction.
 
 ```{r, message=FALSE}
 library(tidyverse)

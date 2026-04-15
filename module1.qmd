@@ -42,6 +42,12 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
     -   Growing availability of vast amounts of data.
     -   Improved computational power.
     -   Development of sophisticated algorithms.
+    -   The rise of Generative AI.
+
+### Definition of AI
+
+-   Artificial Intelligence (AI) is the development of computer systems that can perform tasks that typically require human intelligence — things like recognizing patterns, making decisions, understanding language, and generating content.
+-   For the purposes of this course, the most relevant category is generative AI (tools like ChatGPT, Claude, and GitHub Copilot), which can produce text, code, and analysis in response to natural language prompts.
 
 ### Two Main Branches of Statistics
 
@@ -53,6 +59,52 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 -   Reasons for sampling from the population:
     -   Too expensive to gather information on the entire population.
     -   Often impossible to gather information on the entire population.
+
+#### Descriptive Statistics and AI
+
+-   Descriptive Statistics is where AI currently dominates. Tools like ChatGPT, Copilot, and R's own AI-assisted packages can collect data via APIs, clean and wrangle it, generate summary statistics, and produce polished visualizations faster than any human. When you ask AI to "summarize this dataset," it's doing descriptive work. The output is only as good as the data fed in, but the mechanical execution is largely automated.
+
+#### Inferential Statistics and AI
+
+-   Inferential Statistics is where human judgment remains essential, and AI actually introduces new complications. Consider:
+    -   Who defines the population? If you're studying customer behavior, do you mean all customers, all potential customers, all customers in a region? AI won't ask this question — it will answer whatever you give it. Defining the population of interest is a business and conceptual judgment call, not a computation.
+    -   Is the sample representative? AI can run a regression or t-test in seconds, but it cannot tell you whether your sample was collected with selection bias, convenience sampling, or missing key subgroups. That requires domain knowledge and critical thinking.
+    -   What do the inferences actually mean? A p-value of 0.03 in a business context means something different from one in a clinical trial. Translating statistical conclusions into actionable decisions — and communicating uncertainty honestly to a non-technical audience — is still entirely a human skill.
+
+### Reasons for sampling from the population
+
+-   Too expensive to gather information on the entire population.
+-   Often impossible to gather information on the entire population.
+-   AI models are themselves built on samples — no training dataset captures all human knowledge, all languages, or all possible situations. This is why AI has blind spots, biases, and confidently wrong answers. The same sampling limitations we study in this course apply directly to the tools you use every day.
+
+### AI vs. Statistics
+
+-   Statistics is a branch of mathematics focused on collecting, analyzing, and interpreting data under uncertainty. AI systems, particularly modern ones, are largely built on statistical methods — machine learning models are essentially very complex statistical models trained on large datasets. So, statistics isn't separate from AI; it's foundational to it.
+-   AI vs. Machine Learning — Machine learning is a subset of AI where systems learn from data rather than being explicitly programmed with rules. Most of what powers tools like ChatGPT falls here.
+-   AI vs. a calculator — A calculator executes exactly what you tell it. An AI system infers, predicts, and generates — which makes it more powerful and also less predictable. It can be wrong with great confidence.
+
+### R Comes with Assistance
+
+-   R’s community is vast, and you can always seek information from the community to try to help you with a R related issue.
+-   AI tools like ChatGPT and GitHub Copilot can also assist with R syntax and debugging — but the analyst must understand, verify, and take ownership of every line of code submitted.
+
+### R is Called a Dynamically Typed Language
+
+R figures out a variable's data type automatically based on whatever you assign to it. You can change it, but you don't have to declare it upfront like in some other languages.
+
+### What makes you fluent in R — with or without AI:
+
+-   Troubleshooting (AI helps, but you must read the error)
+-   The Environment — AI can assist if you share your context, but you must know what to share and why
+-   Assignment operator
+-   Sequences
+-   Built-in functions
+-   Reading data
+-   Packages
+-   Conditional statements
+-   Rendering output
+-   Writing functions
+-   Prompting and verifying AI-generated code
 
 # Setting up R
 
@@ -177,27 +229,33 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 -   This means that modulo and integer division have the same priority level as multiplication and division, where modulo is just the remainder.
 
 ```{r}
+# Start with the full expression — what does R see?
 2 + 3 * 5 - 7^2 %% 4 + (5 / 2)
 
-5 / 2    #parentheses: = 2.5
-2 + 3 * 5 - 7^2 %% 4 + 2.5
+# Step 1: Parentheses first
+5 / 2          # = 2.5
+# Expression is now: 2 + 3 * 5 - 7^2 %% 4 + 2.5
 
-7^2      #exponent:= 49
-2 + 3 * 5 - 49 %% 4 + 2.5
+# Step 2: Exponents
+7^2            # = 49
+# Expression is now: 2 + 3 * 5 - 49 %% 4 + 2.5
 
-3 * 5    #multiplication: = 15
-2 + 15 - 49 %% 4 + 2.5
+# Step 3: Multiplication
+3 * 5          # = 15
+# Expression is now: 2 + 15 - 49 %% 4 + 2.5
 
+# Step 4: Modulo (same level as multiplication/division, left to right)
+49 %% 4        # = 1  (49 divided by 4 leaves remainder 1)
+# Expression is now: 2 + 15 - 1 + 2.5
 
-49 %% 4  #modulo: = 1
-2 + 15 - 1 + 2.5
+# Step 5: Addition and subtraction, left to right
+2 + 15         # = 17
+17 - 1         # = 16
+16 + 2.5       # = 18.5
 
-# This is compared to integer division below
-49 %/% 4  #integer division: = 12
-
-2 + 15   #addition: = 17
-17 - 1   #subtraction: = 16
-16 + 2.5 #addition: = 18.5
+# Confirm R agrees:
+print(2 + 3 * 5 - 7^2 %% 4 + (5 / 2))
+## [1] 18.5
 ```
 
 ## Creating Objects
@@ -360,26 +418,58 @@ sort(y, decreasing=FALSE)
 
 ```
 
+## The Environment
+
+-   You can evaluate your Environment Tab to see your Variables we have defined in R Studio.
+-   Use the following functions to view and remove defined variables in your Global Environment
+
+```{r}
+ls() #Lists all variables in Global Environment 
+rm(states) #Removes variable named states
+rm(list=ls()) #Clears all variables from Global Environment
+```
+
+![Evaluating Your RStudio Environment](Pictures/Ch1/Environment.png "Evaluating Your RStudio Environment")
+
 ## Saving
 
 -   You can save your work in the file menu or the save shortcut using Ctrl + S or Cmd + S depending on your Operating System.
--   You will routinely be asked to save your workspace image, and you don’t need to save this unless specifically asked. It saves the output we have generated so far.
--   You can stop this from happening by setting the Tools \> Global Options \> Under Workspace changing this to Never.
--   Be careful with this option because it won’t save what you don’t run.
 
 ![Evaluating Your Environment](Pictures/Ch1/SaveOptions.png "Evaluating Your Environment")
 
-## Calling a Library
+## Installing a Package and Calling a Library
 
--   In R, a package is a collection of R functions, data and compiled code. The location where the packages are stored is called the library.
--   Libraries need to be activated one time in each new R session.
--   You can access a function from a library one time in a session using library::function()
+-   A package is a collection of functions, data, and code. The library is where packages live
+-   We use the install.package command one time to install a package.
+    -   tidyverse is a collection of packages designed to work together for data import, cleaning, and visualization. Loading one line gives you all of them.
+    -   You can also install via the menu: Tools \> Install Packages — type the package name and click Install. Same result, no typing required.
+-   Then, we use the library command to load the library.
+    -   When tidyverse loads, R will tell you exactly which packages were attached and which functions now have conflicts. Read that message — it tells you something important about your environment.
 
 ```{r, message=FALSE}
-#Use to activate library in an R session. 
+# Install once — ever. After that, comment this line out.
+#install.packages("tidyverse") ##commented out for processing
+
+# Load every R session
 library(tidyverse)
-library(dplyr)
+
 ```
+
+### A Common Mistake
+
+Leaving install.packages() uncommented in your script means R reinstalls the package every time you run the file. That wastes time and can cause version issues. Comment it out after the first run.
+
+```{r}
+# install.packages("tidyverse")   # commented out after install
+library(tidyverse)                # this is all you need going forward
+```
+
+-   If a package won't load, the fix is almost always one of these:
+    -   You never installed it — run install.packages() once
+    -   You forgot library() at the top of your script
+    -   There is a typo — package names are case sensitive
+
+### Accessing A Function from Specific Library
 
 -   You can access a function from a specific library using the double-colon operator library::function()
     -   Useful if only using one function from the library.
@@ -395,18 +485,18 @@ library(dplyr)
     -   An example of a conflict is the use of a select function which shows up in both the dplyr and MASS package. If both libraries are active, R does not know which to use.
     -   tidyverse has many libraries included in it.
 
-## The Environment
+## Troubleshotting Errors in RStudio
 
--   You can evaluate your Environment Tab to see your Variables we have defined in R Studio.
--   Use the following functions to view and remove defined variables in your Global Environment
-
-```{r}
-ls() #Lists all variables in Global Environment 
-rm(states) #Removes variable named states
-rm(list=ls()) #Clears all variables from Global Environment
-```
-
-![Evaluating Your RStudio Environment](Pictures/Ch1/Environment.png "Evaluating Your RStudio Environment")
+-   Step 1: Restart RStudio/Restart Computer and Clear your environment
+    -   Use rm(list=ls()) to clear out old variables
+    -   Make sure proper capitalization and spacing is being used.
+-   Step 2: Read the error message carefully: R's error messages are more informative than they look. Check capitalization, spelling, and whether all parentheses and quotes are closed. Most beginner errors live here.
+-   Step 3: Ask AI: Paste the error message directly into ChatGPT or Claude and ask what it means. This is a legitimate and efficient use of AI — error interpretation is exactly what it is good at.
+    -   Verify the fix yourself before running it. AI can suggest plausible-looking code that does the wrong thing.
+-   Two Categories of Errors (Both Matter Equally)
+    -   Hard Error: Code won’t run at all (Easy to catch)
+    -   Silent Error: Code runs but gives wrong output (Dangerous – easy to miss)
+    -   The second type is the more important one to develop instincts for. AI is particularly prone to silent errors — it will produce output that looks correct but isn't. Always sanity-check results against what you expect.
 
 # Entering Data in R
 
@@ -741,127 +831,248 @@ library(dplyr)
 summarize(Insurance, mean(Holders))
 ```
 
-# Evaluating Data Types
+## Data Types in R
 
--   A data type of a variable specifies the type of data that is stored inside that variable. R is Called a Dynamically Typed Language, meaning that a variable itself is not declared of any data type. Rather it receives the data type of the R object that is assigned to it. We can change a variable’s data type if we want through coercion, but it will inherit one based on the object assigned to it. We will learn some common ways to do this in the data preparation section.
--   Evaluating data types in R is crucial for understanding and managing datasets effectively, as different data types require specific handling and operations. R provides several functions to identify and evaluate data types, such as class() to check an object's class, typeof() to determine its internal storage mode, and is.numeric(), is.character(), or is.factor() to test for specific types. These functions help ensure that data is in the correct format for analysis or modeling tasks. For instance, numeric data types are essential for calculations, while factors or characters are used for categorical data.
--   There are a number of data types in R that are common to programming and statistical analysis.
-    -   Factor (Nominal or Ordinal)
-    -   Numeric (Real or Discrete (Integer))
-    -   Character
-    -   Logical
-    -   Date
+R is dynamically typed — every variable receives a type based on what you assign to it. Wrong types cause silent errors: a number stored as text will not calculate.
 
-# Coercing Data Types
+The five types you will use most often:
 
--   In R, coercion is the process of converting one data type to another, often done automatically by R when necessary. For example, if you combine numeric and character data in a vector, R will coerce the numeric values to characters, as seen in c(1, "A"), which results in c("1", "A"). Coercion can also be done manually using functions like as.numeric() or as.factor() to change data types explicitly.
--   To determine whether a variable is numeric or categorical (factor), you can use the class() function. For example, if you have a variable age, running class(age) will tell you if it is stored as "numeric" or "factor". Numeric variables represent quantities, such as continuous or discrete numbers, while categorical variables represent groups or categories, typically stored as factors. For example, a variable with levels like "Male" and "Female" would be a categorical (factor) variable.
--   Sometimes when you read in a dataset all the variables are already in the correct type. Other times, you need to force it into the type you need to conduct the analysis through a process called coercion.
+| Type        | What it stores                  | Example              |
+|-------------|---------------------------------|----------------------|
+| `factor`    | Categories (nominal or ordinal) | Industry, Grade      |
+| `numeric`   | Real numbers or integers        | Wage, GPA            |
+| `character` | Text strings                    | Name, ZIP code       |
+| `logical`   | TRUE or FALSE                   | Is loyal? Did churn? |
+| `Date`      | Calendar dates                  | Hire date            |
 
-## Factor data type
+```{r}
+# Read in gig dataset — required for examples in the data types section
+gig <- read.csv("data/gig.csv",
+                stringsAsFactors = FALSE,
+                na.strings = "")
 
--   Factor data types can be ordinal or nominal. Ordinal and nominal variables are both types of categorical variables but differ in their characteristics. Ordinal variables have a meaningful order or ranking among categories (e.g., "low," "medium," "high"), but the intervals between ranks are not necessarily equal. Nominal variables, on the other hand, represent categories without any inherent order (e.g., "red," "blue," "green"). Understanding this distinction is essential for selecting appropriate statistical methods, as ordinal variables often allow for rank-based analyses, while nominal variables do not.
-    -   Ordinal: Contain categories that have some logical order (e.g. categories of age).
-    -   Nominal: Have categories that have no logical order (e.g., religious affiliation and marital status).
--   R will treat each unique value of a factor as a different level.
+# Quick confirmation the import worked
+dim(gig)
+head(gig)
+```
 
-### Ordinal Variable
+```{r data-types-check}
+# Check types from the gig dataset
+class(gig$Industry)    ## "character"
+class(gig$Wage)        ## "numeric"
+class(gig$EmployeeID)  ## "integer"
+```
 
--   Ordinal data may be categorized and ranked with respect to some characteristic or trait.
-    -   For example, instructors are often evaluated on an ordinal scale (excellent, good, fair, poor).
-    -   A scale allows us to code the data based on order, assuming equal distance between scale items (aka likert items).
-    -   You can make an ordinal factor data type in R or you can convert the order to meaningful numbers.
--   To recode numbers in R, we would code poor to excellent = 1, 2, 3, 4 respectively.
--   The recode() function from the dplyr package within the tidyverse ecosystem is used to replace specific values in a vector or variable with new values.
--   It allows you to map old values to new ones in a simple and readable manner.
--   We will break down the mutate() function and the piping operator a more in the next module. For now, here is an example of how to recode data into numerical values.
+## Factor: Nominal Variable
 
-```{r, tidy=FALSE}
+A nominal variable has categories with **no meaningful order**.
+
+Examples: Industry, Job title, Gender, State
+
+```{r nominal-factor}
+# Small example first
+industry <- c("Automotive", "Tech", "Construction", "Automotive")
+class(industry)                  ## "character"
+
+# Coerce to factor
+industry <- as.factor(industry)
+class(industry)                  ## "factor"
+levels(industry)                 ## alphabetical: "Automotive" "Construction" "Tech"
+
+# Apply the same fix to the gig dataset
+gig$Industry <- as.factor(gig$Industry)
+gig$Job      <- as.factor(gig$Job)
+
+class(gig$Industry)              ## confirm: "factor"
+levels(gig$Industry)             ## see all categories
+```
+
+R will treat each unique value as a level. Use `as.factor()` whenever you load categorical data.
+
+## Factor: Ordinal Variable
+
+An ordinal variable has categories with a **meaningful order**.
+
+Examples: course grade (A \> B \> C), satisfaction (High \> Medium \> Low)
+
+```{r ordinal-factor}
 library(tidyverse)
-# Take a vector representing evaluation scores, named evaluate 
-evaluate <- c("excellent", "good", "fair", "poor", "excellent", "good")
 
-data <- data.frame(evaluate)
+# Small example
+satisfaction <- c("High", "Low", "Medium", "High", "Low")
+data <- data.frame(satisfaction)
+
 data <- data %>%
-     mutate(evaluate = recode(evaluate,
-            "excellent" = 4,
-            "good" = 3,
-            "fair" = 2,
-            "poor" = 1))
-data
+  mutate(satisfaction = recode(satisfaction,
+           "High"   = 3,
+           "Medium" = 2,
+           "Low"    = 1))
 
+data$satisfaction    ## [1] 3 1 2 3 1
 ```
 
-### Nominal Variable
+## Numeric: Real (Continuous) Variable
 
--   With nominal variables, data are simply categories for grouping.
--   For example, coding race/ethnicity might have a category value of White, Black, Native American, Asian/Pacific Islander, Other.
--   Qualitative values may be converted to quantitative values for analysis purposes. + White = 1, Black = 2, etc. This conversion to numerical representation of the category would be needed to run some analysis.
-    -   Sometimes, R does this on our behalf depending on commands used.
--   We can force a variable into a factor data type using the as.factor() command.
--   If we use the read.csv() command, we can sometimes do this by setting an argument $stringsAsFactors=TRUE$. We will do this later in the semester.
+A continuous numeric variable can take **any value along a range**.
 
-## Numerical data type
+Examples: Wage, GPA, Temperature, Sales revenue
 
-### Real Number
+```{r numeric-continuous}
+# Wage is already numeric in gig
+class(gig$Wage)      ## "numeric"
 
--   In R, a real number refers to any numerical value that includes both integers and decimals, as opposed to categorical or character data. The as.numeric() function is used to explicitly convert data into numeric format, allowing R to treat it as a real number for calculations. However, if the input to as.numeric() cannot be logically converted (e.g., non-numeric characters), R will return NA with a warning, highlighting the importance of ensuring the input is suitable for numeric conversion.
--   The as.numeric() function takes an input vector, such as characters or factors, and attempts to coerce it into numeric values. For instance, as.numeric(c("1", "2", "3")) returns a numeric vector of 1, 2, and 3. If applied to factors, it returns the underlying integer codes, not the original levels, so caution is needed to avoid misinterpretation. When conversion is not possible (e.g., as.numeric("abc")), it results in NA with a warning.
--   A numerical data type is a vector of numbers that can be Real or Integer, where continuous (Real) variables can take any value along some continuum, and integers take on whole numbers.
--   Two ways to create:
-    -   We can create a numeric variable by ensuring our value we assign is a number!
-    -   We can force a variable into an real number data type by using the as.numeric() command.
+# What if a number comes in as text?
+wage_text <- "42.75"
+class(wage_text)     ## "character"
 
-```{r}
-# Assign Rhode Island limit for medical marijuana in ounces per person
-kOuncesRhode <- 2.5
-#Identify the data type 
-class(x = kOuncesRhode) 
+wage_num <- as.numeric(wage_text)
+class(wage_num)      ## "numeric"
+wage_num + 10        ## [1] 52.75
+
+# IMPORTANT: as.numeric() returns NA if text cannot be converted
+# Always check for NAs after coercion
+sum(is.na(as.numeric(gig$Wage)))
 ```
 
-### Integer Number
+> **Note:** `as.numeric()` returns `NA` if the text cannot be converted — always check for NAs after coercion.
 
--   Discrete (Integer) Variables: In R, integer discrete data types represent whole numbers, making them ideal for scenarios where only non-fractional values are meaningful, such as counts, rankings, or categorical levels encoded as numbers. Integer values are stored more efficiently than numeric (floating-point) values, providing performance benefits in memory usage and computations. Integers can be explicitly created using the L suffix (e.g., x \<- 5L) or by coercing other data types with as.integer(). Operations on integers, such as arithmetic, comparisons, or indexing, behave consistently with their discrete nature. Integer data types are particularly useful for tasks like looping, array indexing, or when working with data where precision beyond whole numbers is unnecessary or irrelevant.
--   For an example of a discrete variable, we could collect information on the number of children in a family or number of points scored in a basketball game.
+## Numeric: Integer (Discrete) Variable
 
-```{r}
-# Assign the value of 4 to a constant called kTestInteger and set as an integer
-kTestInteger <- as.integer(4)
-class(kTestInteger) #Confirm the data type is an integer 
+An integer variable holds **whole numbers only** — counts, rankings, IDs.
 
-#Use as.integer() to truncate the variable ouncesRhode
-Trunc <- as.integer(kOuncesRhode); Trunc
+Examples: Number of children, Points scored, Employee ID
 
+```{r integer}
+# Create an integer directly
+children <- as.integer(3)
+class(children)       ## "integer"
+
+# The L suffix also creates an integer
+children <- 3L
+class(children)       ## "integer"
+
+# IMPORTANT: as.integer() truncates — it does NOT round
+as.integer(4.9)       ## [1] 4  (not 5)
+as.integer(4.1)       ## [1] 4
+
+# EmployeeID in gig is integer — makes sense, no decimals needed
+class(gig$EmployeeID)
 ```
 
-### Character data type
+Use integer when the variable can only take whole number values.
 
--   The character data type in R is used to store text or string data, making it essential for handling names, labels, descriptions, or any non-numeric information. Character data is represented as sequences of characters enclosed in quotes (e.g., "hello" or 'world').
--   Character data types can be wrapped in either single or double quotation marks (e.g, "hello" or 'hello').
--   Character data types can include letters, words, or numbers that cannot logically be included in calculations (e.g., a zip code).
-    -   A quick example is below that shows how to assign a character value to a variable.
+## Character: Text Variable
 
-```{r}
-# Make string constants 
-Q1 <- "A"
-Q2 <- 'B'
-# Check the data type
-class(x = Q1)
+A character variable stores **text** — names, labels, codes, descriptions.
+
+Examples: Employee name, ZIP code, Email address
+
+```{r character}
+name <- "Alice Johnson"
+zip  <- "23185"
+class(name)           ## "character"
+class(zip)            ## "character"
+
+# Convert a number to character when needed
+id_num  <- 1042
+id_char <- as.character(id_num)
+class(id_char)        ## "character"
+id_char               ## [1] "1042"
 ```
 
-### Logical data type
+> **Important:** ZIP codes look like numbers but must stay as character. If you convert `"02134"` to numeric it becomes `2134` — the leading zero is permanently lost.
 
--   Logical data types in R represent values that are either TRUE or FALSE, often used for conditional operations and data filtering. Logical values can be the result of comparisons (e.g., x \> 10) or explicitly assigned. Logical vectors are particularly useful in subsetting data; for instance, data\[data\$column \> 5, \] selects rows where the column values are greater than 5. Logical operators like & (and), \| (or), and ! (not) allow for more complex conditions. Logical data is also essential in control structures such as if, else, and loops. By enabling dynamic and conditional programming, logical types play a key role in efficient data manipulation and analysis.
+## Logical: TRUE / FALSE Variable
 
-    -   A quick example is below that shows how to assign a logical value to a variable.
+A logical variable stores `TRUE` or `FALSE` — the result of any comparison.
 
-```{r}
-# Store the result of 6 > 8 in a constant called kSixEight
-kSixEight <- 6 > 8 
-# Can use comparison tests with the following == >= <= > < <> != 
-kSixEight # Print kSixEight
-# Determine the data type of kSixEight
-class(x = kSixEight)
+Examples: Is the customer loyal? Did the employee churn? Is the order complete?
+
+```{r logical}
+loyal   <- TRUE
+churned <- FALSE
+class(loyal)          ## "logical"
+
+# Comparisons produce logical values
+wage <- 45.00
+wage > 40             ## [1] TRUE
+wage == 50            ## [1] FALSE
+
+# Combine conditions with logical operators
+wage > 30 & loyal     ## TRUE AND TRUE  = TRUE
+wage > 60 | loyal     ## FALSE OR TRUE  = TRUE
+!loyal                ## NOT TRUE       = FALSE
+
+# Practical use on gig dataset
+sum(gig$Wage > 40)    ## how many employees earn over $40/hr?
+```
+
+## Date Variable
+
+A Date variable stores calendar dates so R can sort, filter, and calculate time differences. Without coercion, dates load as character and **cannot be used for date math**.
+
+```{r date}
+# Without coercion, a date is just text
+hired <- "2021-06-15"
+class(hired)          ## "character"
+
+# Coerce to Date with as.Date()
+hired <- as.Date("2021-06-15")
+class(hired)          ## "Date"
+
+# Now you can do date arithmetic
+today <- Sys.Date()
+days_employed <- today - hired
+days_employed         ## Time difference in days
+
+# For year-month formats, use lubridate
+# lubridate::ym("2021-06")
+```
+
+## Checking Types: The Full Workflow
+
+Always run these three steps on **any new dataset** before analysis.
+
+```{r type-workflow}
+gig <- read.csv("data/gig.csv")
+
+# Step 1 — See all types at once
+str(gig)
+
+# Step 2 — Fix what is wrong
+gig$Industry <- as.factor(gig$Industry)
+gig$Job      <- as.factor(gig$Job)
+
+# Step 3 — Confirm
+class(gig$Industry)   ## "factor"
+class(gig$Job)        ## "factor"
+
+# Final sanity check
+summary(gig)
+```
+
+## Real Example: Fixing Types in gss.2016
+
+The `gss.2016` dataset has two type problems when loaded:
+
+1.  `grass` is stored as character — needs to be a factor
+2.  `age` contains `"89 OR OLDER"` — prevents numeric coercion
+
+```{r gss-type-fix}
+gss.2016 <- read.csv("data/gss2016.csv")
+
+# Problem 1: grass is character — fix by coercing to factor
+class(gss.2016$grass)              ## "character"
+gss.2016$grass <- as.factor(gss.2016$grass)
+class(gss.2016$grass)              ## "factor"
+
+# Problem 2: age contains "89 OR OLDER" — recode first, then coerce
+gss.2016$age <- recode(gss.2016$age, "89 OR OLDER" = "89")
+gss.2016$age <- as.numeric(gss.2016$age)
+class(gss.2016$age)                ## "numeric"
+
+# Final check — confirm all types are correct
+summary(gss.2016)
 ```
 
 ### Date data type
@@ -930,35 +1141,6 @@ summary(UseDates$season)
 #In the example below, I save the filtered data into a new data frame UseDate2022. 
 UseDate2022 <- filter(UseDates, year==2022)
 
-```
-
-### Nominal Example with Dataset
-
-```{r, message=FALSE}
-library(tidyverse)
-gss.2016 <- read_csv(file = "data/gss2016.csv") 
-```
-
-```{r}
-#Examine the variable types with summary and class functions.
-summary(gss.2016)
-class(gss.2016$grass) #Check the data type.
-gss.2016$grass <- as.factor(gss.2016$grass) #Turn to a factor.
-class(gss.2016$grass) #Confirming it is now correct.
-```
-
-### Numerical Example with Dataset
-
--   We need to ensure data can be coded as numeric before using the as.numeric() command. For example, to handle the variable age, it seems like numerical values except one value of "89 OR OLDER". If as.numeric() command was used on this variable, it would put all the 89 and older observations as NAs. To force it to be a numerical variable, and keep that the sample participants were the oldest value, we need to recode it and then use the as.numeric() command to coerce it into a number.
--   Recoding the 89 and older to 89 does cause the data to lack integrity in its current form because it will treat the people over 89 years old as 89. But, we are limited here because this needs to be a numerical variable for us to proceed. We will learn a step later on in this section to transform the age variable into categories so that we bring back our data integrity.
-
-```{r}
-class(gss.2016$age)
-#Recode "89 OR OLDER" into just "89"
-gss.2016$age <- recode(gss.2016$age, "89 OR OLDER" = "89")
-# Convert to numeric data type
-gss.2016$age <- as.numeric(gss.2016$age) 
-summary(gss.2016) #Conduct final check confirming correct data types
 ```
 
 # Handling Missing Data

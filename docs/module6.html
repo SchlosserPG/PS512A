@@ -265,6 +265,7 @@ window.Quarto = {
   <li><a href="#unexplained-variance" id="toc-unexplained-variance" class="nav-link" data-scroll-target="#unexplained-variance">Unexplained Variance</a></li>
   <li><a href="#calculating-f" id="toc-calculating-f" class="nav-link" data-scroll-target="#calculating-f">Calculating F</a></li>
   </ul></li>
+  <li><a href="#subsetting-data-for-anova" id="toc-subsetting-data-for-anova" class="nav-link" data-scroll-target="#subsetting-data-for-anova">Subsetting Data for ANOVA</a></li>
   <li><a href="#example-of-a-one-way-anova" id="toc-example-of-a-one-way-anova" class="nav-link" data-scroll-target="#example-of-a-one-way-anova">Example of a One-Way ANOVA</a>
   <ul class="collapse">
   <li><a href="#step-1-set-up-null-and-alternative-hypothesis" id="toc-step-1-set-up-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-set-up-null-and-alternative-hypothesis">Step 1: Set Up Null and Alternative Hypothesis</a></li>
@@ -284,6 +285,7 @@ window.Quarto = {
   <li><a href="#unexplained-variance-1" id="toc-unexplained-variance-1" class="nav-link" data-scroll-target="#unexplained-variance-1">Unexplained Variance</a></li>
   <li><a href="#calculating-f-test-statistics" id="toc-calculating-f-test-statistics" class="nav-link" data-scroll-target="#calculating-f-test-statistics">Calculating F-test Statistics</a></li>
   </ul></li>
+  <li><a href="#using-factor-inline-in-anova-formulas" id="toc-using-factor-inline-in-anova-formulas" class="nav-link" data-scroll-target="#using-factor-inline-in-anova-formulas">Using factor() Inline in ANOVA Formulas</a></li>
   <li><a href="#example-of-a-two-way-anova" id="toc-example-of-a-two-way-anova" class="nav-link" data-scroll-target="#example-of-a-two-way-anova">Example of a Two-way ANOVA</a>
   <ul class="collapse">
   <li><a href="#step-1-set-up-null-and-alternative-hypothesis-1" id="toc-step-1-set-up-null-and-alternative-hypothesis-1" class="nav-link" data-scroll-target="#step-1-set-up-null-and-alternative-hypothesis-1">Step 1: Set Up Null and Alternative Hypothesis</a></li>
@@ -579,6 +581,21 @@ window.Quarto = {
 </ul>
 </section>
 </section>
+<section id="subsetting-data-for-anova" class="level2">
+<h2 class="anchored" data-anchor-id="subsetting-data-for-anova">Subsetting Data for ANOVA</h2>
+<ul>
+<li><p>When running an ANOVA on a subset of your data (e.g., only certain regions or categories), it is important to use <code>droplevels()</code> after subsetting to remove any unused factor levels. If you do not, the ANOVA output — and post-hoc tests like TukeyHSD — may attempt to test groups that no longer have any observations, which causes errors or misleading results.</p></li>
+<li><p>You can use <code>droplevels()</code> directly on the subsetted data frame, or use it inside a <code>mutate()</code> call on a specific column. For example:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After filtering to a subset of groups:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>subset_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, Region <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"West"</span>, <span class="st">"East"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Region =</span> <span class="fu">droplevels</span>(Region))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This was introduced in Module 2 in the context of cleaning factor variables, and the same logic applies here before running an ANOVA on a subsetted dataset.</li>
+</ul>
+</section>
 <section id="example-of-a-one-way-anova" class="level2">
 <h2 class="anchored" data-anchor-id="example-of-a-one-way-anova">Example of a One-Way ANOVA</h2>
 <ul>
@@ -603,8 +620,8 @@ window.Quarto = {
 <li>The summary() command suggests that there is one categorical variable, “City” and one continuous variable, “CongestionRating.”</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>congestionData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/congestion.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(congestionData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>congestionData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/congestion.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(congestionData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             City    CongestionRating
  Atlanta       :25   Min.   :44.00   
@@ -618,10 +635,10 @@ window.Quarto = {
 <li><p>The aov() function in R is used to fit an analysis of variance (ANOVA) model. The aov function allows you to specify a response variable and one or more explanatory variables (factors), producing a linear model to compare group means. The aov() function assumes that the variances of the groups are equal (homoscedasticity). Therefore, this function is suitable when the assumption of equal variances is met.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A common set of commands that work for both a one-way and two-way</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA: aov() command with output in a followup command: either</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># anova() or summary() command.</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Anova1way <span class="ot">&lt;-</span> <span class="fu">aov</span>(CongestionRating <span class="sc">~</span> City, <span class="at">data =</span> congestionData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A common set of commands that work for both a one-way and two-way</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA: aov() command with output in a followup command: either</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># anova() or summary() command.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Anova1way <span class="ot">&lt;-</span> <span class="fu">aov</span>(CongestionRating <span class="sc">~</span> City, <span class="at">data =</span> congestionData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p>In either command, our formula is ContinuousVariable ~ CategoricalVariable - this will allow us to see if there are group differences in CongestionRating (continuous) based on city (categorical).</p>
@@ -630,10 +647,10 @@ window.Quarto = {
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anova() command works exactly the same as summary here.  This</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># command is very prevalent in various textbooks and online</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># tutorials.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># anova() command works exactly the same as summary here.  This</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># command is very prevalent in various textbooks and online</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># tutorials.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)    
 City          4   3251   812.7   37.25 &lt;2e-16 ***
@@ -641,7 +658,7 @@ Residuals   120   2618    21.8
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -696,7 +713,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(congestionData<span class="sc">$</span>CongestionRating, congestionData<span class="sc">$</span>City, <span class="at">p.adj =</span> <span class="st">"bonf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(congestionData<span class="sc">$</span>CongestionRating, congestionData<span class="sc">$</span>City, <span class="at">p.adj =</span> <span class="st">"bonf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pairwise comparisons using t tests with pooled SD 
@@ -723,7 +740,7 @@ P value adjustment method: bonferroni </code></pre>
 <li>Using the TukeyHSD() command, we insert the Anova1way object as a parameter that we made with the aov() command above. This aov() command is required before or while running the TukeyHSD() command.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(Anova1way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -843,6 +860,18 @@ Washington, DC-San Francisco   6.40   2.740985  10.059015 0.0000373</code></pre>
 </ul>
 </section>
 </section>
+<section id="using-factor-inline-in-anova-formulas" class="level2">
+<h2 class="anchored" data-anchor-id="using-factor-inline-in-anova-formulas">Using factor() Inline in ANOVA Formulas</h2>
+<ul>
+<li>In a two-way ANOVA, you can convert a variable to a factor directly inside the <code>aov()</code> formula using <code>factor()</code>. For example, if <code>year</code> is stored as a numeric variable but you want to treat it as a categorical grouping variable, you can write:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(Outcome <span class="sc">~</span> GroupA <span class="sc">*</span> <span class="fu">factor</span>(year), <span class="at">data =</span> mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is equivalent to converting <code>year</code> to a factor first using <code>as.factor()</code> and then passing it to <code>aov()</code>. The inline approach is convenient when you want to test a numeric variable as a categorical factor without permanently changing the variable in your dataset.</li>
+</ul>
+</section>
 <section id="example-of-a-two-way-anova" class="level2">
 <h2 class="anchored" data-anchor-id="example-of-a-two-way-anova">Example of a Two-way ANOVA</h2>
 <ul>
@@ -873,8 +902,8 @@ Washington, DC-San Francisco   6.40   2.740985  10.059015 0.0000373</code></pre>
 <li>The summary() command suggests that there are two categorical variables, “Instructor” and “Race”, and one continuous variable, “SAT.”</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SATdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/SAT.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(SATdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>SATdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/SAT.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(SATdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Instructor               Race         SAT      
  Instructor A:40   Asian.American  :30   Min.   :1190  
@@ -890,8 +919,8 @@ Washington, DC-San Francisco   6.40   2.740985  10.059015 0.0000373</code></pre>
 <section id="step-3-interpret-the-probabilities-and-write-a-conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-interpret-the-probabilities-and-write-a-conclusion">Step 3: Interpret the Probabilities and Write a Conclusion</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Anova2way <span class="ot">&lt;-</span> <span class="fu">aov</span>(SAT <span class="sc">~</span> Instructor <span class="sc">+</span> Race, <span class="at">data =</span> SATdata)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Anova2way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Anova2way <span class="ot">&lt;-</span> <span class="fu">aov</span>(SAT <span class="sc">~</span> Instructor <span class="sc">+</span> Race, <span class="at">data =</span> SATdata)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Anova2way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Df  Sum Sq Mean Sq F value Pr(&gt;F)    
 Instructor    2    5932    2966   1.084  0.342    
@@ -914,7 +943,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(SATdata<span class="sc">$</span>SAT, SATdata<span class="sc">$</span>Race, <span class="at">p.adj =</span> <span class="st">"bonf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(SATdata<span class="sc">$</span>SAT, SATdata<span class="sc">$</span>Race, <span class="at">p.adj =</span> <span class="st">"bonf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pairwise comparisons using t tests with pooled SD 
@@ -934,7 +963,7 @@ P value adjustment method: bonferroni </code></pre>
 <li>Receiving similar results to the Bonferroni test with regards to Race, we find all group differences significant. Specifically, Black Americans, Mexican Americans, and White Americans scored lower on their SAT than Asian Americans. Mexican Americans and White Americans scored higher on their SAT than Black Americans. White Americans scored higher than Mexican Americans. Using this command, we can tell which group scored lower than the other by looking at the difference score “diff”.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(Anova2way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(Anova2way)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -1061,7 +1090,7 @@ White-Mexican.American           201.96667  166.74805  237.18528 0.0000000</code
 <li>Let’s use the corolla car dataset to make an example of a 2 way interaction.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>corolla <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/corolla.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>corolla <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/corolla.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="step-1-write-the-null-and-alternate-hypotheses" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-write-the-null-and-alternate-hypotheses">Step 1: Write the null and alternate hypotheses</h3>
@@ -1091,8 +1120,8 @@ White-Mexican.American           201.96667  166.74805  237.18528 0.0000000</code
 <li>Compute the associated p-value to determine the significance of the interaction effect.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ANOVAInteraction <span class="ot">&lt;-</span> <span class="fu">aov</span>(Price <span class="sc">~</span> Fuel_Type <span class="sc">*</span> Metallic, <span class="at">data =</span> corolla)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ANOVAInteraction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ANOVAInteraction <span class="ot">&lt;-</span> <span class="fu">aov</span>(Price <span class="sc">~</span> Fuel_Type <span class="sc">*</span> Metallic, <span class="at">data =</span> corolla)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ANOVAInteraction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1128,7 +1157,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(ANOVAInteraction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(ANOVAInteraction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -1172,15 +1201,15 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li><p>Below is a ggplot confirming the relationship. In the chart, The x-axis represents Fuel Type and the y-axis represents Price. Different lines (or colors) represent whether the car has Metallic Paint (Yes/No). If the lines are not parallel, it suggests an interaction effect. The lines are not parallel below, so there is a confirmed interaction.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corolla, <span class="fu">aes</span>(<span class="at">x =</span> Fuel_Type, <span class="at">y =</span> Price, <span class="at">color =</span> Metallic, <span class="at">group =</span> Metallic)) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"line"</span>, <span class="fu">aes</span>(<span class="at">linetype =</span> Metallic)) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fuel Type and Metallic Paint on Price"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Fuel Type"</span>, <span class="at">y =</span> <span class="st">"Price"</span>, <span class="at">color =</span> <span class="st">"Metallic Paint"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(corolla, <span class="fu">aes</span>(<span class="at">x =</span> Fuel_Type, <span class="at">y =</span> Price, <span class="at">color =</span> Metallic, <span class="at">group =</span> Metallic)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"line"</span>, <span class="fu">aes</span>(<span class="at">linetype =</span> Metallic)) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fuel Type and Metallic Paint on Price"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Fuel Type"</span>, <span class="at">y =</span> <span class="st">"Price"</span>, <span class="at">color =</span> <span class="st">"Metallic Paint"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="module6_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="module6_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1202,14 +1231,14 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li><p>You can also calculate the factorial of a number using the factorial function in base R.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># C(4,2) = 4!/2!*(4-2)! manually</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)<span class="sc">/</span>((<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># C(4,2) = 4!/2!*(4-2)! manually</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)<span class="sc">/</span>((<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with the factorial function</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial</span>(<span class="dv">4</span>)<span class="sc">/</span>(<span class="fu">factorial</span>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">factorial</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with the factorial function</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial</span>(<span class="dv">4</span>)<span class="sc">/</span>(<span class="fu">factorial</span>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">factorial</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
@@ -1220,8 +1249,8 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with choose function</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with choose function</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
@@ -1230,7 +1259,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li>We had 3 instructors, so we would use 3,2 inside the command as shown below. If this variable was significant, we should see 3 p-value statistics for 3 pairwise tests.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>

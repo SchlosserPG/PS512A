@@ -9,7 +9,7 @@ output: html_document
 
 -   In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
 
--   R is a very sophisticated statistical software that allows you to enter commands one-at-a-time, or write scripts using the R language.
+-   R is a mature, industry-standard statistical language used across academia, healthcare, finance, and data science. R scripts document exactly what was done to the data — making your analysis reproducible, auditable, and gradable.
 
 -   Easily installed, state-of-the-art, and it is free and open source and supported by a well-established R Community.
 
@@ -20,14 +20,11 @@ output: html_document
     -   manage files, objects and data frames;
     -   integrate with version control systems.
 
--   R comes with community that helps in the development of R resources.
+-   This R Community helps in the development of R resources
 
     -   A package is developed by R users to do one specific thing or a set of related things that could store a collection of functions, data, and code.
     -   A library is the place where the package is located on your computer.
-
--   A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R's main repository with over 18,000 packages available.
-
--   R's community is vast, and you can always seek information from the community to try to help you with a R related issue.
+    -   A repository is a central location where many developed packages are located and available for download. There are 3 big repositories, but we use Comprehensive R Archive Network, or CRAN, which is R’s main repository with over 223,596 packages available.
 
 # Installing R
 

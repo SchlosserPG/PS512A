@@ -9,7 +9,7 @@ format: html
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
--   The goal of this lesson is to teach you how to summarize descriptive statistics for both quantitative and qualitative data in R. To succeed, you will learn to differentiate between these data types and understand their context, which provides crucial information about how the data was collected and its intended use. Additionally, you will gain skills in cleaning datasets for analytics using dplyr, a powerful R package designed for intuitive and efficient data manipulation with data frames or tibbles, a modern reimagining of data frames provided by the tibble package.
+-   The goal of this lesson is to teach you how to summarize descriptive statistics for both quantitative and qualitative data in R. To succeed, you will learn to differentiate between these data types and understand their context, which provides crucial information about how the data was collected and its intended use. Additionally, you will gain skills in cleaning datasets for analytics using dplyr, a powerful R package designed for intuitive and efficient data manipulation with data frames or tibbles.
 
 ### At a Glance
 
@@ -25,124 +25,35 @@ knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRU
 ### Consider While Reading
 
 -   In any analysis, it is critically important to understand your data set by evaluating descriptive statistics. For qualitative data, you should know how to calculate frequencies and proportions and make a user-friendly display of results. For quantitative data, you should know what a histogram is and how it is used to describe quantitative data. We also should know how to describe variables by their center and spread of the distribution. Finally, we should know how to clean datasets to be able to use them more effectively.
+# Summarizing Quantitative Data
 
-## Summarizing Qualitative Data
+* Summarizing Quantitative Data is the process of reducing a large set of numbers down to a small set of meaningful values that describe what is typical, how spread out the data is, and what shape the distribution takes.
+* Rather than reporting every observation, we use statistics to tell the story of the data in a few key numbers.
+* Three questions every summary should answer:
+     + What is typical? Central tendency — mean, median, mode
+     + How spread out is it? Variability — standard deviation, IQR, range
+     + What shape is it? Distribution — skewness, kurtosis, histograms
 
--   Qualitative data is information that cannot be easily counted, measured, or easily expressed using numbers.
-    -   Nominal variables: a type of categorical variable that represents discrete categories or groups with no inherent order or ranking
-        -   gender (male, female)
-        -   marital status (single, married, divorced)
-        -   eye color (blue, brown, green)
-    -   Ordinal variables: categories possess a natural order or ranking
-        -   a Likert scale measuring agreement with a statement (e.g., strongly disagree, disagree, neutral, agree, strongly agree)
--   A frequency distribution shows the number of observations in each category for a factor or categorical variable.
--   Guidelines when constructing frequency distribution:
-    -   Classes or categories are mutually exclusive (they are all unique).
-    -   Classes or categories are exhaustive (a full list of categories).
--   To calculate frequencies, first, start with a variable that has categorical data.
+* Why this matters with AI in the picture:
+AI computes summaries. You decide which summary is honest, and you explain what it means.
 
-```{r}
-# Create a vector with some data that could be categorical
-Sample_Vector <- c("A", "B", "A", "C", "A", "B", "A", "C", "A", "B")
-# Create a data frame with the vector
-data <- data.frame(Sample_Vector)
-```
-
--   To count the number of each category value, we can use the table() command.
--   The output shows a top row of categories and a bottom row that contains the number of observations in the category.
-
-```{r}
-# Create a table of frequencies
-frequencies <- table(data$Sample_Vector); frequencies
-
-```
-
--   Relative frequency is how often something happens divided by all outcomes.
--   The relative frequency is calculated by $f_i/n$, where $f_i$ is the frequency of class $i$ and $n$ is the total frequency.
--   We can use the prop.table() command to calculate relative frequency by dividing each category’s frequency by the sample size.
-
-```{r}
-# Calculate proportions
-proportions <- prop.table(frequencies)
-```
-
--   The cumulative relative frequency is given by $cf_i/n$, where $cf_i$ is the cumulative frequency of class $i$.
--   The cumsum() function calculates the cumulative distribution of the data
-
-```{r}
-# Calculate cumulative frequencies
-cumulfreq <- cumsum(frequencies)
-# Calculate cumulative proportions
-cumulproportions<- cumsum(prop.table(frequencies))
-```
-
--   The rbind() function is used to combine multiple data frames or matrices by row. The name "rbind" stands for "row bind". Since the data produced by the table is in rows, we can use rbind to link them together.
-
-```{r}
-#combine into table
-frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
-# Print the table
-frequency_table
-
-```
-
--   We can transpose a table using the t() command, which flips the dataset.
-
-```{r}
-TransposedData <- t(frequency_table)
-TransposedData
-```
-
--   Finally, sometimes we need to transform our calculations into a dataset.
--   The as.data.frame function is used to coerce or convert an object into a data frame.
--   as.data.frame() is used when you have an existing object that needs to be coerced into a data frame. data.frame(), on the other hand, is for creating a data frame from scratch by specifying the data directly. Therefore, both as.data.frame() and data.frame() are used to convert or create data frames in R.
--   as.data.frame() coerces an existing object (such as a list, matrix, or vector) into a data frame. Data.frame is used to create a new data frame from individual vectors or lists.
--   as.data.frame() accepts a wider variety of inputs (like lists, matrices, and vectors), while data.frame() directly accepts vectors and lists to construct the data frame.
-
-```{r}
-TransposedData <- as.data.frame(TransposedData)
-TransposedData
-```
-
-* When working with a dataset that’s already provided, there’s no need to create a new data frame in the initial steps.
-
-* The example below uses the built-in iris dataset and the Species variable, which is already properly coded as a categorical variable in R.
-
-* This example combines all the previous steps and creates a new data frame that includes the frequency, relative frequency, and cumulative values.
-
-```{r}
-data("iris")
-summary(iris$Species)
-
-frequencies <- table(iris$Species) 
-proportions <- prop.table(frequencies)
-cumulfreq <- cumsum(frequencies)
-cumulproportions<- cumsum(prop.table(frequencies))
-frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
-TransposedData <- t(frequency_table)
-TransposedData <- as.data.frame(TransposedData); TransposedData
-```
-
-
-## Summarizing Quantitative Data
+AI can generate all of these statistics instantly. What it cannot do is tell you which ones are appropriate for your data, or what the numbers mean in context. A mean wage of $42 means something very different depending on whether the data is symmetric or heavily skewed by a few executives. Choosing the right summary and interpreting it correctly is the analytical judgment this section is building.
 
 ### Defining and Calculating Central Tendency
 
--   The term central location refers to how numerical data tend to cluster around some middle or central value.
--   Measures of central location attempt to find a typical or central value that describes a variable.
--   Why frequency distributions do not work for numeric variables:
-    -   Numeric variables measured on a continuum.
-    -   Instead, we calculate descriptive statistics including central tendency and spread of the values for a numeric variable.
--   We will examine the three mostly widely used measures of central location: mean, median and mode.
--   Then we discuss a percentile: a measure of relative position.
+* We will cover four measures in this section:
+     + Mean: Data is symmetric, no extreme outliers
+     + Median: Data is skewed or outliers are present
+     + Mode: Data is categorical, or you need the most common value
+     + Percentile: You need to describe relative position within the data
+
 
 #### Using the Mean
 
--   The mean() function in R is a versatile tool for calculating the arithmetic average of a numeric vector. The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. Simply add up all the observations and divide by the number of observations.
+* The mean() function in R is a versatile tool for calculating the arithmetic average of a numeric vector. The arithmetic mean or simply the mean is a primary measure of central location. It is often referred to as the average. 
+* The sample mean $\bar{x}$ is the sum of all values divided by the number of observations $n$.
 
--   The numerator (top of the fraction) is the sum (sigma) of all the values of x from the first value (i = 1) to the last value (n) divided by the number of values (n).
-
--   $m_x = (\sum_{i=1}^{n} x_{i})/n$
+-  $$\bar{x} = \frac{\sum_{i=1}^{n} x_{i}}{n}$$
 
 -   One of the mean functions key features is the na.rm parameter, which stands for "remove NAs." We discussed this in module 1 under "Handling Missing Data". This parameter allows users to specify whether missing values (NA) in the data should be ignored during the calculation. By default, na.rm is set to FALSE, meaning the presence of any NA values will cause the function to return NA for the entire computation. However, setting na.rm = TRUE instructs the function to exclude NA values and compute the mean only for the available data.
 
@@ -504,6 +415,104 @@ semTools::skew(customers$Orders) ##skewed right
 ### Spread to Report with the Mode
 
 -   While there is no great function to test for spread, you can look at the data and see if it is concentrated around 1 or 2 frequencies. If it is, then the spread is distorted towards those high frequency values.
+
+# Summarizing Qualitative Data
+
+-   Qualitative data is information that cannot be easily counted, measured, or easily expressed using numbers.
+    -   Nominal variables: a type of categorical variable that represents discrete categories or groups with no inherent order or ranking
+        -   gender (male, female)
+        -   marital status (single, married, divorced)
+        -   eye color (blue, brown, green)
+    -   Ordinal variables: categories possess a natural order or ranking
+        -   a Likert scale measuring agreement with a statement (e.g., strongly disagree, disagree, neutral, agree, strongly agree)
+-   A frequency distribution shows the number of observations in each category for a factor or categorical variable.
+-   Guidelines when constructing frequency distribution:
+    -   Classes or categories are mutually exclusive (they are all unique).
+    -   Classes or categories are exhaustive (a full list of categories).
+-   To calculate frequencies, first, start with a variable that has categorical data.
+
+```{r}
+# Create a vector with some data that could be categorical
+Sample_Vector <- c("A", "B", "A", "C", "A", "B", "A", "C", "A", "B")
+# Create a data frame with the vector
+data <- data.frame(Sample_Vector)
+```
+
+-   To count the number of each category value, we can use the table() command.
+-   The output shows a top row of categories and a bottom row that contains the number of observations in the category.
+
+```{r}
+# Create a table of frequencies
+frequencies <- table(data$Sample_Vector); frequencies
+
+```
+
+-   Relative frequency is how often something happens divided by all outcomes.
+-   The relative frequency is calculated by $f_i/n$, where $f_i$ is the frequency of class $i$ and $n$ is the total frequency.
+-   We can use the prop.table() command to calculate relative frequency by dividing each category’s frequency by the sample size.
+
+```{r}
+# Calculate proportions
+proportions <- prop.table(frequencies)
+```
+
+-   The cumulative relative frequency is given by $cf_i/n$, where $cf_i$ is the cumulative frequency of class $i$.
+-   The cumsum() function calculates the cumulative distribution of the data
+
+```{r}
+# Calculate cumulative frequencies
+cumulfreq <- cumsum(frequencies)
+# Calculate cumulative proportions
+cumulproportions<- cumsum(prop.table(frequencies))
+```
+
+-   The rbind() function is used to combine multiple data frames or matrices by row. The name "rbind" stands for "row bind". Since the data produced by the table is in rows, we can use rbind to link them together.
+
+```{r}
+#combine into table
+frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
+# Print the table
+frequency_table
+
+```
+
+-   We can transpose a table using the t() command, which flips the dataset.
+
+```{r}
+TransposedData <- t(frequency_table)
+TransposedData
+```
+
+-   Finally, sometimes we need to transform our calculations into a dataset.
+-   The as.data.frame function is used to coerce or convert an object into a data frame.
+-   as.data.frame() is used when you have an existing object that needs to be coerced into a data frame. data.frame(), on the other hand, is for creating a data frame from scratch by specifying the data directly. Therefore, both as.data.frame() and data.frame() are used to convert or create data frames in R.
+-   as.data.frame() coerces an existing object (such as a list, matrix, or vector) into a data frame. Data.frame is used to create a new data frame from individual vectors or lists.
+-   as.data.frame() accepts a wider variety of inputs (like lists, matrices, and vectors), while data.frame() directly accepts vectors and lists to construct the data frame.
+
+```{r}
+TransposedData <- as.data.frame(TransposedData)
+TransposedData
+```
+
+-   When working with a dataset that’s already provided, there’s no need to create a new data frame in the initial steps.
+
+-   The example below uses the built-in iris dataset and the Species variable, which is already properly coded as a categorical variable in R.
+
+-   This example combines all the previous steps and creates a new data frame that includes the frequency, relative frequency, and cumulative values.
+
+```{r}
+data("iris")
+summary(iris$Species)
+
+frequencies <- table(iris$Species) 
+proportions <- prop.table(frequencies)
+cumulfreq <- cumsum(frequencies)
+cumulproportions<- cumsum(prop.table(frequencies))
+frequency_table <- rbind(frequencies, proportions, cumulfreq, cumulproportions)
+TransposedData <- t(frequency_table)
+TransposedData <- as.data.frame(TransposedData); TransposedData
+```
+
 
 # Data Preparation
 

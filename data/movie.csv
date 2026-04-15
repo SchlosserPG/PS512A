@@ -1,0 +1,9 @@
+Movie,Action,Comedy,Drama,Sci-Fi,Romance,Thriller,Animation
+Avengers,1,0,0,1,0,0,0
+Die Hard,1,0,0,0,0,0,0
+Inception,1,0,1,1,0,1,0
+Interstellar,1,0,1,1,0,0,0
+The Matrix,1,0,0,1,0,1,0
+The Notebook,0,0,1,0,1,0,0
+Titanic,0,0,1,0,1,0,0
+Toy Story,0,1,1,0,0,0,1
