@@ -499,7 +499,7 @@
   async function chatSend() {
     if (chatLoading) return;
 
-    if (CHAT_WORKER_URL === 'https://statchat.pamela-schlosser.workers.dev/') {
+    if (  var CHAT_WORKER_URL = 'https://statchat.pamela-schlosser.workers.dev/';) {
       addMsg('error', 'Worker URL not set. Add your Cloudflare Worker URL to custom-head.html.');
       return;
     }
