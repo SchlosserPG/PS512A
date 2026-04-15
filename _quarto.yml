@@ -8,13 +8,13 @@ book:
   date: "4/15/2026"
   chapters:
     - index.qmd
-    - introR.qmd
-    - descriptives.qmd
-    - dataprep.qmd
-    - probability.qmd
-    - ttests.qmd
-    - anova.qmd
-    - regression.qmd
+    - module1.qmd
+    - module2.qmd
+    - module3.qmd
+    - module4.qmd
+    - module5.qmd
+    - module6.qmd
+    - module7.qmd
     - summary.qmd
     - references.qmd
   navbar:
