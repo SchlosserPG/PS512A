@@ -6,6 +6,7 @@ book:
   title: "Probability And Business Statistics"
   author: "Pamela Schlosser"
   date: "4/15/2026"
+  search: true
   chapters:
     - index.qmd
     - module1.qmd
@@ -26,7 +27,6 @@ format:
     css: styles.css
     number-sections: false
     include-in-header: custom-head.html
-  pdf:
-    documentclass: scrreprt
+
 
 editor: visual
