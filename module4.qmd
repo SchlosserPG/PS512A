@@ -1617,7 +1617,6 @@ chisq.test(STEMGOF$RecentNumbers,p=STEMGOF$X2010Proportions)
 
 -   In a normal distribution, we used 3 main formulas with the pnorm() function. Each formula has a different role, but they all provide a way to assess variability relative to an average value, allowing for comparisons and inferences about the data or sample in question.
 
-```{=tex}
 \begin{array}{|c|c|c|c|}
 \hline
 \textbf{Context} & \textbf{Formula} & \textbf{Interpretation} & \textbf{pnorm Function Usage} \\
@@ -1629,7 +1628,7 @@ chisq.test(STEMGOF$RecentNumbers,p=STEMGOF$X2010Proportions)
 \text{Standardizing a sample proportion} & \frac{\hat{p} - p}{\sqrt{\frac{p(1 - p)}{n}}} & \text{Used for hypothesis tests of proportions} & \text{pnorm}(\hat{p}, p, \sqrt{\frac{p(1 - p)}{n}}) \\
 \hline
 \end{array}
-```
+
 -   We also learned about contingency tables in regards to calculating probability with two categorical variables. We also computed the chi-squared statistics for the test of independence and the goodness of fit.
 -   We note that the "Goodness of fit" and "test of independence" are both chi-square tests, but they serve different purposes:
 -   Goodness of Fit test: *Purpose*: Assesses how well observed data match a specified distribution (often a theoretical or expected distribution). *Example*: Checking if the distribution of colors of M&M’s in a bag matches the expected company distribution (say, 30% blue, 20% red, etc.). *Null Hypothesis*: The observed frequencies match the expected frequencies.
