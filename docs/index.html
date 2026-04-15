@@ -499,153 +499,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 <script>
-(function() {
   // ============================================================
   // Set this to your Cloudflare Worker URL after deploying
   // Example: 'https://buad231-chat.yourname.workers.dev'
   // ============================================================
-  const WORKER_URL = 'https://statchat.p'amela-schlosser.workers.dev';
+  var CHAT_WORKER_URL = 'https://statchat.pamela-schlosser.workers.dev/';
   // ============================================================
 
-  let history  = [];
-  let loading  = false;
-  let isOpen   = false;
+  var chatHistory = [];
+  var chatLoading = false;
+  var chatIsOpen  = false;
 
-  window.toggleChat = function() {
-    isOpen = !isOpen;
-    const panel = document.getElementById('chat-panel');
-    const dot   = document.getElementById('chat-fab-dot');
-    if (isOpen) {
+  function toggleChat() {
+    chatIsOpen = !chatIsOpen;
+    var panel = document.getElementById('chat-panel');
+    var dot   = document.getElementById('chat-fab-dot');
+    if (chatIsOpen) {
       panel.classList.add('open');
       dot.style.display = 'none';
-      setTimeout(() => document.getElementById('chat-input').focus(), 100);
+      setTimeout(function() {
+        var inp = document.getElementById('chat-input');
+        if (inp) inp.focus();
+      }, 100);
     } else {
       panel.classList.remove('open');
     }
-  };
+  }
 
-  window.chipSend = function(el) {
-    document.getElementById('chat-input').value = el.textContent.trim();
+  function chipSend(el) {
+    var inp = document.getElementById('chat-input');
+    inp.value = el.textContent.trim();
     chatSend();
-  };
+  }
 
-  window.chatKey = function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); }
-  };
+  function chatKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      chatSend();
+    }
+  }
 
-  window.chatResize = function(el) {
+  function chatResize(el) {
     el.style.height = 'auto';
     el.style.height = Math.min(el.scrollHeight, 100) + 'px';
-  };
+  }
 
   function escHtml(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
   function mdToHtml(text) {
-    text = text.replace(/```(\w*)\n?([\s\S]*?)```/g, (_,l,c) =>
-      `<pre><code>${escHtml(c.trim())}</code></pre>`);
+    text = text.replace(/```(\w*)\n?([\s\S]*?)```/g, function(_,l,c) {
+      return '<pre><code>' + escHtml(c.trim()) + '</code></pre>';
+    });
     text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
     text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     text = text.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
-    text = text.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
-    text = text.split(/\n{2,}/).map(p => {
+    text = text.replace(/(<li>.*<\/li>\n?)+/g, function(m) { return '<ul>' + m + '</ul>'; });
+    text = text.split(/\n{2,}/).map(function(p) {
       p = p.trim();
-      if (!p || p.startsWith('<')) return p;
-      return `<p>${p.replace(/\n/g,'<br>')}</p>`;
+      if (!p || p.charAt(0) === '<') return p;
+      return '<p>' + p.replace(/\n/g,'<br>') + '</p>';
     }).join('');
     return text;
   }
 
-  function addMsg(role, content, typing=false) {
-    document.getElementById('panel-welcome')?.remove();
-    const box = document.getElementById('chat-messages');
-    const d   = document.createElement('div');
-    d.className = `cm ${role}`;
-    const av   = role==='user'?'you':role==='bot'?'ai':'!';
+  function addMsg(role, content, typing) {
+    var welcome = document.getElementById('panel-welcome');
+    if (welcome) welcome.remove();
+    var box = document.getElementById('chat-messages');
+    var d   = document.createElement('div');
+    d.className = 'cm ' + role;
+    var av = role==='user' ? 'you' : role==='bot' ? 'ai' : '!';
     if (typing) {
-      d.innerHTML = `<div class="cm-av">${av}</div>
-        <div class="cm-text" id="cm-typing">
-          <div class="typing-dots"><span></span><span></span><span></span></div>
-        </div>`;
+      d.innerHTML = '<div class="cm-av">' + av + '</div>' +
+        '<div class="cm-text" id="cm-typing">' +
+        '<div class="typing-dots"><span></span><span></span><span></span></div>' +
+        '</div>';
     } else {
-      const html = role==='user'
-        ? `<p>${escHtml(content)}</p>`
+      var html = role==='user'
+        ? '<p>' + escHtml(content) + '</p>'
         : mdToHtml(content);
-      d.innerHTML = `<div class="cm-av">${av}</div>
-        <div class="cm-text">${html}</div>`;
+      d.innerHTML = '<div class="cm-av">' + av + '</div>' +
+        '<div class="cm-text">' + html + '</div>';
     }
     box.appendChild(d);
     box.scrollTop = box.scrollHeight;
-
-    // show unread dot if panel is closed
-    if (!isOpen && role === 'bot') {
+    if (!chatIsOpen && role === 'bot') {
       document.getElementById('chat-fab-dot').style.display = 'block';
     }
   }
 
   function removeTyping() {
-    document.getElementById('cm-typing')?.closest('.cm')?.remove();
+    var t = document.getElementById('cm-typing');
+    if (t) t.closest('.cm').remove();
   }
 
-  window.chatSend = async function() {
-    if (loading) return;
+  async function chatSend() {
+    if (chatLoading) return;
 
-    if (WORKER_URL === 'https://statchat.p'amela-schlosser.workers.dev') {
+    if (CHAT_WORKER_URL === 'https://statchat.pamela-schlosser.workers.dev/') {
       addMsg('error', 'Worker URL not set. Add your Cloudflare Worker URL to custom-head.html.');
       return;
     }
 
-    const el   = document.getElementById('chat-input');
-    const text = el.value.trim();
+    var el   = document.getElementById('chat-input');
+    var text = el.value.trim();
     if (!text) return;
 
     addMsg('user', text);
-    history.push({ role: 'user', content: text });
+    chatHistory.push({ role: 'user', content: text });
     el.value = '';
     el.style.height = 'auto';
 
-    loading = true;
+    chatLoading = true;
     document.getElementById('chat-send').disabled = true;
     addMsg('bot', '', true);
 
     try {
-      const res = await fetch(WORKER_URL, {
+      var res = await fetch(CHAT_WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 1024,
-          messages: history
+          messages: chatHistory
         })
       });
 
       removeTyping();
 
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        const msg = err?.error || `HTTP ${res.status}`;
+        var err = await res.json().catch(function() { return {}; });
+        var msg = err.error || ('HTTP ' + res.status);
         addMsg('error', res.status === 429
           ? 'Rate limit reached. Please wait a moment and try again.'
-          : `Something went wrong: ${msg}`);
-        history.pop();
+          : 'Something went wrong: ' + msg);
+        chatHistory.pop();
       } else {
-        const data  = await res.json();
-        const reply = data.content?.[0]?.text || '(no response)';
-        history.push({ role: 'assistant', content: reply });
+        var data  = await res.json();
+        var reply = (data.content && data.content[0] && data.content[0].text) || '(no response)';
+        chatHistory.push({ role: 'assistant', content: reply });
         addMsg('bot', reply);
       }
 
     } catch(err) {
       removeTyping();
-      addMsg('error', `Network error: ${err.message}`);
-      history.pop();
+      addMsg('error', 'Network error: ' + err.message);
+      chatHistory.pop();
     }
 
-    loading = false;
+    chatLoading = false;
     document.getElementById('chat-send').disabled = false;
-  };
-})();
+  }
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
