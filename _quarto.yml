@@ -16,7 +16,6 @@ book:
     - module6.qmd
     - module7.qmd
     - summary.qmd
-    - references.qmd
   navbar:
     right:
       - text: "Course Assistant"
