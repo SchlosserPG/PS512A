@@ -21,8 +21,6 @@ book:
       - text: "Course Assistant"
         href: chat.html
 
-bibliography: references.bib
-
 format:
   html:
     css: styles.css
