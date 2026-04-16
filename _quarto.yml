@@ -27,6 +27,7 @@ format:
     css: styles.css
     number-sections: false
     include-in-header: custom-head.html
+    favicon: favicon.ico
 
 
 editor: visual
