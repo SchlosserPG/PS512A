@@ -1812,21 +1812,21 @@
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "Summary",
+    "title": "References and Summary",
     "section": "",
-    "text": "Recommended Further Reading Materials\nAnthropic. (2025). Claude (claude.ai). https://www.anthropic.com\nFung, K. (2010). Numbers rule your world: The hidden influence of probabilities and statistics on everything you do. McGraw-Hill.\nJames, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. (Springer Texts in Statistics)\nJaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education.\nHarris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.\nSchmidt, A., Väänänen, K., Goyal, T., Kristensson, P. O., Peters, A., Mueller, S., Williamson, J. R., & Wilson, M. L. (Eds.). (2023). Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems. Association for Computing Machinery. https://doi.org/10.1145/3544548\nWilke, C. O. (2019). Fundamentals of data visualization: A primer on making informative and compelling figures. O’Reilly Media.",
+    "text": "Course References and Resources\nAnthropic. (2025). Claude (claude.ai). https://www.anthropic.com\nFung, K. (2010). Numbers rule your world: The hidden influence of probabilities and statistics on everything you do. McGraw-Hill.\nJames, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. (Springer Texts in Statistics)\nJaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education.\nHarris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.\nSchmidt, A., Väänänen, K., Goyal, T., Kristensson, P. O., Peters, A., Mueller, S., Williamson, J. R., & Wilson, M. L. (Eds.). (2023). Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems. Association for Computing Machinery. https://doi.org/10.1145/3544548\nWilke, C. O. (2019). Fundamentals of data visualization: A primer on making informative and compelling figures. O’Reilly Media.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>References and Summary</span>"
     ]
   },
   {
     "objectID": "summary.html#summary",
     "href": "summary.html#summary",
-    "title": "Summary",
+    "title": "References and Summary",
     "section": "Summary",
     "text": "Summary\nThis book is designed as the primary resource for OMSBA 512A, a graduate probability and statistics course in R. It is built around the idea that statistical tools only become meaningful when you can implement them yourself — so every concept is paired with working R code you can run, modify, and apply to real data. As long as the data is handled properly and your reasoning is sound, R gives you the flexibility to reach your analytical goals in the way that works best for you.\nWe began with the foundations of R and RStudio — navigating the environment, writing scripts, understanding data types, loading external datasets, and handling missing values. From there we moved to descriptive statistics: summarizing qualitative and quantitative variables using measures of central tendency, spread, skewness, and kurtosis, and visualizing distributions using histograms, density plots, and boxplots. Data preparation gave us the dplyr toolkit — filtering, selecting, arranging, mutating, and summarizing data using the pipe operator — the practical workflow that makes every subsequent analysis possible. Probability followed, covering the binomial and normal distributions, z-scores, cumulative probabilities, and chi-squared tests for goodness of fit and independence.\nWith that foundation in place, we turned to inferential statistics. Hypothesis testing introduced the three-step process — state hypotheses, compute the test statistic and p-value, interpret and conclude — applied across one-sample, independent samples, and paired t-tests. ANOVA extended hypothesis testing to three or more groups, covering one-way and two-way designs, post-hoc tests using Tukey HSD, and Type I and Type II errors. Correlation introduced cor() and cor.test() for measuring and testing linear relationships between continuous variables, with careful attention to the distinction between correlation and causation. Regression built on that foundation with simple linear regression, multiple regression, and regression with categorical predictors, using lm() and vif() for model building and multicollinearity checking.\nNote that several important topics — regression assumptions, transformations, effect size, and partial correlations — were intentionally reserved for future courses in the OMSBA program. The goal here was to build a solid, working foundation across the full arc of a statistics course. The rest follows from this.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>References and Summary</span>"
     ]
   }
 ]

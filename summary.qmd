@@ -1,6 +1,6 @@
-# Summary
+# References and Summary
 
-## Recommended Further Reading Materials
+## Course References and Resources
 
 Anthropic. (2025). Claude (claude.ai). https://www.anthropic.com
 
