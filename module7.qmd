@@ -1,5 +1,5 @@
 ---
-title: "Module 7: Correlation and Regression"
+title: "Module 7: Regression"
 author: ""
 date: "2024-08-09"
 format: html
@@ -9,251 +9,41 @@ format: html
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
--   The main goal of this lesson is to understand, conduct, and interpret both correlation and regression analyses. We will examine Pearson’s $r$ correlation coefficient and learn how to conduct and interpret an inferential statistical test using this common statistic. Additionally, we will explore regression models and their components, including computing the slope and intercept for simple linear regression and the multiple slopes and intercept for multiple linear regression. Finally, we will learn how to interpret the regression output from R, tying together these key analytical techniques.
+This lesson covers simple and multiple linear regression — the foundational predictive modeling technique in business analytics. Building on the correlation analysis from the previous lesson, we move from describing relationships to modeling and forecasting them.
+
+We begin with the **simple linear regression model**, which estimates a straight-line relationship between one explanatory variable and one continuous response variable. The key outputs are the slope and intercept — parameters that define the regression line — along with three goodness-of-fit measures: the Residual Standard Error (RSE), the coefficient of determination (R²), and the Adjusted R². The F-statistic tests whether the model as a whole explains a meaningful share of the variation in the outcome, and the t-statistics on each coefficient test each predictor individually.
+
+We then extend to **multiple regression**, which adds two or more explanatory variables to the model. Multiple regression allows us to control for competing influences on the outcome, isolating the unique contribution of each predictor while holding the others constant. We cover the p-value method for variable selection — iteratively removing the least significant predictors while watching that the Adjusted R² does not meaningfully decline — and multicollinearity, which arises when predictors are highly correlated with each other and can distort or destabilize coefficient estimates.
+
+The lesson closes with **regression using categorical variables**. When a predictor is categorical rather than continuous, R automatically converts it into dummy variables — a set of binary indicators, one per category, with one category held back as the reference. We work through examples with two-category and multi-category predictors, and combine continuous and categorical predictors in the same model.
+
+By the end of this lesson, you should be able to fit and interpret simple and multiple regression models in R, evaluate goodness of fit, test predictor significance, build a regression equation for prediction, detect and address multicollinearity, and correctly include categorical variables using dummy coding. Work through every code example in your own R script alongside the reading.
 
 ### At a Glance
 
--   In order to succeed at this lesson, you will use a statistical model, called linear regression, that helps us understand an outcome variable and also allows us to make predictions for future instances, or the next occurrence. A linear regression model is quite commonly used in many fields and is often the foundation for future more advanced analysis like machine learning. Linear regression can be a fairly easy way to design and test a research model, and in doing so allows us to gauge helpful predictor variables in understanding a phenomenon. Not only can we understand a research model, but we can also make stronger predictions on the future.
+-   In order to succeed at this lesson, you will use a statistical model called linear regression to understand an outcome variable and make predictions. Correlation — covered in the previous lesson — establishes whether a linear relationship exists and how strong it is. Regression uses that relationship to estimate a slope and intercept, allowing us to quantify the effect of each predictor and forecast future values. Linear regression is one of the most commonly used models in business analytics and forms the foundation for more advanced techniques like machine learning.
 
 ### Lesson Objectives
 
--   Compute and interpret Pearson’s r correlation coefficient.
--   Conduct an inferential statistical test for Pearson’s r correlation coefficient.
 -   Explore the statistical model for a line.
 -   Compute the slope and intercept in a simple linear regression.
--   Interpret a regression model significance and model fit.
+-   Interpret regression model significance and goodness-of-fit measures (RSE, R², Adjusted R²).
+-   Extend to multiple regression with two or more predictors.
+-   Apply the p-value method for variable selection.
+-   Detect and interpret multicollinearity using VIF scores.
+-   Include categorical predictors using dummy variables.
 
 ### Consider While Reading
 
--   In this lesson, we will focus on inference for correlation and regression analysis, learning how to conduct a correlation test as well as single and multiple linear regression tests. This builds on the scatterplots introduced in the Data Visualization lesson, which help us visually describe relationships between variables. By revisiting those concepts, we will explore how visualizations can aid in making inferences alongside regression and correlation results. Additionally, we will differentiate between ANOVA, which examines differences between means in categorical data, and linear regression, which focuses on estimating responses or predictions while forming a regression line.
+-   In this lesson, we focus on building and interpreting regression models in R. This builds on the scatterplots introduced in the Data Visualization lesson — those visualizations help us assess linearity before running a model — and on the correlation analysis from the previous lesson, which told us whether a relationship was worth modeling in the first place.
+-   As you read, note the connection between regression and ANOVA. The F-test in a regression output works the same way as in an ANOVA: it tests whether the variation in Y that is explained by the model is significantly greater than the unexplained variation. The sum-of-squares logic (SSR, SSE, SST) is identical.
+-   Pay particular attention to the distinction between the overall F-test (is the model significant?) and the individual t-tests on each coefficient (is this specific predictor significant?). In simple regression these give the same p-value, but in multiple regression they can diverge.
 
 ```{r}
 library(tidyverse)
 ```
 
-# Correlation
-
-## Covariance
-
--   Covariance ($s_{xy}$ or $cov_{xy}$) is a numerical measure that describes the direction of the linear relationship between two variables, x and y and reveals the direction of that linear relationship.
--   The formula for covariance is as follows:
-    -   $cov_{xy} = \sum^n_{i=1}(x_i-m_x)*(y_i-m_y)/(n-1)$
-    -   Where $x_i$ and $y_i$ are the observed values for each observation, $m_x$ and $m_y$ are the mean values for each variable, $i$ represents an individual observation, and $n$ represents the sample size.
-
-```{r}
-
-x <- c(3, 8, 5, 2)
-y <- c(12, 14, 8, 4)
-
-devX <- x-mean(x)
-devY <- y-mean(y)
-
-covXY <- sum(devX * devY)/(length(x)-1); covXY
-
-#We can verify this by using cov() function in R.
-cov(x,y)
-```
-
-## Correlation Coefficient
-
--   A correlation coefficient ($r_{xy}$) describes both the direction and strength of the relationship between $x$ and $y$. $r_{xy} = cov_{xy}/(s_x s_y)$ or using the standardized formula in the book:
-    -   $r_{xy} = \sum^n_{i=1}(z_x*z_y)/(n-1)$
-
-```{r}
-#Calculated manually
-covXY/(sd(x)*sd(y))
-
-#We can verify this by using cor() function in R.
-cor(x,y)
-
-```
-
-### Rules for the Correlation Coefficient
-
--   The correlation coefficient has the same sign as the covariance; however, its value ranges between −1 and +1 whereas $-1 \le r_{xy} \le +1$.
--   The absolute value of the coefficient reflects the strength of the correlation. So a correlation of −.70 is stronger than a correlation of +.50.
-
-![Correlation Coefficient](Pictures/Ch8/Correlation.png "Correlation Coefficient")
-
-## Interpreting the Direction of the Correlation
-
--   Negative correlations occur when one variable goes up and the other goes down.
--   No correlation happens when there is no discernible pattern in how two variables vary.
--   Positive correlations occur when one variable goes up, and the other one also goes up (or when one goes down, the other one does too); both variables move together in the same direction.
-
-![Correlation Scatterplots](Pictures/Ch8/RelationshipScatter.png "Correlation Scatterplots")
-
-### Scatterplots to Visualize Relationship
-
--   Let's do an example to first visualize the data, and then to calculate the correlation coefficient.
-
--   First, read in a .csv called *DebtPayments.csv*. This data set has 26 observations and 4 variables:
-
-    -   A character variable with a bunch of metropolitan areas listed;
-    -   An integer numeric debt;
-    -   A numeric variable Income;
-    -   A numeric variable Unemployment.
-
-```{r}
-Debt_Payments <- read.csv("data/DebtPayments.csv")
-str(Debt_Payments)
-```
-
--   Next, plot the relationship between 2 continuous variables.
-
-    -   There are a few ways to write the plot command using ggplot. We went over these in the Data Visualization lesson. Again we said:
-    -   Layer 1: ggplot() command with aes() command directly inside of it pointing to x and y variables.
-    -   Layer 2: geom_point() command to add the observations as indicators in the chart.
-    -   Layer 3 or more: many other optional additions like labs() command (for labels) or stat_smooth() command to generate a regression line.
-
-    ```{r, fig.alt="Scatterplot Using ggplot2 Generated by R"}
-    Debt_Payments %>% ggplot(aes(Income, Debt))+ 
-      geom_point(color="#183028", shape=2) + 
-      stat_smooth(method="lm", color="#789F90") + 
-      theme_minimal()
-    ```
-
--   In the above plot, there is a strong positive relationship (upward trend) that should be confirmed with a correlation test.
-
--   In a second example below, we look at Unemployment as the X variable. This scatterplot is much more difficult to use in determining whether the correlation will be significant. It looks negative, but there is not a strong linear trend to the data. This will also need to be confirmed with a correlation test.
-
-```{r, fig.alt="Scatterplot Using ggplot2 Generated by R"}
-Debt_Payments %>% ggplot(aes(Unemployment, Debt))+
-  geom_point(color="#183028", shape=2) + 
-  stat_smooth(method="lm", color="#789F90") + 
-  theme_minimal()
-```
-
--   In many scatterplots using big data, the observations are too numerous to see a good relationship. In that case, the statistical test can trump this visual aid. However, in a lot of cases the scatterplot does help visualize the relationship between 2 continuous variables.
-
-### Interpreting the Strength of the Correlation
-
--   Statisticians differ on what is called a strong correlation versus weak correlation, and it depends on the context. A .9 may be required for a strong correlation in one field, and a .5 in another. Generally speaking in business, the absolute value of a correlation .8 or above is considered strong, between .5 and .8 is considered moderate, and between .2 and .5 is considered weak.
--   The following is consistent with what is most generally used:
-
-![Correlation Strength](Pictures/Ch8/CorrelationStrength.png "Correlation Strength")
-
-## Interpreting the Significance of the Correlation
-
--   Correlation values should be tested alongside a p-value to confirm whether or not there is a correlation. The null is tested using a t-distribution specifically testing whether $r = 0$ or not, like the one-sample t-test section from the lesson 6.
--   The null and alternative are listed below.
-    -   $H_0$: There is no relationship between the two variables ($r = 0$).
-    -   $H_A$: There is a relationship between the two variables ($r \neq 0$).
--   Even small correlations can be significant: In large datasets, even a small correlation, like .1, can be statistically significant due to the increased power that comes with a high sample size. It's important to interpret both the strength of the correlation and its practical significance in context.
-
-#### Statistical significance answers the question: "Is the effect real?“
-
--   Statistical Significance:
-
--   A result is statistically significant if it is unlikely to have occurred by random chance, given a pre-defined threshold (usually p \< 0.05).
-
--   With larger sample sizes, even very small effects can become statistically significant because larger samples reduce variability. For example, a correlation of 0.1 can be statistically significant with enough data.
-
--   Practical Significance:
-
--   Practical significance answers the question: "Is the effect meaningful?“
-
--   Practical significance refers to the real-world importance or relevance of a result. It asks, "Does this effect matter in practice?“
-
--   Even if a result is statistically significant, it may not be large enough to have a meaningful impact on business decisions or outcomes.
-
-### cor.test() Command
-
--   The cor() command gives you just the correlation coefficient. This command can be useful if you are testing many correlations at one time. In the below statement, I can use $cor(Variable1, Variable2)$ to see the correlation between 2 continuous variables.
-
-```{r}
-cor(Debt_Payments$Income, Debt_Payments$Debt) 
-```
-
--   The cor.test() command tests the hypothesis whether $r=0$ or not. This command comes with a p-value and t-test statistic (along with the correlation coefficient).
-
-```{r}
-cor.test(Debt_Payments$Income, Debt_Payments$Debt)
-```
-
--   This test shows a strong positive correlation of .8675 (\>.8) which is significant. Our p-value is 9.66e-09 or \< .001 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
--   We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between .723 and .939.
-
-```{r}
-cor.test(Debt_Payments$Income, Debt_Payments$Unemployment)
-```
-
--   This test shows a moderate negative correlation of -.534 (between .5 and .8 in absolute value), which is significant. Our p-value is 0.004928 or \< .01 alpha level. This suggests that we reject the null hypothesis and support the alternative that $r \neq 0$ which confirms a correlation is present.
--   We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between -.765 and -.185. This confidence interval is wider than the one listed above. This is due to the noise in the relationship we noted in the scatterplot - the correlation is weaker, the relationship does not look as linear, the confidence decreases. Even though this is true, we must note that we still found a significant correlation.
-
-## Additional Examples
-
-```{r}
-library(ISLR)
-data("Credit")
-summary(Credit)
-
-attach(Credit)
-
-cor.test(Rating, Income) #0.7913776 moderate and positive
-
-cor.test(Rating, Balance) #0.8636252 strong and positive
-
-cor.test(Rating, Limit) #0.9968797 strong and positive
-##almost perfectly linear 
-ggplot(Credit, aes(Rating, Limit))+geom_point()
-
-cor.test(Rating, Education) #-0.03013563 no correlation
-
-cor.test(Rating, Age) #0.103165 - between -.2 and .2 - so no relationship even though p-value < .05 -- p-value fails at .01 level. 
-ggplot(Credit, aes(Rating, Age))+geom_point()+stat_smooth(method="lm")
-
-
-cor.test(Rating, Cards) #0.05323903 
-ggplot(Credit, aes(Rating, Cards))+geom_point()+stat_smooth(method="lm")
-
-
-
-```
-
-## Comparing to t.test and ANOVA
-
--   A t-test examines if there is a significant difference in the means of two groups on a dependent variable. For example, whether males and females differ in their credit ratings, where a correlation measures the strength and direction of a linear relationship between two continuous variables, such as Rating and Income.
--   An independent t-test requires a categorical independent variable (e.g., Gender) with two levels and a continuous dependent variable (e.g., Rating), where a correlation requires two continuous variables.
--   Both can provide insights into relationships in the dataset, but they address different questions. An independent t-test evaluates mean differences (group comparisons), while correlation evaluates relationships (continuous covariation). \* A significant t-test does not imply a strong correlation between the grouping variable and the dependent variable; the correlation would depend on the coding of the categorical variable and the distribution of data
-
-```{r}
-## -- Example of an independent t.test using same dataset
-t.test(Rating~Gender, data=Credit) ##no group differences
-ggplot(Credit, aes(Gender, Rating)) + geom_boxplot()
-
-t.test(Rating~Married, data=Credit)##no group differences
-ggplot(Credit, aes(Married, Rating)) + geom_boxplot()
-
-
-```
-
--   An ANOVA tests for significant differences in the means of three or more groups on a dependent variable. For example, whether credit ratings differ across ethnic groups, where a correlation examines the strength of the relationship between two continuous variables.
--   An Anova requires a categorical independent variable (with three or more levels) and a continuous dependent variable, where a correlation requires two continuous variables.
--   ANOVA focuses on group comparisons (e.g., Rating differences across Ethnicity), while correlation looks at how two variables change together.A significant ANOVA could suggest that the categorical grouping variable explains some variance in the dependent variable, but this variance is not quantified as a relationship strength (as correlation would provide).
-
-```{r}
-## -- Example of An ANOVA using same dataset
-anova1 <- aov(Rating~Ethnicity, data=Credit)
-anova(anova1) #no group differences - no need for a post hoc test. 
-ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legend=FALSE)
-```
-
-## Limitations of Correlation Analysis
-
--   Note that a correlation is the first step in understanding causality. Correlation and causality are closely related but fundamentally different concepts in data analysis. Correlation refers to the statistical relationship between two variables, indicating how changes in one variable are associated with changes in another. However, it does not imply that one variable causes the other to change. Causality, on the other hand, goes beyond mere association to establish a cause-and-effect relationship, where one variable directly influences the other. Determining causality requires meeting specific criteria, including significant association, temporal precedence (the cause precedes the effect), and ruling out alternative explanations or confounding variables. While correlation is often the first step in exploring potential relationships, additional analysis—such as experimental design or causal modeling—is necessary to confirm causality. This distinction highlights the importance of critical thinking when interpreting statistical results, as a strong correlation alone does not prove that one variable is the cause of another.
-
--   To determine a causal model, you need the following:
-
-1.  Significant Correlation: Statistically significant relationship between the variables.
-2.  Temporal Precedence: Causal variable occurred prior to the other variable.
-3.  Eliminate Alternate Variables: No other factors can account for the cause.
-
--   Some limitations are as follows:
-    -   The correlation coefficient captures only a linear relationship.
-    -   The correlation coefficient may not be a reliable measure in the presence of outliers.
-    -   Even if two variables are highly correlated, one does not necessarily cause the other.
--   When interpreting results, note that lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.
+In the previous lesson, we used correlation to measure the strength and direction of the linear relationship between two continuous variables. Regression takes the next step: it uses that relationship to build a predictive model. Where a correlation coefficient tells you *how strongly* two variables move together, a regression equation tells you *by how much* one variable changes for each unit change in the other — and lets you forecast values you have not yet observed.
 
 # The Linear Regression Model
 
@@ -940,27 +730,11 @@ glance(lmModel4)
 
 -   We can look at the R-squared value of .693 and adjusted R-squared value of .692 and state that about 69% of the variable in total score is explained by a linear relationship with the predictors in our model.
 
-# Using AI
+# Review and Practice
+
+## Using AI
 
 -   Use the following prompts on a generative AI, like chatGPT, to learn more about regression analysis in R.
-
--   Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?"
-
--   What is covariance, and how does it describe the relationship between two variables? Provide an example with a simple dataset. Describe Pearson’s correlation coefficient. How do you calculate it, and what does it tell you about the relationship between two variables?
-
--   Explain how to create a scatterplot using ggplot2 in R to visualize the relationship between two continuous variables. How can you add a regression line to assess the linearity of the relationship?
-
--   How can you use the cor.test() function in R to conduct a hypothesis test for correlation? What do the p-value and confidence interval indicate in the context of correlation?
-
--   How do you interpret the strength and direction of a correlation? What is considered a strong, moderate, or weak correlation in the context of business data?
-
--   Explain the null and alternative hypotheses for correlation testing. How does the t-distribution play a role in testing the significance of a correlation coefficient?
-
--   What are some challenges of visualizing relationships between variables when dealing with big data, and how can statistical tests help when scatterplots are not effective?
-
--   Discuss the limitations of correlation analysis. Why is it important to be cautious when interpreting correlation as causation?
-
--   What are the key differences between correlation and causation? How can you determine if a correlation implies causality?
 
 -   Explain how to perform simple linear regression in R. Use the lm() function and discuss how to interpret the slope, intercept, and R-squared values from the regression output.
 
@@ -980,6 +754,594 @@ glance(lmModel4)
 
 -   Describe how to use the p-value method for variable selection in multiple regression. How do you iteratively remove insignificant predictors while monitoring the R-squared and adjusted R-squared values?
 
-# Summary
+## Regression Lab
 
--   In this lesson, we explored the correlation coefficient, learning how to evaluate the strength and direction of a correlation (strong, moderate, weak; positive or negative) and how to visualize relationships using scatterplots. We also learned to test whether a correlation is statistically significant. Additionally, we delved into simple and multiple linear regression models, understanding how to write and interpret these models, assess goodness-of-fit measures, and test hypotheses by interpreting the summary output from the lm() command. Finally, we examined how regression can incorporate both continuous and categorical predictor variables.
+**A dataset** has one continuous predictor variable (`Income`, in thousands) and one continuous outcome (`Debt`, in dollars). A student runs `lm(Debt ~ Income, data = df)` and gets the following summary output:
+
+```         
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  210.30      41.82    5.03  0.00004 ***
+Income        10.44       1.19    8.77  9.66e-09 ***
+
+Residual standard error: 63.26 on 26 degrees of freedom
+Multiple R-squared:  0.7526,    Adjusted R-squared:  0.7423 
+F-statistic: 76.86 on 1 and 26 DF,  p-value: 9.66e-09
+```
+
+Write out the regression equation, interpret the slope and intercept in plain English, and state what the $R^2$ tells you about model fit.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Regression equation:** $$\hat{y} = 210.30 + 10.44 \times \text{Income}$$
+
+**Intercept (**$b_0 = 210.30$): When Income is zero (i.e., \$0 in thousands), the predicted debt payment is \$210.30. In this context, the intercept is a mathematical anchor for the line — there is likely no data at Income = 0, so it should not be interpreted as a meaningful real-world value on its own.
+
+**Slope (**$b_1 = 10.44$): For every additional \$1,000 in income (one unit increase in Income), debt payments are predicted to increase by \$10.44. Income and debt move in the same direction — higher earners tend to carry higher debt payments.
+
+$R^2 = 0.7526$: Income explains approximately **75.3%** of the variability in debt payments. The remaining 24.7% is explained by other factors not in the model. An $R^2$ above 0.5 is generally considered moderate-to-strong in business applications — this model fits the data reasonably well.
+:::
+
+**Using the regression output above**, make a prediction for a person with an income of \$85,000 (Income = 85) using both the regression equation and the `predict()` function in R. Show both approaches.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Using the equation:** $$\hat{y} = 210.30 + 10.44 \times 85 = 210.30 + 887.40 = 1097.70$$
+
+Predicted debt payment: approximately **\$1,097.70**
+
+**Using `predict()` in R:**
+
+``` r
+predict(Simple, data.frame(Income = 85))
+```
+
+Both approaches give the same answer. The `predict()` function is more convenient when making many predictions at once or when the model includes multiple predictors, since it handles all the coefficient multiplication automatically.
+:::
+
+**A multiple regression model** is built to predict `Balance` from `Income`, `Rating`, `Limit`, `Cards`, `Age`, and `Education`. The initial model returns the following Adjusted $R^2$ values as variables are removed one at a time using the p-value method:
+
+| Step           | Variables removed    | Adjusted R² |
+|----------------|----------------------|-------------|
+| 0 (full model) | —                    | 0.8764      |
+| 1              | Education (p = 0.71) | 0.8765      |
+| 2              | Cards (p = 0.53)     | 0.8760      |
+| 3              | Age (p = 0.06)       | 0.8753      |
+| 4              | Limit (p = 0.059)    | 0.8745      |
+
+Explain why Adjusted $R^2$ barely changes — and in step 1 actually *increases* — as variables are removed, and why this supports the variable-removal decisions.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Why Adjusted** $R^2$ barely changes: The variables being removed (Education, Cards, Age, Limit) were contributing almost nothing to the model's explanatory power. When a predictor is truly uninformative, removing it does not reduce how well the model fits the data — it just eliminates noise.
+
+**Why it increased in step 1:** The Adjusted $R^2$ formula penalizes models for having extra predictors. The raw $R^2$ always increases or stays flat when you add a variable, but the Adjusted $R^2$ can actually *decrease* if a variable's marginal contribution is less than the penalty for including it. When Education (p = 0.71) was removed, the penalty relief from dropping one useless predictor outweighed the tiny loss in explained variance, nudging Adjusted $R^2$ slightly upward.
+
+**Why this supports the decisions:** A good variable-selection strategy keeps Adjusted $R^2$ stable or improves it while reducing model complexity. Starting at 0.8764 and finishing at 0.8745 after removing four predictors means the simpler final model explains almost exactly as much variation as the full model — with fewer parameters, easier interpretation, and less risk of overfitting. The two remaining predictors (Income and Rating) are doing essentially all the work.
+:::
+
+**A researcher** includes `Ethnicity` as a predictor in a regression model. It has three categories: Asian.American, Black, and White. R automatically creates dummy variables and produces this output (condensed):
+
+```         
+Coefficients:
+                    Estimate
+(Intercept)           720.5     ← Asian.American baseline
+EthnicityBlack        -18.3    (p = 0.12)
+EthnicityWhite        -13.1    (p = 0.08)
+```
+
+Identify the reference category, interpret the intercept and each dummy coefficient, and explain why there is no `EthnicityAsian.American` row in the output.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Reference category:** Asian.American — it is the category that R excluded from the output and absorbed into the intercept.
+
+**Intercept (720.5):** The predicted outcome for an Asian.American individual (when all other predictors are held at zero, or if this is the only predictor). It represents the baseline group mean.
+
+**EthnicityBlack (−18.3):** Black respondents are predicted to have an outcome 18.3 units *lower* than Asian.American respondents, on average, all else equal. The p-value of 0.12 means this difference is **not statistically significant** at $\alpha = 0.05$ — we cannot conclude that the group means differ from the Asian.American baseline.
+
+**EthnicityWhite (−13.1):** White respondents are predicted to score 13.1 units lower than the Asian.American baseline. Again, p = 0.08 is not significant at $\alpha = 0.05$.
+
+**Why no Asian.American row:** Including all three dummy variables (Asian.American, Black, White) would create **perfect multicollinearity** — the three dummies would always sum to 1, making the model mathematically unsolvable. R automatically drops one category (alphabetically first by default, which is Asian.American here) to serve as the reference. Every other category is interpreted *relative to* that reference.
+
+**Note:** A non-significant dummy coefficient does not mean you remove that category from the model — it means that category is not significantly *different from the reference*. You remove or keep the entire categorical variable together.
+:::
+
+**Explain** why multicollinearity is a problem in multiple regression, and interpret the following VIF output. Which predictors pass the assumption, and what would you do about the one(s) that do not?
+
+```         
+   Income    Rating     Limit 
+    1.011     2.234    14.822
+```
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Why multicollinearity is a problem:** When two or more predictors are highly correlated with each other, the model cannot reliably separate their individual effects. This inflates the standard errors of the affected coefficients, making them appear non-significant even when they genuinely predict the outcome. It can also produce coefficient estimates with wrong signs — a predictor that should have a positive relationship might appear negative in the output. Predictions from the model may still be accurate, but individual coefficient interpretation becomes unreliable.
+
+**Interpreting the VIF output:**
+
+| Predictor | VIF    | Verdict                                            |
+|-----------|--------|----------------------------------------------------|
+| Income    | 1.011  | ✅ Passes — no correlation with other predictors   |
+| Rating    | 2.234  | ✅ Passes — moderate but acceptable (well under 5) |
+| Limit     | 14.822 | ❌ Fails — severe multicollinearity (VIF ≥ 10)     |
+
+**What to do about Limit:** A VIF of 14.8 suggests `Limit` is highly correlated with one or more other predictors in the model (likely `Rating`, since credit limit and credit rating are often set together). Options:
+
+1.  **Drop one of the correlated variables.** If `Limit` and `Rating` are largely redundant, remove whichever is less theoretically important.
+2.  **Check the correlation matrix** — `cor(Credit$Limit, Credit$Rating)` — to confirm which variable is driving the problem.
+3.  **Keep it if prediction is the goal.** If you only care about the model's overall predictions (not the individual coefficients), multicollinearity is less harmful. The Adjusted $R^2$ and predictions remain valid even when VIF is high.
+:::
+
+**A model predicting employee salary** (in \$000s) from `YearsExperience` and `Department` (Finance, Marketing, Operations — three categories) returns these coefficients:
+
+```         
+(Intercept)             52.1
+YearsExperience          2.8
+DepartmentMarketing     -4.5
+DepartmentOperations    -9.2
+```
+
+Write the four prediction equations (one per department), then calculate the predicted salary for a Marketing employee with 7 years of experience and an Operations employee with 12 years of experience.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+**Reference category:** Finance (alphabetically first, omitted from output).
+
+**Four prediction equations:**
+
+-   **Finance:** $\hat{y} = 52.1 + 2.8 \times \text{Years}$
+-   **Marketing:** $\hat{y} = 52.1 + 2.8 \times \text{Years} + (-4.5) = 47.6 + 2.8 \times \text{Years}$
+-   **Operations:** $\hat{y} = 52.1 + 2.8 \times \text{Years} + (-9.2) = 42.9 + 2.8 \times \text{Years}$
+
+All three lines have the **same slope** (2.8 — each additional year of experience adds \$2,800 regardless of department) but **different intercepts** (Finance starts highest, then Marketing, then Operations).
+
+**Predictions:**
+
+Marketing, 7 years: $47.6 + 2.8 \times 7 = 47.6 + 19.6 = \$67,200$
+
+Operations, 12 years: $42.9 + 2.8 \times 12 = 42.9 + 33.6 = \$76,500$
+
+``` r
+predict(salary_model, data.frame(YearsExperience = 7,  Department = "Marketing"))
+predict(salary_model, data.frame(YearsExperience = 12, Department = "Operations"))
+```
+
+Note that even though Operations has the lowest intercept, the Operations employee earns more here because they have significantly more experience — the slope effect eventually overtakes the department penalty.
+:::
+
+## Interactive R Lesson: Regression {#interactive-regression-lesson}
+
+::: {.callout-note}
+This lesson covers simple linear regression, qualitative predictors, multiple regression, and interaction terms. All examples use datasets from the ISLR package — `Hitters` for numeric regression, `Carseats` for qualitative predictors, and `Credit` for interaction terms.
+
+**First-time load:** The interactive R environment may take 10–20 seconds to initialize. Once the Run Code buttons become active, you are ready to go.
+:::
+
+```{webr-r}
+#| label: reg-setup
+#| context: setup
+Hitters  <- ISLR::Hitters
+Carseats <- ISLR::Carseats
+Credit   <- ISLR::Credit
+# Remove rows with missing Salary in Hitters
+Hitters <- na.omit(Hitters)
+```
+
+---
+
+### Part 1: Simple Linear Regression — Hitters Dataset
+
+Simple linear regression estimates a straight-line relationship between one predictor (X) and one continuous outcome (Y). The format is `lm(Y ~ X, data = dataset)`.
+
+The `Hitters` dataset from ISLR contains performance statistics and salary data for 263 Major League Baseball players. `Salary` is our outcome variable throughout Parts 1 and 3.
+
+::: {.callout-tip}
+Key variables: `Salary` = 1987 annual salary in thousands of dollars, `Hits` = number of hits in 1986, `Years` = number of years in the major leagues, `HmRun` = home runs in 1986, `RBI` = runs batted in during 1986.
+:::
+
+**Explore the Hitters dataset:**
+
+```{webr-r}
+#| label: hitters-head
+head(Hitters[, c("Salary", "Hits", "Years", "HmRun", "RBI", "Walks")])
+summary(Hitters[, c("Salary", "Hits", "Years")])
+```
+
+**Does the number of hits predict salary?**
+
+```{webr-r}
+#| label: simple-lm-hits
+firstLM <- lm(Salary ~ Hits, data = Hitters)
+summary(firstLM)
+confint(firstLM)
+ggplot(Hitters, aes(x = Hits, y = Salary)) +
+  geom_point(alpha = 0.4, color = "steelblue") +
+  stat_smooth(method = "lm", color = "red") +
+  labs(title = "Hits vs. Salary",
+       x = "Hits (1986)", y = "Salary ($000s)")
+```
+
+::: {.callout-note}
+Read the output: the **slope estimate** for Hits (positive — more hits, higher salary), the **p-value** (significant if < 0.05), the **R²** (proportion of salary variance explained by hits alone), and the **F-statistic p-value** (overall model significance). `confint()` gives the 95% confidence interval around the slope — if the entire interval is positive, the positive relationship is not a chance result.
+:::
+
+**Now try Years as a predictor:**
+
+```{webr-r}
+#| label: simple-lm-years
+secondLM <- lm(Salary ~ Years, data = Hitters)
+summary(secondLM)
+ggplot(Hitters, aes(x = Years, y = Salary)) +
+  geom_point(alpha = 0.4, color = "darkorange") +
+  stat_smooth(method = "lm", color = "red") +
+  labs(title = "Years of Experience vs. Salary",
+       x = "Years in Major Leagues", y = "Salary ($000s)")
+```
+
+::: {.callout-note}
+Compare R² for Hits vs. Years. Experience (Years) tends to explain more salary variance than a single season's hit count — players accumulate leverage and reputation over time. Both are significant but neither alone captures the full picture, which motivates multiple regression in Part 3.
+:::
+
+---
+
+### Part 2: Regression with Qualitative Predictors
+
+When a predictor is categorical, R automatically creates dummy variables — one binary indicator per category, with one category held back as the reference. You write the `lm()` command the same way.
+
+**Does shelf location (Bad / Medium / Good) affect unit sales?**
+
+```{webr-r}
+#| label: qual-reg-shelveloc
+summary(Carseats[, c("Sales", "ShelveLoc", "Price")])
+qualReg <- lm(Sales ~ ShelveLoc, data = Carseats)
+summary(qualReg)
+ggplot(Carseats, aes(x = ShelveLoc, y = Sales, fill = ShelveLoc)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(title = "Sales by Shelf Location", x = "Shelf Location", y = "Sales (000s)")
+```
+
+::: {.callout-note}
+R drops one category as the reference — here `Bad` is the reference (alphabetically first). The intercept represents mean sales when `ShelveLoc = Bad`. The coefficients for `ShelveLocGood` and `ShelveLocMedium` show how much sales *change* relative to Bad. With k = 3 categories, R creates k − 1 = 2 dummy variables.
+:::
+
+**Does gender affect credit limit? (2-category predictor):**
+
+```{webr-r}
+#| label: gender-credit
+creditlm <- lm(Limit ~ Gender, data = Credit)
+summary(creditlm)
+ggplot(Credit, aes(x = Gender, y = Limit, fill = Gender)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(title = "Credit Limit by Gender", x = "Gender", y = "Limit")
+```
+
+::: {.callout-note}
+With only 2 categories (Female / Male), R creates 1 dummy variable. Here the model is **not significant** — gender has no meaningful effect on credit limit. The boxplot confirms this: the distributions overlap substantially. A non-significant result is still a valid finding.
+:::
+
+---
+
+### Part 3: Multiple Regression — Hitters
+
+Multiple regression adds two or more predictors. Use `+` to add predictors; use `.` to include all variables; use `.- variable` to exclude one.
+
+**Does salary depend on both Hits and Years?**
+
+```{webr-r}
+#| label: multiple-reg
+multipleReg <- lm(Salary ~ Hits + Years, data = Hitters)
+summary(multipleReg)
+```
+
+::: {.callout-note}
+Compare the slopes here to the simple regressions in Part 1. Each slope now reflects a predictor's unique contribution *holding the other constant*. The coefficient on Hits may shrink when Years is added — because experienced players tend to have more hits, and the two predictors share variance. Adjusted R² tells you how much the second predictor genuinely helped beyond the first.
+:::
+
+**Run regression with all numeric Hitters predictors:**
+
+```{webr-r}
+#| label: reg-all
+# Select only numeric columns for the full model
+HittersNum <- Hitters[, sapply(Hitters, is.numeric)]
+regAll <- lm(Salary ~ ., data = HittersNum)
+summary(regAll)
+```
+
+**Remove non-significant predictors one at a time:**
+
+```{webr-r}
+#| label: reg-selection
+# Drop the least significant predictor and refit
+regAll2 <- lm(Salary ~ Hits + Years + RBI + Walks + CAtBat + CHits + CHmRun + CRuns + CRBI + CWalks + PutOuts + Assists, data = Hitters)
+summary(regAll2)
+```
+
+::: {.callout-tip}
+The p-value method for variable selection: remove the predictor with the highest non-significant p-value one at a time, rerun the model, and check whether Adjusted R² holds. Career statistics (prefixed with C) tend to be stronger predictors than single-season counts because they reflect accumulated performance.
+:::
+
+**Check for multicollinearity using VIF:**
+
+::: {.callout-important}
+**Run in RStudio — not in the browser**
+
+The `car` package required for `vif()` cannot install in WebR. Run this in your local RStudio:
+
+```r
+library(car)
+vif(regAll2)
+```
+
+Career statistics like `CHits`, `CAtBat`, and `CRuns` are highly correlated with each other — VIF values above 10 signal a multicollinearity problem. Remove the most redundant career stats until VIF values fall below 10.
+:::
+
+---
+
+### Part 4: Regression with Interaction Terms
+
+An interaction term tests whether the effect of one predictor on the outcome **depends on** the value of another predictor. Use `*` between two predictors — this automatically includes both direct effects and the interaction.
+
+**Does the effect of Hits on Salary depend on Years of experience?**
+
+```{webr-r}
+#| label: interact-hitters
+interact <- lm(Salary ~ Hits * Years, data = Hitters)
+summary(interact)
+coef(interact)
+confint(interact)
+```
+
+::: {.callout-note}
+The `Hits:Years` coefficient is the interaction term. A significant interaction means the effect of Hits on Salary is not the same at all levels of experience — it changes as Years increases. If positive, the salary boost from hitting well is even greater for experienced players. If negative, performance hits matter less for veterans who command salary based on accumulated reputation rather than current season output.
+:::
+
+**Interaction example — Income × Student status predicting Credit Balance:**
+
+```{webr-r}
+#| label: interact-credit
+interact2 <- lm(Balance ~ Income * Student, data = Credit)
+summary(interact2)
+```
+
+::: {.callout-note}
+`Student` is a categorical predictor (Yes/No), so the interaction `Income:StudentYes` asks: does the effect of income on credit balance differ between students and non-students? If significant, the slope of income on balance is steeper for one group than the other — meaning they respond differently to the same income level. A non-significant interaction means the income effect is parallel across student status.
+:::
+
+---
+
+## Scored Quiz: Regression {#regression-quiz}
+
+```{=html}
+<div id="ps512-reg-quiz" style="font-family: Georgia, serif; max-width: 720px; margin: 2rem auto; background: #fafaf8; border: 1px solid #ddd; border-radius: 8px; padding: 2rem;">
+
+  <h3 style="margin-top:0; font-size:1.2rem; background:#2c6fad; color:#ffffff; padding:0.8rem 1.2rem; border-radius:6px 6px 0 0; margin:-2rem -2rem 1.5rem -2rem;">
+    Regression Quiz
+  </h3>
+
+  <div id="rquiz-progress" style="font-size:0.85rem; color:#444; margin-bottom:1.5rem;">Question 1 of 11</div>
+
+  <!-- Q1 -->
+  <div class="rquiz-q" id="rq1" style="display:block">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">1. In the Hitters simple regression of Salary on Hits, the slope is positive. This means:</p>
+    <label class="rquiz-option"><input type="radio" name="rq1" value="a"> Players with fewer hits earn more salary.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq1" value="b"> As the number of hits increases, predicted salary increases.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq1" value="c"> Hits causes salary to increase.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq1" value="d"> The relationship between Hits and Salary is non-linear.</label>
+    <div class="rquiz-feedback" id="rfb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="rquiz-q" id="rq2" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">2. The R² for the Hits → Salary model is, say, 0.24. This means:</p>
+    <label class="rquiz-option"><input type="radio" name="rq2" value="a"> Hits and Salary have a correlation of 0.24.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq2" value="b"> Hits explains about 24% of the variance in Salary.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq2" value="c"> 24% of the observations fall on the regression line.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq2" value="d"> The model predicts Salary with 24% accuracy.</label>
+    <div class="rquiz-feedback" id="rfb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="rquiz-q" id="rq3" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">3. What does <code>confint(firstLM)</code> produce?</p>
+    <label class="rquiz-option"><input type="radio" name="rq3" value="a"> A confidence interval for the predicted values of Salary.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq3" value="b"> A 95% confidence interval around the slope and intercept estimates.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq3" value="c"> A test of whether the model is significant.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq3" value="d"> The VIF scores for each predictor.</label>
+    <div class="rquiz-feedback" id="rfb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="rquiz-q" id="rq4" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">4. In the Carseats regression with ShelveLoc as the predictor, the intercept represents:</p>
+    <label class="rquiz-option"><input type="radio" name="rq4" value="a"> The overall mean of Sales across all shelf locations.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq4" value="b"> Mean Sales when ShelveLoc is Bad (the reference category).</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq4" value="c"> The total number of shelf locations.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq4" value="d"> The difference between Good and Bad shelf locations.</label>
+    <div class="rquiz-feedback" id="rfb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="rquiz-q" id="rq5" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">5. ShelveLoc has 3 categories (Bad, Medium, Good). How many dummy variables does R create?</p>
+    <label class="rquiz-option"><input type="radio" name="rq5" value="a"> 3 — one for each category.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq5" value="b"> 2 — one less than the number of categories (k − 1).</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq5" value="c"> 1 — one binary variable for all categories.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq5" value="d"> 0 — categorical variables cannot be used in lm().</label>
+    <div class="rquiz-feedback" id="rfb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="rquiz-q" id="rq6" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">6. In multiple regression, when Hits and Years are both included, the Hits slope changes compared to the simple regression. Why?</p>
+    <label class="rquiz-option"><input type="radio" name="rq6" value="a"> A computational error — the slope should not change.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq6" value="b"> Each slope in multiple regression reflects a predictor's unique contribution holding others constant — the shared variance between predictors shifts the estimates.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq6" value="c"> Adding Years makes Hits more significant.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq6" value="d"> The dataset changes when more predictors are added.</label>
+    <div class="rquiz-feedback" id="rfb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="rquiz-q" id="rq7" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">7. To run a regression on all predictors in HittersNum except Runs, you would write:</p>
+    <label class="rquiz-option"><input type="radio" name="rq7" value="a"> <code>lm(Salary ~ all - Runs, data = HittersNum)</code></label><br>
+    <label class="rquiz-option"><input type="radio" name="rq7" value="b"> <code>lm(Salary ~ . - Runs, data = HittersNum)</code></label><br>
+    <label class="rquiz-option"><input type="radio" name="rq7" value="c"> <code>lm(Salary ~ ., data = HittersNum, exclude = "Runs")</code></label><br>
+    <label class="rquiz-option"><input type="radio" name="rq7" value="d"> <code>lm(Salary - Runs ~ ., data = HittersNum)</code></label>
+    <div class="rquiz-feedback" id="rfb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="rquiz-q" id="rq8" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">8. A VIF score of 14.8 for a predictor means:</p>
+    <label class="rquiz-option"><input type="radio" name="rq8" value="a"> The predictor explains 14.8% of the variance in Y.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq8" value="b"> The predictor is highly correlated with other predictors — its coefficient estimate is unreliable.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq8" value="c"> The predictor should be kept because it has a large effect.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq8" value="d"> The predictor has 14.8 times more variance than the others.</label>
+    <div class="rquiz-feedback" id="rfb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="rquiz-q" id="rq9" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">9. In <code>lm(Salary ~ Hits * Years, data = Hitters)</code>, what does the <code>*</code> produce?</p>
+    <label class="rquiz-option"><input type="radio" name="rq9" value="a"> Only the interaction term Hits:Years — not the direct effects.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq9" value="b"> The direct effects of Hits and Years plus the interaction term Hits:Years.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq9" value="c"> Hits multiplied by Years as a single new variable.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq9" value="d"> A two-way ANOVA instead of a regression.</label>
+    <div class="rquiz-feedback" id="rfb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="rquiz-q" id="rq10" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">10. A negative interaction slope between two positive predictors means:</p>
+    <label class="rquiz-option"><input type="radio" name="rq10" value="a"> One predictor cancels out the other entirely.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq10" value="b"> As both predictors increase together, the effect each has on the outcome becomes smaller — the relationship flattens at the high end.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq10" value="c"> The model is not significant.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq10" value="d"> The interaction variable needs to be recoded before interpretation.</label>
+    <div class="rquiz-feedback" id="rfb10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="rquiz-q" id="rq11" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">11. The Credit gender model returns a non-significant p-value. The correct conclusion is:</p>
+    <label class="rquiz-option"><input type="radio" name="rq11" value="a"> Remove gender from the dataset — it is not a useful variable.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq11" value="b"> Gender has no statistically significant effect on credit limit — we fail to reject the null that the slope is zero.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq11" value="c"> The model failed to run correctly.</label><br>
+    <label class="rquiz-option"><input type="radio" name="rq11" value="d"> A non-significant result means gender is negatively related to credit limit.</label>
+    <div class="rquiz-feedback" id="rfb11"></div>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; gap:1rem; margin-top:1.5rem; align-items:center; flex-wrap:wrap;">
+    <button id="rquiz-prev" onclick="rquizNav(-1)" style="display:none; padding:0.5rem 1.2rem; background:#6c757d; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">← Previous</button>
+    <button id="rquiz-next" onclick="rquizNav(1)" style="padding:0.5rem 1.2rem; background:#4a90d9; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">Next →</button>
+    <button id="rquiz-submit" onclick="rsubmitQuiz()" style="display:none; padding:0.5rem 1.4rem; background:#27ae60; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem; font-weight:600;">Submit Quiz</button>
+  </div>
+
+  <div id="rquiz-score" style="display:none; margin-top:1.5rem; padding:1rem 1.5rem; border-radius:6px; font-size:1rem;"></div>
+</div>
+
+<style>
+.rquiz-option { display:block; margin:0.4rem 0; cursor:pointer; padding:0.4rem 0.6rem; border-radius:4px; transition:background 0.15s; color:#1a1a1a; }
+.rquiz-option:hover { background:#ddeeff; border:1px solid #2c6fad; }
+.rquiz-feedback { margin-top:0.8rem; padding:0.6rem 1rem; border-radius:5px; font-size:0.9rem; display:none; }
+.rcorrect-fb { background:#d4edda; color:#155724; border-left:4px solid #27ae60; }
+.rincorrect-fb { background:#f8d7da; color:#721c24; border-left:4px solid #e74c3c; }
+</style>
+
+<script>
+const rAnswers = {
+  rq1:'b', rq2:'b', rq3:'b', rq4:'b', rq5:'b',
+  rq6:'b', rq7:'b', rq8:'b', rq9:'b', rq10:'b', rq11:'b'
+};
+const rHints = {
+  rq1:  "A positive slope means Y increases as X increases. In regression, the sign of the slope tells you the direction of the relationship. Correlation ≠ causation.",
+  rq2:  "R² (coefficient of determination) is the proportion of variance in Y explained by X. 0.24 means 24% of the variability in Salary is accounted for by Hits alone.",
+  rq3:  "confint() returns a confidence interval around each estimated coefficient — slope and intercept. It does not test significance; it quantifies precision.",
+  rq4:  "The intercept in a regression with a categorical predictor is the predicted mean for the reference category — whichever level R excluded (here, Bad).",
+  rq5:  "R creates k − 1 dummy variables to avoid perfect multicollinearity. With 3 categories, that is 2 dummies. The dropped category becomes the reference.",
+  rq6:  "In multiple regression, each slope is a partial coefficient — the effect of that predictor holding all others constant. Hits and Years share variance (experienced players tend to have more career hits), so adding one shifts the other's slope.",
+  rq7:  "The dot (.) includes all columns as predictors. Subtracting a variable with .- removes it. This is the standard syntax for backward selection one variable at a time.",
+  rq8:  "VIF measures how much a predictor's variance is inflated by correlation with other predictors. VIF ≥ 10 indicates severe multicollinearity — coefficients become unstable.",
+  rq9:  "The * operator in lm() expands to both main effects and the interaction: Hits + Years + Hits:Years. To include only the interaction term without main effects, use : instead.",
+  rq10: "A negative interaction between two positive predictors means their combined effect diminishes — each variable's positive influence on Y weakens as the other increases.",
+  rq11: "A non-significant p-value means we fail to reject H₀ that the slope equals zero. It is a valid finding — not an error. It means the data provides no evidence that gender predicts credit limit."
+};
+let rcurrent = 1;
+const rtotal = 11;
+
+function rquizNav(dir) {
+  document.getElementById('rq' + rcurrent).style.display = 'none';
+  rcurrent += dir;
+  document.getElementById('rq' + rcurrent).style.display = 'block';
+  document.getElementById('rquiz-progress').textContent = 'Question ' + rcurrent + ' of ' + rtotal;
+  document.getElementById('rquiz-prev').style.display = rcurrent > 1 ? 'inline-block' : 'none';
+  document.getElementById('rquiz-next').style.display = rcurrent < rtotal ? 'inline-block' : 'none';
+  document.getElementById('rquiz-submit').style.display = rcurrent === rtotal ? 'inline-block' : 'none';
+}
+
+function rsubmitQuiz() {
+  let score = 0;
+  for (let i = 1; i <= rtotal; i++) {
+    const sel = document.querySelector('input[name="rq' + i + '"]:checked');
+    const fb  = document.getElementById('rfb' + i);
+    document.getElementById('rq' + i).style.display = 'block';
+    if (sel && sel.value === rAnswers['rq' + i]) {
+      score++;
+      fb.className = 'rquiz-feedback rcorrect-fb';
+      fb.textContent = '✓ Correct! ' + rHints['rq' + i];
+    } else {
+      fb.className = 'rquiz-feedback rincorrect-fb';
+      fb.textContent = '✗ ' + (sel ? 'Not quite. ' : 'No answer selected. ') + rHints['rq' + i];
+    }
+    fb.style.display = 'block';
+  }
+  document.getElementById('rquiz-prev').style.display = 'none';
+  document.getElementById('rquiz-next').style.display = 'none';
+  document.getElementById('rquiz-submit').style.display = 'none';
+  document.getElementById('rquiz-progress').textContent = 'Quiz complete';
+  const sd = document.getElementById('rquiz-score');
+  const pct = Math.round((score / rtotal) * 100);
+  sd.style.display = 'block';
+  sd.style.background = pct >= 70 ? '#d4edda' : '#fff3cd';
+  sd.style.borderLeft  = pct >= 70 ? '4px solid #27ae60' : '4px solid #f39c12';
+  sd.style.color        = pct >= 70 ? '#155724' : '#856404';
+  sd.innerHTML = '<strong>Your Score: ' + score + ' / ' + rtotal + ' (' + pct + '%)</strong><br>' +
+    (pct === 100 ? 'Excellent work — perfect score!' :
+     pct >= 70  ? 'Good work! Review any missed questions above.' :
+                  'Keep reviewing the lesson material above, then try again.');
+}
+</script>
+```
+
+::: {.callout-note}
+No need to submit this quiz anywhere. This exercise is for your benefit to help you learn R. 
+:::
+
+
+## Summary
+
+This lesson covered simple linear regression, multiple regression, and regression with categorical variables:
+
+| Topic | Key concepts |
+|------------------------------------|------------------------------------|
+| Simple linear regression | `lm()`, slope ($b_1$), intercept ($b_0$), regression equation $\hat{y} = b_0 + b_1 x$ |
+| Goodness of fit | RSE (Residual Standard Error), R², Adjusted R² |
+| Sum of squares | SSE (unexplained), SSR (explained), SST (total) |
+| F-test | Overall model significance; ratio of explained to unexplained variance |
+| Coefficient t-tests | Individual predictor significance; slope = 0 vs. slope ≠ 0 |
+| Predictions | `predict()`, `coef()` |
+| Multiple regression | Two or more predictors, partial regression coefficients, holding others constant |
+| Variable selection | P-value method: remove highest p-value iteratively; monitor Adjusted R² |
+| Multicollinearity | `vif()` from `car` package; VIF \< 5 passes, VIF ≥ 10 fails |
+| Dummy variables | Categorical predictors as binary indicators; reference category held in intercept |
+| Multi-category dummies | k − 1 dummy variables for k categories; R handles automatically in `lm()` |
+| Predictions with categorical variables | `predict()` with `data.frame()` specifying category as character string |
+
+**What comes next:** The final lesson in this course brings together the two threads that have run throughout — statistical reasoning and generative AI. You will learn how to evaluate data visualizations critically using Kaiser Fung's Trifecta Checkup, apply the same reasoning-error framework to AI-generated charts, and use prompt engineering to build and critique visualizations from the datasets you have worked with all semester. The regression concepts from this lesson appear directly in that work: R² and model fit, correlation vs. causation, and the distinction between a chart that describes a relationship and one that implies it causes something.

@@ -1,9 +1,12 @@
 project:
   type: book
   output-dir: docs
+  resources: 
+     - favicon.ico
 
+        
 book:
-  title: "Probability And Business Statistics"
+  title: "Probability and Business Statistics"
   author: "Pamela Schlosser"
   date: "4/15/2026"
   search: true
@@ -28,6 +31,15 @@ format:
     number-sections: false
     include-in-header: custom-head.html
     favicon: favicon.ico
+webr:
+  packages:
+    - ggplot2
+    - dplyr
+    - ISLR
+    
+filters:
+  - webr
 
 
-editor: visual
+    
+editor: source

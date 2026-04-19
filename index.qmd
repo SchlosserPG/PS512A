@@ -1,5 +1,5 @@
 ---
-title: "Module 0: Software Know-How"
+title: "Software Know-How"
 author: ""
 date: "2024-08-09"
 output: html_document
@@ -7,7 +7,7 @@ output: html_document
 
 # Why R?
 
--   In an OMSBA Probability and Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
+-   In an Business Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.
 
 -   R is a mature, industry-standard statistical language used across academia, healthcare, finance, and data science. R scripts document exactly what was done to the data — making your analysis reproducible, auditable, and gradable.
 
@@ -242,7 +242,7 @@ ggplot(mpg, aes(x=displ, y=hwy)) + geom_point()
 
 -   RMarkdown requires updated packages for formatting and when saving as .pdf documents, a latex extension is also required so that it properly reads the formulas in the problems. Download the .R file on Canvas and follow the instructions provided to use RMarkdown. You may also watch the tutorial video on Canvas for specific information on how to set up R Markdown Files.
 
-![Looking at the HW](Pictures/RMD/RMDTasks.png)
+![Looking at the HW](Pictures/Ch0/RMDTasks.png "RMD Tasks")
 
 -   To use RMarkdown most efficiently, make sure your version of R is the latest by checking the website. If it is not, then take the time to get the latest version of the software. Second, make sure your files are not on the cloud, including OneDrive. If so, then decouple at least your desktop with OneDrive so you can work off the cloud. Finally, run the lines below one at a time. Once the packages are done installing, then restart your computer. Finally, open RStudio and run a blank RMarkdown file. If this file knits, then your homework should knit as long as there are no other errors.
 

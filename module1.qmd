@@ -5,27 +5,45 @@ date: "2024-08-09"
 format: html
 ---
 
--   The goal of this lesson is to introduce you to R and RStudio while teaching you how to perform data preparation using these tools. In this part, we will go over forming an understanding of statistics, learning about observations and variables, and being able to move around and get comfortable with R. I will also teach you how use and load data.
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
+This lesson introduces R and RStudio — the statistical computing environment used throughout this course. By the end, you will be able to navigate RStudio, write and run R code, create and name objects, load data from external files, understand R's core data types, and handle missing values.
+
+We begin with **the foundations of statistics and AI**: what descriptive and inferential statistics are, where AI fits into each branch, and what it means to be fluent in R in an age when AI can write code on demand. Understanding the "why" behind each command is what separates an analyst from someone who just runs code.
+
+We then move to **setting up and using R**: creating script files, writing comments and a prolog, performing arithmetic, assigning values to objects, naming those objects consistently, working with built-in functions, installing and loading packages, and troubleshooting errors. These are the mechanical building blocks every subsequent lesson relies on.
+
+The lesson continues with **entering and loading data**: building vectors, matrices, and data frames from scratch, setting a working directory, and reading in external files with `read.csv()` and `read_csv()`. Understanding the difference between absolute and relative file paths — and why relative paths are preferred — is a practical skill that prevents a large share of beginner errors.
+
+We close with two critical data-quality topics: **data types** and **missing data**. R assigns a type to every variable — factor, numeric, integer, character, logical, or date — and the wrong type causes silent errors that look fine but produce wrong results. Missing data is equally common in real datasets and requires a deliberate strategy: omit, impute, or handle with `na.rm`. Neither topic is glamorous, but both are essential before any analysis can be trusted.
+
+By the end of this lesson, you should be comfortable writing and running basic R code, loading a dataset, checking and correcting variable types, and identifying and handling missing values. Work through every code example in your own `.R` script file alongside the reading.
+
 ### At a Glance
 
--   In order to succeed in this lesson, you will need to start by having both R and RStudio downloaded. Then, the only way to learn R is to use it in various ways and to practice as much as you can.
--   It is also important to note that this is a statistics class and that R is a statistical computing software. Because of that, we need to not only pay attention to what we are typing in, but understand why we are typing it in the ways suggested, and also how we could do it differently to get similar if not the same results.
+-   In order to succeed in this lesson, you will need to have both R and RStudio downloaded and open. The only way to learn R is to use it — type every code example yourself rather than just reading it. Pay attention not just to *what* you are typing but *why* the code is written that way, and what other forms would produce the same result.
+-   This is a statistics course, and R is a statistical computing tool. The two are inseparable here. Every command you learn connects to a statistical concept, and understanding that connection is what makes the code meaningful rather than mechanical.
 
 ### Lesson Objectives
 
--   Be Introduced to R and R Studio.
--   Set up R and R Studio.
--   Use basic Built-in Functions in R.
--   Enter and load data into R.
+-   Explain the difference between descriptive and inferential statistics and identify where AI assists versus where human judgment is required.
+-   Create and run an R script file with a prolog, comments, and code.
+-   Assign values to objects using the `<-` operator and follow consistent naming conventions.
+-   Use built-in functions with single and multiple arguments, including default values.
+-   Install and load packages; access functions using the `library::function()` syntax.
+-   Troubleshoot common R errors using a systematic approach.
+-   Create vectors, matrices, and data frames from scratch.
+-   Set a working directory and load data using `read.csv()` and `read_csv()`.
+-   Identify and correct variable data types using `str()`, `class()`, and coercion functions.
+-   Handle missing values using `na.rm`, `is.na()`, `na.omit()`, and `drop_na()`.
 
 ### Consider While Reading
 
--   This material is so important because it is likely the start of your R journey and will provide the groundwork for learning a modern approach to calculating statistics. R has a fairly steep learning curve, but, once you are over it, it becomes fairly easy to figure out new things. It is important to make connections to what we are doing and why we are doing it a certain way. There are rules to learning R, and you will get better with constant practice. Try to avoid just typing in code. Instead, determine why the code was typed the way it was and try to figure out all the other ways the code could also be typed to get the same answer. Practice, practice, practice!
+-   R has a steep learning curve, but the curve flattens fast once you start recognising patterns. Every error message is information — read it before asking AI to fix it. Every function has a help page — check it before guessing at arguments.
+-   As you read, notice how the lesson is structured as a workflow: set up → write code → create data → load data → fix types → handle missing values. Each section is a prerequisite for the next. By the time you reach missing data, you will have seen every piece needed to make sense of it.
+-   AI tools like ChatGPT and GitHub Copilot can write R code for you. The goal of this lesson is to build enough understanding that you can *read, verify, and own* that code — not just run it and hope for the best.
 
 ## What is Statistics?
 
@@ -106,6 +124,10 @@ R figures out a variable's data type automatically based on whatever you assign 
 -   Writing functions
 -   Prompting and verifying AI-generated code
 
+------------------------------------------------------------------------
+
+With the statistical and conceptual framing in place, the next step is getting R and RStudio ready to use. This section covers how to create and organise your script files — the foundation of reproducible, documented work in R.
+
 # Setting up R
 
 ## R Script Files
@@ -123,6 +145,10 @@ R figures out a variable's data type automatically based on whatever you assign 
 -   For each new module, start a new file and save it to your project folder.
 
 ![Screenshot of R Environment](Pictures/Ch1/RScript.png "Screenshot of R Environment")
+
+------------------------------------------------------------------------
+
+With R installed and a script file open, it is time to start writing code. This section introduces the core mechanics of the R language: comments, arithmetic, objects, naming conventions, built-in functions, packages, and how to troubleshoot when something goes wrong.
 
 # Using R
 
@@ -322,6 +348,15 @@ G123AB <- "Allowed?"
 kStates <- 29 
 ```
 
+The naming conventions above can be summarised as:
+
+| Object type | Convention | Example |
+|------------------------|------------------------|------------------------|
+| Constant (single value) | `k` + CamelCase | `kStates`, `kMaxRetries` |
+| Function | CamelCase, first letter capitalised | `MultiplyByTwo`, `CleanData` |
+| Variable / column | dot.case or camelCase | `filled.script.month`, `filledScriptMonth` |
+| Dataset / data frame | Short, lowercase or camelCase | `gig`, `gss.2016`, `potLegal` |
+
 -   Different R coders have different preferences, but consistency is key in making sure your code is easy to follow and for others to read. In this course, we will generally use the recommendation in the text which are listed above.
 -   We tend to use one letter variable names (i.e., x) for placeholders or for simple functions (like naming a vector).
 
@@ -498,6 +533,10 @@ library(tidyverse)                # this is all you need going forward
     -   Silent Error: Code runs but gives wrong output (Dangerous – easy to miss)
     -   The second type is the more important one to develop instincts for. AI is particularly prone to silent errors — it will produce output that looks correct but isn't. Always sanity-check results against what you expect.
 
+------------------------------------------------------------------------
+
+With the language mechanics established, the next step is creating data structures directly in R. Before you read in real datasets, understanding how vectors, matrices, and data frames are built from scratch gives you a mental model of how R stores and organises data.
+
 # Entering Data in R
 
 ## Creating a Vector
@@ -529,6 +568,15 @@ seq(from=0,to= 30,by=5) #Creates a sequence vector from 0 to 30 in increments on
 rep(x=1:3,times=4) #Repeat the elements of the vector 4 times
 rep(x=1:3, each=3) #Repeat the elements of a vector 3 times each
 ```
+
+The four main ways to create a vector in R:
+
+| Function | Purpose                   | Example             | Result        |
+|----------|---------------------------|---------------------|---------------|
+| `c()`    | Combine any values        | `c(1, 2, 3)`        | `1 2 3`       |
+| `:`      | Integer sequence          | `1:5`               | `1 2 3 4 5`   |
+| `seq()`  | Custom sequence with step | `seq(0, 30, 5)`     | `0 5 10 … 30` |
+| `rep()`  | Repeat elements           | `rep(1:3, times=2)` | `1 2 3 1 2 3` |
 
 ## Creating a Matrix
 
@@ -633,6 +681,10 @@ nrow(pot.legal)
 dim(pot.legal)
 ```
 
+------------------------------------------------------------------------
+
+You can build data manually, but most real analysis starts with loading an external file. Before reading data into R, you need to understand where R looks for files — which is what working directories and file paths control.
+
 # Working Directories
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Hem4uoChTfU?si=y6maq2PDItpJ-ufL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
@@ -671,6 +723,13 @@ dim(pot.legal)
 -   Cons
     -   Requires setting the working directory correctly (getwd() and setwd() can help).
 
+|   | Absolute path | Relative path |
+|------------------------|------------------------|------------------------|
+| **Example** | `"C:/Users/pam/Documents/data.csv"` | `"data/data.csv"` |
+| **Starts from** | Root of the file system | Current working directory |
+| **Portability** | Breaks on any other machine | Works on any machine with the same folder structure |
+| **Best for** | Quick personal scripts | Shared projects, submitted work |
+
 ## Setting up a Working Directory
 
 -   You should have the data files from our LMS in a data folder on your computer. Your project folder would contain that data folder.
@@ -690,6 +749,10 @@ getwd() #Alerts you to what folder you are currently set to as your working dire
 -   Or if in a project, like we should be, you can click the More tab as shown in the Figure below, and set your project folder as your working directory.
 
 ![Setting Your Working Directory](Pictures/Ch1/WorkingDir.png "Setting Your Working Directory")
+
+------------------------------------------------------------------------
+
+With your working directory set and file paths understood, you are ready to load real datasets. This section covers the most common ways to bring data into R, from built-in datasets to CSV files from your computer.
 
 # Reading in Data
 
@@ -760,6 +823,15 @@ summary(object = gss.2016)
 summary(gss.2016) 
 ```
 
+|   | `read.csv()` | `read_csv()` |
+|------------------------|------------------------|------------------------|
+| **Package** | Base R — no library needed | `readr` (part of tidyverse) |
+| **Speed** | Adequate for small files | Faster on large datasets |
+| **Strings** | Converts to factors unless `stringsAsFactors=FALSE` | Keeps as character by default |
+| **Output** | `data.frame` | `tibble` (a tidyverse-enhanced data frame) |
+| **Error messages** | Minimal | More informative |
+| **Best for** | Quick reads, base R workflows | Tidyverse projects, large files |
+
 ## read_csv() function
 
 -   read_csv() is a function from the readr package, which is part of the tidyverse ecosystem.
@@ -791,6 +863,10 @@ head(Insurance$Claims) #lists the first 6 Claims in the Insurance dataset.
 sd(Insurance$Claims) #provides the standard deviation of all Claims in the Insurance dataset.
 ```
 
+------------------------------------------------------------------------
+
+Once data is loaded, the first thing to do is examine it. The `summary()` and `summarize()` functions give you an immediate overview of what is in the dataset before any deeper analysis begins.
+
 # Summarize Data
 
 -   In R, summary() and summarize() serve different purposes. summary() is part of base R and gives a quick overview of data, returning descriptive statistics for each column. For example, summary(mtcars) provides the min, max, median, and mean for numeric columns and counts for factors. It’s useful for a broad snapshot of your dataset.
@@ -808,6 +884,8 @@ summary(object = Insurance)
 ```{r}
 summary(Insurance)
 ```
+
+------------------------------------------------------------------------
 
 # Explicit Use of Libraries
 
@@ -830,6 +908,10 @@ dplyr::summarize(Insurance, mean(Holders))
 library(dplyr)
 summarize(Insurance, mean(Holders))
 ```
+
+------------------------------------------------------------------------
+
+Reading data into R is only the first step — R must also interpret each column correctly. A number stored as text will not calculate. A category stored as a number will not group. This section covers R's five core data types, how to detect them, and how to fix them when they are wrong.
 
 ## Data Types in R
 
@@ -1143,6 +1225,10 @@ UseDate2022 <- filter(UseDates, year==2022)
 
 ```
 
+------------------------------------------------------------------------
+
+After fixing data types, the next common problem is missing values. Real datasets almost always have gaps — understanding what causes them and how to handle them is an essential part of any analysis workflow.
+
 # Handling Missing Data
 
 -   Missing data is a common issue in data analysis and can arise for various reasons, such as data collection errors, non-responses in surveys, or data corruption. In R, handling missing data is crucial to ensure accurate and reliable analysis. Missing values are typically represented by NA (Not Available) in R.
@@ -1163,6 +1249,12 @@ UseDate2022 <- filter(UseDates, year==2022)
 3.  Ignore your missing data if the function works without it.
 
     -   When you ignore missing data because your function works without it, the missing values are typically excluded from the calculations by default. In R, many functions, such as mean(), sum(), or lm(), have arguments like na.rm = TRUE to explicitly remove missing values during computation. Ignoring missing data can simplify the analysis, but it comes with potential consequences.
+
+| Strategy | When to use | R approach |
+|------------------------|------------------------|------------------------|
+| **Omit** | Few missing values; missingness is random | `na.omit()`, `drop_na()` |
+| **Impute** | Many missing values; can't afford to lose rows | Replace with mean/median/mode or a model |
+| **Ignore** | Function supports it and impact is minimal | `na.rm = TRUE` in `mean()`, `sd()`, etc. |
 
 -   The choice of approach depends on the nature of the missingness, which can be categorized as Missing Completely at Random, Missing at Random, or Missing Not at Random. Addressing missing data appropriately is essential to maintain the validity of statistical analyses and avoid biases.
 
@@ -1291,7 +1383,9 @@ summary(africa2)
     summary(airqual)
     ```
 
-# Using AI
+# Review and Practice
+
+## Using AI
 
 Use the following prompts on a generative AI, like chatGPT, to learn more about introductory topics.
 
@@ -1301,24 +1395,532 @@ Use the following prompts on a generative AI, like chatGPT, to learn more about 
 
 -   What happens when you assign the same variable multiple values in R? Write an example script that demonstrates this behavior and explains the output.
 
--   Create a script that demonstrates how to assign values to variables using both numeric and character data types. Then, explain how these assignments are stored in RStudio’s environment.
+-   Create a script that demonstrates how to assign values to variables using both numeric and character data types. Then, explain how these assignments are stored in RStudio's environment.
 
--   In R, what is the role of the assignment operator \<- Demonstrate its use by creating a few variables for numeric and character data types.
+-   In R, what is the role of the assignment operator `<-`? Demonstrate its use by creating a few variables for numeric and character data types.
 
--   Demonstrate how to create a vector in R using the c() function. Use this vector to perform basic operations like addition and multiplication.
+-   Demonstrate how to create a vector in R using the `c()` function. Use this vector to perform basic operations like addition and multiplication.
 
--   Write a script that reads a CSV file into R using read.csv(). Summarize the dataset and explain how the columns and rows are structured.
+-   Write a script that reads a CSV file into R using `read.csv()`. Summarize the dataset and explain how the columns and rows are structured.
 
--   How can you access specific columns of a data frame using the \$ operator? Provide an example using a sample dataset in R.
+-   How can you access specific columns of a data frame using the `$` operator? Provide an example using a sample dataset in R.
 
--   Explain how to use the summary() function in R to summarize a dataset. Write a script that loads a dataset and runs summary() on it.
+-   Explain how to use the `summary()` function in R to summarize a dataset. Write a script that loads a dataset and runs `summary()` on it.
 
 -   What is the difference between ordinal and nominal variables, and how can you recode these data types in R?
 
--   Explain the steps to coerce a character variable into a factor using the as.factor() function in R.
+-   Explain the steps to coerce a character variable into a factor using the `as.factor()` function in R.
 
--   What strategies can you use to handle missing data in R, and how does na.omit() differ from drop_na()?
+-   What strategies can you use to handle missing data in R, and how does `na.omit()` differ from `drop_na()`?
 
-# Summary
+## Intro Lab
 
--   In this lesson, we went over information to make sure you had some basics to really start learning R. There are a lot of ways to get the same things done in R; you have to find the way that works best for you. As we learn R, you will get used to doing things your way to be able to slice and evaluate the data to find rich information from the data sets we look at. As long as the data was handled properly, it does not matter how we reach our goal using R as long as we do it ourselves.
+Use the `gig.csv` and `gss2016.csv` datasets referenced in this lesson. Make sure `tidyverse` is loaded.
+
+**1.** Create a new `.R` script file with a prolog at the top. Include your name, today's date, the purpose of the file, and the datasets used. Then add a comment explaining what the assignment operator does, and assign the value `42` to an object called `answer`. Print it two ways — using `print()` and by typing the object name alone.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+``` r
+####################################
+# Project name: Intro Lab
+# Project purpose: Practice basic R from the Intro lesson
+# Code author name: [Your Name]
+# Date last edited: [Today's Date]
+# Data used: gig.csv, gss2016.csv
+# Libraries used: tidyverse
+####################################
+
+# The <- operator assigns the value on the right to the object on the left
+answer <- 42
+
+print(answer)   # explicit print
+answer          # implicit print — R prints the value when you type the name
+```
+
+Both lines produce `[1] 42`. The `[1]` is R's way of indicating this is the first (and only) element of the result. Note that `print()` is rarely needed in a script — typing the object name is idiomatic R.
+:::
+
+**2.** Create the following three vectors and combine them into a data frame called `employees`. Then use `ncol()`, `nrow()`, and `dim()` to confirm its shape.
+
+-   `name`: "Alice", "Bob", "Carol"
+-   `department`: "Finance", "HR", "Finance"
+-   `salary`: 72000, 58000, 81000
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+``` r
+name       <- c("Alice", "Bob", "Carol")
+department <- c("Finance", "HR", "Finance")
+salary     <- c(72000, 58000, 81000)
+
+employees <- data.frame(name, department, salary)
+
+ncol(employees)   # 3 — three variables
+nrow(employees)   # 3 — three observations
+dim(employees)    # 3 3
+```
+
+In a data frame, rows are observations (one row per employee) and columns are variables (name, department, salary). `dim()` returns both at once as `[rows, columns]`.
+:::
+
+**3.** Load `gig.csv` using `read.csv()` with `stringsAsFactors = TRUE` and `na.strings = ""`. Run `str()` on the result. List every variable, its type as R loaded it, and whether the type is correct for what the variable represents.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+``` r
+gig <- read.csv("data/gig.csv", stringsAsFactors = TRUE, na.strings = "")
+str(gig)
+```
+
+Expected output will vary by dataset, but the evaluation follows this logic:
+
+| Variable | Type R assigned | Correct? | Notes |
+|----|----|----|----|
+| EmployeeID | integer | ✅ | Whole-number ID — integer is fine |
+| Industry | factor | ✅ | Categorical — factor is correct |
+| Job | factor | ✅ | Categorical — factor is correct |
+| Wage | numeric | ✅ | Continuous measurement — numeric is correct |
+
+Any variable showing `chr` (character) that represents a category needs `as.factor()`. Any numeric field that loaded as `chr` needs `as.numeric()` — always check for NAs introduced by coercion.
+:::
+
+**4.** Using the `gig` dataset, identify the total number of missing values in the entire dataset, then count the missing values in the `Wage` column specifically. Use two different approaches for the column count.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+``` r
+# Total NAs in the entire dataset
+sum(is.na(gig))
+
+# NAs in Wage — approach 1: sum of logical vector
+sum(is.na(gig$Wage))
+
+# NAs in Wage — approach 2: count rows where Wage is NA
+nrow(gig[is.na(gig$Wage), ])
+```
+
+`is.na()` returns `TRUE` for each missing value. `sum()` treats `TRUE` as 1 and `FALSE` as 0, so the total is a count of NAs. The two approaches for `Wage` give the same answer — the first is more concise, the second makes the filtering logic explicit.
+:::
+
+**5.** Load `gss2016.csv`. Fix the two known type problems: coerce `grass` to a factor, and recode `"89 OR OLDER"` in the `age` column to `"89"` before converting `age` to numeric. Confirm both fixes with `class()`.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+``` r
+gss.2016 <- read.csv("data/gss2016.csv")
+
+# Fix 1: grass should be a factor, not character
+gss.2016$grass <- as.factor(gss.2016$grass)
+class(gss.2016$grass)   # "factor"
+
+# Fix 2: age has a text entry that blocks numeric coercion
+gss.2016$age <- recode(gss.2016$age, "89 OR OLDER" = "89")
+gss.2016$age <- as.numeric(gss.2016$age)
+class(gss.2016$age)     # "numeric"
+```
+
+Why does the order matter for `age`? `as.numeric()` cannot convert `"89 OR OLDER"` — it would return `NA` and you would silently lose data. Recoding first, then converting, preserves the value. Always recode text anomalies before numeric coercion and check `sum(is.na(gss.2016$age))` afterwards to confirm no NAs were introduced unexpectedly.
+:::
+
+**6.** The three strategies for handling missing data are omit, impute, and ignore. For each scenario below, identify the most appropriate strategy and explain why.
+
+-   
+
+    a.  A survey dataset has 2 rows out of 500 with missing income values. The analysis does not focus on income specifically.
+
+-   
+
+    b.  A clinical dataset tracks pregnancy-related complications. The variable "number of previous pregnancies" is missing for all male patients.
+
+-   
+
+    c.  You are computing the mean satisfaction score for a customer survey. A few respondents left the question blank.
+
+::: {.callout-note collapse="true"}
+### Show Answer
+
+-   **a. Ignore (or omit).** With only 2 missing rows out of 500 and income not being the focus, using `na.rm = TRUE` when income appears in calculations is sensible. Omitting those 2 rows entirely would also be defensible — the impact on results is negligible.
+
+-   **b. Neither omit nor impute — investigate first.** Removing all male rows would introduce severe selection bias, distorting the entire analysis. The missing values are *systematically* missing (not random), and the variable may simply not apply to part of the population. The right approach is to understand the data structure and consider whether this variable should be included at all, or whether a subset analysis is more appropriate.
+
+-   **c. Ignore with `na.rm = TRUE`.** For a straightforward mean calculation, `mean(data$satisfaction, na.rm = TRUE)` is appropriate. The missing values represent non-responses, which are common in surveys. If a large proportion of responses were missing, further investigation would be warranted — but for a few blanks, `na.rm` is the practical and defensible choice.
+:::
+
+## Interactive R Lesson: Creating and Loading Data {#interactive-intro-lesson}
+
+::: {.callout-note}
+This lesson walks through creating and loading data in R. You can run real R code directly in the browser — no installation needed. Work through each section in order, then test yourself with the scored quiz at the bottom.
+
+**First-time load:** The interactive R environment may take 10–20 seconds to initialize on your first visit. Once the Run Code buttons become active, you are ready to go.
+:::
+
+```{webr-r}
+#| label: intro-setup
+#| context: setup
+
+```
+
+------------------------------------------------------------------------
+
+### Part 1: Creating Vectors
+
+A vector is the simplest data structure in R — a set of data elements saved together as the same type.
+
+**Create a numeric vector using the `:` shortcut:**
+
+```{webr-r}
+myVector <- 1:10
+myVector
+length(myVector)
+```
+
+::: {.callout-tip}
+`1:10` is shorthand for `c(1, 2, 3, ..., 10)`. The `length()` function counts the number of elements. You do not need `c()` when using `:`.
+:::
+
+**Create a character vector of employee names:**
+
+```{webr-r}
+employees <- c("Alice", "Bob", "Cathy", "David")
+employees
+```
+
+::: {.callout-tip}
+Double quotes tell R that something is a character string. Single quotes also work — just be consistent with whichever you open with.
+:::
+
+**Generate random normal data with `rnorm()` and control reproducibility with `set.seed()`:**
+
+```{webr-r}
+# 20 random numbers, mean 0, sd 1
+x <- rnorm(20)
+x
+
+# 20 random numbers, mean 50, sd 0.5
+y <- rnorm(20, mean = 50, sd = 0.5)
+y
+```
+
+```{webr-r}
+# set.seed() makes random results reproducible
+set.seed(1303)
+x <- rnorm(20)
+mean(x)
+var(x)
+```
+
+::: {.callout-note}
+`set.seed()` fixes the random number generator so you and your instructor get the same values. Without it, `rnorm()` produces different numbers every run. This is especially important when checking your work against provided answers.
+:::
+
+------------------------------------------------------------------------
+
+### Part 2: Creating a Matrix
+
+A matrix is a rectangular data structure with rows and columns — but unlike a data frame, all elements must be the same type.
+
+**Create a 2×2 matrix three equivalent ways:**
+
+```{webr-r}
+# Full argument names
+x <- matrix(data = c(1, 2, 3, 4), nrow = 2, ncol = 2)
+x
+
+# Without argument names (same order)
+x <- matrix(c(1, 2, 3, 4), 2, 2)
+x
+
+# Using : shortcut
+x <- matrix(1:4, 2, 2)
+x
+```
+
+::: {.callout-tip}
+Notice how R fills the matrix — column by column, top to bottom. Value 1 goes in row 1 col 1, then 2 in row 2 col 1, then 3 in row 1 col 2, and so on.
+:::
+
+**Create a 4×5 matrix and add row/column labels:**
+
+```{webr-r}
+myMatrix <- matrix(1:20, nrow = 4, ncol = 5)
+myMatrix
+
+# Fill across rows instead of down columns
+m <- matrix(1:9, 3, 3, byrow = TRUE)
+dimnames(m) <- list(c("2020", "2021", "2022"), c("low", "medium", "high"))
+m
+```
+
+------------------------------------------------------------------------
+
+### Part 3: Creating a Data Frame
+
+A data frame is R's core tabular structure — rows are observations, columns are variables, and each column can hold a different data type.
+
+**Build a data frame from scratch:**
+
+```{webr-r}
+state    <- c("Alaska", "Arizona", "Arkansas")
+year     <- c(1998, 2010, 2016)
+state_lim <- c(1, 2.5, 3)
+
+state_legal <- data.frame(state, year, state_lim)
+state_legal
+```
+
+**Build a data frame from random data:**
+
+```{webr-r}
+set.seed(1303)
+x  <- rnorm(20)
+y  <- rnorm(20, mean = 50, sd = 0.5)
+df <- data.frame(x, y)
+head(df)
+```
+
+::: {.callout-tip}
+`head()` shows the first 6 rows — useful for a quick check without printing the entire data frame.
+:::
+
+------------------------------------------------------------------------
+
+### Part 4: Loading Built-in Data and the Auto Dataset
+
+R includes many built-in datasets you can load with `data()`. The `mtcars` dataset is part of base R — no package needed.
+
+**Load and explore mtcars:**
+
+```{webr-r}
+data("cars")
+summary(cars)
+```
+
+**Load and explore the Auto dataset from ISLR:**
+
+```{webr-r}
+#| label: load-auto
+# In a .R file you would use: library(ISLR); data(Auto)
+# In WebR we access it directly from the package using :: so no library() call is needed
+Auto <- ISLR::Auto
+summary(Auto)
+```
+
+```{webr-r}
+dim(Auto)
+head(Auto)
+names(Auto)
+mean(Auto$mpg)
+```
+
+::: {.callout-note}
+`dim()` returns the number of rows and columns. `names()` lists all variable names — useful when you cannot remember exact spelling. `dataset$variable` is how you access a single column.
+:::
+
+------------------------------------------------------------------------
+
+## Scored Quiz: Introduction to R {#intro-quiz}
+
+```{=html}
+<div id="ps512-intro-quiz" style="font-family: Georgia, serif; max-width: 720px; margin: 2rem auto; background: #fafaf8; border: 1px solid #ddd; border-radius: 8px; padding: 2rem;">
+
+  <h3 style="margin-top:0; font-size:1.2rem; background:#2c6fad; color:#ffffff; padding:0.8rem 1.2rem; border-radius:6px 6px 0 0; margin:-2rem -2rem 1.5rem -2rem;">
+    Introduction to R Quiz
+  </h3>
+
+  <div id="iquiz-progress" style="font-size:0.85rem; color:#444; margin-bottom:1.5rem;">Question 1 of 8</div>
+
+  <!-- Q1 -->
+  <div class="iquiz-q" id="iq1" style="display:block">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">1. What is the difference between <code>myVector &lt;- 1:10</code> and <code>myVector &lt;- c(1,2,3,4,5,6,7,8,9,10)</code>?</p>
+    <label class="iquiz-option"><input type="radio" name="iq1" value="a"> They produce different results — <code>:</code> creates a matrix, <code>c()</code> creates a vector.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq1" value="b"> They produce identical results — <code>:</code> is just a shortcut for consecutive integers.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq1" value="c"> <code>c()</code> is required for all vectors; <code>:</code> only works for matrices.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq1" value="d"> <code>:</code> creates a character vector; <code>c()</code> creates a numeric vector.</label>
+    <div class="iquiz-feedback" id="ifb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="iquiz-q" id="iq2" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">2. What does <code>set.seed(1303)</code> do before calling <code>rnorm(20)</code>?</p>
+    <label class="iquiz-option"><input type="radio" name="iq2" value="a"> It sets the mean of the normal distribution to 1303.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq2" value="b"> It fixes the random number generator so the same 20 values are produced every run.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq2" value="c"> It limits the output to values between 0 and 1303.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq2" value="d"> It rounds all random numbers to the nearest integer.</label>
+    <div class="iquiz-feedback" id="ifb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="iquiz-q" id="iq3" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">3. How does R fill a matrix created with <code>matrix(1:4, 2, 2)</code>?</p>
+    <label class="iquiz-option"><input type="radio" name="iq3" value="a"> Across rows first — 1 and 2 fill row 1, then 3 and 4 fill row 2.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq3" value="b"> Down columns first — 1 and 2 fill column 1, then 3 and 4 fill column 2.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq3" value="c"> Diagonally from the top left.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq3" value="d"> Randomly — the order is not guaranteed.</label>
+    <div class="iquiz-feedback" id="ifb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="iquiz-q" id="iq4" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">4. What is the key difference between a matrix and a data frame in R?</p>
+    <label class="iquiz-option"><input type="radio" name="iq4" value="a"> A matrix can have more rows than a data frame.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq4" value="b"> A matrix requires all elements to be the same type; a data frame allows different types per column.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq4" value="c"> A data frame can only store numeric data.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq4" value="d"> There is no difference — they are interchangeable.</label>
+    <div class="iquiz-feedback" id="ifb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="iquiz-q" id="iq5" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">5. To add row and column labels to a matrix <code>m</code>, you would use:</p>
+    <label class="iquiz-option"><input type="radio" name="iq5" value="a"> <code>colnames(m)</code> and <code>rownames(m)</code> only.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq5" value="b"> <code>dimnames(m) &lt;- list(rowNames, colNames)</code></label><br>
+    <label class="iquiz-option"><input type="radio" name="iq5" value="c"> <code>labels(m) &lt;- list(rowNames, colNames)</code></label><br>
+    <label class="iquiz-option"><input type="radio" name="iq5" value="d"> <code>names(m) &lt;- c(rowNames, colNames)</code></label>
+    <div class="iquiz-feedback" id="ifb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="iquiz-q" id="iq6" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">6. What does <code>dim(Auto)</code> return?</p>
+    <label class="iquiz-option"><input type="radio" name="iq6" value="a"> The data types of each column.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq6" value="b"> The number of rows and columns — observations and variables.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq6" value="c"> A summary of all numeric variables.</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq6" value="d"> The first 6 rows of the dataset.</label>
+    <div class="iquiz-feedback" id="ifb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="iquiz-q" id="iq7" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">7. How do you access the <code>mpg</code> variable from the <code>Auto</code> dataset?</p>
+    <label class="iquiz-option"><input type="radio" name="iq7" value="a"> <code>Auto[mpg]</code></label><br>
+    <label class="iquiz-option"><input type="radio" name="iq7" value="b"> <code>Auto$mpg</code></label><br>
+    <label class="iquiz-option"><input type="radio" name="iq7" value="c"> <code>mpg(Auto)</code></label><br>
+    <label class="iquiz-option"><input type="radio" name="iq7" value="d"> <code>get(Auto, mpg)</code></label>
+    <div class="iquiz-feedback" id="ifb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="iquiz-q" id="iq8" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">8. What is the default mean and standard deviation of <code>rnorm(n)</code> when no arguments are specified?</p>
+    <label class="iquiz-option"><input type="radio" name="iq8" value="a"> Mean = 1, SD = 0</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq8" value="b"> Mean = 0, SD = 1</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq8" value="c"> Mean = 50, SD = 10</label><br>
+    <label class="iquiz-option"><input type="radio" name="iq8" value="d"> Mean and SD are always required arguments.</label>
+    <div class="iquiz-feedback" id="ifb8"></div>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; gap:1rem; margin-top:1.5rem; align-items:center; flex-wrap:wrap;">
+    <button id="iquiz-prev" onclick="iquizNav(-1)" style="display:none; padding:0.5rem 1.2rem; background:#6c757d; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">← Previous</button>
+    <button id="iquiz-next" onclick="iquizNav(1)" style="padding:0.5rem 1.2rem; background:#4a90d9; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">Next →</button>
+    <button id="iquiz-submit" onclick="isubmitQuiz()" style="display:none; padding:0.5rem 1.4rem; background:#27ae60; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem; font-weight:600;">Submit Quiz</button>
+  </div>
+
+  <div id="iquiz-score" style="display:none; margin-top:1.5rem; padding:1rem 1.5rem; border-radius:6px; font-size:1rem;"></div>
+</div>
+
+<style>
+.iquiz-option { display:block; margin:0.4rem 0; cursor:pointer; padding:0.4rem 0.6rem; border-radius:4px; transition:background 0.15s; color:#1a1a1a; }
+.iquiz-option:hover { background:#ddeeff; border:1px solid #2c6fad; }
+.iquiz-feedback { margin-top:0.8rem; padding:0.6rem 1rem; border-radius:5px; font-size:0.9rem; display:none; }
+.icorrect-fb { background:#d4edda; color:#155724; border-left:4px solid #27ae60; }
+.iincorrect-fb { background:#f8d7da; color:#721c24; border-left:4px solid #e74c3c; }
+</style>
+
+<script>
+const iAnswers = {
+  iq1:'b', iq2:'b', iq3:'b', iq4:'b', iq5:'b', iq6:'b', iq7:'b', iq8:'b'
+};
+const iHints = {
+  iq1: "1:10 is simply a shortcut for c(1,2,3,...,10). Both create identical integer vectors — the colon operator saves typing for consecutive integers.",
+  iq2: "set.seed() fixes the random number generator to a specific starting point. Anyone using the same seed gets the same sequence of random numbers.",
+  iq3: "R fills matrices column by column by default. To fill row by row instead, add byrow = TRUE to the matrix() call.",
+  iq4: "A matrix requires all elements to be the same type — usually numeric. A data frame is more flexible and allows each column to have its own type.",
+  iq5: "dimnames() sets both row and column names at once using a list. The first element names the rows, the second names the columns.",
+  iq6: "dim() returns a two-element vector: the number of rows (observations) followed by the number of columns (variables).",
+  iq7: "The $ operator extracts a single column from a data frame by name. Auto$mpg pulls the mpg column as a vector.",
+  iq8: "rnorm(n) defaults to mean = 0 and sd = 1 — the standard normal distribution. You only need to specify mean and sd when you want different values."
+};
+let icurrent = 1;
+const itotal = 8;
+
+function iquizNav(dir) {
+  document.getElementById('iq' + icurrent).style.display = 'none';
+  icurrent += dir;
+  document.getElementById('iq' + icurrent).style.display = 'block';
+  document.getElementById('iquiz-progress').textContent = 'Question ' + icurrent + ' of ' + itotal;
+  document.getElementById('iquiz-prev').style.display = icurrent > 1 ? 'inline-block' : 'none';
+  document.getElementById('iquiz-next').style.display = icurrent < itotal ? 'inline-block' : 'none';
+  document.getElementById('iquiz-submit').style.display = icurrent === itotal ? 'inline-block' : 'none';
+}
+
+function isubmitQuiz() {
+  let score = 0;
+  for (let i = 1; i <= itotal; i++) {
+    const sel = document.querySelector('input[name="iq' + i + '"]:checked');
+    const fb  = document.getElementById('ifb' + i);
+    document.getElementById('iq' + i).style.display = 'block';
+    if (sel && sel.value === iAnswers['iq' + i]) {
+      score++;
+      fb.className = 'iquiz-feedback icorrect-fb';
+      fb.textContent = '✓ Correct! ' + iHints['iq' + i];
+    } else {
+      fb.className = 'iquiz-feedback iincorrect-fb';
+      fb.textContent = '✗ ' + (sel ? 'Not quite. ' : 'No answer selected. ') + iHints['iq' + i];
+    }
+    fb.style.display = 'block';
+  }
+  document.getElementById('iquiz-prev').style.display = 'none';
+  document.getElementById('iquiz-next').style.display = 'none';
+  document.getElementById('iquiz-submit').style.display = 'none';
+  document.getElementById('iquiz-progress').textContent = 'Quiz complete';
+  const sd = document.getElementById('iquiz-score');
+  const pct = Math.round((score / itotal) * 100);
+  sd.style.display = 'block';
+  sd.style.background = pct >= 70 ? '#d4edda' : '#fff3cd';
+  sd.style.borderLeft  = pct >= 70 ? '4px solid #27ae60' : '4px solid #f39c12';
+  sd.style.color        = pct >= 70 ? '#155724' : '#856404';
+  sd.innerHTML = '<strong>Your Score: ' + score + ' / ' + itotal + ' (' + pct + '%)</strong><br>' +
+    (pct === 100 ? 'Excellent work — perfect score!' :
+     pct >= 70  ? 'Good work! Review any missed questions above.' :
+                  'Keep reviewing the lesson material above, then try again.');
+}
+</script>
+```
+
+::: {.callout-note}
+No need to submit this quiz anywhere. This exercise is for your benefit to help you learn R.
+:::
+
+## Summary
+
+This lesson covered the foundations of R and RStudio:
+
+| Topic | Key concepts |
+|------------------------------------|------------------------------------|
+| Statistics overview | Descriptive (summarising data) vs. inferential (drawing conclusions); both use samples |
+| AI and statistics | AI automates descriptive work; inferential judgment — population definition, sampling validity, interpretation — remains human |
+| R script files | `.R` files save and rerun code; always include a prolog; comment with `#` |
+| Assignment operator | `<-` assigns values to objects; `=` works but is discouraged for clarity |
+| Naming conventions | Constants: `kName`; functions: `CamelCase`; variables: `dot.case` or `camelCase`; no spaces, case-sensitive |
+| Built-in functions | `functionName(argument)`; arguments have defaults; use `?function` to see all parameters |
+| Packages | `install.packages()` once; `library()` every session; `package::function()` for single-use access |
+| Troubleshooting | Read the error; check spelling and capitalisation; use AI for error interpretation but verify every fix |
+| Vectors | `c()`, `:`, `seq()`, `rep()` — the building blocks of all R data structures |
+| Matrices | `matrix(data, nrow, ncol, byrow)`; same data type throughout; `dimnames()` for labels |
+| Data frames | `data.frame()`; rows = observations, columns = variables; mixed types allowed |
+| Working directories | `getwd()`, `setwd()`; relative paths (`"data/file.csv"`) preferred over absolute |
+| Reading data | `read.csv()` (base R) vs. `read_csv()` (readr/tidyverse); `data()` for built-in datasets |
+| `summary()` vs `summarize()` | `summary()` gives automatic overview; `summarize()` from dplyr gives custom grouped summaries |
+| Data types | factor (nominal/ordinal), numeric, integer, character, logical, Date; use `str()` to check all at once |
+| Type coercion | `as.factor()`, `as.numeric()`, `as.integer()`, `as.character()`, `as.Date()`; always check for NAs after |
+| Missing data strategies | Omit (`na.omit()`, `drop_na()`), impute, or ignore (`na.rm = TRUE`); choice depends on why values are missing |
+| `is.na()` | Returns `TRUE` for each NA; `sum(is.na(x))` counts missing values |
+
+**What comes next:** The Descriptive Statistics lesson builds directly on this foundation — using the loading, typing, and summarising tools introduced here to describe the shape, center, and spread of real variables. Every line of code in that lesson assumes you can open RStudio, load a dataset, and check that variables are the right type.

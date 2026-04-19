@@ -30,8 +30,6 @@ ul, ol{font-size:1.0 em;}
 ul li{margin-left:15px;}
 ul li li, ol li li {color:#5B6770;list-style-type: circle;}
 
-
-
 #header{display:block; font-size:1.2em}
 .author, .date{display:none;}
 img{    display:block;
@@ -82,10 +80,50 @@ a {color:#3E3E3E;}
 
 figcaption{text-align: center}
 
-.toc ol, .toc ul {
-    list-style: none;
-    padding-left: 0;
+/* Hide WebR Code Links section from TOC */
+.quarto-code-links {
+  display: none !important;
 }
+
+/* Quiz header contrast fix */
+#ps512-quiz h3 {
+  background: #2c6fad !important;
+  color: #ffffff !important;
+  padding: 0.8rem 1.2rem !important;
+  border-radius: 6px 6px 0 0 !important;
+  margin: -2rem -2rem 1.5rem -2rem !important;
+}
+
+/* Quiz option spacing and contrast */
+#ps512-quiz .quiz-option {
+  color: #1a1a1a !important;
+  padding: 0.5rem 0.8rem !important;
+  border: 1px solid transparent !important;
+}
+
+#ps512-quiz .quiz-option:hover {
+  background: #ddeeff !important;
+  border-color: #2c6fad !important;
+}
+
+/* Question text contrast */
+#ps512-quiz p {
+  color: #1a1a1a !important;
+}
+
+/* Progress text */
+#quiz-progress {
+  color: #444 !important;
+}
+
 
 div.quarto-title-meta{display:none;}
 #title-block-header.quarto-title-block.default .quarto-title-meta{display:none;}
+
+
+/* Hide WebR Code Links section from TOC */
+.quarto-code-links {
+  display: none !important;
+}
+
+h2#toc-title{padding-top:10px;margin-top:10px;}

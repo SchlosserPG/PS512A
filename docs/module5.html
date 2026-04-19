@@ -9,7 +9,7 @@
 <meta name="author" content="">
 <meta name="dcterms.date" content="2024-08-09">
 
-<title>Module 5: Hypothesis Testing – Probability And Business Statistics</title>
+<title>Module 5: Hypothesis Testing – Probability and Business Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -649,6 +649,1559 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     document.getElementById('chat-send').disabled = false;
   }
 </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+<style type="text/css">
+.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-editor-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.qwebr-editor-toolbar-left-buttons, .qwebr-editor-toolbar-right-buttons {
+  display: flex;
+}
+
+.qwebr-non-interactive-loading-container.qwebr-cell-needs-evaluation, .qwebr-non-interactive-loading-container.qwebr-cell-evaluated {
+  justify-content: center;
+  display: flex;
+  background-color: rgba(250, 250, 250, 0.65);
+  border: 1px solid rgba(233, 236, 239, 0.65);
+  border-radius: 0.5rem;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.qwebr-r-project-logo {
+  color: #2767B0; /* R Project's blue color */
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+body.quarto-light .qwebr-output-code-stdout {
+  color: #111;
+}
+
+body.quarto-dark .qwebr-output-code-stdout {
+  color: #EEE;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+body.quarto-light .qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+body.quarto-light .qwebr-editor-toolbar {
+  background-color: #EEEEEE;
+  padding: 0.2rem 0.5rem;
+}
+
+body.quarto-dark .qwebr-editor {
+  border: 1px solid #111;
+}
+
+body.quarto-dark .qwebr-editor-toolbar {
+  background-color: #111;
+  padding: 0.2rem 0.5rem;
+}
+
+.qwebr-button {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  padding: 0.375rem 0.75rem;
+  font-size: .9rem;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+body.quarto-light .qwebr-button {
+  background-color: #EEEEEE;
+  color: #000;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+}
+
+body.quarto-dark .qwebr-button {
+  background-color: #111;
+  color: #EEE;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+}
+
+body.quarto-light .qwebr-button:hover {
+  color: #000;
+  background-color: #d9dce0;
+  border-color: #c8ccd0;
+}
+
+body.quarto-dark .qwebr-button:hover {
+  color: #d9dce0;
+  background-color: #323232;
+  border-color: #d9dce0;
+}
+
+.qwebr-button:disabled,.qwebr-button.disabled,fieldset:disabled .qwebr-button {
+  pointer-events: none;
+  opacity: .65
+}
+
+.qwebr-button-reset {
+  color: #696969; /*#4682b4;*/
+}
+
+.qwebr-button-copy {
+  color: #696969;
+}
+
+/* Style the code highlight lines */
+body.quarto-light .qwebr-editor-highlight-line {
+  background-color: lightblue;
+}
+
+body.quarto-dark .qwebr-editor-highlight-line {
+  background-color: darkblue;
+}
+
+/* Style the modal pop-up */
+
+/* The Modal (background) */
+.qwebr-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content */
+.qwebr-modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.qwebr-modal-content-code {
+  max-height: 50vh;
+  min-height: 5vh;
+  overflow: scroll;
+  border: 1px solid #888;
+}
+
+/* The Close Button */
+.qwebr-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.qwebr-modal-close:hover,
+.qwebr-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.qwebr-download-btn {
+  margin-top: 10px;
+  text-decoration: none !important;
+}
+
+/* Styling to download image that is created */
+
+.qwebr-canvas-image {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.qwebr-canvas-image-download-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+figure:hover .qwebr-canvas-image-download-btn {
+  display: block;
+}
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+body.reveal.quarto-light pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+body.reveal.quarto-dark pre div code.qwebr-output-code-stdout {
+  color: #EEEEEE;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+body.reveal.quarto-light div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+body.reveal.quarto-dark div.qwebr-console-area {
+  border: 1px solid #111;
+  box-shadow: 2px 2px 10px #111;
+}
+
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+
+iframe.qwebr-output-code-browse {
+  width: 100%;
+
+  /*
+    TODO: How to make the height automatic according to the widget size,
+    or respect the quarto code block options?
+  */
+  min-height: 500px;
+}
+
+</style>
+<script type="module">
+// Document level settings ----
+
+// Determine if we need to install R packages
+globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr', 'ISLR'];
+
+// Specify possible locations to search for the repository
+globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
+
+// Check to see if we have an empty array, if we do set to skip the installation.
+globalThis.qwebrSetupRPackages = !(qwebrInstallRPackagesList.indexOf("") !== -1);
+globalThis.qwebrAutoloadRPackages = true;
+
+// Display a startup message?
+globalThis.qwebrShowStartupMessage = true;
+globalThis.qwebrShowHeaderMessage = false;
+
+// Describe the webR settings that should be used
+globalThis.qwebrCustomizedWebROptions = {
+  "baseURL": "https://webr.r-wasm.org/v0.5.7/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": "ChannelType.Automatic"
+};
+
+// Store cell data
+globalThis.qwebrCellDetails = [{"code":"data(\"mtcars\")\ndata(\"CO2\")\ndata(\"sleep\")","id":1,"options":{"autorun":"true","classes":"","comment":"","context":"setup","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"ttest-setup","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"summary(mtcars)","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mu = 25   HA: mu ≠ 25  (default — two-tailed)\nt.test(mtcars$mpg, mu = 25)","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mu >= 25   HA: mu < 25\nt.test(mtcars$mpg, mu = 25, alternative = \"less\")","id":4,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-4","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mu <= 25   HA: mu > 25\nt.test(mtcars$mpg, mu = 25, alternative = \"greater\")","id":5,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-5","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mu_vs0 = mu_vs1   HA: mu_vs0 ≠ mu_vs1\nt.test(mtcars$mpg ~ mtcars$vs)","id":6,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-6","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"t.test(mtcars$mpg ~ mtcars$am)","id":7,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-7","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# automatics coded 0 = group 1; manuals coded 1 = group 2\n# alternative=\"less\" tests whether group 1 mean < group 2 mean\nt.test(mtcars$mpg ~ mtcars$am, alternative = \"less\")","id":8,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-8","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"summary(CO2)","id":9,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-9","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mu_nonchilled = mu_chilled   HA: they differ\nt.test(CO2$uptake ~ CO2$Treatment)","id":10,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-10","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# nonchilled is listed first in the group means = group 1\n# alternative=\"greater\" tests whether group 1 mean > group 2 mean\nt.test(CO2$uptake ~ CO2$Treatment, alternative = \"greater\")","id":11,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-11","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"summary(sleep)","id":12,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-12","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"sleep2 <- reshape(sleep, timevar = \"group\", idvar = \"ID\", direction = \"wide\")\nsleep2","id":13,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-13","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# H0: mean difference = 0   HA: mean difference ≠ 0\nt.test(sleep2$extra.1, sleep2$extra.2, paired = TRUE)","id":14,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-14","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+
+</script>
+<script type="module">
+// Declare startupMessageQWebR globally
+globalThis.qwebrStartupMessage = document.createElement("p");
+
+// Verify if OffScreenCanvas is supported
+globalThis.qwebrOffScreenCanvasSupport = function() {
+  return typeof OffscreenCanvas !== 'undefined'
+}
+
+// Function to set the button text
+globalThis.qwebrSetInteractiveButtonState = function(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
+
+// Function to update the status message in non-interactive cells
+globalThis.qwebrUpdateStatusMessage = function(message) {
+  document.querySelectorAll(".qwebr-status-text.qwebr-cell-needs-evaluation").forEach((elem) => {
+    elem.innerText = message;
+  });
+}
+
+// Function to update the status message
+globalThis.qwebrUpdateStatusHeader = function(message) {
+  qwebrStartupMessage.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function to return true if element is found, false if not
+globalThis.qwebrCheckHTMLElementExists = function(selector) {
+  const element = document.querySelector(selector);
+  return !!element;
+}
+
+// Function that detects whether reveal.js slides are present
+globalThis.qwebrIsRevealJS = function() {
+  // If the '.reveal .slides' selector exists, RevealJS is likely present
+  return qwebrCheckHTMLElementExists('.reveal .slides');
+}
+
+// Initialize the Quarto sidebar element
+function qwebrSetupQuartoSidebar() {
+  var newSideBarDiv = document.createElement('div');
+  newSideBarDiv.id = 'quarto-margin-sidebar';
+  newSideBarDiv.className = 'sidebar margin-sidebar';
+  newSideBarDiv.style.top = '0px';
+  newSideBarDiv.style.maxHeight = 'calc(0px + 100vh)';
+
+  return newSideBarDiv;
+}
+
+// Position the sidebar in the document
+function qwebrPlaceQuartoSidebar() {
+  // Get the reference to the element with id 'quarto-document-content'
+  var referenceNode = document.getElementById('quarto-document-content');
+
+  // Create the new div element
+  var newSideBarDiv = qwebrSetupQuartoSidebar();
+
+  // Insert the new div before the 'quarto-document-content' element
+  referenceNode.parentNode.insertBefore(newSideBarDiv, referenceNode);
+}
+
+function qwebrPlaceMessageContents(content, html_location = "title-block-header", revealjs_location = "title-slide") {
+
+  // Get references to header elements
+  const headerHTML = document.getElementById(html_location);
+  const headerRevealJS = document.getElementById(revealjs_location);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML || headerRevealJS) {
+    // Append to the existing "title-block-header" element or "title-slide" div
+    (headerHTML || headerRevealJS).appendChild(content);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(content);
+    monacoScript.after(header);
+  }
+}
+
+
+
+function qwebrOffScreenCanvasSupportWarningMessage() {
+  
+  // Verify canvas is supported.
+  if(qwebrOffScreenCanvasSupport()) return;
+
+  // Create the main container div
+  var calloutContainer = document.createElement('div');
+  calloutContainer.classList.add('callout', 'callout-style-default', 'callout-warning', 'callout-titled');
+
+  // Create the header div
+  var headerDiv = document.createElement('div');
+  headerDiv.classList.add('callout-header', 'd-flex', 'align-content-center');
+
+  // Create the icon container div
+  var iconContainer = document.createElement('div');
+  iconContainer.classList.add('callout-icon-container');
+
+  // Create the icon element
+  var iconElement = document.createElement('i');
+  iconElement.classList.add('callout-icon');
+
+  // Append the icon element to the icon container
+  iconContainer.appendChild(iconElement);
+
+  // Create the title container div
+  var titleContainer = document.createElement('div');
+  titleContainer.classList.add('callout-title-container', 'flex-fill');
+  titleContainer.innerText = 'Warning: Web Browser Does Not Support Graphing!';
+
+  // Append the icon container and title container to the header div
+  headerDiv.appendChild(iconContainer);
+  headerDiv.appendChild(titleContainer);
+
+  // Create the body container div
+  var bodyContainer = document.createElement('div');
+  bodyContainer.classList.add('callout-body-container', 'callout-body');
+
+  // Create the paragraph element for the body content
+  var paragraphElement = document.createElement('p');
+  paragraphElement.innerHTML = 'This web browser does not have support for displaying graphs through the <code>quarto-webr</code> extension since it lacks an <code>OffScreenCanvas</code>. Please upgrade your web browser to one that supports <code>OffScreenCanvas</code>.';
+
+  // Append the paragraph element to the body container
+  bodyContainer.appendChild(paragraphElement);
+
+  // Append the header div and body container to the main container div
+  calloutContainer.appendChild(headerDiv);
+  calloutContainer.appendChild(bodyContainer);
+
+  // Append the main container div to the document depending on format
+  qwebrPlaceMessageContents(calloutContainer, "title-block-header"); 
+
+}
+
+
+// Function that attaches the document status message and diagnostics
+function displayStartupMessage(showStartupMessage, showHeaderMessage) {
+  if (!showStartupMessage) {
+    return;
+  }
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  qwebrStartupMessage.innerText = "🟡 Loading...";
+  qwebrStartupMessage.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  qwebrStartupMessage.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(qwebrStartupMessage);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Place message on webpage
+  qwebrPlaceMessageContents(quartoTitleMeta); 
+}
+
+function qwebrAddCommandHistoryModal() {
+  // Create the modal div
+  var modalDiv = document.createElement('div');
+  modalDiv.id = 'qwebr-history-modal';
+  modalDiv.className = 'qwebr-modal';
+
+  // Create the modal content div
+  var modalContentDiv = document.createElement('div');
+  modalContentDiv.className = 'qwebr-modal-content';
+
+  // Create the span for closing the modal
+  var closeSpan = document.createElement('span');
+  closeSpan.id = 'qwebr-command-history-close-btn';
+  closeSpan.className = 'qwebr-modal-close';
+  closeSpan.innerHTML = '&times;';
+
+  // Create the h1 element for the modal
+  var modalH1 = document.createElement('h1');
+  modalH1.textContent = 'R History Command Contents';
+
+  // Create an anchor element for downloading the Rhistory file 
+  var downloadLink = document.createElement('a');
+  downloadLink.href = '#';
+  downloadLink.id = 'qwebr-download-history-btn';
+  downloadLink.className = 'qwebr-download-btn';
+
+  // Create an 'i' element for the icon
+  var icon = document.createElement('i');
+  icon.className = 'bi bi-file-code';
+
+  // Append the icon to the anchor element
+  downloadLink.appendChild(icon);
+
+  // Add the text 'Download R History' to the anchor element
+  downloadLink.appendChild(document.createTextNode(' Download R History File'));
+
+  // Create the pre for command history contents
+  var commandContentsPre = document.createElement('pre');
+  commandContentsPre.id = 'qwebr-command-history-contents';
+  commandContentsPre.className = 'qwebr-modal-content-code';
+
+  // Append the close span, h1, and history contents pre to the modal content div
+  modalContentDiv.appendChild(closeSpan);
+  modalContentDiv.appendChild(modalH1);
+  modalContentDiv.appendChild(downloadLink);
+  modalContentDiv.appendChild(commandContentsPre);
+
+  // Append the modal content div to the modal div
+  modalDiv.appendChild(modalContentDiv);
+
+  // Append the modal div to the body
+  document.body.appendChild(modalDiv);
+}
+
+function qwebrRegisterRevealJSCommandHistoryModal() {
+  // Select the <ul> element inside the <div> with data-panel="Custom0"
+  let ulElement = document.querySelector('div[data-panel="Custom0"] > ul.slide-menu-items');
+
+  // Find the last <li> element with class slide-tool-item
+  let lastItem = ulElement.querySelector('li.slide-tool-item:last-child');
+
+  // Calculate the next data-item value
+  let nextItemValue = 0;
+  if (lastItem) {
+      nextItemValue = parseInt(lastItem.dataset.item) + 1;
+  }
+
+  // Create a new <li> element
+  let newListItem = document.createElement('li');
+  newListItem.className = 'slide-tool-item';
+  newListItem.dataset.item = nextItemValue.toString(); // Set the next available data-item value
+
+  // Create the <a> element inside the <li>
+  let newLink = document.createElement('a');
+  newLink.href = '#';
+  newLink.id = 'qwebrRHistoryButton'; // Set the ID for the new link
+  
+  // Create the <kbd> element inside the <a>
+  let newKbd = document.createElement('kbd');
+  newKbd.textContent = ' '; // Set to empty as we are not registering a keyboard shortcut
+
+  // Create text node for the link text
+  let newText = document.createTextNode(' View R History');
+
+  // Append <kbd> and text node to <a>
+  newLink.appendChild(newKbd);
+  newLink.appendChild(newText);
+
+  // Append <a> to <li>
+  newListItem.appendChild(newLink);
+
+  // Append <li> to <ul>
+  ulElement.appendChild(newListItem);
+}
+
+// Handle setting up the R history modal
+function qwebrCodeLinks() {
+
+  if (qwebrIsRevealJS()) {
+    qwebrRegisterRevealJSCommandHistoryModal();
+    return;
+  }
+
+  // Create the container div
+  var containerDiv = document.createElement('div');
+  containerDiv.className = 'quarto-code-links';
+
+  // Create the h2 element
+  var h2 = document.createElement('h2');
+  h2.textContent = 'webR Code Links';
+
+  // Create the ul element
+  var ul = document.createElement('ul');
+
+  // Create the li element
+  var li = document.createElement('li');
+
+  // Create the a_history_btn element
+  var a_history_btn = document.createElement('a');
+  a_history_btn.href = 'javascript:void(0)';
+  a_history_btn.setAttribute('id', 'qwebrRHistoryButton');
+
+  // Create the i_history_btn element
+  var i_history_btn = document.createElement('i');
+  i_history_btn.className = 'bi bi-file-code';
+
+  // Create the text node for the link text
+  var text_history_btn = document.createTextNode('View R History');
+
+  // Append the icon element and link text to the a element
+  a_history_btn.appendChild(i_history_btn);
+  a_history_btn.appendChild(text_history_btn);
+
+  // Append the a element to the li element
+  li.appendChild(a_history_btn);
+
+  // Append the li element to the ul element
+  ul.appendChild(li);
+
+  // Append the h2 and ul elements to the container div
+  containerDiv.appendChild(h2);
+  containerDiv.appendChild(ul);
+
+  // Append the container div to the element with the ID 'quarto-margin-sidebar'
+  var sidebar = document.getElementById('quarto-margin-sidebar');
+    
+  // If the sidebar element is not found, create it
+  if(!sidebar) {
+    qwebrPlaceQuartoSidebar();
+  }
+  
+  // Re-select the sidebar element (if it was just created)
+  sidebar = document.getElementById('quarto-margin-sidebar');   
+
+
+  // If the sidebar element exists, append the container div to it
+  if(sidebar) {
+    // Append the container div to the sidebar
+    sidebar.appendChild(containerDiv);
+    // Force the sidebar to be clickable by removing the 'zindex-bottom' class
+    // added in pre-release: https://github.com/quarto-dev/quarto-cli/commit/f0c53a1ffcaa1de4eccbf07803b096898248adcc
+    sidebar.className = 'sidebar margin-sidebar';
+  } else {
+    // Get a debugger ...
+    console.warn('Element with ID "quarto-margin-sidebar" not found.');
+  }
+}
+
+// Call the function to append the code links for qwebR into the right sidebar
+qwebrCodeLinks();
+
+// Add the command history modal
+qwebrAddCommandHistoryModal();
+
+displayStartupMessage(qwebrShowStartupMessage, qwebrShowHeaderMessage);
+qwebrOffScreenCanvasSupportWarningMessage();
+</script>
+<script type="module">
+// Define a global storage and retrieval solution ----
+
+// Store commands executed in R
+globalThis.qwebrRCommandHistory = [];
+
+// Function to retrieve the command history
+globalThis.qwebrFormatRHistory = function() {
+   return qwebrRCommandHistory.join("\n\n");
+}
+
+// Retrieve HTML Elements ----
+
+// Get the command modal
+const command_history_modal = document.getElementById("qwebr-history-modal");
+
+// Get the button that opens the command modal
+const command_history_btn = document.getElementById("qwebrRHistoryButton");
+
+// Get the <span> element that closes the command modal
+const command_history_close_span = document.getElementById("qwebr-command-history-close-btn");
+
+// Get the download button for r history information
+const command_history_download_btn = document.getElementById("qwebr-download-history-btn");
+
+// Plug in command history into modal/download button ----
+
+// Function to populate the modal with command history
+function populateCommandHistoryModal() {
+    document.getElementById("qwebr-command-history-contents").innerHTML = qwebrFormatRHistory() || "No commands have been executed yet.";
+}
+
+// Function to format the current date and time to
+// a string with the format YYYY-MM-DD-HH-MM-SS
+function formatDateTime() {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+}
+
+
+// Function to convert document title with datetime to a safe filename
+function safeFileName() {
+    // Get the current page title
+    let pageTitle = document.title;
+
+    // Combine the current page title with the current date and time
+    let pageNameWithDateTime = `Rhistory-${pageTitle}-${formatDateTime()}`;
+
+    // Replace unsafe characters with safe alternatives
+    let safeFilename = pageNameWithDateTime.replace(/[\\/:\*\?! "<>\|]/g, '-');
+
+    return safeFilename;
+}
+
+
+// Function to download list contents as text file
+function downloadRHistory() {
+    // Get the current page title + datetime and use it as the filename
+    const filename = `${safeFileName()}.R`;
+
+    // Get the text contents of the R History list
+    const text = qwebrFormatRHistory();
+
+    // Create a new Blob object with the text contents
+    const blob = new Blob([text], { type: 'text/plain' });
+  
+    // Create a new anchor element for the download
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+
+    // Append the anchor to the body, click it, and remove it
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+// Register event handlers ----
+
+// When the user clicks the View R History button, open the command modal
+command_history_btn.onclick = function() {
+    populateCommandHistoryModal();
+    command_history_modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the command modal
+command_history_close_span.onclick = function() {
+    command_history_modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the command modal, close it
+window.onclick = function(event) {
+    if (event.target == command_history_modal) {
+        command_history_modal.style.display = "none";
+    }
+}
+
+// Add an onclick event listener to the download button so that
+// the user can download the R history as a text file
+command_history_download_btn.onclick = function() {
+    downloadRHistory();
+};
+</script>
+<script type="module">
+// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+  Interactive: 'interactive',
+  Setup: 'setup',
+  Output: 'output',
+});
+
+// Function that obtains the font size for a given element 
+globalThis.qwebrCurrentFontSizeOnElement = function(element, cssProperty = 'font-size') {
+
+  const currentFontSize = parseFloat(
+    window
+    .getComputedStyle(element)
+    .getPropertyValue(cssProperty)
+  );
+  
+  return currentFontSize;
+}
+
+// Function to determine font scaling
+globalThis.qwebrScaledFontSize = function(div, qwebrOptions) {
+  // Determine if we should compute font-size using RevealJS's `--r-main-font-size` 
+  // or if we can directly use the document's `font-size`.
+  const cssProperty = document.body.classList.contains('reveal') ? 
+    "--r-main-font-size" : "font-size";
+  
+  // Get the current font size on the div element
+  const elementFontSize = qwebrCurrentFontSizeOnElement(div, cssProperty);
+
+  // Determine the scaled font size value
+  const scaledFontSize = ((qwebrOptions['editor-font-scale'] ?? 1) * elementFontSize) ?? 17.5;
+
+  return scaledFontSize;
+}
+
+
+// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (
+  cellData
+) {
+
+  // Extract key components
+  const evalType = cellData.options.context;
+  const qwebrCounter = cellData.id;
+
+  // We make an assumption that insertion points are defined by the Lua filter as:
+  // qwebr-insertion-location-{qwebrCounter} 
+  const elementLocator = document.getElementById(`qwebr-insertion-location-${qwebrCounter}`);
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive:
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter, cellData.options);
+      break;
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter, cellData.options);
+      break;
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter, cellData.options);
+      break;
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating `quarto-webr` element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  elementLocator.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter, qwebrOptions) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = `qwebr-interactive-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+
+  // Create toolbar div
+  var toolbarDiv = document.createElement('div');
+  toolbarDiv.className = 'qwebr-editor-toolbar';
+  toolbarDiv.id = 'qwebr-editor-toolbar-' + qwebrCounter;
+
+  // Create a div to hold the left buttons
+  var leftButtonsDiv = document.createElement('div');
+  leftButtonsDiv.className = 'qwebr-editor-toolbar-left-buttons';
+
+  // Create a div to hold the right buttons
+  var rightButtonsDiv = document.createElement('div');
+  rightButtonsDiv.className = 'qwebr-editor-toolbar-right-buttons';
+
+  // Create Run Code button
+  var runCodeButton = document.createElement('button');
+  runCodeButton.className = 'btn btn-default qwebr-button qwebr-button-run';
+  runCodeButton.disabled = true;
+  runCodeButton.type = 'button';
+  runCodeButton.id = 'qwebr-button-run-' + qwebrCounter;
+  runCodeButton.textContent = '🟡 Loading webR...';
+  runCodeButton.title = `Run code (Shift + Enter)`;
+
+  // Append buttons to the leftButtonsDiv
+  leftButtonsDiv.appendChild(runCodeButton);
+
+  // Create Reset button
+  var resetButton = document.createElement('button');
+  resetButton.className = 'btn btn-light btn-xs qwebr-button qwebr-button-reset';
+  resetButton.type = 'button';
+  resetButton.id = 'qwebr-button-reset-' + qwebrCounter;
+  resetButton.title = 'Start over';
+  resetButton.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i>';
+
+  // Create Copy button
+  var copyButton = document.createElement('button');
+  copyButton.className = 'btn btn-light btn-xs qwebr-button qwebr-button-copy';
+  copyButton.type = 'button';
+  copyButton.id = 'qwebr-button-copy-' + qwebrCounter;
+  copyButton.title = 'Copy code';
+  copyButton.innerHTML = '<i class="fa-regular fa-copy"></i>';
+
+  // Append buttons to the rightButtonsDiv
+  rightButtonsDiv.appendChild(resetButton);
+  rightButtonsDiv.appendChild(copyButton);
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append buttons to the toolbar
+  toolbarDiv.appendChild(leftButtonsDiv);
+  toolbarDiv.appendChild(rightButtonsDiv);
+
+  // Append all elements to the main div
+  mainDiv.appendChild(toolbarDiv);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter, qwebrOptions) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = `qwebr-noninteractive-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+  
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+  
+  // Create a status container div
+  var statusContainer = createLoadingContainer(qwebrCounter);
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(statusContainer);
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter, qwebrOptions) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = `qwebr-noninteractive-setup-area-${qwebrCounter}`;
+  mainDiv.className = `qwebr-noninteractive-setup-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+
+
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+
+  // Create a status container div
+  var statusContainer = createLoadingContainer(qwebrCounter);
+
+  // Append status onto the main div
+  mainDiv.appendChild(statusContainer);
+
+  return mainDiv;
+}
+
+
+// Function to create loading container with specified ID
+globalThis.createLoadingContainer = function(qwebrCounter) {
+
+  // Create a status container
+  const container = document.createElement('div');
+  container.id = `qwebr-non-interactive-loading-container-${qwebrCounter}`;
+  container.className = 'qwebr-non-interactive-loading-container qwebr-cell-needs-evaluation';
+
+  // Create an R project logo to indicate its a code space
+  const rProjectIcon = document.createElement('i');
+  rProjectIcon.className = 'fa-brands fa-r-project fa-3x qwebr-r-project-logo';
+
+  // Setup a loading icon from font awesome
+  const spinnerIcon = document.createElement('i');
+  spinnerIcon.className = 'fa-solid fa-spinner fa-spin fa-1x qwebr-icon-status-spinner';
+
+  // Add a section for status text
+  const statusText = document.createElement('p');
+  statusText.id = `qwebr-status-text-${qwebrCounter}`;
+  statusText.className = `qwebr-status-text qwebr-cell-needs-evaluation`;
+  statusText.innerText = 'Loading webR...';
+
+  // Incorporate an inner container
+  const innerContainer = document.createElement('div');
+
+  // Append elements to the inner container
+  innerContainer.appendChild(spinnerIcon);
+  innerContainer.appendChild(statusText);
+
+  // Append elements to the main container
+  container.appendChild(rProjectIcon);
+  container.appendChild(innerContainer);
+
+  return container;
+}
+</script>
+<script type="module">
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await mainWebR.evalRVoid(`webr::install('${packageName}');`);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await mainWebR.evalRVoid(`require('${packageName}', quietly = TRUE)`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+
+    // Display the update in header
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
+    }
+
+    // Display the update in non-active areas
+    qwebrUpdateStatusMessage(formattedMessage);
+
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
+  }
+
+  // Clean slate
+  if (processType === 'load') {
+    await mainWebR.flush();
+  }
+}
+
+// Start a timer
+const initializeWebRTimerStart = performance.now();
+
+// Encase with a dynamic import statement
+globalThis.qwebrInstance = import(qwebrCustomizedWebROptions.baseURL + "webr.mjs").then(
+  async ({ WebR, ChannelType }) => {
+    // Populate WebR options with defaults or new values based on `webr` meta
+    globalThis.mainWebR = new WebR(qwebrCustomizedWebROptions);
+
+    // Initialization WebR
+    await mainWebR.init();
+
+    // Setup a shelter
+    globalThis.mainWebRCodeShelter = await new mainWebR.Shelter();
+
+    // Setup a pager to allow processing help documentation
+    await mainWebR.evalRVoid('webr::pager_install()');
+
+    // Setup a viewer to allow processing htmlwidgets.
+    // This might not be available in old webr version
+    await mainWebR.evalRVoid('try({ webr::viewer_install() })');
+
+    // Override the existing install.packages() to use webr::install()
+    await mainWebR.evalRVoid('webr::shim_install()');
+
+    // Specify the repositories to pull from
+    // Note: webR does not use the `repos` option, but instead uses `webr_pkg_repos`
+    // inside of `install()`. However, other R functions still pull from `repos`.
+    await mainWebR.evalRVoid(`
+      options(
+        webr_pkg_repos = c(${qwebrPackageRepoURLS.map(repoURL => `'${repoURL}'`).join(',')}),
+        repos = c(${qwebrPackageRepoURLS.map(repoURL => `'${repoURL}'`).join(',')})
+      )
+    `);
+
+    // Check to see if any packages need to be installed
+    if (qwebrSetupRPackages) {
+      // Obtain only a unique list of packages
+      const uniqueRPackageList = Array.from(new Set(qwebrInstallRPackagesList));
+
+      // Install R packages one at a time (either silently or with a status update)
+      await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', qwebrShowStartupMessage);
+
+      if (qwebrAutoloadRPackages) {
+        // Load R packages one at a time (either silently or with a status update)
+        await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', qwebrShowStartupMessage);
+      }
+    }
+  }
+);
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+</script>
+<script type="module">
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Global version of the Escape HTML function that converts HTML
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+};
+
+// Passthrough results
+globalThis.qwebrIdentity = function(x) {
+    return x;
+};
+
+// Append a comment
+globalThis.qwebrPrefixComment = function(x, comment) {
+    return `${comment}${x}`;
+};
+
+// Function to store the code in the history
+globalThis.qwebrLogCodeToHistory = function(codeToRun, options) {
+    qwebrRCommandHistory.push(
+        `# Ran code in ${options.label} at ${new Date().toLocaleString()} ----\n${codeToRun}`
+    );
+};
+
+// Function to attach a download button onto the canvas
+// allowing the user to download the image.
+function qwebrImageCanvasDownloadButton(canvas, canvasContainer) {
+
+    // Create the download button
+    const downloadButton = document.createElement('button');
+    downloadButton.className = 'qwebr-canvas-image-download-btn';
+    downloadButton.textContent = 'Download Image';
+    canvasContainer.appendChild(downloadButton);
+
+    // Trigger a download of the image when the button is clicked
+    downloadButton.addEventListener('click', function() {
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'qwebr-canvas-image.png';
+        link.click();
+    });
+}
+
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) {
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data;
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await mainWebR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+            content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) {
+        await mainWebR.FS.unlink(path);
+    }
+
+    // Return extracted data with spaces
+    return paged_data;
+};
+
+
+// Function to parse the browse results
+globalThis.qwebrParseTypeBrowse = async function (msg) {
+
+    // msg.type === "browse"
+    const path = msg.data.url;
+
+    // Process the browse data by reading the information from disk
+    const browse_data = await mainWebR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        return content;
+    });
+
+    // Return extracted data as-is
+    return browse_data;
+};
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun,
+    elements,
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens:
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. We disable the current device's image creation.
+    // 5. Piece-wise parse the results into the different output areas
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // Handle how output is processed
+    let showMarkup = options.results === "markup" && options.output !== "asis";
+    let processOutput;
+
+    if (showMarkup) {
+        processOutput = qwebrEscapeHTMLCharacters;
+    } else {
+        processOutput = qwebrIdentity;
+    }
+
+    // ----
+    // Convert from Inches to Pixels by using DPI (dots per inch)
+    // for bitmap devices (dpi * inches = pixels)
+    let fig_width = options["fig-width"] * options["dpi"];
+    let fig_height = options["fig-height"] * options["dpi"];
+
+    // Initialize webR
+    await mainWebR.init();
+
+    // Configure capture output
+    let captureOutputOptions = {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    };
+
+    // Determine if the browser supports OffScreen
+    if (qwebrOffScreenCanvasSupport()) {
+        // Mirror default options of webr::canvas()
+        // with changes to figure height and width.
+        captureOutputOptions.captureGraphics = {
+            width: fig_width,
+            height: fig_height,
+            bg: "white", // default: transparent
+            pointsize: 12,
+            capture: true
+        };
+    }  else {
+        // Disable generating graphics
+        captureOutputOptions.captureGraphics = false;
+    }
+
+    // Store the code to run in history
+    qwebrLogCodeToHistory(codeToRun, options);
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    // Evaluate the R code
+    // Remove the active canvas silently
+    const result = await mainWebRCodeShelter.captureR(
+        `${codeToRun}`,
+        captureOutputOptions
+    );
+
+    // -----
+
+    // Start attempting to parse the result data
+    processResultOutput:try {
+
+        // Avoid running through output processing
+        if (options.results === "hide" || options.output === "false") {
+            break processResultOutput;
+        }
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        // Require both `warning` and `message` to be true to display `STDErr`.
+        const out = result.output
+        .filter(
+            evt => evt.type === "stdout" ||
+            ( evt.type === "stderr" && (options.warning === "true" && options.message === "true"))
+        )
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            const outputResult = qwebrPrefixComment(processOutput(evt.data), options.comment);
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${outputResult}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order
+        // without individually feeding each line
+        const msgs = await mainWebR.flush();
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = [];
+        const browse = [];
+
+        await Promise.all(
+            msgs.map(
+                async (msg) => {
+
+                    const msgType = msg.type || "unknown";
+
+                    switch(msgType) {
+                        case 'pager':
+                            const pager_data = await qwebrParseTypePager(msg);
+                            pager.push(pager_data);
+                            break;
+                        case 'browse':
+                            const browse_data = await qwebrParseTypeBrowse(msg);
+                            browse.push(browse_data);
+                            break;
+                    }
+                    return;
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+
+            // Calculate a scaled font-size value
+            const scaledFontSize = qwebrScaledFontSize(
+                elements.outputCodeDiv, options);
+
+            // Override output code cell size
+            pre.style.fontSize = `${scaledFontSize}px`;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Determine if we have graphs to display
+        if (result.images.length > 0) {
+
+            // Create figure element
+            const figureElement = document.createElement("figure");
+            figureElement.className = "qwebr-canvas-image";
+
+            // Place each rendered graphic onto a canvas element
+            result.images.forEach((img) => {
+
+                // Construct canvas for object
+                const canvas = document.createElement("canvas");
+
+                // Add an image download button
+                qwebrImageCanvasDownloadButton(canvas, figureElement);
+
+                // Set canvas size to image
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Apply output truncations
+                canvas.style.width = options["out-width"] ? options["out-width"] : `${fig_width}px`;
+                if (options["out-height"]) {
+                    canvas.style.height = options["out-height"];
+                }
+
+                // Apply styling
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+
+                // Draw image onto Canvas
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                // Append canvas to figure output area
+                figureElement.appendChild(canvas);
+
+            });
+
+            if (options['fig-cap']) {
+                // Create figcaption element
+                const figcaptionElement = document.createElement('figcaption');
+                figcaptionElement.innerText = options['fig-cap'];
+                // Append figcaption to figure
+                figureElement.appendChild(figcaptionElement);
+            }
+
+            elements.outputGraphDiv.appendChild(figureElement);
+
+        }
+
+        // Display the pager data
+        if (pager.length > 0) {
+            // Use the `pre` element to preserve whitespace.
+            pager.forEach((paged_data, index) => {
+                const pre_pager = document.createElement("pre");
+                pre_pager.innerText = paged_data;
+                pre_pager.classList.add("qwebr-output-code-pager");
+                pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+                elements.outputCodeDiv.appendChild(pre_pager);
+            });
+        }
+
+        // Display the browse data
+        if (browse.length > 0) {
+            // Use the `pre` element to preserve whitespace.
+            browse.forEach((browse_data, index) => {
+                const iframe_browse = document.createElement('iframe');
+                iframe_browse.classList.add("qwebr-output-code-browse");
+                iframe_browse.setAttribute("id", `qwebr-output-code-browse-editor-${elements.id}-result-${index + 1}`);
+                iframe_browse.style.width = "100%";
+                iframe_browse.style.minHeight = "500px";
+                elements.outputCodeDiv.appendChild(iframe_browse);
+
+                iframe_browse.contentWindow.document.open();
+                iframe_browse.contentWindow.document.write(browse_data);
+                iframe_browse.contentWindow.document.close();
+            });
+        }
+    } finally {
+        // Clean up the remaining code
+        mainWebRCodeShelter.purge();
+    }
+};
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = {
+            "context": "interactive",
+            "fig-width": 7, "fig-height": 5,
+            "out-width": "700px", "out-height": "",
+            "dpi": 72,
+            "results": "markup",
+            "warning": "true", "message": "true",
+        };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (options.context == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (options.context == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+
+</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -691,7 +2244,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Probability And Business Statistics</span>
+    <span class="navbar-title">Probability and Business Statistics</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -729,7 +2282,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 0: Software Know-How</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Software Know-How</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -739,12 +2292,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 2: Descriptive Statistics and Data Prep</span></a>
+  <a href="./module2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 2: Descriptive Statistics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 3: Data Visualization</span></a>
+  <a href="./module3.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 3: Data Preparation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -759,12 +2312,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></a>
+  <a href="./module6.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 6: ANOVA and Correlation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./module7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 7: Correlation and Regression</span></a>
+  <a href="./module7.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Module 7: Regression</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -800,37 +2353,333 @@ window.Quarto = {
   <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test">One-Sample t-Test</a>
   <ul class="collapse">
   <li><a href="#t.test-command-for-one-sample-t-test" id="toc-t.test-command-for-one-sample-t-test" class="nav-link" data-scroll-target="#t.test-command-for-one-sample-t-test">t.test() Command for One-Sample t-Test</a></li>
-  <li><a href="#step-1-specify-null-and-alternative-hypothesis" id="toc-step-1-specify-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-specify-null-and-alternative-hypothesis">Step 1: Specify Null and Alternative Hypothesis</a></li>
-  <li><a href="#step-2.-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2.-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2.-compute-the-test-statistic-and-calculate-the-p-value">Step 2. Compute the Test Statistic and calculate the p-value</a></li>
-  <li><a href="#step-3.-interpret-probability-and-results." id="toc-step-3.-interpret-probability-and-results." class="nav-link" data-scroll-target="#step-3.-interpret-probability-and-results.">Step 3. Interpret probability and results.</a></li>
+  <li><a href="#one-sample-step-1-specify-null-and-alternative-hypothesis" id="toc-one-sample-step-1-specify-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#one-sample-step-1-specify-null-and-alternative-hypothesis">One-Sample Step 1: Specify Null and Alternative Hypothesis</a></li>
+  <li><a href="#one-sample-step-2-compute-the-test-statistic-and-p-value" id="toc-one-sample-step-2-compute-the-test-statistic-and-p-value" class="nav-link" data-scroll-target="#one-sample-step-2-compute-the-test-statistic-and-p-value">One-Sample Step 2: Compute the Test Statistic and p-value</a></li>
+  <li><a href="#one-sample-step-3-interpret-and-conclude" id="toc-one-sample-step-3-interpret-and-conclude" class="nav-link" data-scroll-target="#one-sample-step-3-interpret-and-conclude">One-Sample Step 3: Interpret and Conclude</a></li>
   <li><a href="#example-of-a-one-sample-t-test-in-r" id="toc-example-of-a-one-sample-t-test-in-r" class="nav-link" data-scroll-target="#example-of-a-one-sample-t-test-in-r">Example of a One-Sample t-Test in R</a></li>
   <li><a href="#example-of-a-one-sample-using-a-subset" id="toc-example-of-a-one-sample-using-a-subset" class="nav-link" data-scroll-target="#example-of-a-one-sample-using-a-subset">Example of a One-Sample Using a Subset</a></li>
   </ul></li>
   <li><a href="#independent-samples-t-test" id="toc-independent-samples-t-test" class="nav-link" data-scroll-target="#independent-samples-t-test">Independent Samples t-Test</a>
   <ul class="collapse">
   <li><a href="#t.test-command-for-independent-samples-t-test" id="toc-t.test-command-for-independent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-independent-samples-t-test">t.test() Command for Independent Samples t-Test</a></li>
-  <li><a href="#step-1-specify-null-and-alternative-hypothesis-1" id="toc-step-1-specify-null-and-alternative-hypothesis-1" class="nav-link" data-scroll-target="#step-1-specify-null-and-alternative-hypothesis-1">Step 1: Specify Null and Alternative Hypothesis</a></li>
-  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
-  <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion" id="toc-step-3-interpret-the-probability-and-write-a-conclusion" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion">Step 3: Interpret the Probability and Write a Conclusion</a></li>
+  <li><a href="#independent-samples-step-1-specify-null-and-alternative-hypothesis" id="toc-independent-samples-step-1-specify-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#independent-samples-step-1-specify-null-and-alternative-hypothesis">Independent Samples Step 1: Specify Null and Alternative Hypothesis</a></li>
+  <li><a href="#independent-samples-step-2-compute-the-test-statistic-and-p-value" id="toc-independent-samples-step-2-compute-the-test-statistic-and-p-value" class="nav-link" data-scroll-target="#independent-samples-step-2-compute-the-test-statistic-and-p-value">Independent Samples Step 2: Compute the Test Statistic and p-value</a></li>
+  <li><a href="#independent-samples-step-3-interpret-and-conclude" id="toc-independent-samples-step-3-interpret-and-conclude" class="nav-link" data-scroll-target="#independent-samples-step-3-interpret-and-conclude">Independent Samples Step 3: Interpret and Conclude</a></li>
   <li><a href="#example-of-an-independent-samples-t-test-in-r" id="toc-example-of-an-independent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-independent-samples-t-test-in-r">Example of an Independent Samples t-Test in R</a></li>
   <li><a href="#example-independent-t-test-using-a-subset" id="toc-example-independent-t-test-using-a-subset" class="nav-link" data-scroll-target="#example-independent-t-test-using-a-subset">Example Independent t-test Using a Subset</a></li>
   </ul></li>
   <li><a href="#dependent-samples-t-test" id="toc-dependent-samples-t-test" class="nav-link" data-scroll-target="#dependent-samples-t-test">Dependent Samples t-Test</a>
   <ul class="collapse">
   <li><a href="#t.test-command-for-dependent-samples-t-test" id="toc-t.test-command-for-dependent-samples-t-test" class="nav-link" data-scroll-target="#t.test-command-for-dependent-samples-t-test">t.test() Command for Dependent Samples t-Test</a></li>
-  <li><a href="#step-1-write-null-and-alternative-hypothesis" id="toc-step-1-write-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#step-1-write-null-and-alternative-hypothesis">Step 1: Write Null and Alternative Hypothesis</a></li>
-  <li><a href="#step-2-compute-the-test-statistic-and-calculate-the-p-value-1" id="toc-step-2-compute-the-test-statistic-and-calculate-the-p-value-1" class="nav-link" data-scroll-target="#step-2-compute-the-test-statistic-and-calculate-the-p-value-1">Step 2: Compute the Test Statistic and Calculate the p-value</a></li>
-  <li><a href="#step-3-interpret-the-probability-and-write-a-conclusion-1" id="toc-step-3-interpret-the-probability-and-write-a-conclusion-1" class="nav-link" data-scroll-target="#step-3-interpret-the-probability-and-write-a-conclusion-1">Step 3: Interpret the Probability and Write a Conclusion</a></li>
+  <li><a href="#paired-step-1-specify-null-and-alternative-hypothesis" id="toc-paired-step-1-specify-null-and-alternative-hypothesis" class="nav-link" data-scroll-target="#paired-step-1-specify-null-and-alternative-hypothesis">Paired Step 1: Specify Null and Alternative Hypothesis</a></li>
+  <li><a href="#paired-step-2-compute-the-test-statistic-and-p-value" id="toc-paired-step-2-compute-the-test-statistic-and-p-value" class="nav-link" data-scroll-target="#paired-step-2-compute-the-test-statistic-and-p-value">Paired Step 2: Compute the Test Statistic and p-value</a></li>
+  <li><a href="#paired-step-3-interpret-and-conclude" id="toc-paired-step-3-interpret-and-conclude" class="nav-link" data-scroll-target="#paired-step-3-interpret-and-conclude">Paired Step 3: Interpret and Conclude</a></li>
   <li><a href="#example-of-an-dependent-samples-t-test-in-r" id="toc-example-of-an-dependent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-dependent-samples-t-test-in-r">Example of an Dependent Samples t-Test in R</a></li>
   <li><a href="#reshape-function" id="toc-reshape-function" class="nav-link" data-scroll-target="#reshape-function">reshape function</a></li>
   </ul></li>
+  <li><a href="#review-and-practice" id="toc-review-and-practice" class="nav-link" data-scroll-target="#review-and-practice">Review and Practice</a>
+  <ul class="collapse">
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
+  <li><a href="#t-test-lab" id="toc-t-test-lab" class="nav-link" data-scroll-target="#t-test-lab">t-Test Lab</a></li>
+  <li><a href="#interactive-ttest-lesson" id="toc-interactive-ttest-lesson" class="nav-link" data-scroll-target="#interactive-ttest-lesson">Interactive R Lesson: t-Tests</a>
+  <ul class="collapse">
+  <li><a href="#part-1-one-sample-t-test" id="toc-part-1-one-sample-t-test" class="nav-link" data-scroll-target="#part-1-one-sample-t-test">Part 1: One-Sample t-Test</a></li>
+  <li><a href="#part-2-independent-samples-t-test" id="toc-part-2-independent-samples-t-test" class="nav-link" data-scroll-target="#part-2-independent-samples-t-test">Part 2: Independent Samples t-Test</a></li>
+  <li><a href="#part-3-independent-samples-t-test-co2-dataset" id="toc-part-3-independent-samples-t-test-co2-dataset" class="nav-link" data-scroll-target="#part-3-independent-samples-t-test-co2-dataset">Part 3: Independent Samples t-Test — CO2 Dataset</a></li>
+  <li><a href="#part-4-dependent-paired-samples-t-test" id="toc-part-4-dependent-paired-samples-t-test" class="nav-link" data-scroll-target="#part-4-dependent-paired-samples-t-test">Part 4: Dependent (Paired) Samples t-Test</a></li>
+  </ul></li>
+  <li><a href="#ttest-quiz" id="toc-ttest-quiz" class="nav-link" data-scroll-target="#ttest-quiz">Scored Quiz: t-Tests</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs'
+    }
+  });
+</script>
+<script type="module">
+// Function to update Monaco Editors when body class changes
+function updateMonacoEditorsOnBodyClassChange() {
+    // Select the body element
+    const body = document.querySelector('body');
+
+    // Options for the observer (which mutations to observe)
+    const observerOptions = {
+        attributes: true,  // Observe changes to attributes
+        attributeFilter: ['class'] // Only observe changes to the 'class' attribute
+    };
+
+    // Callback function to execute when mutations are observed
+    const bodyClassChangeCallback = function(mutationsList, observer) {
+        for(let mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                // Class attribute has changed
+                // Update all Monaco Editors on the page
+                updateMonacoEditorTheme();
+            }
+        }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(bodyClassChangeCallback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(body, observerOptions);
+}
+
+// Function to update all instances of Monaco Editors on the page
+function updateMonacoEditorTheme() {
+    // Determine what VS Theme to use
+    const vsThemeToUse = document.body.classList.contains("quarto-dark") ? 'vs-dark' : 'vs' ;
+
+    // Iterate through all initialized Monaco Editors
+    qwebrEditorInstances.forEach( function(editorInstance) { 
+        editorInstance.updateOptions({ theme: vsThemeToUse }); 
+    });
+}
+
+// Call the function to start observing changes to body class
+updateMonacoEditorsOnBodyClassChange();
+</script>
+<script type="module">
+// Global array to store Monaco Editor instances
+globalThis.qwebrEditorInstances = [];
+
+function isValidCodeLineNumbers(stringCodeLineNumbers) {
+  // Regular expression to match valid input strings
+  const regex = /^(\d+(-\d+)?)(,\d+(-\d+)?)*$/;
+  return regex.test(stringCodeLineNumbers);
+}
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
+
+  const initialCode = cellData.code;
+  const qwebrCounter = cellData.id;
+  const qwebrOptions = cellData.options;
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let resetButton = document.getElementById(`qwebr-button-reset-${qwebrCounter}`);
+  let copyButton = document.getElementById(`qwebr-button-copy-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: qwebrScaledFontSize(editorDiv, qwebrOptions),         
+      renderLineHighlight: "none",      // Disable current line highlighting
+      hideCursorInOverviewRuler: true,  // Remove cursor indictor in right hand side scroll bar
+      readOnly: qwebrOptions['read-only'] ?? false,
+      quickSuggestions: qwebrOptions['editor-quick-suggestions'] ?? false,
+      wordWrap: (qwebrOptions['editor-word-wrap'] == 'true' ? "on" : "off")
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value and options
+    editor.__qwebrinitialCode = initialCode;
+    editor.__qwebrOptions = qwebrOptions;
+
+    // Set at the model level the preferred end of line (EOL) character to LF.
+    // This prevent `\r\n` from being given to the webR engine if the user is on Windows.
+    // See details in: https://github.com/coatless/quarto-webr/issues/94
+    // Associated error text: 
+    // Error: <text>:1:7 unexpected input
+
+    // Retrieve the underlying model
+    const model = editor.getModel();
+    // Set EOL for the model
+    model.setEOL(monaco.editor.EndOfLineSequence.LF);
+    
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      // Increment editor height by 2 to prevent vertical scroll bar from appearing
+      const contentHeight = editor.getContentHeight() + 2;
+
+      // Retrieve editor-max-height option
+      const maxEditorHeight = qwebrOptions['editor-max-height'];
+
+      // If editor-max-height is missing, allow infinite growth. Otherwise, threshold.
+      const editorHeight = !maxEditorHeight ?  contentHeight : Math.min(contentHeight, maxEditorHeight);
+
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${editorHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Function to generate decorations to highlight lines
+    // in the editor based on input string.
+    function decoratorHighlightLines(codeLineNumbers) {
+      // Store the lines to be lighlight
+      let linesToHighlight = [];
+      
+      // Parse the codeLineNumbers string to get the line numbers to highlight
+      // First, split the string by commas
+      codeLineNumbers.split(',').forEach(part => {
+        // Check if we have a range of lines
+        if (part.includes('-')) {
+            // Handle range of lines (e.g., "6-8")
+            const [start, end] = part.split('-').map(Number);
+            for (let i = start; i <= end; i++) {
+                linesToHighlight.push(i);
+            }
+        } else {
+            // Handle single line (e.g., "7")
+            linesToHighlight.push(Number(part));
+        }
+      });
+  
+      // Create monaco decorations for the lines to highlight
+      const decorations = linesToHighlight.map(lineNumber => ({
+          range: new monaco.Range(lineNumber, 1, lineNumber, 1),
+          options: {
+              isWholeLine: true,
+              className: 'qwebr-editor-highlight-line'
+          }
+      }));
+  
+      // Return decorations to be applied to the editor
+      return decorations;
+    }
+
+    // Ensure that the editor-code-line-numbers option is set and valid
+    // then apply styling
+    if (qwebrOptions['editor-code-line-numbers']) {
+      // Remove all whitespace from the string
+      const codeLineNumbers = qwebrOptions['editor-code-line-numbers'].replace(/\s/g,'');
+      // Check if the string is valid for line numbers, e.g., "1,3-5,7"
+      if (isValidCodeLineNumbers(codeLineNumbers)) {
+        // Apply the decorations to the editor
+        editor.createDecorationsCollection(decoratorHighlightLines(codeLineNumbers));
+      } else {
+        // Warn the user that the input is invalid
+        console.warn(`Invalid "editor-code-line-numbers" value in code cell ${qwebrOptions['label']}: ${codeLineNumbers}`);
+      }
+    }
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, editor.__qwebrOptions);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter, editor.__qwebrOptions);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, editor.__qwebrOptions);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, editor.__qwebrOptions);
+  };
+
+  // Add a click event listener to the reset button
+  copyButton.onclick = function () {
+    // Retrieve current code data
+    const data = editor.getValue();
+    
+    // Write code data onto the clipboard.
+    navigator.clipboard.writeText(data || "");
+  };
+  
+  // Add a click event listener to the copy button
+  resetButton.onclick = function () {
+    editor.setValue(editor.__qwebrinitialCode);
+  };
+  
+}
+</script>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -857,30 +2706,34 @@ window.Quarto = {
 </header>
 
 
-<ul>
-<li>The goal of this lesson is to teach you how to conduct statistical inference with regards to hypothesis testing. In doing so, we will learn a few key hypothesis tests given t-distributions, including the one-sample t-test, the independent samples t-test, and the dependent samples t-test. We will continue to conduct hypothesis tests in the later modules as they are the cornerstone to conducting sound statistical inference.</li>
-</ul>
+<p>This lesson introduces the logic and mechanics of statistical hypothesis testing, then applies that framework to three t-tests that will appear throughout the rest of the course.</p>
+<p>We begin with the <strong>foundations of hypothesis testing</strong>: what a null and alternative hypothesis are, why we assume the null is true until the evidence says otherwise, and how the p-value approach works. A p-value is the probability of observing a result at least as extreme as the one calculated, <em>assuming the null hypothesis is true</em>. A small p-value means the observed data would be very unlikely if the null were true — giving us grounds to reject it. We set a decision rule in advance: reject <span class="math inline">\(H_0\)</span> if the p-value is less than alpha (typically 0.05). We also cover the three tail configurations — two-tailed (<span class="math inline">\(\neq\)</span>), right-tailed (<span class="math inline">\(&gt;\)</span>), and left-tailed (<span class="math inline">\(&lt;\)</span>) — and how the direction of the alternative hypothesis determines which tail of the distribution we look at.</p>
+<p>The lesson then works through three <strong>t-tests</strong>, each using R’s <code>t.test()</code> function with different arguments. All three follow the same three-step procedure: specify hypotheses, compute the test statistic and p-value, interpret and conclude. The t-distribution is used instead of the z-distribution because we are estimating population parameters from sample data — specifically, we rarely know the population standard deviation. Where a z-score measures how many standard deviations a value is from the mean, a t-statistic measures how many standard errors the sample mean is from the hypothesized value. As sample size grows, the t-distribution approaches the normal distribution.</p>
+<p>The <strong>one-sample t-test</strong> compares a single sample mean to a known or hypothesized value — for example, testing whether average study hours differ from 12. The <strong>independent samples t-test</strong> compares the means of two unrelated groups — for example, whether systolic blood pressure differs between males and females. The <strong>dependent (paired) samples t-test</strong> compares two related measurements, such as weight before and after an intervention, where each observation in one group is matched to a specific observation in the other. The key to choosing the right test is understanding how the data are structured.</p>
+<p>By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, and write a formal conclusion from the output. Work through every code example in your own R script alongside the reading.</p>
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
 <ul>
-<li>In order to succeed in this section, you will need to understand how to set up and test a hypothesis, knowing that we can reuse our logic of hypothesis testing for other types of models later on. Pay close attention to the idea of and the reason for the t-distribution with regards to one-sample, independent samples, and dependent samples hypothesis test. Additionally, note when the test is a two-tailed, a right-tailed, or a left-tailed test, and what that means for the interpretation of the results.</li>
+<li>In order to succeed in this section, you will need to understand how to set up and test a hypothesis, knowing that we can reuse this logic for many other types of models throughout the course. Pay close attention to why we use the t-distribution — and how it differs from the z-distribution — for one-sample, independent samples, and dependent samples tests. Additionally, note when the test is two-tailed, right-tailed, or left-tailed, and what that means for the interpretation of the results.</li>
 </ul>
 </section>
 <section id="lesson-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
 <ul>
-<li>Compare a sample mean to a population mean with a one-sample t-test.</li>
+<li>Explain the logic of hypothesis testing: null and alternative hypotheses, p-value interpretation, and the decision rule.</li>
+<li>Distinguish between two-tailed, right-tailed, and left-tailed tests and set up each correctly.</li>
+<li>Compare a sample mean to a hypothesized population value with a one-sample t-test.</li>
 <li>Compare two unrelated sample means with an independent-samples t-test.</li>
-<li>Compare two related sample means with a dependent-samples t-test.</li>
-<li>Compare and contrast the the three t-tests covered in this module: one-sample, independent samples, and dependent samples.</li>
+<li>Compare two related sample means with a dependent-samples (paired) t-test.</li>
+<li>Select the correct t-test for a given research question based on data structure.</li>
 </ul>
 </section>
 <section id="consider-while-reading" class="level3">
 <h3 class="anchored" data-anchor-id="consider-while-reading">Consider While Reading</h3>
 <ul>
-<li>In this lesson, we learn more about hypothesis testing, which will continue throughout the rest of the term! We are still conducting inference analysis. As an analyst, I like to say that this starts the fun stuff.</li>
-<li>We cover three important t-tests. There are more examples on the our course management system with regards to setting up a two-tailed, right-tailed, or left-tailed test and adjusting the <span class="math inline">\(\mu\)</span> of interest.</li>
-<li>Make sure you understand the key differences between all the three t-tests presented in this module and their role in interpreting data and making inferences. All three tests are making comparisons: comparisons to a mean value, comparison to another population, or comparison to paired data like before and after results.</li>
+<li>In this lesson, we introduce hypothesis testing — the formal statistical process for deciding whether sample evidence supports a claim about a population. This framework carries forward for the remainder of the course: ANOVA, regression, and correlation all follow the same fundamental logic of comparing a test statistic to a null distribution and interpreting the resulting p-value.</li>
+<li>We cover three t-tests that use the <code>t.test()</code> command with different arguments. The differences between them come down to one question: what are you comparing? A sample mean to a benchmark, two independent groups, or two related measurements on the same subjects?</li>
+<li>As you read, pay particular attention to how the alternative hypothesis determines the direction of the test — and therefore which side of the distribution you examine — and how <code>paired = TRUE</code> versus the tilde (<code>~</code>) syntax in <code>t.test()</code> changes the structure of the test.</li>
 </ul>
 </section>
 <section id="hypothesis-testing" class="level2">
@@ -1090,6 +2943,8 @@ window.Quarto = {
 </ul></li>
 <li>We change arguments as needed to satisfy the type of test that we are conducting.</li>
 </ul>
+<hr>
+<p>With the framework for hypothesis testing established, the next three sections apply it to three specific scenarios using R’s <code>t.test()</code> function. The choice of test depends entirely on what you are comparing and how the data are structured: one group versus a known value, two unrelated groups, or two related measurements on the same subjects.</p>
 </section>
 <section id="one-sample-t-test" class="level2">
 <h2 class="anchored" data-anchor-id="one-sample-t-test">One-Sample t-Test</h2>
@@ -1103,8 +2958,8 @@ window.Quarto = {
 <li>In base R, the t.test() command discussed above is useful for getting the t for a one-sample t-test. The command arguments include the name of the variable and the hypothesized or population value (<span class="math inline">\(\mu\)</span>) to compare it to. We can also include the alternative statement to signify a right-tailed, left-tailed, or two-tailed test.</li>
 </ul>
 </section>
-<section id="step-1-specify-null-and-alternative-hypothesis" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-specify-null-and-alternative-hypothesis">Step 1: Specify Null and Alternative Hypothesis</h3>
+<section id="one-sample-step-1-specify-null-and-alternative-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="one-sample-step-1-specify-null-and-alternative-hypothesis">One-Sample Step 1: Specify Null and Alternative Hypothesis</h3>
 <ul>
 <li>In order to set up the appropriate null and alternative hypothesis, we need to determine the type of test: two-tailed, right-tailed, or left-tailed.</li>
 </ul>
@@ -1238,8 +3093,8 @@ mean of x
 </div>
 </section>
 </section>
-<section id="step-2.-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
-<h3 class="anchored" data-anchor-id="step-2.-compute-the-test-statistic-and-calculate-the-p-value">Step 2. Compute the Test Statistic and calculate the p-value</h3>
+<section id="one-sample-step-2-compute-the-test-statistic-and-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="one-sample-step-2-compute-the-test-statistic-and-p-value">One-Sample Step 2: Compute the Test Statistic and p-value</h3>
 <ul>
 <li>When the population standard deviation <span class="math inline">\(\sigma\)</span> is unknown, the test statistic for testing the population mean <span class="math inline">\(\mu\)</span> is assumed to follow the <span class="math inline">\(t\)</span> distribution with a computed degrees of freedom (<span class="math inline">\(df\)</span>) based on whether population variances are assumed to be equal or not.</li>
 <li>Formula for the Test Statistic: <span class="math inline">\(t = (m_x-\mu_x)/(s_x/\sqrt(n_x))\)</span>
@@ -1249,8 +3104,8 @@ mean of x
 <li>R will compute the <span class="math inline">\(df\)</span> based on the parameters set in the t.test() command along with the test statistic, so we can rely on it to calculate this for us.</li>
 </ul>
 </section>
-<section id="step-3.-interpret-probability-and-results." class="level3">
-<h3 class="anchored" data-anchor-id="step-3.-interpret-probability-and-results.">Step 3. Interpret probability and results.</h3>
+<section id="one-sample-step-3-interpret-and-conclude" class="level3">
+<h3 class="anchored" data-anchor-id="one-sample-step-3-interpret-and-conclude">One-Sample Step 3: Interpret and Conclude</h3>
 <ul>
 <li>Set alpha (<span class="math inline">\(\alpha\)</span>) to a common level, like .05, and compare it to the calculated p-value from your output in R.</li>
 <li>Reject <span class="math inline">\(H_0\)</span> if p-value is less than <span class="math inline">\(\alpha\)</span> value. This means we show support for our alternative hypothesis <span class="math inline">\(H_A\)</span>, which is against status quo.</li>
@@ -1386,8 +3241,8 @@ mean of x
 <li>Using the ~ symbol between variables: This method allows you to run the t-test without having to split the data manually if your data is not already split. You specify the numerical variable (your continuous measurement) on the left and the categorical variable (which identifies the two groups) on the right of the ~ symbol.</li>
 </ul>
 </section>
-<section id="step-1-specify-null-and-alternative-hypothesis-1" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-specify-null-and-alternative-hypothesis-1">Step 1: Specify Null and Alternative Hypothesis</h3>
+<section id="independent-samples-step-1-specify-null-and-alternative-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="independent-samples-step-1-specify-null-and-alternative-hypothesis">Independent Samples Step 1: Specify Null and Alternative Hypothesis</h3>
 <ul>
 <li>When conducting hypothesis tests concerning <span class="math inline">\(\mu_1  - \mu_2\)</span> , the competing hypotheses will take one of the following forms:
 <ul>
@@ -1531,8 +3386,8 @@ mean of x mean of y
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># which is greater than .05.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
+<section id="independent-samples-step-2-compute-the-test-statistic-and-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="independent-samples-step-2-compute-the-test-statistic-and-p-value">Independent Samples Step 2: Compute the Test Statistic and p-value</h3>
 <p>Formula for the Test Statistic: <span class="math inline">\(t = (m_1 - m_2)/\sqrt((s^2_1/n_1)+(s^2_2/n_2))\)</span></p>
 <ul>
 <li><p>In the independent samples t-test formula, <span class="math inline">\(m_1\)</span> is the mean of one group and <span class="math inline">\(m_2\)</span> is the mean of the other group; the difference between the means makes up the numerator. The larger the difference between the group means, the larger the numerator will be and the larger the t-statistic will be!</p></li>
@@ -1542,8 +3397,8 @@ mean of x mean of y
 <li><p>Calculate the p-value and Compare it to a Predetermined Alpha level</p></li>
 </ul>
 </section>
-<section id="step-3-interpret-the-probability-and-write-a-conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-interpret-the-probability-and-write-a-conclusion">Step 3: Interpret the Probability and Write a Conclusion</h3>
+<section id="independent-samples-step-3-interpret-and-conclude" class="level3">
+<h3 class="anchored" data-anchor-id="independent-samples-step-3-interpret-and-conclude">Independent Samples Step 3: Interpret and Conclude</h3>
 </section>
 <section id="example-of-an-independent-samples-t-test-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="example-of-an-independent-samples-t-test-in-r">Example of an Independent Samples t-Test in R</h3>
@@ -1692,8 +3547,8 @@ sample estimates:
 <li>Summary: In a paired t-test, you’re comparing two related sets of observations, such as measurements taken from the same subjects under different conditions. The key is that each observation in one group has a corresponding observation in the other group. In R, you can perform a paired t-test by either specifying paired = TRUE in the t.test function or by directly calculating the differences between the paired observations and running the t-test on those differences. If you choose the second approach, you subtract one set of values from the other and then use that result as the first argument in the t.test function (essentially calculating the <span class="math inline">\(\mu_d\)</span>. This directly tests whether the mean of the differences is significantly different from zero, giving the same result as a paired t-test but with the differences calculated explicitly beforehand. Either method is fine.</li>
 </ul>
 </section>
-<section id="step-1-write-null-and-alternative-hypothesis" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-write-null-and-alternative-hypothesis">Step 1: Write Null and Alternative Hypothesis</h3>
+<section id="paired-step-1-specify-null-and-alternative-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="paired-step-1-specify-null-and-alternative-hypothesis">Paired Step 1: Specify Null and Alternative Hypothesis</h3>
 <ul>
 <li>When conducting hypothesis tests concerning <span class="math inline">\(\mu_d\)</span> , the competing hypotheses will take one of the following forms:
 <ul>
@@ -1801,16 +3656,16 @@ mean difference
 </div></li>
 </ul>
 </section>
-<section id="step-2-compute-the-test-statistic-and-calculate-the-p-value-1" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-compute-the-test-statistic-and-calculate-the-p-value-1">Step 2: Compute the Test Statistic and Calculate the p-value</h3>
+<section id="paired-step-2-compute-the-test-statistic-and-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="paired-step-2-compute-the-test-statistic-and-p-value">Paired Step 2: Compute the Test Statistic and p-value</h3>
 <p>Formula for the Test Statistic: <span class="math inline">\(t = (m_d-d_0)/\sqrt((s^2_d/n_d)\)</span></p>
 <ul>
 <li><p>Dependent samples t-test formula: The <span class="math inline">\(m_d\)</span> is the mean of the differences between the related measures, the <span class="math inline">\(s^2_d\)</span> is the variance of the mean difference between the measures, and <span class="math inline">\(n_d\)</span> is the sample size. The dependent samples t-test worked a little differently from the independent samples t-test. In this case, the formula uses the mean of the differences between the two related measures.</p></li>
 <li><p>Calculate the p-value and Compare it to a Predetermined Alpha level</p></li>
 </ul>
 </section>
-<section id="step-3-interpret-the-probability-and-write-a-conclusion-1" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-interpret-the-probability-and-write-a-conclusion-1">Step 3: Interpret the Probability and Write a Conclusion</h3>
+<section id="paired-step-3-interpret-and-conclude" class="level3">
+<h3 class="anchored" data-anchor-id="paired-step-3-interpret-and-conclude">Paired Step 3: Interpret and Conclude</h3>
 <ul>
 <li>The steps involved with setting up the null and alternative hypotheses and calculating the test statistic are based on different rules and formulas for all three t-tests, but the rest of the steps are the same.</li>
 </ul>
@@ -1965,6 +3820,8 @@ mean difference
 </ul>
 </section>
 </section>
+<section id="review-and-practice" class="level1">
+<h1>Review and Practice</h1>
 <section id="using-ai" class="level2">
 <h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
 <ul>
@@ -1975,17 +3832,592 @@ mean difference
 <li><p>What are the key arguments in the t.test() function in R, and how do I modify these arguments to perform different types of t-tests, such as two-tailed or paired t-tests?</p></li>
 <li><p>How do I interpret the p-value in the context of hypothesis testing, and how does it relate to rejecting or failing to reject the null hypothesis?</p></li>
 <li><p>How does the confidence interval calculated during a t-test help in understanding the range of possible population parameters, and why is it important in hypothesis testing?</p></li>
-<li><p>What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used?</p></li>
+<li><p>What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used? # Summary and Review</p></li>
 </ul>
+</section>
+<section id="t-test-lab" class="level2">
+<h2 class="anchored" data-anchor-id="t-test-lab">t-Test Lab</h2>
+<p><strong>A campus dining service</strong> claims that the average wait time at peak lunch hours is 8 minutes. A student researcher times 40 randomly selected visits and finds a mean wait of 9.4 minutes (sd = 3.1 minutes). Without running the code, set up the null and alternative hypotheses for a two-tailed test, and identify which t-test is appropriate and why.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>one-sample t-test</strong> because we are comparing a single sample mean (9.4 minutes) to a known or claimed population value (8 minutes).</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: The mean wait time is equal to 8 minutes. (<span class="math inline">\(\mu = 8\)</span>)</li>
+<li><span class="math inline">\(H_A\)</span>: The mean wait time is not equal to 8 minutes. (<span class="math inline">\(\mu \neq 8\)</span>)</li>
+<li>Two-tailed because the researcher is testing for any difference, not a specific direction.</li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(wait_times, <span class="at">mu =</span> <span class="dv">8</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p><strong>Identify</strong> whether each scenario below calls for a one-sample, independent samples, or dependent samples t-test. Briefly justify each choice.</p>
+<ul>
+<li><ol type="a">
+<li>A hospital compares the recovery times of patients assigned to two different physical therapy programs.</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>A nutritionist records a client’s sodium intake before and after a four-week dietary intervention.</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>A manufacturer wants to know if the average output voltage of a new circuit board differs from the specification of 5.0 volts.</li>
+</ol></li>
+<li><ol start="4" type="a">
+<li>A university compares the GPA of students who attended orientation versus those who did not.</li>
+</ol></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>a. Independent samples t-test.</strong> Two separate, unrelated groups (different patients in different programs). Each patient appears in only one group.</li>
+<li><strong>b. Dependent (paired) samples t-test.</strong> The same clients are measured twice — before and after. Each “before” observation is directly linked to the same person’s “after” observation.</li>
+<li><strong>c.&nbsp;One-sample t-test.</strong> One sample of circuit boards is being compared to a single known specification value (5.0 volts), not to another group.</li>
+<li><strong>d.&nbsp;Independent samples t-test.</strong> Two distinct, unrelated groups of students — those who attended orientation and those who did not. No natural pairing between individuals across groups.</li>
+</ul>
+</div>
+</div>
+</div>
+<p><strong>A two-tailed one-sample t-test</strong> returns a t-statistic of 2.31 with a p-value of 0.024. Alpha is set at 0.05. State the conclusion in plain English, including both the formal decision and a sentence that communicates the result to a non-statistician.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Formal decision:</strong> Since the p-value (0.024) is less than alpha (0.05), we reject the null hypothesis.</p>
+<p><strong>Plain English conclusion:</strong> The sample provides statistically significant evidence that the true population mean is different from the hypothesized value. In other words, the difference we observed is unlikely to be due to random chance alone — there is real evidence that the actual average differs from what was claimed.</p>
+<p>Note: If alpha had been set to 0.01, the p-value of 0.024 would be <em>greater</em> than alpha, and we would fail to reject the null. The conclusion depends on the alpha level chosen before running the test.</p>
+</div>
+</div>
+</div>
+<p><strong>A researcher</strong> wants to test whether employees who participate in a wellness program report fewer sick days than those who do not. She collects data on 45 participants and 45 non-participants. Write out the null and alternative hypotheses, identify the test, specify the <code>alternative</code> argument in R’s <code>t.test()</code> function, and explain how the direction of the hypothesis affects which tail is examined.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Test:</strong> Independent samples t-test — two separate, unrelated groups (participants vs.&nbsp;non-participants).</p>
+<p>Let <span class="math inline">\(\mu_1\)</span> = mean sick days for wellness program participants and <span class="math inline">\(\mu_2\)</span> = mean sick days for non-participants.</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_1 - \mu_2 \geq 0\)</span> (participants have the same or more sick days)</li>
+<li><span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span> (participants have <em>fewer</em> sick days — left-tailed)</li>
+</ul>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sick_days <span class="sc">~</span> group, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Why left-tailed?</strong> The hypothesis is directional — the researcher specifically predicts that participants will have <em>fewer</em> sick days, meaning <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>, which places the rejection region in the <em>left</em> tail of the distribution. If the data showed participants had <em>more</em> sick days, the test would not reject the null regardless of the magnitude of the difference.</p>
+</div>
+</div>
+</div>
+<p><strong>A before-and-after study</strong> measures employee productivity scores before and after a training program for 12 employees. The differences (after minus before) are:</p>
+<p><code>4, -1, 6, 3, 5, 2, 0, 7, 3, -2, 4, 5</code></p>
+<p>By hand: (a) calculate the mean difference <span class="math inline">\(\bar{d}\)</span>, and (b) state what value of <code>mu</code> you would use in the <code>t.test()</code> call and why.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>(a) Mean difference:</strong></p>
+<p><span class="math display">\[\bar{d} = \frac{4 + (-1) + 6 + 3 + 5 + 2 + 0 + 7 + 3 + (-2) + 4 + 5}{12} = \frac{36}{12} = 3.0\]</span></p>
+<p>The average productivity score increased by 3.0 points after training.</p>
+<p><strong>(b) Value of <code>mu</code>:</strong></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We use <code>mu = 0</code> because the null hypothesis for a paired test is that the mean difference is zero — meaning training had no effect on productivity. We are testing whether the observed mean difference of 3.0 is significantly different from zero.</p>
+</div>
+</div>
+</div>
+<p><strong>Interpret</strong> the following R output from a dependent samples t-test. State the conclusion, identify the direction of the difference from the mean estimate, and explain what the confidence interval tells you.</p>
+<pre><code>Paired t-test
+
+t = 4.1832, df = 11, p-value = 0.001501
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 1.463852 4.536148
+sample estimates:
+mean of the differences 
+                      3</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Conclusion:</strong> Since the p-value (0.0015) is less than alpha (0.05), we reject the null hypothesis. There is statistically significant evidence that the mean difference is not equal to zero — the training program did change productivity scores (t(11) = 4.18, p = 0.0015).</p>
+<p><strong>Direction:</strong> The mean difference is positive (3.0), meaning scores were higher <em>after</em> the training program than before. The program appears to have increased productivity on average.</p>
+<p><strong>Confidence interval:</strong> We are 95% confident that the true mean increase in productivity falls between 1.46 and 4.54 points. Because the entire interval is above zero (it does not include zero), this corroborates the significant p-value — we are confident the true effect is positive and meaningful, not just a chance fluctuation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interactive-ttest-lesson" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-ttest-lesson">Interactive R Lesson: t-Tests</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lesson covers the one-sample, independent samples, and dependent (paired) samples t-test using built-in R datasets. All calculations use base R — no additional packages needed.</p>
+<p>You can run real R code directly in the browser — no installation needed. Work through each section in order, then test yourself with the scored quiz at the bottom.</p>
+<p><strong>First-time load:</strong> The interactive R environment may take 10–20 seconds to initialize on your first visit. Once the Run Code buttons become active, you are ready to go.</p>
+</div>
+</div>
+<div id="qwebr-insertion-location-1"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<hr>
+<section id="part-1-one-sample-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-one-sample-t-test">Part 1: One-Sample t-Test</h3>
+<p>A one-sample t-test compares a single sample mean to a known or hypothesized population value. The null hypothesis always contains the equality sign; the alternative states the contradiction.</p>
+<p><strong>Load and summarize <code>mtcars</code>:</strong></p>
+<div id="qwebr-insertion-location-2"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Test whether the true mean mpg is not equal to 25 (two-tailed):</strong></p>
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is well below 0.05 — we reject H₀ and conclude the true mean mpg is significantly different from 25. The sample mean is approximately 20, which is the direction driving the result.</p>
+</div>
+</div>
+<p><strong>Test whether the true mean mpg is less than 25 (left-tailed):</strong></p>
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Test whether the true mean mpg is greater than 25 (right-tailed):</strong></p>
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When the true mean is about 20 and we hypothesize 25, the left-tailed test is highly significant and the right-tailed test returns a p-value near 1 — meaning it is almost certain the mean is <em>not</em> greater than 25. Flipping the tail flips the probability: p-value (greater) ≈ 1 − p-value (less).</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="part-2-independent-samples-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-independent-samples-t-test">Part 2: Independent Samples t-Test</h3>
+<p>An independent samples t-test compares the means of two unrelated groups. When the grouping variable is in its own column, use the formula syntax <code>Y ~ X</code>.</p>
+<p><strong>Does the type of engine (vs) affect mpg?</strong></p>
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Does transmission type (am: 0 = automatic, 1 = manual) affect mpg?</strong></p>
+<div id="qwebr-insertion-location-7"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Do automatics get significantly less mpg than manuals (left-tailed)?</strong></p>
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both the two-tailed and left-tailed tests are significant — manual transmissions get significantly more miles per gallon than automatics. Notice that <code>alternative = "less"</code> tests whether the <em>first</em> group (automatics, coded 0) has a smaller mean than the second (manuals, coded 1). Which group is “first” depends on the coding, so always check the group means in the output.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="part-3-independent-samples-t-test-co2-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-independent-samples-t-test-co2-dataset">Part 3: Independent Samples t-Test — CO2 Dataset</h3>
+<p><strong>Load and summarize <code>CO2</code>:</strong></p>
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Does cold treatment (chilled vs.&nbsp;nonchilled) affect CO2 uptake?</strong></p>
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Do nonchilled plants have significantly greater uptake than chilled plants?</strong></p>
+<div id="qwebr-insertion-location-11"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both tests are significant. Being chilled does cause plants to take up less CO₂. The group labeled first in the output is group 1 for the direction of the test — always check which group R lists as group 1 before specifying a directional alternative.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="part-4-dependent-paired-samples-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="part-4-dependent-paired-samples-t-test">Part 4: Dependent (Paired) Samples t-Test</h3>
+<p>A paired samples t-test compares two related measurements — typically before/after or matched pairs. Each observation in group 1 is matched to a specific observation in group 2.</p>
+<p><strong>Load and summarize <code>sleep</code>:</strong></p>
+<div id="qwebr-insertion-location-12"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<p><strong>Reshape the data from long to wide so each patient has one row:</strong></p>
+<div id="qwebr-insertion-location-13"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>reshape()</code> function converts the data so that each of the 10 patients occupies one row, with <code>extra.1</code> (Drug 1) and <code>extra.2</code> (Drug 2) as separate columns. This structure is required for <code>paired = TRUE</code> in <code>t.test()</code>.</p>
+</div>
+</div>
+<p><strong>Test whether the drug affected sleep duration:</strong></p>
+<div id="qwebr-insertion-location-14"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The p-value is below 0.05 — we reject H₀ and conclude that the type of drug significantly affects sleep duration. The mean of differences tells you the direction: a negative value means Drug 1 produced less extra sleep than Drug 2 on average.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="ttest-quiz" class="level2">
+<h2 class="anchored" data-anchor-id="ttest-quiz">Scored Quiz: t-Tests</h2>
+<div id="ps512-tt-quiz" style="font-family: Georgia, serif; max-width: 720px; margin: 2rem auto; background: #fafaf8; border: 1px solid #ddd; border-radius: 8px; padding: 2rem;">
+
+  <h3 style="margin-top:0; font-size:1.2rem; background:#2c6fad; color:#ffffff; padding:0.8rem 1.2rem; border-radius:6px 6px 0 0; margin:-2rem -2rem 1.5rem -2rem;" class="anchored">
+    Hypothesis Testing and t-Tests Quiz
+  </h3>
+
+  <div id="ttquiz-progress" style="font-size:0.85rem; color:#444; margin-bottom:1.5rem;">Question 1 of 10</div>
+
+  <!-- Q1 -->
+  <div class="ttquiz-q" id="ttq1" style="display:block">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">1. Which hypothesis always contains the equality sign?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq1" value="a"> The alternative hypothesis H<sub>A</sub>.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq1" value="b"> The null hypothesis H<sub>0</sub>.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq1" value="c"> Both hypotheses use equality signs.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq1" value="d"> Neither — only inequalities are used in hypothesis testing.</label>
+    <div class="ttquiz-feedback" id="ttfb1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="ttquiz-q" id="ttq2" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">2. A p-value of 0.03 at alpha = 0.05 means:</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq2" value="a"> Fail to reject H₀ — the result is not significant.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq2" value="b"> Reject H₀ — there is significant evidence in support of H<sub>A</sub>.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq2" value="c"> Accept H₀ — the null is proven true.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq2" value="d"> The test cannot be interpreted without the t-statistic.</label>
+    <div class="ttquiz-feedback" id="ttfb2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="ttquiz-q" id="ttq3" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">3. To test whether the mean mpg is less than 25 using the mtcars dataset, you would write:</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq3" value="a"> <code>t.test(mtcars$mpg, mu = 25)</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq3" value="b"> <code>t.test(mtcars$mpg, mu = 25, alternative = "greater")</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq3" value="c"> <code>t.test(mtcars$mpg, mu = 25, alternative = "less")</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq3" value="d"> <code>t.test(mtcars$mpg ~ 25)</code></label>
+    <div class="ttquiz-feedback" id="ttfb3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="ttquiz-q" id="ttq4" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">4. Why does <code>t.test(mtcars$mpg, mu = 25, alternative = "greater")</code> return a p-value near 1?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq4" value="a"> Because the dataset is too small to detect significance.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq4" value="b"> Because the sample mean (~20) is far below 25, making it extremely unlikely the true mean is greater than 25.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq4" value="c"> Because t.test() defaults to two-tailed regardless of the alternative argument.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq4" value="d"> Because mpg is a categorical variable.</label>
+    <div class="ttquiz-feedback" id="ttfb4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="ttquiz-q" id="ttq5" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">5. When running an independent samples t-test and the grouping variable is in its own column, the correct syntax is:</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq5" value="a"> <code>t.test(Y, X)</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq5" value="b"> <code>t.test(Y ~ X)</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq5" value="c"> <code>t.test(X ~ Y)</code></label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq5" value="d"> <code>t.test(Y, X, paired = TRUE)</code></label>
+    <div class="ttquiz-feedback" id="ttfb5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="ttquiz-q" id="ttq6" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">6. In <code>t.test(mtcars$mpg ~ mtcars$am, alternative = "less")</code>, what does <code>alternative = "less"</code> test?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq6" value="a"> Whether manual cars (am = 1) have less mpg than automatics.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq6" value="b"> Whether the first group (automatics, am = 0) has a smaller mean mpg than the second group (manuals, am = 1).</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq6" value="c"> Whether the overall mean is less than zero.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq6" value="d"> Whether the p-value is less than alpha.</label>
+    <div class="ttquiz-feedback" id="ttfb6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="ttquiz-q" id="ttq7" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">7. What distinguishes a dependent (paired) samples t-test from an independent samples t-test?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq7" value="a"> The paired test uses a larger sample size.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq7" value="b"> In a paired test, each observation in one group is matched to a specific observation in the other — such as before/after measurements on the same subjects.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq7" value="c"> The paired test compares more than two groups.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq7" value="d"> The paired test does not use a p-value.</label>
+    <div class="ttquiz-feedback" id="ttfb7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="ttquiz-q" id="ttq8" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">8. Why does the paired t-test on the sleep dataset require <code>reshape()</code> first?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq8" value="a"> Because reshape() is needed to load the sleep dataset.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq8" value="b"> Because the data is in long format with both drug measurements stacked in one column, and paired = TRUE requires each patient's two measurements to be in separate columns on the same row.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq8" value="c"> Because t.test() cannot handle character variables without reshaping.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq8" value="d"> Because reshape() removes missing values before the test.</label>
+    <div class="ttquiz-feedback" id="ttfb8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="ttquiz-q" id="ttq9" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">9. The CO2 test <code>t.test(CO2$uptake ~ CO2$Treatment, alternative = "greater")</code> is significant. What is the correct conclusion?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq9" value="a"> Chilled plants have significantly greater CO2 uptake than nonchilled plants.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq9" value="b"> Nonchilled plants have significantly greater CO2 uptake than chilled plants.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq9" value="c"> There is no significant difference in CO2 uptake between treatments.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq9" value="d"> The treatment variable is not related to uptake.</label>
+    <div class="ttquiz-feedback" id="ttfb9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="ttquiz-q" id="ttq10" style="display:none">
+    <p style="font-weight:600; color:#1a1a1a; margin-bottom:1rem;">10. Which research scenario calls for a paired samples t-test rather than an independent samples t-test?</p>
+    <label class="ttquiz-option"><input type="radio" name="ttq10" value="a"> Comparing the average salary of employees in two different companies.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq10" value="b"> Comparing blood pressure before and after a medication for the same 20 patients.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq10" value="c"> Comparing exam scores between a control group and a treatment group of different students.</label><br>
+    <label class="ttquiz-option"><input type="radio" name="ttq10" value="d"> Comparing the mean GPA of students across three majors.</label>
+    <div class="ttquiz-feedback" id="ttfb10"></div>
+  </div>
+
+  <!-- Navigation -->
+  <div style="display:flex; gap:1rem; margin-top:1.5rem; align-items:center; flex-wrap:wrap;">
+    <button id="ttquiz-prev" onclick="ttquizNav(-1)" style="display:none; padding:0.5rem 1.2rem; background:#6c757d; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">← Previous</button>
+    <button id="ttquiz-next" onclick="ttquizNav(1)" style="padding:0.5rem 1.2rem; background:#4a90d9; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem;">Next →</button>
+    <button id="ttquiz-submit" onclick="ttsubmitQuiz()" style="display:none; padding:0.5rem 1.4rem; background:#27ae60; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95rem; font-weight:600;">Submit Quiz</button>
+  </div>
+
+  <div id="ttquiz-score" style="display:none; margin-top:1.5rem; padding:1rem 1.5rem; border-radius:6px; font-size:1rem;"></div>
+</div>
+
+<style>
+.ttquiz-option { display:block; margin:0.4rem 0; cursor:pointer; padding:0.4rem 0.6rem; border-radius:4px; transition:background 0.15s; color:#1a1a1a; }
+.ttquiz-option:hover { background:#ddeeff; border:1px solid #2c6fad; }
+.ttquiz-feedback { margin-top:0.8rem; padding:0.6rem 1rem; border-radius:5px; font-size:0.9rem; display:none; }
+.ttcorrect-fb { background:#d4edda; color:#155724; border-left:4px solid #27ae60; }
+.ttincorrect-fb { background:#f8d7da; color:#721c24; border-left:4px solid #e74c3c; }
+</style>
+
+<script>
+const ttAnswers = {
+  ttq1:'b', ttq2:'b', ttq3:'c', ttq4:'b', ttq5:'b',
+  ttq6:'b', ttq7:'b', ttq8:'b', ttq9:'b', ttq10:'b'
+};
+const ttHints = {
+  ttq1:  "H₀ always contains the equality sign (=, ≥, or ≤). The alternative H_A always uses an inequality (≠, >, or <).",
+  ttq2:  "When p-value < alpha, we reject H₀. A p-value of 0.03 is less than 0.05, so we reject — we never 'accept' the null.",
+  ttq3:  "alternative = 'less' specifies a left-tailed test, meaning H_A: mu < 25.",
+  ttq4:  "The sample mean is approximately 20 — far below 25. The probability of the true mean being *greater* than 25 is nearly zero, so the p-value approaches 1.",
+  ttq5:  "The tilde formula Y ~ X is used when the grouping variable is in its own column. Use Y, X (comma) only when each group is already a separate variable.",
+  ttq6:  "In R, the first level of the grouping variable becomes group 1. Automatics are coded 0 and listed first, so alternative='less' tests whether automatics have less mpg than manuals.",
+  ttq7:  "In a paired test, the same subjects or matched pairs appear in both conditions — each observation is linked. Independent samples have no such connection between groups.",
+  ttq8:  "paired = TRUE requires each pair of measurements to be in the same row. The original sleep data is long format (one row per measurement), so reshape() converts it to wide format first.",
+  ttq9:  "nonchilled plants are listed first in the output (group 1), and alternative='greater' tests whether group 1 > group 2. A significant result means nonchilled > chilled.",
+  ttq10: "Paired tests are for matched or repeated measurements on the same subjects. Before/after on the same 20 patients is the classic paired design."
+};
+let ttcurrent = 1;
+const tttotal = 10;
+
+function ttquizNav(dir) {
+  document.getElementById('ttq' + ttcurrent).style.display = 'none';
+  ttcurrent += dir;
+  document.getElementById('ttq' + ttcurrent).style.display = 'block';
+  document.getElementById('ttquiz-progress').textContent = 'Question ' + ttcurrent + ' of ' + tttotal;
+  document.getElementById('ttquiz-prev').style.display = ttcurrent > 1 ? 'inline-block' : 'none';
+  document.getElementById('ttquiz-next').style.display = ttcurrent < tttotal ? 'inline-block' : 'none';
+  document.getElementById('ttquiz-submit').style.display = ttcurrent === tttotal ? 'inline-block' : 'none';
+}
+
+function ttsubmitQuiz() {
+  let score = 0;
+  for (let i = 1; i <= tttotal; i++) {
+    const sel = document.querySelector('input[name="ttq' + i + '"]:checked');
+    const fb  = document.getElementById('ttfb' + i);
+    document.getElementById('ttq' + i).style.display = 'block';
+    if (sel && sel.value === ttAnswers['ttq' + i]) {
+      score++;
+      fb.className = 'ttquiz-feedback ttcorrect-fb';
+      fb.textContent = '✓ Correct! ' + ttHints['ttq' + i];
+    } else {
+      fb.className = 'ttquiz-feedback ttincorrect-fb';
+      fb.textContent = '✗ ' + (sel ? 'Not quite. ' : 'No answer selected. ') + ttHints['ttq' + i];
+    }
+    fb.style.display = 'block';
+  }
+  document.getElementById('ttquiz-prev').style.display = 'none';
+  document.getElementById('ttquiz-next').style.display = 'none';
+  document.getElementById('ttquiz-submit').style.display = 'none';
+  document.getElementById('ttquiz-progress').textContent = 'Quiz complete';
+  const sd = document.getElementById('ttquiz-score');
+  const pct = Math.round((score / tttotal) * 100);
+  sd.style.display = 'block';
+  sd.style.background = pct >= 70 ? '#d4edda' : '#fff3cd';
+  sd.style.borderLeft  = pct >= 70 ? '4px solid #27ae60' : '4px solid #f39c12';
+  sd.style.color        = pct >= 70 ? '#155724' : '#856404';
+  sd.innerHTML = '<strong>Your Score: ' + score + ' / ' + tttotal + ' (' + pct + '%)</strong><br>' +
+    (pct === 100 ? 'Excellent work — perfect score!' :
+     pct >= 70  ? 'Good work! Review any missed questions above.' :
+                  'Keep reviewing the lesson material above, then try again.');
+}
+</script>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No need to submit this quiz anywhere. This exercise is for your benefit to help you learn R.</p>
+</div>
+</div>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<ul>
-<li>In summary, we learned about the basic rules of hypothesis testing and how to set up a null and alternative hypothesis. We learned about two-tailed, right-tailed, and left-tailed hypotheses. We learned about 3 t.tests: the one-sample t-test, the independent samples t-test, and the dependent (or paired) samples t-test. Finally, we also learned how to interpret the results using the p-value approach.</li>
-<li>Take note that this lesson does not include the assumptions for t-tests. Assumptions are extremely important, but I will leave the discussion of them to another class.</li>
-</ul>
+<p>This lesson covered the logic of hypothesis testing and three t-tests in R:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Topic</th>
+<th>Key concepts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hypothesis testing logic</td>
+<td>Null (<span class="math inline">\(H_0\)</span>) vs.&nbsp;alternative (<span class="math inline">\(H_A\)</span>), p-value interpretation, decision rule (p &lt; α = reject <span class="math inline">\(H_0\)</span>)</td>
+</tr>
+<tr class="even">
+<td>Tail types</td>
+<td>Two-tailed ($</td>
+</tr>
+<tr class="odd">
+<td>eq<span class="math inline">\(), right-tailed (\)</span>&gt;<span class="math inline">\(), left-tailed (\)</span>&lt;$); alternative hypothesis determines the tail</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>p-value approach</td>
+<td>Compare p-value to pre-set alpha (typically 0.05); never “accept” <span class="math inline">\(H_0\)</span>, only fail to reject</td>
+</tr>
+<tr class="odd">
+<td>t-distribution</td>
+<td>Used when population SD is unknown; approaches normal as <span class="math inline">\(n\)</span> increases; measured in standard errors</td>
+</tr>
+<tr class="even">
+<td><code>t.test()</code> command</td>
+<td>Core arguments: <code>alternative</code>, <code>mu</code>, <code>paired</code>, <code>var.equal</code>, <code>conf.level</code></td>
+</tr>
+<tr class="odd">
+<td>One-sample t-test</td>
+<td>Compares sample mean to a known/hypothesized value; formula <span class="math inline">\(t = (m_x - \mu_x)/(s_x/\sqrt{n})\)</span></td>
+</tr>
+<tr class="even">
+<td>Independent samples t-test</td>
+<td>Compares means of two unrelated groups; use <code>~</code> when groups are in one column, <code>,</code> when in two</td>
+</tr>
+<tr class="odd">
+<td>Dependent samples t-test</td>
+<td>Compares two related measurements; use <code>paired = TRUE</code>; formula uses mean of differences <span class="math inline">\(m_d\)</span></td>
+</tr>
+<tr class="even">
+<td><code>reshape()</code></td>
+<td>Converts long-to-wide data for paired tests; tidyverse alternative uses <code>filter()</code> + <code>full_join()</code></td>
+</tr>
+<tr class="odd">
+<td>Confidence intervals</td>
+<td>Output includes 95% CI around the estimate; interpreted alongside the p-value</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What comes next:</strong> The ANOVA lesson extends hypothesis testing beyond two groups. Where the independent samples t-test compares the means of two populations, a one-way ANOVA compares three or more. The F-statistic and p-value interpretation follow the same logic introduced here.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -2416,12 +4848,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./module6.html" class="pagination-link" aria-label="Module 6: Analysis of Variance (ANOVA)">
-        <span class="nav-page-text"><span class="chapter-title">Module 6: Analysis of Variance (ANOVA)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./module6.html" class="pagination-link" aria-label="Module 6: ANOVA and Correlation">
+        <span class="nav-page-text"><span class="chapter-title">Module 6: ANOVA and Correlation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+<script type="module">
+// Handle cell initialization initialization
+qwebrCellDetails.map(
+  (entry) => {
+    // Handle the creation of the element
+    qwebrCreateHTMLElement(entry);
+    // In the event of interactive, initialize the monaco editor
+    if (entry.options.context == EvalTypes.Interactive) {
+      qwebrCreateMonacoEditorInstance(entry);
+    }
+  }
+);
+
+// Identify non-interactive cells (in order)
+const filteredEntries = qwebrCellDetails.filter(entry => {
+  const contextOption = entry.options && entry.options.context;
+  return ['output', 'setup'].includes(contextOption) || (contextOption == "interactive" && entry.options && entry.options.autorun === 'true');
+});
+
+// Condition non-interactive cells to only be run after webR finishes its initialization.
+qwebrInstance.then(
+  async () => {
+    const nHiddenCells = filteredEntries.length;
+    var currentHiddenCell = 0;
+
+
+    // Modify button state
+    qwebrSetInteractiveButtonState(`🟡 Running hidden code cells ...`, false);
+
+    // Begin processing non-interactive sections
+    // Due to the iteration policy, we must use a for() loop.
+    // Otherwise, we would need to switch to using reduce with an empty
+    // starting promise
+    for (const entry of filteredEntries) {
+
+      // Determine cell being examined
+      currentHiddenCell = currentHiddenCell + 1;
+      const formattedMessage = `Evaluating hidden cell ${currentHiddenCell} out of ${nHiddenCells}`;
+
+      // Update the document status header
+      if (qwebrShowStartupMessage) {
+        qwebrUpdateStatusHeader(formattedMessage);
+      }
+
+      // Display the update in non-active areas
+      qwebrUpdateStatusMessage(formattedMessage);
+
+      // Extract details on the active cell
+      const evalType = entry.options.context;
+      const cellCode = entry.code;
+      const qwebrCounter = entry.id;
+
+      if (['output', 'setup'].includes(evalType)) {
+        // Disable further global status updates
+        const activeContainer = document.getElementById(`qwebr-non-interactive-loading-container-${qwebrCounter}`);
+        activeContainer.classList.remove('qwebr-cell-needs-evaluation');
+        activeContainer.classList.add('qwebr-cell-evaluated');
+
+        // Update status on the code cell
+        const activeStatus = document.getElementById(`qwebr-status-text-${qwebrCounter}`);
+        activeStatus.innerText = " Evaluating hidden code cell...";
+        activeStatus.classList.remove('qwebr-cell-needs-evaluation');
+        activeStatus.classList.add('qwebr-cell-evaluated');
+      }
+
+      switch (evalType) {
+        case 'interactive':
+          // TODO: Make this more standardized.
+          // At the moment, we're overriding the interactive status update by pretending its
+          // output-like. 
+          const tempOptions = entry.options;
+          tempOptions["context"] = "output"
+          // Run the code in a non-interactive state that is geared to displaying output
+          await qwebrExecuteCode(`${cellCode}`, qwebrCounter, tempOptions);
+          break;
+        case 'output':
+          // Run the code in a non-interactive state that is geared to displaying output
+          await qwebrExecuteCode(`${cellCode}`, qwebrCounter, entry.options);
+          break;
+        case 'setup':
+          const activeDiv = document.getElementById(`qwebr-noninteractive-setup-area-${qwebrCounter}`);
+
+          // Store code in history
+          qwebrLogCodeToHistory(cellCode, entry.options);
+
+          // Run the code in a non-interactive state with all output thrown away
+          await mainWebR.evalRVoid(`${cellCode}`);
+          break;
+        default: 
+          break; 
+      }
+
+      if (['output', 'setup'].includes(evalType)) {
+        // Disable further global status updates
+        const activeContainer = document.getElementById(`qwebr-non-interactive-loading-container-${qwebrCounter}`);
+        // Disable visibility
+        activeContainer.style.visibility = 'hidden';
+        activeContainer.style.display = 'none';
+      }
+    }
+  }
+).then(
+  () => {
+    // Release document status as ready
+
+    if (qwebrShowStartupMessage) {
+      qwebrStartupMessage.innerText = "🟢 Ready!"
+    }
+  
+    qwebrSetInteractiveButtonState(
+      `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+      true
+    );  
+  }
+);
+</script>
 
 
 
