@@ -1,21 +1,28 @@
 # Summary
 
-# Required Reading
+## Recommended Further Reading Materials
 
-Harris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.
+Anthropic. (2025). Claude (claude.ai). https://www.anthropic.com
 
-# Recommended Further Reading Materials
+Fung, K. (2010). Numbers rule your world: The hidden influence of probabilities and statistics on everything you do. McGraw-Hill.
 
 James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning: With applications in R. Springer. (Springer Texts in Statistics)
 
-Jaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education. }
+Jaggia, S., & Kelly, A. (2018). Business statistics: Communicating with numbers (3rd ed.). McGraw-Hill Education.
 
-# Summary
+Harris, J. K. (2019). Statistics with R: Solving problems using real-world data. SAGE Publications.
 
--   This book is designed to complement our traditional probability and statistics course. We went over information to make sure you had some basics to really start learning R. This journey began with the basics of R, emphasizing that while multiple methods exist to achieve the same results in R, it's crucial to find the approach that works best for you. As we learn R, you will get used to doing things your way to be able to slice and evaluate the data to find rich information from the data sets we look at. As long as the data was handled properly, it does not matter how we reach our goal using R as long as we do it ourselves.
--   Mastering R allows you to effectively clean, analyze, and interpret data, unlocking valuable insights from various datasets. We explored the essential practice of data cleaning, learning various techniques and popular functions within the dplyr package under the tidyverse. Proper data cleaning ensures the integrity and accuracy of your analysis. We delved into skewness, kurtosis, variables, and scales of measurement, focusing on summarizing qualitative and quantitative data. Visualizations were introduced as powerful tools to describe variables and uncover patterns in the data.
--   We examined basic probability rules were covered alongside binomial and continuous distributions. We examined the normal distribution, its limitations, and methods for transforming non-normal variables.
--   We learned how to set up null and alternative hypotheses, and the different types of hypotheses tests (two-tailed, right-tailed, and left-tailed). We discussed three t-tests: one-sample, independent samples, and dependent samples, interpreting results through the p-value approach. Note that the assumptions for t-tests were not covered and are reserved for a future discussion.
--   We used contingency tables to calculate probabilities with categorical variables and computed chi-squared statistics for tests of independence and goodness of fit.
--   The concepts of Type I and Type II errors were introduced, emphasizing their reduction. We covered one-way and two-way ANOVA, including conducting and evaluating post-hoc tests. We learned how to write and interpret simple and multiple linear regression models, including goodness of fit measures and hypothesis testing using regression. The lm() command was crucial for interpreting summary output, and we explored using both continuous and categorical variables as predictors.
--   This book has equipped you with the foundational skills to handle and analyze data using R. Remember, the key to mastering these techniques lies in consistent practice and finding the methods that best suit your analytical style.
+Schmidt, A., Väänänen, K., Goyal, T., Kristensson, P. O., Peters, A., Mueller, S., Williamson, J. R., & Wilson, M. L. (Eds.). (2023). Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems. Association for Computing Machinery. https://doi.org/10.1145/3544548
+
+Wilke, C. O. (2019). Fundamentals of data visualization: A primer on making informative and compelling figures. O'Reilly Media.
+
+## Summary
+
+This book is designed as the primary resource for OMSBA 512A, a graduate probability and statistics course in R. It is built around the idea that statistical tools only become meaningful when you can implement them yourself — so every concept is paired with working R code you can run, modify, and apply to real data. As long as the data is handled properly and your reasoning is sound, R gives you the flexibility to reach your analytical goals in the way that works best for you.
+
+We began with the foundations of R and RStudio — navigating the environment, writing scripts, understanding data types, loading external datasets, and handling missing values. From there we moved to descriptive statistics: summarizing qualitative and quantitative variables using measures of central tendency, spread, skewness, and kurtosis, and visualizing distributions using histograms, density plots, and boxplots.
+Data preparation gave us the dplyr toolkit — filtering, selecting, arranging, mutating, and summarizing data using the pipe operator — the practical workflow that makes every subsequent analysis possible. Probability followed, covering the binomial and normal distributions, z-scores, cumulative probabilities, and chi-squared tests for goodness of fit and independence.
+
+With that foundation in place, we turned to inferential statistics. Hypothesis testing introduced the three-step process — state hypotheses, compute the test statistic and p-value, interpret and conclude — applied across one-sample, independent samples, and paired t-tests. ANOVA extended hypothesis testing to three or more groups, covering one-way and two-way designs, post-hoc tests using Tukey HSD, and Type I and Type II errors. Correlation introduced cor() and cor.test() for measuring and testing linear relationships between continuous variables, with careful attention to the distinction between correlation and causation. Regression built on that foundation with simple linear regression, multiple regression, and regression with categorical predictors, using lm() and vif() for model building and multicollinearity checking.
+
+Note that several important topics — regression assumptions, transformations, effect size, and partial correlations — were intentionally reserved for future courses in the OMSBA program. The goal here was to build a solid, working foundation across the full arc of a statistics course. The rest follows from this.
