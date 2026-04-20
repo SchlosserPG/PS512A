@@ -20,7 +20,18 @@ We close with **missing data and visualization**: identifying where values are a
 
 By the end of this lesson, you should be able to load a messy dataset, diagnose its problems, apply a dplyr cleaning workflow, and produce a visualization that reflects the prepared data. Work through every code example in your own `.R` script file alongside the reading.
 
----
+### Lesson Objectives
+
+-   Load a dataset, evaluate variable types using `class()` and `summary()`, and apply coercion functions (`as.factor()`, `as.numeric()`, `as.character()`) to correct type mismatches before analysis begins.
+-   Use the core dplyr verbs — `filter()`, `select()`, `arrange()`, `mutate()`, and `group_by()` with `summarize()` — to clean, reshape, and aggregate a data frame, chaining steps together with the pipe operator (`%>%`).
+-   Identify and handle missing values using `is.na()`, `sum(is.na())`, and `na.omit()`, and explain the implications of removing versus retaining missing observations.
+-   Produce a scatterplot and a grouped bar chart from a prepared dataset and interpret the visual output as a quality check on the cleaning workflow.
+
+### Consider While Reading
+
+-   Every dplyr function in this module does one thing and does it cleanly — the power comes from chaining them. As you work through each function individually, keep asking: how would I combine this with the previous step using `%>%`? The pipe is not just a convenience; it is the habit that makes your code readable and your workflow reproducible.
+-   Data preparation is where most analytical errors are introduced, not in the modeling steps that follow. A wrong data type, an undetected missing value, or a miscoded category will silently corrupt every result downstream. Get in the habit of running `summary()` and `str()` on your dataset before touching anything else — these two commands together will surface most problems immediately.
+-   When you use `group_by()` with `summarize()`, you are shifting from thinking about individual rows to thinking about groups. This is one of the most important conceptual transitions in data analysis. Notice how the same variable — say, `AnnualSpend` — means something different when you look at its overall mean versus its mean broken out by `Region` or `Churned`. The grouped summary is where business questions actually get answered.
 
 # Data Types and Coercion
 

@@ -2320,7 +2320,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Summary</span></a>
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">References and Summary</span></a>
   </div>
 </li>
     </ul>
@@ -2333,7 +2333,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data-types-and-coercion" id="toc-data-types-and-coercion" class="nav-link active" data-scroll-target="#data-types-and-coercion">Data Types and Coercion</a>
+  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link active" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
+  <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
+  <li><a href="#data-types-and-coercion" id="toc-data-types-and-coercion" class="nav-link" data-scroll-target="#data-types-and-coercion">Data Types and Coercion</a>
   <ul class="collapse">
   <li><a href="#evaluating-data-types" id="toc-evaluating-data-types" class="nav-link" data-scroll-target="#evaluating-data-types">Evaluating Data Types</a></li>
   <li><a href="#coercing-data-types" id="toc-coercing-data-types" class="nav-link" data-scroll-target="#coercing-data-types">Coercing Data Types</a>
@@ -2727,7 +2729,23 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>The lesson continues with <strong>grouping and summarizing</strong>: using <code>group_by()</code> with <code>summarize()</code> to compute statistics separately for each level of a categorical variable. This is one of the most frequently used patterns in real analysis — comparing means, counts, or totals across groups is the starting point for almost every business question.</p>
 <p>We close with <strong>missing data and visualization</strong>: identifying where values are absent and deciding whether to omit, impute, or work around them, then producing a scatterplot and grouped bar chart to confirm that the cleaned data tells a coherent story before any formal analysis begins.</p>
 <p>By the end of this lesson, you should be able to load a messy dataset, diagnose its problems, apply a dplyr cleaning workflow, and produce a visualization that reflects the prepared data. Work through every code example in your own <code>.R</code> script file alongside the reading.</p>
-<hr>
+<section id="lesson-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
+<ul>
+<li>Load a dataset, evaluate variable types using <code>class()</code> and <code>summary()</code>, and apply coercion functions (<code>as.factor()</code>, <code>as.numeric()</code>, <code>as.character()</code>) to correct type mismatches before analysis begins.</li>
+<li>Use the core dplyr verbs — <code>filter()</code>, <code>select()</code>, <code>arrange()</code>, <code>mutate()</code>, and <code>group_by()</code> with <code>summarize()</code> — to clean, reshape, and aggregate a data frame, chaining steps together with the pipe operator (<code>%&gt;%</code>).</li>
+<li>Identify and handle missing values using <code>is.na()</code>, <code>sum(is.na())</code>, and <code>na.omit()</code>, and explain the implications of removing versus retaining missing observations.</li>
+<li>Produce a scatterplot and a grouped bar chart from a prepared dataset and interpret the visual output as a quality check on the cleaning workflow.</li>
+</ul>
+</section>
+<section id="consider-while-reading" class="level3">
+<h3 class="anchored" data-anchor-id="consider-while-reading">Consider While Reading</h3>
+<ul>
+<li>Every dplyr function in this module does one thing and does it cleanly — the power comes from chaining them. As you work through each function individually, keep asking: how would I combine this with the previous step using <code>%&gt;%</code>? The pipe is not just a convenience; it is the habit that makes your code readable and your workflow reproducible.</li>
+<li>Data preparation is where most analytical errors are introduced, not in the modeling steps that follow. A wrong data type, an undetected missing value, or a miscoded category will silently corrupt every result downstream. Get in the habit of running <code>summary()</code> and <code>str()</code> on your dataset before touching anything else — these two commands together will surface most problems immediately.</li>
+<li>When you use <code>group_by()</code> with <code>summarize()</code>, you are shifting from thinking about individual rows to thinking about groups. This is one of the most important conceptual transitions in data analysis. Notice how the same variable — say, <code>AnnualSpend</code> — means something different when you look at its overall mean versus its mean broken out by <code>Region</code> or <code>Churned</code>. The grouped summary is where business questions actually get answered.</li>
+</ul>
+</section>
 <section id="data-types-and-coercion" class="level1">
 <h1>Data Types and Coercion</h1>
 <p>Before cleaning or transforming a dataset, you need to confirm that R is treating each variable as the correct type. A variable stored as text when it should be numeric will silently break calculations; a number stored as a factor will produce the wrong chart. This section covers how to identify data types and how to convert between them — skills you will use immediately in the dplyr examples that follow.</p>
