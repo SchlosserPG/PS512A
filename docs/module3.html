@@ -2333,7 +2333,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link active" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
+  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link active" data-scroll-target="#at-a-glance">At a Glance</a></li>
+  <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
   <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
   <li><a href="#data-types-and-coercion" id="toc-data-types-and-coercion" class="nav-link" data-scroll-target="#data-types-and-coercion">Data Types and Coercion</a>
   <ul class="collapse">
@@ -2729,6 +2730,12 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>The lesson continues with <strong>grouping and summarizing</strong>: using <code>group_by()</code> with <code>summarize()</code> to compute statistics separately for each level of a categorical variable. This is one of the most frequently used patterns in real analysis — comparing means, counts, or totals across groups is the starting point for almost every business question.</p>
 <p>We close with <strong>missing data and visualization</strong>: identifying where values are absent and deciding whether to omit, impute, or work around them, then producing a scatterplot and grouped bar chart to confirm that the cleaned data tells a coherent story before any formal analysis begins.</p>
 <p>By the end of this lesson, you should be able to load a messy dataset, diagnose its problems, apply a dplyr cleaning workflow, and produce a visualization that reflects the prepared data. Work through every code example in your own <code>.R</code> script file alongside the reading.</p>
+<section id="at-a-glance" class="level3">
+<h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
+<ul>
+<li>This lesson is about developing the habits of a careful analyst before any modeling begins. R will not warn you when a number is stored as text or a category is coded as a number — it will simply produce wrong results. The skills here — checking types, correcting them, filtering and reshaping with dplyr, handling missing values, and verifying your work with a visualization — are not preliminary steps you do once and move on from. They are the foundation of every analysis you will run in the MSBA program. The goal is not just to learn the functions, but to internalize a workflow: inspect first, clean deliberately, verify visually.</li>
+</ul>
+</section>
 <section id="lesson-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="lesson-objectives">Lesson Objectives</h3>
 <ul>

@@ -1,6 +1,8 @@
 ---
 title: "Module 3: Data Preparation"
 format: html
+filters:
+  - webr
 ---
 
 ```{r setup, include=FALSE}
@@ -19,6 +21,10 @@ The lesson continues with **grouping and summarizing**: using `group_by()` with 
 We close with **missing data and visualization**: identifying where values are absent and deciding whether to omit, impute, or work around them, then producing a scatterplot and grouped bar chart to confirm that the cleaned data tells a coherent story before any formal analysis begins.
 
 By the end of this lesson, you should be able to load a messy dataset, diagnose its problems, apply a dplyr cleaning workflow, and produce a visualization that reflects the prepared data. Work through every code example in your own `.R` script file alongside the reading.
+
+### At a Glance
+
+-   This lesson is about developing the habits of a careful analyst before any modeling begins. R will not warn you when a number is stored as text or a category is coded as a number — it will simply produce wrong results. The skills here — checking types, correcting them, filtering and reshaping with dplyr, handling missing values, and verifying your work with a visualization — are not preliminary steps you do once and move on from. They are the foundation of every analysis you will run in the MSBA program. The goal is not just to learn the functions, but to internalize a workflow: inspect first, clean deliberately, verify visually.
 
 ### Lesson Objectives
 

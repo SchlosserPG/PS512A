@@ -1122,16 +1122,19 @@ The probability work so far has focused on a single continuous (or discrete) var
 -   The joint probability rule is determined by dividing each cell frequency by the grand total. Joint probability refers to the statistical measure that calculates the likelihood of two events occurring together and at the same point in time.\
     $$P(A \cap B)$$
     -   For example, the probability that a randomly selected person is under 35 years of age and makes an Under Armour purchase is $P(U35 \cap UA)=174/600= .29$
--   For example, this Venn Diagram illustrates the sample space for events A and B.
--   The union of two events ($A \cup B$) is the event consisting of all simple events in A or B.
 
-![Venn Diagram](Pictures/Ch5/Venn1.png "Venn Diagram") The intersection of two events ($A \cap B$) consists of all simple events in both A and B.
+For example, this Venn Diagram illustrates the sample space for events A and B.
+* The union of two events ($A \cup B$) is the event consisting of all simple events in A or B.
+* The intersection of two events ($A \cap B$) consists of all simple events in both A and B.
+
 
 ![Venn Diagram: Intersection and Union](Pictures/Ch5/Venn2.png "Venn Diagram: Intersection and Union")
 
 -   The complement of event A (i.e., $A^c$) is the event consisting of all simple events in the sample space S that are not in A.
 
 ![Venn Diagram: Complement Rule](Pictures/Ch5/Venn3.png "Venn Diagram: Complement Rule")
+
+
 
 ## Summary Measures for a Random Variable
 
@@ -1608,7 +1611,7 @@ chisq.test(STEMGOF$RecentNumbers,p=STEMGOF$X2010Proportions)
 
 ## Using AI
 
--   Use the following prompts on a generative AI, like chatGPT, to learn more about probability and contingency tables.
+Use the following prompts with our chatbot (bottom right of this page) to explore more about probability and contingency tables.
 
 -   What is a contingency table, and how is it used to represent the relationship between two categorical variables in probability calculations?
 

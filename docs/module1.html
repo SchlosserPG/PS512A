@@ -2452,6 +2452,7 @@ window.Quarto = {
   <li><a href="#part-3-creating-a-data-frame" id="toc-part-3-creating-a-data-frame" class="nav-link" data-scroll-target="#part-3-creating-a-data-frame">Part 3: Creating a Data Frame</a></li>
   <li><a href="#part-4-loading-built-in-data-and-the-auto-dataset" id="toc-part-4-loading-built-in-data-and-the-auto-dataset" class="nav-link" data-scroll-target="#part-4-loading-built-in-data-and-the-auto-dataset">Part 4: Loading Built-in Data and the Auto Dataset</a></li>
   </ul></li>
+  <li><a href="#interactive-drag-and-drop" id="toc-interactive-drag-and-drop" class="nav-link" data-scroll-target="#interactive-drag-and-drop">Interactive Drag and Drop</a></li>
   <li><a href="#intro-quiz" id="toc-intro-quiz" class="nav-link" data-scroll-target="#intro-quiz">Scored Quiz: Introduction to R</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul></li>
@@ -2913,7 +2914,6 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>Writing functions</li>
 <li>Prompting and verifying AI-generated code</li>
 </ul>
-<hr>
 <p>With the statistical and conceptual framing in place, the next step is getting R and RStudio ready to use. This section covers how to create and organise your script files — the foundation of reproducible, documented work in R.</p>
 </section>
 </section>
@@ -4440,7 +4440,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>days_employed <span class="ot">&lt;-</span> today <span class="sc">-</span> hired</span>
 <span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a>days_employed  <span class="do">## Time difference in days</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 1770 days</code></pre>
+<pre><code>Time difference of 1773 days</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For year-month formats, use lubridate lubridate::ym('2021-06')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -5189,7 +5189,6 @@ Note
 </div>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-<hr>
 <section id="part-1-creating-vectors" class="level3">
 <h3 class="anchored" data-anchor-id="part-1-creating-vectors">Part 1: Creating Vectors</h3>
 <p>A vector is the simplest data structure in R — a set of data elements saved together as the same type.</p>
@@ -5317,8 +5316,128 @@ Note
 <p><code>dim()</code> returns the number of rows and columns. <code>names()</code> lists all variable names — useful when you cannot remember exact spelling. <code>dataset$variable</code> is how you access a single column.</p>
 </div>
 </div>
-<hr>
 </section>
+</section>
+<section id="interactive-drag-and-drop" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-drag-and-drop">Interactive Drag and Drop</h2>
+<div id="stat-type-exercise" style="font-family: 'Georgia', serif; max-width: 860px; margin: 1.5rem 0; border: 1px solid #d1d5db; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+
+  <div style="background: #1e3a5f; color: white; padding: 1rem 1.4rem;">
+    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-bottom: 0.25rem;">Interactive Exercise</div>
+    <div style="font-size: 1.05rem; font-weight: 600;">Descriptive and Inferential Statistics</div>
+  </div>
+
+  <div style="padding: 1.2rem 1.4rem; background: #f9fafb;">
+    <p style="margin: 0 0 1rem; font-size: 0.92rem; color: #374151; line-height: 1.6;">
+      Statistics can answer many different types of questions — but identifying <em>which branch</em> applies is essential to drawing accurate conclusions. Sort each question or task into the correct category.
+    </p>
+
+    <div style="margin-bottom: 1.2rem;">
+      <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #6b7280; margin-bottom: 0.5rem;">Drag items to sort:</div>
+      <div id="st-source-zone" ondragover="event.preventDefault()" ondrop="stDropToSource(event)" style="min-height: 64px; background: #1e3a5f; border-radius: 8px; padding: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-start;">
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #1d4ed8; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span style="display:inline-block; width:10px; height:10px; background:#2563eb; border-radius:50%;"></span> Descriptive
+        </div>
+        <div id="st-descriptive-zone" ondragover="event.preventDefault()" ondrop="stDropTo(event, 'descriptive')" style="min-height: 150px; background: #eff6ff; border: 2px dashed #93c5fd; border-radius: 8px; padding: 0.6rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="color:#93c5fd; font-size:0.8rem; text-align:center; margin:auto; pointer-events:none;" class="st-placeholder">Drop here</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #7c3aed; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span style="display:inline-block; width:10px; height:10px; background:#7c3aed; border-radius:50%;"></span> Inferential
+        </div>
+        <div id="st-inferential-zone" ondragover="event.preventDefault()" ondrop="stDropTo(event, 'inferential')" style="min-height: 150px; background: #f5f3ff; border: 2px dashed #c4b5fd; border-radius: 8px; padding: 0.6rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="color:#c4b5fd; font-size:0.8rem; text-align:center; margin:auto; pointer-events:none;" class="st-placeholder">Drop here</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+      <button onclick="stCheckAnswers()" style="background:#1e3a5f; color:white; border:none; padding: 0.45rem 1.1rem; border-radius:6px; font-size:0.85rem; cursor:pointer; font-family:inherit;">Check Answers</button>
+      <button onclick="stReset()" style="background:white; color:#374151; border:1px solid #d1d5db; padding: 0.45rem 1.1rem; border-radius:6px; font-size:0.85rem; cursor:pointer; font-family:inherit;">Reset</button>
+    </div>
+    <div id="st-feedback" style="margin-top: 0.8rem; font-size: 0.88rem; display:none;"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const stItems = [
+    { id: "st1", text: "What is the average monthly revenue across all 12 months in this dataset?",                                          answer: "descriptive"  },
+    { id: "st2", text: "What percentage of customers in this sample rated service as 'excellent'?",                                          answer: "descriptive"  },
+    { id: "st3", text: "Create a histogram showing the distribution of exam scores for this class.",                                         answer: "descriptive"  },
+    { id: "st4", text: "What is the median household income across all zip codes in the dataset?",                                           answer: "descriptive"  },
+    { id: "st5", text: "Based on a sample of 200 customers, do loyalty program members spend more on average than non-members company-wide?", answer: "inferential" },
+    { id: "st6", text: "Does a new onboarding process reduce 30-day churn for all new users, based on an A/B test of 500 accounts?",         answer: "inferential" },
+    { id: "st7", text: "Is the difference in average delivery times between two regional warehouses statistically significant?",              answer: "inferential" },
+    { id: "st8", text: "Based on this semester's class, do students who attend office hours earn higher final grades on average?",            answer: "inferential" },
+  ];
+
+  function stShuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+  function stMakeTile(item) {
+    const div = document.createElement("div");
+    div.id = item.id; div.draggable = true; div.dataset.answer = item.answer; div.textContent = item.text;
+    div.style.cssText = "background:white;border:1px solid #d1d5db;border-radius:6px;padding:0.55rem 0.75rem;font-size:0.83rem;line-height:1.45;cursor:grab;color:#1f2937;box-shadow:0 1px 3px rgba(0,0,0,0.08);user-select:none;";
+    div.addEventListener("dragstart", e => { e.dataTransfer.setData("text/plain", item.id); div.style.opacity="0.5"; });
+    div.addEventListener("dragend", () => { div.style.opacity="1"; });
+    return div;
+  }
+
+  function stClearPlaceholders(zone) { zone.querySelectorAll(".st-placeholder").forEach(el => el.remove()); }
+
+  window.stDropTo = function(event, target) {
+    event.preventDefault();
+    const tile = document.getElementById(event.dataTransfer.getData("text/plain"));
+    if (!tile) return;
+    const zone = document.getElementById("st-" + target + "-zone");
+    stClearPlaceholders(zone); zone.appendChild(tile);
+    tile.style.border="1px solid #d1d5db"; tile.style.background="white"; tile.style.color="#1f2937";
+    document.getElementById("st-feedback").style.display="none";
+  };
+
+  window.stDropToSource = function(event) {
+    event.preventDefault();
+    const tile = document.getElementById(event.dataTransfer.getData("text/plain"));
+    if (!tile) return;
+    document.getElementById("st-source-zone").appendChild(tile);
+    tile.style.border="1px solid #d1d5db"; tile.style.background="white"; tile.style.color="#1f2937";
+    document.getElementById("st-feedback").style.display="none";
+  };
+
+  window.stCheckAnswers = function() {
+    let correct = 0, total = 0;
+    ["descriptive","inferential"].forEach(z => {
+      document.getElementById("st-" + z + "-zone").childNodes.forEach(tile => {
+        if (!tile.dataset || !tile.dataset.answer) return;
+        total++;
+        if (z === tile.dataset.answer) { tile.style.border="2px solid #16a34a"; tile.style.background="#f0fdf4"; correct++; }
+        else { tile.style.border="2px solid #dc2626"; tile.style.background="#fff1f2"; }
+      });
+    });
+    const fb = document.getElementById("st-feedback");
+    fb.style.display="block";
+    if (total === 0) fb.innerHTML=`<span style="color:#6b7280;">Sort all items before checking.</span>`;
+    else if (correct === stItems.length) fb.innerHTML=`<span style="color:#166534;font-weight:600;">✓ All correct!</span> Descriptive statistics summarise the data you have. Inferential statistics use a sample to draw conclusions about a larger population — and that generalisation step is where judgment, sampling validity, and uncertainty all come into play.`;
+    else fb.innerHTML=`<span style="color:#991b1b;font-weight:600;">${correct} of ${stItems.length} correct.</span> Red items are in the wrong bucket. Ask: is this question summarising the data at hand, or generalising beyond it to a larger population?`;
+  };
+
+  window.stReset = function() {
+    const src = document.getElementById("st-source-zone"); src.innerHTML="";
+    document.getElementById("st-descriptive-zone").innerHTML=`<div style="color:#93c5fd;font-size:0.8rem;text-align:center;margin:auto;pointer-events:none;" class="st-placeholder">Drop here</div>`;
+    document.getElementById("st-inferential-zone").innerHTML=`<div style="color:#c4b5fd;font-size:0.8rem;text-align:center;margin:auto;pointer-events:none;" class="st-placeholder">Drop here</div>`;
+    document.getElementById("st-feedback").style.display="none";
+    stShuffle(stItems).forEach(item => src.appendChild(stMakeTile(item)));
+  };
+
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", stReset) : stReset();
+})();
+</script>
 </section>
 <section id="intro-quiz" class="level2">
 <h2 class="anchored" data-anchor-id="intro-quiz">Scored Quiz: Introduction to R</h2>

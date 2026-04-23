@@ -2386,6 +2386,7 @@ window.Quarto = {
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
   <li><a href="#quantitative-data-lab" id="toc-quantitative-data-lab" class="nav-link" data-scroll-target="#quantitative-data-lab">Quantitative Data Lab</a></li>
   <li><a href="#qualitative-data-lab" id="toc-qualitative-data-lab" class="nav-link" data-scroll-target="#qualitative-data-lab">Qualitative Data Lab</a></li>
+  <li><a href="#interactive-drag-and-drop" id="toc-interactive-drag-and-drop" class="nav-link" data-scroll-target="#interactive-drag-and-drop">Interactive Drag and Drop</a></li>
   <li><a href="#interactive-lesson" id="toc-interactive-lesson" class="nav-link" data-scroll-target="#interactive-lesson">Interactive R Lesson: Descriptive Statistics</a>
   <ul class="collapse">
   <li><a href="#part-1-exploring-a-categorical-variable" id="toc-part-1-exploring-a-categorical-variable" class="nav-link" data-scroll-target="#part-1-exploring-a-categorical-variable">Part 1: Exploring a Categorical Variable</a></li>
@@ -4098,6 +4099,138 @@ Show Answer
 </div>
 <hr>
 <p>With the reading and lab exercises complete, the interactive lesson below lets you apply these same techniques in your browser using real datasets — no RStudio needed for this section.</p>
+</section>
+<section id="interactive-drag-and-drop" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-drag-and-drop">Interactive Drag and Drop</h2>
+<div id="dtype-exercise" style="font-family: 'Georgia', serif; max-width: 900px; margin: 1.5rem 0; border: 1px solid #d1d5db; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+
+  <div style="background: #1e3a5f; color: white; padding: 1rem 1.4rem;">
+    <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-bottom: 0.25rem;">Interactive Exercise</div>
+    <div style="font-size: 1.05rem; font-weight: 600;">Data Type Classification</div>
+  </div>
+
+  <div style="padding: 1.2rem 1.4rem; background: #f9fafb;">
+    <p style="margin: 0 0 1rem; font-size: 0.92rem; color: #374151; line-height: 1.6;">
+      Numeric variables can be <strong>continuous</strong> (any value within a range) or <strong>discrete</strong> (whole, countable values). Categorical variables are <strong>nominal</strong> (no natural order) or <strong>ordinal</strong> (ordered categories). The type of a variable determines which summary statistics and charts are appropriate. Sort each variable into the correct bucket.
+    </p>
+
+    <div style="margin-bottom: 1.2rem;">
+      <div style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #6b7280; margin-bottom: 0.5rem;">Drag items to sort:</div>
+      <div id="dt-source-zone" ondragover="event.preventDefault()" ondrop="dtDropToSource(event)" style="min-height: 64px; background: #1e3a5f; border-radius: 8px; padding: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-start;">
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
+      <div>
+        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #1d4ed8; margin-bottom: 0.4rem; display:flex; align-items:center; gap:0.3rem;">
+          <span style="display:inline-block; width:9px; height:9px; background:#2563eb; border-radius:50%;"></span> Continuous Numeric
+        </div>
+        <div id="dt-continuous-zone" ondragover="event.preventDefault()" ondrop="dtDropTo(event,'continuous')" style="min-height:160px; background:#eff6ff; border:2px dashed #93c5fd; border-radius:8px; padding:0.6rem; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="color:#93c5fd;font-size:0.78rem;text-align:center;margin:auto;pointer-events:none;" class="dt-placeholder">Drop here</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #166534; margin-bottom: 0.4rem; display:flex; align-items:center; gap:0.3rem;">
+          <span style="display:inline-block; width:9px; height:9px; background:#16a34a; border-radius:50%;"></span> Discrete Numeric
+        </div>
+        <div id="dt-discrete-zone" ondragover="event.preventDefault()" ondrop="dtDropTo(event,'discrete')" style="min-height:160px; background:#f0fdf4; border:2px dashed #86efac; border-radius:8px; padding:0.6rem; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="color:#86efac;font-size:0.78rem;text-align:center;margin:auto;pointer-events:none;" class="dt-placeholder">Drop here</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #92400e; margin-bottom: 0.4rem; display:flex; align-items:center; gap:0.3rem;">
+          <span style="display:inline-block; width:9px; height:9px; background:#d97706; border-radius:50%;"></span> Categorical
+        </div>
+        <div id="dt-categorical-zone" ondragover="event.preventDefault()" ondrop="dtDropTo(event,'categorical')" style="min-height:160px; background:#fffbeb; border:2px dashed #fcd34d; border-radius:8px; padding:0.6rem; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="color:#fcd34d;font-size:0.78rem;text-align:center;margin:auto;pointer-events:none;" class="dt-placeholder">Drop here</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+      <button onclick="dtCheckAnswers()" style="background:#1e3a5f;color:white;border:none;padding:0.45rem 1.1rem;border-radius:6px;font-size:0.85rem;cursor:pointer;font-family:inherit;">Check Answers</button>
+      <button onclick="dtReset()" style="background:white;color:#374151;border:1px solid #d1d5db;padding:0.45rem 1.1rem;border-radius:6px;font-size:0.85rem;cursor:pointer;font-family:inherit;">Reset</button>
+    </div>
+    <div id="dt-feedback" style="margin-top:0.8rem;font-size:0.88rem;display:none;"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const dtItems = [
+    { id: "dt1", text: "Customer's annual income ($)",                answer: "continuous"  },
+    { id: "dt2", text: "Delivery time in hours",                      answer: "continuous"  },
+    { id: "dt3", text: "Customer satisfaction score (0–100 scale)",   answer: "continuous"  },
+    { id: "dt4", text: "Number of products purchased per transaction", answer: "discrete"    },
+    { id: "dt5", text: "Number of customer service calls made",        answer: "discrete"    },
+    { id: "dt6", text: "Count of defective units in a shipment",       answer: "discrete"    },
+    { id: "dt7", text: "Customer's region (Northeast, South, West…)",  answer: "categorical" },
+    { id: "dt8", text: "Product category (Electronics, Apparel…)",     answer: "categorical" },
+    { id: "dt9", text: "Education level (High School, Bachelor's, Master's, PhD)", answer: "categorical" },
+  ];
+
+  function dtShuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }
+
+  function dtMakeTile(item) {
+    const div = document.createElement("div");
+    div.id = item.id; div.draggable = true; div.dataset.answer = item.answer; div.textContent = item.text;
+    div.style.cssText = "background:white;border:1px solid #d1d5db;border-radius:6px;padding:0.5rem 0.65rem;font-size:0.81rem;line-height:1.4;cursor:grab;color:#1f2937;box-shadow:0 1px 3px rgba(0,0,0,0.08);user-select:none;";
+    div.addEventListener("dragstart", e => { e.dataTransfer.setData("text/plain", item.id); div.style.opacity="0.5"; });
+    div.addEventListener("dragend", () => { div.style.opacity="1"; });
+    return div;
+  }
+
+  function dtClearPlaceholders(zone) { zone.querySelectorAll(".dt-placeholder").forEach(el => el.remove()); }
+
+  window.dtDropTo = function(event, target) {
+    event.preventDefault();
+    const tile = document.getElementById(event.dataTransfer.getData("text/plain"));
+    if (!tile) return;
+    const zone = document.getElementById("dt-" + target + "-zone");
+    dtClearPlaceholders(zone); zone.appendChild(tile);
+    tile.style.border="1px solid #d1d5db"; tile.style.background="white"; tile.style.color="#1f2937";
+    document.getElementById("dt-feedback").style.display="none";
+  };
+
+  window.dtDropToSource = function(event) {
+    event.preventDefault();
+    const tile = document.getElementById(event.dataTransfer.getData("text/plain"));
+    if (!tile) return;
+    document.getElementById("dt-source-zone").appendChild(tile);
+    tile.style.border="1px solid #d1d5db"; tile.style.background="white"; tile.style.color="#1f2937";
+    document.getElementById("dt-feedback").style.display="none";
+  };
+
+  window.dtCheckAnswers = function() {
+    let correct = 0, total = 0;
+    ["continuous","discrete","categorical"].forEach(z => {
+      document.getElementById("dt-" + z + "-zone").childNodes.forEach(tile => {
+        if (!tile.dataset || !tile.dataset.answer) return;
+        total++;
+        if (z === tile.dataset.answer) { tile.style.border="2px solid #16a34a"; tile.style.background="#f0fdf4"; correct++; }
+        else { tile.style.border="2px solid #dc2626"; tile.style.background="#fff1f2"; }
+      });
+    });
+    const fb = document.getElementById("dt-feedback");
+    fb.style.display="block";
+    if (total === 0) fb.innerHTML=`<span style="color:#6b7280;">Sort all items before checking.</span>`;
+    else if (correct === dtItems.length) fb.innerHTML=`<span style="color:#166534;font-weight:600;">✓ All correct!</span> Continuous variables can take any value within a range and pair with mean, SD, and histograms. Discrete variables are whole counts and pair with the same tools but often benefit from bar charts. Categorical variables — including ordinal ones like education level — use frequency tables and bar charts, not means.`;
+    else fb.innerHTML=`<span style="color:#991b1b;font-weight:600;">${correct} of ${dtItems.length} correct.</span> Red items are in the wrong bucket. Ask: can the variable take fractional values (continuous), is it a whole-number count (discrete), or does it name a group or category (categorical)?`;
+  };
+
+  window.dtReset = function() {
+    const src = document.getElementById("dt-source-zone"); src.innerHTML="";
+    const colors = { continuous:"#93c5fd", discrete:"#86efac", categorical:"#fcd34d" };
+    ["continuous","discrete","categorical"].forEach(z => {
+      document.getElementById("dt-" + z + "-zone").innerHTML=`<div style="color:${colors[z]};font-size:0.78rem;text-align:center;margin:auto;pointer-events:none;" class="dt-placeholder">Drop here</div>`;
+    });
+    document.getElementById("dt-feedback").style.display="none";
+    dtShuffle(dtItems).forEach(item => src.appendChild(dtMakeTile(item)));
+  };
+
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", dtReset) : dtReset();
+})();
+</script>
 </section>
 <section id="interactive-lesson" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-lesson">Interactive R Lesson: Descriptive Statistics</h2>
