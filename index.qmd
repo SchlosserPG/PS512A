@@ -11,7 +11,7 @@ output: html_document
 
 This course book is a living document. Content, code examples, and tools are reviewed and updated each year to reflect the evolving landscape of business analytics and data science. The version you are reading reflects the most recent revision at the time of publication, but specific topics, libraries, or examples may be updated before or during the course. If you notice an error or have a suggested improvement, please let your instructor know. Many aspects of this material will be further clarified and expanded upon during sessions to help address any gaps.
 
-This site used Google Analytics 4 only to measure aggregate page views and session engagement. Advertising features, remarketing, and demographic reporting were not used. User consent was handled through Google Consent Mode before analytics cookies were enabled.
+This site used Google Analytics 4 only to measure aggregate page views and session engagement. Advertising features, remarketing, and demographic reporting were not used. User consent is handled through Google Consent Mode before analytics cookies are enabled.
 :::
 
 
