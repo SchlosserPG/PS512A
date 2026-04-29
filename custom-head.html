@@ -3,10 +3,74 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  // 🔴 Default: NO tracking until consent
+  gtag('consent', 'default', {
+    analytics_storage: 'denied'
+  });
+
   gtag('js', new Date());
-  gtag('config', 'G-CNGRHWZ7C6');
+
+  // GA config (pageviews + session metrics only)
+  gtag('config', 'G-CNGRHWZ7C6', {
+    anonymize_ip: true
+  });
 </script>
 
+<!-- =========================
+     Minimal Cookie Banner
+     ========================= -->
+<style>
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #181c27;
+  color: #e8eaf0;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+  font-size: 13px;
+  font-family: -apple-system, sans-serif;
+}
+#cookie-banner button {
+  background: #4f8ef7;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+
+<div id="cookie-banner">
+  <span>This site uses analytics to measure page views and engagement.</span>
+  <button onclick="acceptCookies()">Accept</button>
+</div>
+
+<script>
+function acceptCookies() {
+  gtag('consent', 'update', {
+    analytics_storage: 'granted'
+  });
+  localStorage.setItem('cookie_consent', 'true');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// Restore consent if already accepted
+if (localStorage.getItem('cookie_consent') === 'true') {
+  gtag('consent', 'update', {
+    analytics_storage: 'granted'
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  });
+}
+</script>
 <!-- ============================================================
      Statistics Course Assistant — Floating Chat Bubble
      Appears on every page of the book.

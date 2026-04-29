@@ -109,10 +109,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+
+  // 🔴 Default: NO tracking until consent
+  gtag('consent', 'default', {
+    analytics_storage: 'denied'
+  });
+
   gtag('js', new Date());
-  gtag('config', 'G-CNGRHWZ7C6');
+
+  // GA config (pageviews + session metrics only)
+  gtag('config', 'G-CNGRHWZ7C6', {
+    anonymize_ip: true
+  });
 </script>
 
+<!-- =========================
+     Minimal Cookie Banner
+     ========================= -->
+<style>
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #181c27;
+  color: #e8eaf0;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9999;
+  font-size: 13px;
+  font-family: -apple-system, sans-serif;
+}
+#cookie-banner button {
+  background: #4f8ef7;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+
+</head><body class="nav-sidebar floating nav-fixed"><div id="cookie-banner">
+  <span>This site uses analytics to measure page views and engagement.</span>
+  <button onclick="acceptCookies()">Accept</button>
+</div>
+
+<script>
+function acceptCookies() {
+  gtag('consent', 'update', {
+    analytics_storage: 'granted'
+  });
+  localStorage.setItem('cookie_consent', 'true');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// Restore consent if already accepted
+if (localStorage.getItem('cookie_consent') === 'true') {
+  gtag('consent', 'update', {
+    analytics_storage: 'granted'
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    var banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  });
+}
+</script>
 <!-- ============================================================
      Statistics Course Assistant — Floating Chat Bubble
      Appears on every page of the book.
@@ -451,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 <!-- Floating Action Button -->
-</head><body class="nav-sidebar floating nav-fixed"><button id="chat-fab" onclick="toggleChat()" title="Course Assistant" aria-label="Open course assistant">
+<button id="chat-fab" onclick="toggleChat()" title="Course Assistant" aria-label="Open course assistant">
   <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   </svg>
@@ -4440,7 +4504,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>days_employed <span class="ot">&lt;-</span> today <span class="sc">-</span> hired</span>
 <span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a>days_employed  <span class="do">## Time difference in days</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 1773 days</code></pre>
+<pre><code>Time difference of 1779 days</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For year-month formats, use lubridate lubridate::ym('2021-06')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

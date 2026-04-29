@@ -5,6 +5,10 @@ date: "2024-08-09"
 output: html_document
 ---
 
+# Consent
+
+This site used Google Analytics 4 only to measure aggregate page views and session engagement. Advertising features, remarketing, and demographic reporting were not used. User consent was handled through Google Consent Mode before analytics cookies were enabled.
+
 # Why R?
 
 -   In an Business Statistics course, we teach R because it is a powerful, flexible tool widely used in business analytics for data analysis and visualization. R allows students to apply theoretical concepts to real-world datasets, enhancing their understanding through hands-on practice. Its rich ecosystem of packages, like ggplot2 for visualization and dplyr for data manipulation, makes it ideal for tackling the types of problems analysts face in the field. Additionally, R promotes reproducibility and collaboration through features like R Markdown and RStudio Projects, which align with industry standards. By learning R, students not only gain valuable technical skills but also build a strong foundation for advanced analytics and decision-making in their careers.

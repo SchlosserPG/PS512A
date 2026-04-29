@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Probability and Business Statistics",
     "section": "",
-    "text": "Why R?",
+    "text": "Consent\nThis site used Google Analytics 4 only to measure aggregate page views and session engagement. Advertising features, remarketing, and demographic reporting were not used. User consent was handled through Google Consent Mode before analytics cookies were enabled.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Software Know-How</span>"
     ]
@@ -454,7 +454,7 @@
     "href": "module1.html#date-variable",
     "title": "Module 1: Introduction to R and RStudio",
     "section": "Date Variable",
-    "text": "Date Variable\nA Date variable stores calendar dates so R can sort, filter, and calculate time differences. Without coercion, dates load as character and cannot be used for date math.\n\n# Without coercion, a date is just text\nhired &lt;- \"2021-06-15\"\nclass(hired)  ## 'character'\n\n[1] \"character\"\n\n# Coerce to Date with as.Date()\nhired &lt;- as.Date(\"2021-06-15\")\nclass(hired)  ## 'Date'\n\n[1] \"Date\"\n\n# Now you can do date arithmetic\ntoday &lt;- Sys.Date()\ndays_employed &lt;- today - hired\ndays_employed  ## Time difference in days\n\nTime difference of 1773 days\n\n# For year-month formats, use lubridate lubridate::ym('2021-06')",
+    "text": "Date Variable\nA Date variable stores calendar dates so R can sort, filter, and calculate time differences. Without coercion, dates load as character and cannot be used for date math.\n\n# Without coercion, a date is just text\nhired &lt;- \"2021-06-15\"\nclass(hired)  ## 'character'\n\n[1] \"character\"\n\n# Coerce to Date with as.Date()\nhired &lt;- as.Date(\"2021-06-15\")\nclass(hired)  ## 'Date'\n\n[1] \"Date\"\n\n# Now you can do date arithmetic\ntoday &lt;- Sys.Date()\ndays_employed &lt;- today - hired\ndays_employed  ## Time difference in days\n\nTime difference of 1779 days\n\n# For year-month formats, use lubridate lubridate::ym('2021-06')",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Module 1: Introduction to R and RStudio</span>"
     ]
