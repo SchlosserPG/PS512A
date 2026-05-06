@@ -2401,7 +2401,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link active" data-scroll-target="#at-a-glance">At a Glance</a></li>
+  <li><a href="#ai-and-hypothesis-testing-where-misinterpretation-happens" id="toc-ai-and-hypothesis-testing-where-misinterpretation-happens" class="nav-link active" data-scroll-target="#ai-and-hypothesis-testing-where-misinterpretation-happens">AI and Hypothesis Testing: Where Misinterpretation Happens</a></li>
+  <li><a href="#at-a-glance" id="toc-at-a-glance" class="nav-link" data-scroll-target="#at-a-glance">At a Glance</a></li>
   <li><a href="#lesson-objectives" id="toc-lesson-objectives" class="nav-link" data-scroll-target="#lesson-objectives">Lesson Objectives</a></li>
   <li><a href="#consider-while-reading" id="toc-consider-while-reading" class="nav-link" data-scroll-target="#consider-while-reading">Consider While Reading</a></li>
   <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a>
@@ -2777,6 +2778,16 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>The lesson then works through three <strong>t-tests</strong>, each using R’s <code>t.test()</code> function with different arguments. All three follow the same three-step procedure: specify hypotheses, compute the test statistic and p-value, interpret and conclude. The t-distribution is used instead of the z-distribution because we are estimating population parameters from sample data — specifically, we rarely know the population standard deviation. Where a z-score measures how many standard deviations a value is from the mean, a t-statistic measures how many standard errors the sample mean is from the hypothesized value. As sample size grows, the t-distribution approaches the normal distribution.</p>
 <p>The <strong>one-sample t-test</strong> compares a single sample mean to a known or hypothesized value — for example, testing whether average study hours differ from 12. The <strong>independent samples t-test</strong> compares the means of two unrelated groups — for example, whether systolic blood pressure differs between males and females. The <strong>dependent (paired) samples t-test</strong> compares two related measurements, such as weight before and after an intervention, where each observation in one group is matched to a specific observation in the other. The key to choosing the right test is understanding how the data are structured.</p>
 <p>By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, and write a formal conclusion from the output. Work through every code example in your own R script alongside the reading.</p>
+<section id="ai-and-hypothesis-testing-where-misinterpretation-happens" class="level3">
+<h3 class="anchored" data-anchor-id="ai-and-hypothesis-testing-where-misinterpretation-happens">AI and Hypothesis Testing: Where Misinterpretation Happens</h3>
+<p>AI can run any of these t-tests in seconds and produce a plausible-sounding interpretation of the result. That interpretation may be wrong. The most common AI errors in hypothesis testing are:</p>
+<ul>
+<li><strong>Conflating statistical significance with practical significance.</strong> A p-value below 0.05 means the result is unlikely under the null — it does not mean the effect is large enough to matter in a business context. AI will rarely volunteer this distinction.</li>
+<li><strong>Misstating what a p-value means.</strong> The correct interpretation is “the probability of observing a result at least this extreme, <em>assuming the null is true</em>” — not “the probability that the null hypothesis is true.” AI frequently produces the incorrect version.</li>
+<li><strong>Choosing the wrong test.</strong> AI infers the test structure from your prompt. If you describe your data ambiguously, it may set up an independent-samples test when you need a paired one, or vice versa.</li>
+</ul>
+<p>Understanding the logic in this module is what gives you the ability to catch these errors. Statistical significance, practical significance, and correct test selection are all human judgment calls — not outputs you can read off a p-value alone.</p>
+</section>
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
 <ul>
@@ -3898,8 +3909,37 @@ mean difference
 <li><p>What are the key arguments in the t.test() function in R, and how do I modify these arguments to perform different types of t-tests, such as two-tailed or paired t-tests?</p></li>
 <li><p>How do I interpret the p-value in the context of hypothesis testing, and how does it relate to rejecting or failing to reject the null hypothesis?</p></li>
 <li><p>How does the confidence interval calculated during a t-test help in understanding the range of possible population parameters, and why is it important in hypothesis testing?</p></li>
-<li><p>What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used? # Summary and Review</p></li>
+<li><p>What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used?</p></li>
 </ul>
+<p><strong>Prompting AI effectively for hypothesis testing tasks:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Vague prompt</th>
+<th>Specific prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Run a t-test”</td>
+<td>“Run a two-sample t-test comparing <code>home_value</code> between Summer and Winter observations in <code>zillow.csv</code>. State the null and alternative hypotheses, run <code>t.test()</code>, and interpret the p-value at α = 0.05. Note whether the result is statistically significant and whether the effect size appears practically meaningful.”</td>
+</tr>
+<tr class="even">
+<td>“Is this significant?”</td>
+<td>“I ran <code>t.test(score ~ group, data=mydata)</code> and got t = 2.14, df = 48, p = 0.037. Explain: (1) what the p-value means precisely, (2) whether I should reject the null at α = 0.05, and (3) what the 95% confidence interval tells me about the size of the difference.”</td>
+</tr>
+<tr class="odd">
+<td>“Compare these groups”</td>
+<td>“I have pre- and post-training scores for the same 30 employees. Is a paired or independent samples t-test correct here? Write the <code>t.test()</code> code with <code>paired = TRUE</code> or <code>paired = FALSE</code> as appropriate, and explain why.”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verification checklist for AI-generated t-test output:</strong></p>
+<p>After AI generates a t-test result and interpretation, check three things: (1) does the p-value actually fall below your stated alpha? — do not rely on AI’s “significant” label; read the p-value yourself; (2) did AI correctly identify whether this is one-tailed or two-tailed? — wrong tail direction is a common AI error; (3) does AI’s interpretation correctly distinguish between statistical significance (p &lt; α) and practical significance (is the effect large enough to act on)? — AI will almost never raise the practical significance question unless you ask explicitly.</p>
 </section>
 <section id="t-test-lab" class="level2">
 <h2 class="anchored" data-anchor-id="t-test-lab">t-Test Lab</h2>

@@ -19,6 +19,22 @@ The lesson closes with **regression using categorical variables**. When a predic
 
 By the end of this lesson, you should be able to fit and interpret simple and multiple regression models in R, evaluate goodness of fit, test predictor significance, build a regression equation for prediction, detect and address multicollinearity, and correctly include categorical variables using dummy coding. Work through every code example in your own R script alongside the reading.
 
+### AI and Regression: From Descriptive to Predictive
+
+This module marks the transition from descriptive to predictive analytics — the capstone of the progression you first saw in Module 1 (Descriptive → Diagnostic → Predictive → Prescriptive). Regression is where that transition becomes concrete: you are no longer summarizing what happened, you are building a model to forecast what will happen.
+
+AI accelerates every mechanical step of regression modeling. It can write `lm()` calls, interpret coefficient tables, check for multicollinearity, and even draft narrative interpretations of model output. The division of labor remains the same as in every prior module:
+
+| AI handles well | Requires your judgment |
+|-------------------------------------|---------------------------------------|
+| Writing and running `lm()` and `summary()` code | Deciding which predictors belong in the model based on theory and business logic |
+| Reporting Adjusted R² and VIF scores | Evaluating whether the goodness-of-fit justifies the model's use for prediction |
+| Generating coefficient tables | Interpreting what each coefficient means in the context of your data and audience |
+| Applying `vif()` and identifying values above 5 or 10 | Deciding whether multicollinearity is severe enough to warrant removing a predictor |
+| Producing predictions from the regression equation | Determining whether predictions extrapolate dangerously beyond the training data range |
+
+**The most important AI caution for regression:** a significant F-test and a high R² do not make a causal claim. AI may describe a significant predictor as "driving" or "causing" the outcome — this language is not warranted by regression analysis alone. Regression establishes that a predictor is a statistically significant linear associate of the outcome, while controlling for the other predictors in the model. Causation requires experimental design or additional theoretical justification. This distinction carries directly into how you communicate regression results to a business audience.
+
 ### At a Glance
 
 -   In order to succeed at this lesson, you will use a statistical model called linear regression to understand an outcome variable and make predictions. Correlation — covered in the previous lesson — establishes whether a linear relationship exists and how strong it is. Regression uses that relationship to estimate a slope and intercept, allowing us to quantify the effect of each predictor and forecast future values. Linear regression is one of the most commonly used models in business analytics and forms the foundation for more advanced techniques like machine learning.
@@ -734,7 +750,9 @@ glance(lmModel4)
 
 ## Using AI
 
-Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
+Use the following prompts with our chatbot below to explore more about regression analysis in R.
+
+**Understanding regression concepts:**
 
 -   Explain how to perform simple linear regression in R. Use the lm() function and discuss how to interpret the slope, intercept, and R-squared values from the regression output.
 
@@ -753,6 +771,18 @@ Use the following prompts with our chatbot (bottom right of this page) to explor
 -   Given the output from the summary() function for a regression model in R, explain how to interpret the coefficients, R-squared, adjusted R-squared, residual standard error, and p-values.
 
 -   Describe how to use the p-value method for variable selection in multiple regression. How do you iteratively remove insignificant predictors while monitoring the R-squared and adjusted R-squared values?
+
+**Prompting AI effectively for regression tasks:**
+
+| Vague prompt | Specific prompt |
+|-----------------------------------|------------------------------------------|
+| "Run a regression" | "Run a multiple regression predicting `home_value` from `season`, `year`, and `income_needed` in `zillow.csv`. Use `lm()`, print `summary()`, interpret the Adjusted R², and explain which predictors are significant at α = 0.05. Check for multicollinearity using `vif()` from the `car` package and flag any VIF values above 5." |
+| "What does this output mean?" | "I ran `summary(lm(home_value ~ season + income_needed, data=zillow))` and got these results: [paste output]. Explain what the Intercept, `seasonSpring` coefficient, `income_needed` coefficient, and p-values mean in plain English for a non-statistician. Do not use causal language — describe these as associations, not causes." |
+| "Make a prediction" | "Using my fitted regression model `m1 <- lm(home_value ~ income_needed, data=zillow)`, write code using `predict()` to forecast `home_value` for a new observation where `income_needed = 85000`. Include a 95% prediction interval." |
+
+**Verification checklist for AI-generated regression output:**
+
+After AI generates a regression model and interpretation, check four things: (1) do the coefficient signs make intuitive sense — if the model says higher income needed is associated with *lower* home values, something is wrong; (2) is the Adjusted R² reasonable for your domain — a value of 0.95 for economic data should raise questions; (3) did AI flag any multicollinearity concerns, or do you need to run `vif()` yourself; (4) does AI's interpretation use causal language ("X drives Y," "X causes Y") when the model only supports associational language ("X is associated with Y," "a one-unit increase in X predicts a Y-unit change in the outcome")? Correct causal language to associational language before presenting results to any audience.
 
 ## Regression Lab
 
@@ -1344,4 +1374,4 @@ This lesson covered simple linear regression, multiple regression, and regressio
 | Multi-category dummies | k − 1 dummy variables for k categories; R handles automatically in `lm()` |
 | Predictions with categorical variables | `predict()` with `data.frame()` specifying category as character string |
 
-**What comes next:** The final lesson in this course brings together the two threads that have run throughout — statistical reasoning and generative AI. You will learn how to evaluate data visualizations critically using Kaiser Fung's Trifecta Checkup, apply the same reasoning-error framework to AI-generated charts, and use prompt engineering to build and critique visualizations from the datasets you have worked with all semester. The regression concepts from this lesson appear directly in that work: R² and model fit, correlation vs. causation, and the distinction between a chart that describes a relationship and one that implies it causes something.
+**Course summary:** Regression is the capstone of OMSBA 512A. The analytical arc of this course has moved from summarizing what you have (descriptive statistics), to cleaning and preparing data (data preparation), to testing claims about groups (hypothesis testing and ANOVA), to quantifying relationships (correlation), and finally to building predictive models (regression). Each stage has used AI as a tool while requiring your statistical judgment for the question, the data, and the interpretation. The AI critical framework — understanding what AI handles well, recognizing causal language errors, verifying output against your statistical knowledge — applies to every deliverable you will produce in your career.

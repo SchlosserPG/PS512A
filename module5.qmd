@@ -19,6 +19,16 @@ The **one-sample t-test** compares a single sample mean to a known or hypothesiz
 
 By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, and write a formal conclusion from the output. Work through every code example in your own R script alongside the reading.
 
+### AI and Hypothesis Testing: Where Misinterpretation Happens
+
+AI can run any of these t-tests in seconds and produce a plausible-sounding interpretation of the result. That interpretation may be wrong. The most common AI errors in hypothesis testing are:
+
+-   **Conflating statistical significance with practical significance.** A p-value below 0.05 means the result is unlikely under the null — it does not mean the effect is large enough to matter in a business context. AI will rarely volunteer this distinction.
+-   **Misstating what a p-value means.** The correct interpretation is "the probability of observing a result at least this extreme, *assuming the null is true*" — not "the probability that the null hypothesis is true." AI frequently produces the incorrect version.
+-   **Choosing the wrong test.** AI infers the test structure from your prompt. If you describe your data ambiguously, it may set up an independent-samples test when you need a paired one, or vice versa.
+
+Understanding the logic in this module is what gives you the ability to catch these errors. Statistical significance, practical significance, and correct test selection are all human judgment calls — not outputs you can read off a p-value alone.
+
 ### At a Glance
 
 -   In order to succeed in this section, you will need to understand how to set up and test a hypothesis, knowing that we can reuse this logic for many other types of models throughout the course. Pay close attention to why we use the t-distribution — and how it differs from the z-distribution — for one-sample, independent samples, and dependent samples tests. Additionally, note when the test is two-tailed, right-tailed, or left-tailed, and what that means for the interpretation of the results.
@@ -721,7 +731,19 @@ Use the following prompts with our chatbot (bottom right of this page) to explor
 
 -   How does the confidence interval calculated during a t-test help in understanding the range of possible population parameters, and why is it important in hypothesis testing?
 
--   What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used? \# Summary and Review
+-   What is the difference between an independent samples t-test and a dependent (paired) samples t-test, and in what situations should each be used?
+
+**Prompting AI effectively for hypothesis testing tasks:**
+
+| Vague prompt | Specific prompt |
+|-----------------------------------|------------------------------------------|
+| "Run a t-test" | "Run a two-sample t-test comparing `home_value` between Summer and Winter observations in `zillow.csv`. State the null and alternative hypotheses, run `t.test()`, and interpret the p-value at α = 0.05. Note whether the result is statistically significant and whether the effect size appears practically meaningful." |
+| "Is this significant?" | "I ran `t.test(score ~ group, data=mydata)` and got t = 2.14, df = 48, p = 0.037. Explain: (1) what the p-value means precisely, (2) whether I should reject the null at α = 0.05, and (3) what the 95% confidence interval tells me about the size of the difference." |
+| "Compare these groups" | "I have pre- and post-training scores for the same 30 employees. Is a paired or independent samples t-test correct here? Write the `t.test()` code with `paired = TRUE` or `paired = FALSE` as appropriate, and explain why." |
+
+**Verification checklist for AI-generated t-test output:**
+
+After AI generates a t-test result and interpretation, check three things: (1) does the p-value actually fall below your stated alpha? — do not rely on AI's "significant" label; read the p-value yourself; (2) did AI correctly identify whether this is one-tailed or two-tailed? — wrong tail direction is a common AI error; (3) does AI's interpretation correctly distinguish between statistical significance (p < α) and practical significance (is the effect large enough to act on)? — AI will almost never raise the practical significance question unless you ask explicitly.
 
 ## t-Test Lab
 

@@ -63,6 +63,18 @@ By the end of this lesson, you should be able to choose the appropriate measures
 
 AI can generate all of these statistics instantly. What it cannot do is tell you which ones are appropriate for your data, or what the numbers mean in context. A mean wage of \$42 means something very different depending on whether the data is symmetric or heavily skewed by a few executives. Choosing the right summary and interpreting it correctly is the analytical judgment this section is building.
 
+The table below maps the division of labor precisely for descriptive statistics work:
+
+| AI handles well | Requires your judgment |
+|-------------------------------------|---------------------------------------|
+| Computing mean, median, mode, SD, IQR | Deciding whether mean or median is honest given the distribution shape |
+| Generating histograms, density plots, boxplots | Interpreting what skewness means in your specific business context |
+| Running `skew()` and `kurtosis()` from semTools | Evaluating whether a z-score threshold flags a real problem or a sample-size artifact |
+| Calculating outlier bounds using the IQR rule | Deciding whether an outlier is a data entry error or a real observation worth keeping |
+| Producing a formatted summary table | Explaining what the summary tells a non-technical audience |
+
+Understanding this table is more useful than any individual function in this module. AI handles mechanical execution. You handle analytical honesty.
+
 ## Defining and Calculating Central Tendency
 
 -   We will cover four measures in this section:
@@ -794,6 +806,8 @@ ggplot(fbi.deaths.small, aes(x = "", y = X2016, fill = Weapon)) +
 
 Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
+**Understanding the concepts:**
+
 -   What is the difference between mean, median, and mode in describing data distributions, and how can each be used to understand the shape of a distribution?
 -   How do mean and median help identify whether a distribution is skewed, and what does it tell us about the dataset?
 -   Can you explain how the mean, median, and mode behave in normal, positively skewed, and negatively skewed distributions?
@@ -803,6 +817,18 @@ Use the following prompts with our chatbot (bottom right of this page) to explor
 -   What is skewness, and how does it affect the shape of a distribution? How can we identify positive and negative skew?
 -   How is kurtosis defined in the semTools package in R, and what does it tell us about the tails of a distribution?
 -   How would you compare and contrast the roles of skewness and kurtosis in identifying the shape and behavior of a distribution?
+
+**Prompting AI effectively for descriptive statistics tasks:**
+
+When using AI to help with descriptive statistics code or interpretation, specificity dramatically improves output quality. Compare these prompts:
+
+| Vague prompt | Specific prompt |
+|-----------------------------------|------------------------------------------|
+| "Summarize my data" | "Calculate mean, median, SD, and IQR for `CustomerValue` from `descriptive_data`. Use `group_by(Segment)` to break out each statistic by segment, and run `skew()` from semTools to check normality. Interpret the results in 2 sentences." |
+| "Make a histogram" | "Using ggplot2, create a histogram of `DeliveryTime` from `descriptive_data` with 20 bins. Add a vertical line for the mean and another for the median using `geom_vline()`. Color the mean line blue and the median line red. Label both lines in the legend." |
+| "Find outliers" | "Using the 1.5 × IQR rule, calculate the lower and upper outlier bounds for `ReturnRate` in `descriptive_data`. Print any rows where `ReturnRate` falls outside those bounds, and state how many outliers were found." |
+
+**Verification reminder:** After AI generates descriptive statistics code, apply the three-step check: (1) run the code and confirm it executes without errors; (2) sanity-check the output — if the reported mean and median are far apart, does the histogram confirm a skewed distribution? (3) verify the interpretation — if AI says "the mean is the best measure of central tendency," does that hold given the skewness you observed?
 
 ## Quantitative Data Lab
 

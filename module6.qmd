@@ -131,6 +131,15 @@ By the end of this lesson, you should be able to set up and conduct one- and two
     -   Non-response bias refers to a systematic difference in preferences between respondents and non-respondents to a survey or a poll.
     -   Social Desirability bias refers to a bias that refers to the systematic difference between a group’s “socially acceptable” responses to a survey or poll.
 
+### AI and Hypothesis Error: What AI Cannot Tell You
+
+AI output is not immune to these errors. When AI reports that an ANOVA result is significant or interprets a pattern as meaningful, it does not supply the error context — it does not tell you how likely the result is to be a false positive given your sample size, your alpha level, or whether you have run multiple comparisons without adjustment. Consider:
+
+-   **Type I error and AI:** If you run an ANOVA on many groups simultaneously and ask AI to flag which differences are significant, it may identify comparisons with p < 0.05 without noting that running multiple comparisons inflates the false positive rate — exactly what Bonferroni and Tukey corrections are designed to address.
+-   **Type II error and AI:** AI will not tell you whether your sample was large enough to detect a real effect. A non-significant result may reflect a true null — or it may reflect insufficient power. That judgment requires knowing your sample size, the expected effect size, and the desired power level, none of which AI can supply from the output alone.
+
+The error framework you are learning in this module is precisely what you apply *after* reading AI output — not what you expect AI to apply for you.
+
 ## One-Way ANOVA
 
 -   One-way ANOVA compares population means based on one categorical variable.
@@ -250,7 +259,7 @@ anova(Anova1way)
 -   Reading the codes:
     -   If there are three asterisks, you would say that that your p-value is less than .001. If there are 2, your p-value is less than .01. 1 asterisk indicates a p-value \< .05.
     -   We never say our p-value is 0, but instead say it is less than \_\_\_.
-    -   We *do not* use .1 as a significance level, although some statisticians mark a p-value less than .1 as "marginally significant". There is a big debate about this, but I agree with the general consensus, so our threshold for this class is less than .05. Anything greater than or equal to .05 is not significant.
+    -   We *do not* use .1 as a significance level, although some statisticians mark a p-value less than .1 as "marginally significant". There is a big debate about this, but I agree with the general consensus, so our threshold for this course is less than .05. Anything greater than or equal to .05 is not significant.
 
 #### Step 3: Interpret the Probability and Write a conclusion.
 
@@ -843,27 +852,51 @@ anova(anova1) #no group differences - no need for a post hoc test.
 ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legend=FALSE)
 ```
 
-## Limitations of Correlation Analysis
+## Correlation, Causation, and AI
 
--   Note that a correlation is the first step in understanding causality. Correlation and causality are closely related but fundamentally different concepts in data analysis. Correlation refers to the statistical relationship between two variables, indicating how changes in one variable are associated with changes in another. However, it does not imply that one variable causes the other to change. Causality, on the other hand, goes beyond mere association to establish a cause-and-effect relationship, where one variable directly influences the other. Determining causality requires meeting specific criteria, including significant association, temporal precedence (the cause precedes the effect), and ruling out alternative explanations or confounding variables. While correlation is often the first step in exploring potential relationships, additional analysis—such as experimental design or causal modeling—is necessary to confirm causality. This distinction highlights the importance of critical thinking when interpreting statistical results, as a strong correlation alone does not prove that one variable is the cause of another.
+Correlation measures the strength and direction of the linear relationship between two variables. The correlation coefficient *r* ranges from −1 to +1.
 
--   To determine a causal model, you need the following:
+| *r* value    | Interpretation                   |
+|--------------|----------------------------------|
+| ±0.9 to ±1.0 | Very strong linear relationship  |
+| ±0.7 to ±0.9 | Strong                           |
+| ±0.5 to ±0.7 | Moderate                         |
+| ±0.3 to ±0.5 | Weak                             |
+| 0.0 to ±0.3  | Little to no linear relationship |
 
-1.  Significant Correlation: Statistically significant relationship between the variables.
-2.  Temporal Precedence: Causal variable occurred prior to the other variable.
-3.  Eliminate Alternate Variables: No other factors can account for the cause.
+Two important caveats: correlation is sensitive to outliers (one extreme point can inflate or deflate *r* substantially), and correlation says nothing about causation — regardless of magnitude.
 
--   Some limitations are as follows:
-    -   The correlation coefficient captures only a linear relationship.
-    -   The correlation coefficient may not be a reliable measure in the presence of outliers.
-    -   Even if two variables are highly correlated, one does not necessarily cause the other.
--   When interpreting results, note that lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.
+![Correlation vs. Causation](images/correlation_Vs_causation.png)
+
+To establish **causation**, three conditions must all be met:
+
+1.  A statistically significant relationship between the variables.
+2.  No other factors that could account for the relationship (ruling out confounds).
+3.  Correct temporal ordering — the cause must precede the effect.
+
+![Three Conditions for Causation](images/fixed.png)
+
+**The third variable problem (confounding)** is the most common reason correlations are misleading in business data. A third variable related to both X and Y creates a spurious association between them. Classic example: cities with more hospitals have higher death rates — not because hospitals cause death, but because illness severity and population size drive both variables simultaneously.
+
+**The directionality problem** adds another layer: even when two variables are genuinely related, the causal direction may be unclear. Does exercise reduce anxiety, or do lower-anxiety people exercise more? Observational data cannot distinguish these.
+
+![The Third Variable Problem and Directionality](images/corr_vs_cause_2.png)
+
+**AI and false causal claims:** When AI interprets a correlation or ANOVA result, watch for causal language. Phrases like “X affects Y,” “X leads to Y,” or “X causes Y” in AI output should be challenged unless an experiment or controlled design supports them. AI pattern-matches on how correlational findings are described in its training data, and that language is very often causal even when the evidence is only associational. A strong *r* value never licenses a causal claim — that judgment belongs to you.
+
+**Some technical limitations to keep in mind:**
+
+-   The correlation coefficient captures only *linear* relationships. Two variables can be strongly related in a non-linear way and still show r ≈ 0.
+-   The correlation coefficient may not be a reliable measure in the presence of outliers.
+-   Lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.
 
 # Review and Practice
 
 ## Using AI
 
 Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
+
+**ANOVA concepts:**
 
 -   Explain how ANOVA is used to compare group means. What are the assumptions of ANOVA, and how do we interpret the F-statistic and p-value?
 
@@ -883,7 +916,9 @@ Use the following prompts with our chatbot (bottom right of this page) to explor
 
 ------------------------------------------------------------------------
 
--   Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?"
+**Correlation and causation concepts:**
+
+-   Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?
 
 -   What is covariance, and how does it describe the relationship between two variables? Provide an example with a simple dataset. Describe Pearson’s correlation coefficient. How do you calculate it, and what does it tell you about the relationship between two variables?
 
@@ -893,14 +928,20 @@ Use the following prompts with our chatbot (bottom right of this page) to explor
 
 -   How do you interpret the strength and direction of a correlation? What is considered a strong, moderate, or weak correlation in the context of business data?
 
--   Explain the null and alternative hypotheses for correlation testing. How does the t-distribution play a role in testing the significance of a correlation coefficient?
+-   What are the three conditions required to establish causation? Why is a strong correlation insufficient on its own, and what role does the third variable (confounding) problem play?
 
 -   What are some challenges of visualizing relationships between variables when dealing with big data, and how can statistical tests help when scatterplots are not effective?
 
 -   Discuss the limitations of correlation analysis. Why is it important to be cautious when interpreting correlation as causation?
 
--   What are the key differences between correlation and causation? How can you determine if a correlation implies causality?
+**Prompting AI effectively for ANOVA and correlation tasks:**
 
+| Vague prompt | Specific prompt |
+|-----------------------------------|-----------------------------------------|
+| "Run an ANOVA" | "Run a one-way ANOVA comparing `home_value` across the four levels of `season` in `zillow.csv`. State the null and alternative hypotheses, run `aov()` and `summary()`, and interpret the F-statistic and p-value at α = 0.05. If the result is significant, run `TukeyHSD()` and identify which season pairs differ." |
+| "Test correlation" | "Using `zillow.csv`, run `cor.test()` to test whether there is a statistically significant linear relationship between `income_needed` and `home_value`. State the hypotheses, report the correlation coefficient and p-value, and interpret both. Note any concerns about directionality or confounding." |
+
+**AI causal language warning:** When AI interprets ANOVA or correlation results, watch carefully for language like “season *affects* home values” or “income *drives* home prices.” These are causal claims. Your results are observational — they establish association and group differences, not causation. If AI uses causal language, correct the interpretation: “seasons are *associated with* differences in home values” or “income needed and home value are *correlated*.”
 ## ANOVA Lab
 
 **A marketing analyst** wants to test whether average customer satisfaction scores differ across four store locations (North, South, East, West). She collected satisfaction ratings (1–10 scale) from random samples at each location. Without running any code, identify the correct test, state the null and alternative hypotheses, and write the `aov()` command she would use given a data frame called `stores` with columns `Satisfaction` and `Location`.

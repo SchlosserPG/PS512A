@@ -542,7 +542,7 @@ if (localStorage.getItem('cookie_consent') === 'true') {
 
   <div id="chat-messages">
     <div class="panel-welcome" id="panel-welcome">
-      <p>Ask me anything about R, statistics concepts, or your code.</p>
+      <p>Ask me anything about R, statistics concepts, or your code. Please note that AI tools can make mistakes, so always double-check responses against the course materials and your own work.</p>
       <div class="panel-chips">
         <div class="panel-chip" onclick="chipSend(this)">mean vs median?</div>
         <div class="panel-chip" onclick="chipSend(this)">What is skewness?</div>
@@ -2410,6 +2410,8 @@ window.Quarto = {
   <li><a href="#two-main-branches-of-statistics" id="toc-two-main-branches-of-statistics" class="nav-link" data-scroll-target="#two-main-branches-of-statistics">Two Main Branches of Statistics</a></li>
   <li><a href="#reasons-for-sampling-from-the-population" id="toc-reasons-for-sampling-from-the-population" class="nav-link" data-scroll-target="#reasons-for-sampling-from-the-population">Reasons for sampling from the population</a></li>
   <li><a href="#ai-vs.-statistics" id="toc-ai-vs.-statistics" class="nav-link" data-scroll-target="#ai-vs.-statistics">AI vs.&nbsp;Statistics</a></li>
+  <li><a href="#ai-and-the-analytics-workflow" id="toc-ai-and-the-analytics-workflow" class="nav-link" data-scroll-target="#ai-and-the-analytics-workflow">AI and the Analytics Workflow</a></li>
+  <li><a href="#ai-hallucinations-what-to-watch-for-before-you-start" id="toc-ai-hallucinations-what-to-watch-for-before-you-start" class="nav-link" data-scroll-target="#ai-hallucinations-what-to-watch-for-before-you-start">AI Hallucinations: What to Watch For Before You Start</a></li>
   <li><a href="#r-comes-with-assistance" id="toc-r-comes-with-assistance" class="nav-link" data-scroll-target="#r-comes-with-assistance">R Comes with Assistance</a></li>
   <li><a href="#r-is-called-a-dynamically-typed-language" id="toc-r-is-called-a-dynamically-typed-language" class="nav-link" data-scroll-target="#r-is-called-a-dynamically-typed-language">R is Called a Dynamically Typed Language</a></li>
   <li><a href="#what-makes-you-fluent-in-r-with-or-without-ai" id="toc-what-makes-you-fluent-in-r-with-or-without-ai" class="nav-link" data-scroll-target="#what-makes-you-fluent-in-r-with-or-without-ai">What makes you fluent in R — with or without AI:</a></li>
@@ -2903,6 +2905,64 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>Artificial Intelligence (AI) is the development of computer systems that can perform tasks that typically require human intelligence — things like recognizing patterns, making decisions, understanding language, and generating content.</li>
 <li>For the purposes of this course, the most relevant category is generative AI (tools like ChatGPT, Claude, and GitHub Copilot), which can produce text, code, and analysis in response to natural language prompts.</li>
 </ul>
+<section id="the-ai-landscape-where-generative-ai-fits" class="level4">
+<h4 class="anchored" data-anchor-id="the-ai-landscape-where-generative-ai-fits">The AI Landscape: Where Generative AI Fits</h4>
+<p>AI is not a single thing — it is a nested set of capabilities, and understanding where generative AI sits within that hierarchy helps you use it more effectively and avoid overstating what it can do.</p>
+<p><strong>Artificial Intelligence</strong> is the broad effort to create systems that can mimic human intelligence — reasoning, learning, adapting. Within that, <strong>Machine Learning</strong> is one of the most important approaches: algorithms that learn from data to make predictions or recommendations. When Netflix suggests your next show or a bank predicts loan default risk, that is machine learning at work.</p>
+<p>A subset of ML is <strong>Deep Learning</strong> — neural networks with many layers that power image recognition, speech recognition, and voice assistants. And within deep learning sits <strong>Generative AI</strong>, which represents a new kind of capability: instead of classifying or predicting, generative models <em>create</em> — producing text, images, code, and audio that did not exist before.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/GenAI.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Generative AI within the AI Landscape</figcaption>
+</figure>
+</div>
+<p><strong>Generative AI</strong> refers specifically to AI systems that create new content — text, code, images, audio, and video — based on patterns learned from training data. It is distinct from <strong>predictive AI</strong>, which forecasts outcomes from historical data without producing new content.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Goal</th>
+<th>Business example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generative AI</td>
+<td>Create new content</td>
+<td>Drafting a report, writing R code, generating chart titles</td>
+</tr>
+<tr class="even">
+<td>Predictive AI</td>
+<td>Forecast outcomes</td>
+<td>Customer churn model, demand forecasting, credit scoring</td>
+</tr>
+</tbody>
+</table>
+<p>Both types are useful in a statistics course. Predictive AI is what you are building when you run a regression. Generative AI is what helps you write, code, and communicate. Understanding the difference prevents misuse.</p>
+<p>Notable tools in a business statistics context: <strong>ChatGPT</strong> and <strong>Claude</strong> (text and code generation), <strong>GitHub Copilot</strong> (code completion in your editor), and <strong>Perplexity AI</strong> (search combined with generative synthesis).</p>
+</section>
+<section id="narrow-ai-general-ai-and-strong-ai" class="level4">
+<h4 class="anchored" data-anchor-id="narrow-ai-general-ai-and-strong-ai">Narrow AI, General AI, and Strong AI</h4>
+<p>Generative AI <em>feels</em> general because it handles so many different kinds of tasks. But even the most capable tools like ChatGPT or Claude are still forms of <strong>Narrow AI</strong> — systems designed to perform well within a defined domain without genuine general reasoning.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/GenAI_paradigm.png" class="img-fluid figure-img"></p>
+<figcaption>Narrow AI, General AI, and Strong AI — Where Generative AI Sits</figcaption>
+</figure>
+</div>
+<p>The three levels of AI capability are:</p>
+<ul>
+<li><strong>Narrow AI</strong> — systems designed to do one thing, or a small set of related tasks, extremely well. Spam filters, recommendation engines, facial recognition, and medical imaging classifiers are all narrow AI. Generative AI tools belong here too — they are extraordinarily capable within the domain of language, but they do not generalize outside it the way a human reasoner does.</li>
+<li><strong>General AI (AGI)</strong> — a hypothetical system that could understand, learn, and apply knowledge across any domain at human level or beyond. AGI remains aspirational.</li>
+<li><strong>Strong AI</strong> — a further hypothetical: AI that surpasses human intelligence across all domains, including creativity, problem-solving, and decision-making.</li>
+</ul>
+<p>You can think of generative AI as <strong>broad narrow AI</strong>: remarkably versatile within the domain of language and content generation, but still limited outside of it. A large language model cannot reason about an entirely new domain the way a human expert can — it pattern-matches against its training data.</p>
+</section>
 </section>
 <section id="two-main-branches-of-statistics" class="level3">
 <h3 class="anchored" data-anchor-id="two-main-branches-of-statistics">Two Main Branches of Statistics</h3>
@@ -2953,6 +3013,59 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>AI vs.&nbsp;Machine Learning — Machine learning is a subset of AI where systems learn from data rather than being explicitly programmed with rules. Most of what powers tools like ChatGPT falls here.</li>
 <li>AI vs.&nbsp;a calculator — A calculator executes exactly what you tell it. An AI system infers, predicts, and generates — which makes it more powerful and also less predictable. It can be wrong with great confidence.</li>
 </ul>
+</section>
+<section id="ai-and-the-analytics-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="ai-and-the-analytics-workflow">AI and the Analytics Workflow</h3>
+<p>Before diving into R, it is worth situating AI within the broader analytics workflow you will encounter throughout this course and in business settings. Traditional analytics follows a familiar progression:</p>
+<ul>
+<li><strong>Descriptive analytics</strong> — what happened (reports, summaries, visualizations)</li>
+<li><strong>Diagnostic analytics</strong> — why it happened (exploring relationships and causes)</li>
+<li><strong>Predictive analytics</strong> — what will happen (forecasting models, regression)</li>
+<li><strong>Prescriptive analytics</strong> — what we should do (recommendations, optimization)</li>
+</ul>
+<p>These four categories have shaped how organizations approach data for decades, and they remain the core of what you are learning in this course. AI does not replace this progression — it <em>supercharges</em> it. The key distinction for this course is between <strong>AI as a tool you use</strong> and <strong>AI as a system an organization embeds</strong>. When you use Claude or ChatGPT to write R code or interpret output, you are using AI as a productivity tool — it handles mechanical execution while you supply the question, the data, and the judgment. You will return to this framework throughout the course as you move from descriptive statistics all the way through regression.</p>
+</section>
+<section id="ai-hallucinations-what-to-watch-for-before-you-start" class="level3">
+<h3 class="anchored" data-anchor-id="ai-hallucinations-what-to-watch-for-before-you-start">AI Hallucinations: What to Watch For Before You Start</h3>
+<p>Because you will be using AI to help write and debug R code from your very first assignment, it is important to understand one critical limitation before you begin: <strong>hallucinations</strong>.</p>
+<p><strong>Hallucinations</strong> occur when an LLM generates plausible-sounding but factually incorrect content. The model does not know it is wrong — it produces the statistically most likely continuation of the prompt, which can be entirely fabricated. A well-known example: a lawyer asked ChatGPT to provide legal cases supporting an argument. The model returned several cases with plausible names, courts, years, and rulings. None of them existed.</p>
+<p>Hallucinations are not a fixable bug — they are a structural property of how language prediction works. When the correct answer is rare or absent in training data, the model produces whatever is statistically likely, not whatever is true.</p>
+<p><strong>Five warning signs to watch for in every AI response:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Warning sign</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Unverified specificity</strong></td>
+<td>Exact statistics cited without a source</td>
+</tr>
+<tr class="even">
+<td><strong>Invented sources</strong></td>
+<td>Journal articles, packages, or functions that do not exist</td>
+</tr>
+<tr class="odd">
+<td><strong>Internal contradictions</strong></td>
+<td>Two claims within the same response that conflict</td>
+</tr>
+<tr class="even">
+<td><strong>Overconfident language</strong></td>
+<td>“This is definitively true” on an uncertain topic</td>
+</tr>
+<tr class="odd">
+<td><strong>Failures of common sense</strong></td>
+<td>Physically or logically impossible claims</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical rule:</strong> always run and verify AI-generated R code yourself. Never submit code you have not executed and checked. You will go deeper on hallucinations and how to mitigate them in the final module of this course.</p>
 </section>
 <section id="r-comes-with-assistance" class="level3">
 <h3 class="anchored" data-anchor-id="r-comes-with-assistance">R Comes with Assistance</h3>
@@ -3587,6 +3700,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>Step 3: Ask AI: Paste the error message directly into ChatGPT or Claude and ask what it means. This is a legitimate and efficient use of AI — error interpretation is exactly what it is good at.
 <ul>
 <li>Verify the fix yourself before running it. AI can suggest plausible-looking code that does the wrong thing.</li>
+<li>Three-step check for any AI-generated R code: (1) <strong>Run the code</strong> — does it execute without errors? (2) <strong>Sanity-check the output</strong> — do the numbers make sense given what you know about the data? (3) <strong>Verify the interpretation</strong> — does the AI’s explanation actually match the statistical meaning of the output? Step 3 is where your growing statistical knowledge is irreplaceable — AI can produce a result and write a plausible sentence about it, but only you can confirm that sentence is correct.</li>
 </ul></li>
 <li>Two Categories of Errors (Both Matter Equally)
 <ul>
@@ -5016,8 +5130,15 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <section id="using-ai" class="level2">
 <h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
 <p>Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.</p>
+<p><strong>Understanding AI and Statistics:</strong></p>
 <ul>
 <li><p>Explain the difference between descriptive and inferential statistics and provide real-life examples of both.</p></li>
+<li><p>What is the difference between generative AI and predictive AI? Give one example of each that a business analyst might use, and explain which type you are building when you run a regression in this course.</p></li>
+<li><p>Why do large language models hallucinate, and why is this a structural property rather than a fixable bug? What does it tell you about the relationship between language prediction and factual accuracy?</p></li>
+<li><p>Compare the four levels of analytics — descriptive, diagnostic, predictive, and prescriptive. How does AI fit into each category?</p></li>
+</ul>
+<p><strong>Working with R:</strong></p>
+<ul>
 <li><p>What is the purpose of using R in statistical analysis, and what are the key benefits of using RStudio as a graphical interface?</p></li>
 <li><p>What happens when you assign the same variable multiple values in R? Write an example script that demonstrates this behavior and explains the output.</p></li>
 <li><p>Create a script that demonstrates how to assign values to variables using both numeric and character data types. Then, explain how these assignments are stored in RStudio’s environment.</p></li>
@@ -5436,12 +5557,12 @@ Note
   const stItems = [
     { id: "st1", text: "What is the average monthly revenue across all 12 months in this dataset?",                                          answer: "descriptive"  },
     { id: "st2", text: "What percentage of customers in this sample rated service as 'excellent'?",                                          answer: "descriptive"  },
-    { id: "st3", text: "Create a histogram showing the distribution of exam scores for this class.",                                         answer: "descriptive"  },
+    { id: "st3", text: "Create a histogram showing the distribution of employee performance scores across all departments.",                   answer: "descriptive"  },
     { id: "st4", text: "What is the median household income across all zip codes in the dataset?",                                           answer: "descriptive"  },
     { id: "st5", text: "Based on a sample of 200 customers, do loyalty program members spend more on average than non-members company-wide?", answer: "inferential" },
     { id: "st6", text: "Does a new onboarding process reduce 30-day churn for all new users, based on an A/B test of 500 accounts?",         answer: "inferential" },
     { id: "st7", text: "Is the difference in average delivery times between two regional warehouses statistically significant?",              answer: "inferential" },
-    { id: "st8", text: "Based on this semester's class, do students who attend office hours earn higher final grades on average?",            answer: "inferential" },
+    { id: "st8", text: "Based on a sample of this quarter's sales calls, do reps who complete advanced training close deals at a higher rate on average?", answer: "inferential" },
   ];
 
   function stShuffle(arr) { return arr.map(v => [Math.random(), v]).sort((a,b) => a[0]-b[0]).map(v => v[1]); }

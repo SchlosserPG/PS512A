@@ -2411,6 +2411,7 @@ window.Quarto = {
   <li><a href="#type-i-and-type-ii-errors" id="toc-type-i-and-type-ii-errors" class="nav-link" data-scroll-target="#type-i-and-type-ii-errors">Type I and Type II Errors</a>
   <ul class="collapse">
   <li><a href="#some-reasons-for-error" id="toc-some-reasons-for-error" class="nav-link" data-scroll-target="#some-reasons-for-error">Some Reasons For Error</a></li>
+  <li><a href="#ai-and-hypothesis-error-what-ai-cannot-tell-you" id="toc-ai-and-hypothesis-error-what-ai-cannot-tell-you" class="nav-link" data-scroll-target="#ai-and-hypothesis-error-what-ai-cannot-tell-you">AI and Hypothesis Error: What AI Cannot Tell You</a></li>
   </ul></li>
   <li><a href="#one-way-anova" id="toc-one-way-anova" class="nav-link" data-scroll-target="#one-way-anova">One-Way ANOVA</a>
   <ul class="collapse">
@@ -2451,12 +2452,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#additional-examples" id="toc-additional-examples" class="nav-link" data-scroll-target="#additional-examples">Additional Examples</a></li>
   <li><a href="#comparing-to-t.test-and-anova" id="toc-comparing-to-t.test-and-anova" class="nav-link" data-scroll-target="#comparing-to-t.test-and-anova">Comparing to t.test and ANOVA</a></li>
-  <li><a href="#limitations-of-correlation-analysis" id="toc-limitations-of-correlation-analysis" class="nav-link" data-scroll-target="#limitations-of-correlation-analysis">Limitations of Correlation Analysis</a></li>
+  <li><a href="#correlation-causation-and-ai" id="toc-correlation-causation-and-ai" class="nav-link" data-scroll-target="#correlation-causation-and-ai">Correlation, Causation, and AI</a></li>
   </ul></li>
   <li><a href="#review-and-practice" id="toc-review-and-practice" class="nav-link" data-scroll-target="#review-and-practice">Review and Practice</a>
   <ul class="collapse">
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
-  <li><a href="#anova-lab" id="toc-anova-lab" class="nav-link" data-scroll-target="#anova-lab">ANOVA Lab</a></li>
   <li><a href="#correlation-lab" id="toc-correlation-lab" class="nav-link" data-scroll-target="#correlation-lab">Correlation Lab</a></li>
   <li><a href="#interactive-anova-lesson" id="toc-interactive-anova-lesson" class="nav-link" data-scroll-target="#interactive-anova-lesson">Interactive R Lesson: ANOVA and Correlation</a>
   <ul class="collapse">
@@ -2946,6 +2946,15 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </ul></li>
 </ul>
 </section>
+<section id="ai-and-hypothesis-error-what-ai-cannot-tell-you" class="level3">
+<h3 class="anchored" data-anchor-id="ai-and-hypothesis-error-what-ai-cannot-tell-you">AI and Hypothesis Error: What AI Cannot Tell You</h3>
+<p>AI output is not immune to these errors. When AI reports that an ANOVA result is significant or interprets a pattern as meaningful, it does not supply the error context — it does not tell you how likely the result is to be a false positive given your sample size, your alpha level, or whether you have run multiple comparisons without adjustment. Consider:</p>
+<ul>
+<li><strong>Type I error and AI:</strong> If you run an ANOVA on many groups simultaneously and ask AI to flag which differences are significant, it may identify comparisons with p &lt; 0.05 without noting that running multiple comparisons inflates the false positive rate — exactly what Bonferroni and Tukey corrections are designed to address.</li>
+<li><strong>Type II error and AI:</strong> AI will not tell you whether your sample was large enough to detect a real effect. A non-significant result may reflect a true null — or it may reflect insufficient power. That judgment requires knowing your sample size, the expected effect size, and the desired power level, none of which AI can supply from the output alone.</li>
+</ul>
+<p>The error framework you are learning in this module is precisely what you apply <em>after</em> reading AI output — not what you expect AI to apply for you.</p>
+</section>
 </section>
 <section id="one-way-anova" class="level2">
 <h2 class="anchored" data-anchor-id="one-way-anova">One-Way ANOVA</h2>
@@ -3119,7 +3128,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li>If there are three asterisks, you would say that that your p-value is less than .001. If there are 2, your p-value is less than .01. 1 asterisk indicates a p-value &lt; .05.</li>
 <li>We never say our p-value is 0, but instead say it is less than ___.</li>
-<li>We <em>do not</em> use .1 as a significance level, although some statisticians mark a p-value less than .1 as “marginally significant”. There is a big debate about this, but I agree with the general consensus, so our threshold for this class is less than .05. Anything greater than or equal to .05 is not significant.</li>
+<li>We <em>do not</em> use .1 as a significance level, although some statisticians mark a p-value less than .1 as “marginally significant”. There is a big debate about this, but I agree with the general consensus, so our threshold for this course is less than .05. Anything greater than or equal to .05 is not significant.</li>
 </ul></li>
 </ul>
 </section>
@@ -4166,25 +4175,72 @@ Residuals 397 9532496 24011.3               </code></pre>
 </div>
 </div>
 </section>
-<section id="limitations-of-correlation-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-of-correlation-analysis">Limitations of Correlation Analysis</h2>
-<ul>
-<li><p>Note that a correlation is the first step in understanding causality. Correlation and causality are closely related but fundamentally different concepts in data analysis. Correlation refers to the statistical relationship between two variables, indicating how changes in one variable are associated with changes in another. However, it does not imply that one variable causes the other to change. Causality, on the other hand, goes beyond mere association to establish a cause-and-effect relationship, where one variable directly influences the other. Determining causality requires meeting specific criteria, including significant association, temporal precedence (the cause precedes the effect), and ruling out alternative explanations or confounding variables. While correlation is often the first step in exploring potential relationships, additional analysis—such as experimental design or causal modeling—is necessary to confirm causality. This distinction highlights the importance of critical thinking when interpreting statistical results, as a strong correlation alone does not prove that one variable is the cause of another.</p></li>
-<li><p>To determine a causal model, you need the following:</p></li>
-</ul>
+<section id="correlation-causation-and-ai" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-causation-and-ai">Correlation, Causation, and AI</h2>
+<p>Correlation measures the strength and direction of the linear relationship between two variables. The correlation coefficient <em>r</em> ranges from −1 to +1.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><em>r</em> value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>±0.9 to ±1.0</td>
+<td>Very strong linear relationship</td>
+</tr>
+<tr class="even">
+<td>±0.7 to ±0.9</td>
+<td>Strong</td>
+</tr>
+<tr class="odd">
+<td>±0.5 to ±0.7</td>
+<td>Moderate</td>
+</tr>
+<tr class="even">
+<td>±0.3 to ±0.5</td>
+<td>Weak</td>
+</tr>
+<tr class="odd">
+<td>0.0 to ±0.3</td>
+<td>Little to no linear relationship</td>
+</tr>
+</tbody>
+</table>
+<p>Two important caveats: correlation is sensitive to outliers (one extreme point can inflate or deflate <em>r</em> substantially), and correlation says nothing about causation — regardless of magnitude.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/correlation_Vs_causation.png" class="img-fluid figure-img"></p>
+<figcaption>Correlation vs.&nbsp;Causation</figcaption>
+</figure>
+</div>
+<p>To establish <strong>causation</strong>, three conditions must all be met:</p>
 <ol type="1">
-<li>Significant Correlation: Statistically significant relationship between the variables.</li>
-<li>Temporal Precedence: Causal variable occurred prior to the other variable.</li>
-<li>Eliminate Alternate Variables: No other factors can account for the cause.</li>
+<li>A statistically significant relationship between the variables.</li>
+<li>No other factors that could account for the relationship (ruling out confounds).</li>
+<li>Correct temporal ordering — the cause must precede the effect.</li>
 </ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fixed.png" class="img-fluid figure-img"></p>
+<figcaption>Three Conditions for Causation</figcaption>
+</figure>
+</div>
+<p><strong>The third variable problem (confounding)</strong> is the most common reason correlations are misleading in business data. A third variable related to both X and Y creates a spurious association between them. Classic example: cities with more hospitals have higher death rates — not because hospitals cause death, but because illness severity and population size drive both variables simultaneously.</p>
+<p><strong>The directionality problem</strong> adds another layer: even when two variables are genuinely related, the causal direction may be unclear. Does exercise reduce anxiety, or do lower-anxiety people exercise more? Observational data cannot distinguish these.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/corr_vs_cause_2.png" class="img-fluid figure-img"></p>
+<figcaption>The Third Variable Problem and Directionality</figcaption>
+</figure>
+</div>
+<p><strong>AI and false causal claims:</strong> When AI interprets a correlation or ANOVA result, watch for causal language. Phrases like “X affects Y,” “X leads to Y,” or “X causes Y” in AI output should be challenged unless an experiment or controlled design supports them. AI pattern-matches on how correlational findings are described in its training data, and that language is very often causal even when the evidence is only associational. A strong <em>r</em> value never licenses a causal claim — that judgment belongs to you.</p>
+<p><strong>Some technical limitations to keep in mind:</strong></p>
 <ul>
-<li>Some limitations are as follows:
-<ul>
-<li>The correlation coefficient captures only a linear relationship.</li>
+<li>The correlation coefficient captures only <em>linear</em> relationships. Two variables can be strongly related in a non-linear way and still show r ≈ 0.</li>
 <li>The correlation coefficient may not be a reliable measure in the presence of outliers.</li>
-<li>Even if two variables are highly correlated, one does not necessarily cause the other.</li>
-</ul></li>
-<li>When interpreting results, note that lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.</li>
+<li>Lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.</li>
 </ul>
 </section>
 </section>
@@ -4193,6 +4249,7 @@ Residuals 397 9532496 24011.3               </code></pre>
 <section id="using-ai" class="level2">
 <h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
 <p>Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.</p>
+<p><strong>ANOVA concepts:</strong></p>
 <ul>
 <li><p>Explain how ANOVA is used to compare group means. What are the assumptions of ANOVA, and how do we interpret the F-statistic and p-value?</p></li>
 <li><p>Walk me through the steps of conducting a one-way ANOVA. Explain how to use the aov() function in R and how to interpret the results, including the F-statistic and p-value.</p></li>
@@ -4204,20 +4261,41 @@ Residuals 397 9532496 24011.3               </code></pre>
 <li><p>Compare the TukeyHSD and Bonferroni post-hoc tests. Which one is more conservative, and how do they help in reducing error in multiple comparisons?</p></li>
 </ul>
 <hr>
+<p><strong>Correlation and causation concepts:</strong></p>
 <ul>
-<li><p>Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?”</p></li>
+<li><p>Explain the difference between covariance and correlation. How do you interpret the direction and strength of a correlation coefficient?</p></li>
 <li><p>What is covariance, and how does it describe the relationship between two variables? Provide an example with a simple dataset. Describe Pearson’s correlation coefficient. How do you calculate it, and what does it tell you about the relationship between two variables?</p></li>
 <li><p>Explain how to create a scatterplot using ggplot2 in R to visualize the relationship between two continuous variables. How can you add a regression line to assess the linearity of the relationship?</p></li>
 <li><p>How can you use the cor.test() function in R to conduct a hypothesis test for correlation? What do the p-value and confidence interval indicate in the context of correlation?</p></li>
 <li><p>How do you interpret the strength and direction of a correlation? What is considered a strong, moderate, or weak correlation in the context of business data?</p></li>
-<li><p>Explain the null and alternative hypotheses for correlation testing. How does the t-distribution play a role in testing the significance of a correlation coefficient?</p></li>
+<li><p>What are the three conditions required to establish causation? Why is a strong correlation insufficient on its own, and what role does the third variable (confounding) problem play?</p></li>
 <li><p>What are some challenges of visualizing relationships between variables when dealing with big data, and how can statistical tests help when scatterplots are not effective?</p></li>
 <li><p>Discuss the limitations of correlation analysis. Why is it important to be cautious when interpreting correlation as causation?</p></li>
-<li><p>What are the key differences between correlation and causation? How can you determine if a correlation implies causality?</p></li>
 </ul>
-</section>
-<section id="anova-lab" class="level2">
-<h2 class="anchored" data-anchor-id="anova-lab">ANOVA Lab</h2>
+<p><strong>Prompting AI effectively for ANOVA and correlation tasks:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Vague prompt</th>
+<th>Specific prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Run an ANOVA”</td>
+<td>“Run a one-way ANOVA comparing <code>home_value</code> across the four levels of <code>season</code> in <code>zillow.csv</code>. State the null and alternative hypotheses, run <code>aov()</code> and <code>summary()</code>, and interpret the F-statistic and p-value at α = 0.05. If the result is significant, run <code>TukeyHSD()</code> and identify which season pairs differ.”</td>
+</tr>
+<tr class="even">
+<td>“Test correlation”</td>
+<td>“Using <code>zillow.csv</code>, run <code>cor.test()</code> to test whether there is a statistically significant linear relationship between <code>income_needed</code> and <code>home_value</code>. State the hypotheses, report the correlation coefficient and p-value, and interpret both. Note any concerns about directionality or confounding.”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI causal language warning:</strong> When AI interprets ANOVA or correlation results, watch carefully for language like “season <em>affects</em> home values” or “income <em>drives</em> home prices.” These are causal claims. Your results are observational — they establish association and group differences, not causation. If AI uses causal language, correct the interpretation: “seasons are <em>associated with</em> differences in home values” or “income needed and home value are <em>correlated</em>.” ## ANOVA Lab</p>
 <p><strong>A marketing analyst</strong> wants to test whether average customer satisfaction scores differ across four store locations (North, South, East, West). She collected satisfaction ratings (1–10 scale) from random samples at each location. Without running any code, identify the correct test, state the null and alternative hypotheses, and write the <code>aov()</code> command she would use given a data frame called <code>stores</code> with columns <code>Satisfaction</code> and <code>Location</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">

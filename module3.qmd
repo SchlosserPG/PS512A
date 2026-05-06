@@ -22,6 +22,20 @@ We close with **missing data and visualization**: identifying where values are a
 
 By the end of this lesson, you should be able to load a messy dataset, diagnose its problems, apply a dplyr cleaning workflow, and produce a visualization that reflects the prepared data. Work through every code example in your own `.R` script file alongside the reading.
 
+### AI and Data Preparation: Where the Stakes Are Highest
+
+Data preparation is the phase of analysis where AI errors are most consequential — and most invisible. AI can write dplyr pipelines, suggest coercion functions, and generate filter conditions quickly and correctly. But the decisions that matter most in this phase are not about syntax:
+
+| AI handles well | Requires your judgment |
+|-------------------------------------|---------------------------------------|
+| Writing `filter()`, `mutate()`, `select()` pipelines | Deciding *which* observations to filter out — and whether that introduces bias |
+| Suggesting `as.factor()` or `as.numeric()` coercions | Recognizing when a variable is miscoded in a way that silently corrupts analysis |
+| Generating `group_by()` + `summarize()` code | Deciding *which* groups make sense to compare for your business question |
+| Proposing `na.omit()` or `drop_na()` for missing data | Deciding whether removing missing values on a key demographic introduces selection bias |
+| Producing clean, readable code | Noticing when the cleaning logic is technically valid but analytically wrong |
+
+The critical insight: removing missing data is not automatically "cleaning." If missing values are concentrated in a particular region, income bracket, or customer segment, removing them can systematically distort every analysis that follows. AI will execute whatever you ask it without flagging that issue — because it is a statistical judgment, not a code error. This is why understanding the *why* behind each data preparation step matters as much as learning the functions.
+
 ### At a Glance
 
 -   This lesson is about developing the habits of a careful analyst before any modeling begins. R will not warn you when a number is stored as text or a category is coded as a number — it will simply produce wrong results. The skills here — checking types, correcting them, filtering and reshaping with dplyr, handling missing values, and verifying your work with a visualization — are not preliminary steps you do once and move on from. They are the foundation of every analysis you will run in the MSBA program. The goal is not just to learn the functions, but to internalize a workflow: inspect first, clean deliberately, verify visually.
@@ -1146,7 +1160,27 @@ kurtosis(brfss.cleaned$PHYSHLTH)
 
 ## Using AI
 
-Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
+Use the following prompts with our chatbot below to explore more about data preparation and visualization with `ggplot2` further.
+
+**Understanding data preparation concepts:**
+
+-   What is the difference between `na.omit()` and `drop_na()` in R? When would removing rows with missing values introduce analytical bias, and what is an alternative approach?
+
+-   Explain the difference between `filter()`, `select()`, and `mutate()` in dplyr. Write an example of each using a customer dataset with columns for `CustomerID`, `Region`, `Age`, and `AnnualSpend`.
+
+-   What does the pipe operator `%>%` do in R, and why does it make dplyr code more readable? Show an example of the same operation written with and without the pipe.
+
+-   When using `group_by()` with `summarize()`, how do you decide which grouping variable to use? Give an example where the grouped result changes the business interpretation compared to the overall summary.
+
+**Prompting AI effectively for data preparation tasks:**
+
+| Vague prompt | Specific prompt |
+|-----------------------------------|------------------------------------------|
+| "Clean my data" | "In my `customer_data` dataframe, coerce `PurchaseDate` to Date using `as.Date()`, recode `Region` from numeric (1, 2, 3) to factor with levels East, West, Central using `mutate()` and `recode()`, and use `drop_na(AnnualSpend)` to remove rows where the outcome variable is missing. Then run `summary()` and report any remaining type mismatches." |
+| "Summarize by group" | "Using `group_by()` and `summarize()`, calculate the mean, median, and count of `AnnualSpend` broken out by `Region` and `Churned` in `customer_data`. Arrange the output from highest to lowest mean spend." |
+| "Fix missing values" | "In `customer_data`, identify which columns have missing values using `sum(is.na())` applied to each column. For `AnnualSpend`, impute missing values with the column median. For `Region`, print the rows with missing values so I can review them before deciding whether to remove or impute." |
+
+**Visualization prompts:**
 
 -   How can I modify the appearance of a ggplot bar chart to include custom colors for each bar, and what are the best practices for choosing colors in data visualization?
 
@@ -1786,4 +1820,4 @@ The core of the lesson covered the dplyr toolkit: arrange() to sort data, filter
 
 The visualization section is organized by complexity. Single-variable bar charts that require data cleaning (recoding factor levels, handling missing values) are covered first using the nhanes and GSS datasets — these show how data preparation and visualization connect in practice. Multi-variable charts follow: grouped and stacked bar charts for two categorical variables, boxplots by group, and scatterplots with `geom_smooth()` for two continuous variables. Full worked examples using the nhanes and BRFSS datasets tie everything together.
 
-**What comes next:** The Hypothesis Testing lesson introduces t-tests — the first formal inferential tool in the course. The visualization and reasoning-error principles from this lesson apply directly: a t-test result is only meaningful if the question was well-posed, the data are appropriate, and the output is communicated honestly. The Trifecta Checkup extends naturally to interpreting statistical output: does the analysis answer the right question, with the right data, communicated clearly?
+**What comes next:** Module 5 introduces hypothesis testing and t-tests — the first formal inferential tools in the course. The habits built here carry forward directly: a t-test result is only meaningful if the data were cleaned correctly, variable types are right, and missing values were handled deliberately. Every analytical judgment you made in this module — which observations to keep, how to recode categories, whether to impute or drop missing values — shapes the validity of every inferential result that follows.
