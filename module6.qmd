@@ -863,7 +863,7 @@ ggplot(Credit, aes(Ethnicity, Rating, fill=Ethnicity)) + geom_boxplot(show.legen
 
 ## Using AI
 
--   Use the following prompts on a generative AI, like chatGPT, to learn more about ANOVA analysis.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   Explain how ANOVA is used to compare group means. What are the assumptions of ANOVA, and how do we interpret the F-statistic and p-value?
 

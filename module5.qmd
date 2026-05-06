@@ -707,7 +707,7 @@ t.test(sleep2$extra.1, sleep2$extra.2, paired=TRUE)
 
 ## Using AI
 
--   Use the following prompts on a generative AI, like chatGPT, to learn more about t.test's and confidence intervals.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   Can you explain the difference between the null hypothesis and the alternative hypothesis, and why is it important to set up both correctly before conducting a t-test?
 

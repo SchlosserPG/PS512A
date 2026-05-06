@@ -134,19 +134,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
   background: #181c27;
   color: #e8eaf0;
-  padding: 12px 16px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 9999;
-  font-size: 13px;
+  z-index: 10001; /* ⬅️ FIX: above chatbot */
+  font-size: 14px;
   font-family: -apple-system, sans-serif;
 }
+
 #cookie-banner button {
   background: #4f8ef7;
   border: none;
   color: #fff;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
 }
@@ -177,6 +178,7 @@ if (localStorage.getItem('cookie_consent') === 'true') {
   });
 }
 </script>
+
 <!-- ============================================================
      Statistics Course Assistant — Floating Chat Bubble
      Appears on every page of the book.

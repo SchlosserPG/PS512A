@@ -734,7 +734,7 @@ glance(lmModel4)
 
 ## Using AI
 
--   Use the following prompts on a generative AI, like chatGPT, to learn more about regression analysis in R.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   Explain how to perform simple linear regression in R. Use the lm() function and discuss how to interpret the slope, intercept, and R-squared values from the regression output.
 

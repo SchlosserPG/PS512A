@@ -134,19 +134,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
   background: #181c27;
   color: #e8eaf0;
-  padding: 12px 16px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 9999;
-  font-size: 13px;
+  z-index: 10001; /* ⬅️ FIX: above chatbot */
+  font-size: 14px;
   font-family: -apple-system, sans-serif;
 }
+
 #cookie-banner button {
   background: #4f8ef7;
   border: none;
   color: #fff;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
 }
@@ -177,6 +178,7 @@ if (localStorage.getItem('cookie_consent') === 'true') {
   });
 }
 </script>
+
 <!-- ============================================================
      Statistics Course Assistant — Floating Chat Bubble
      Appears on every page of the book.
@@ -4190,8 +4192,8 @@ Residuals 397 9532496 24011.3               </code></pre>
 <h1>Review and Practice</h1>
 <section id="using-ai" class="level2">
 <h2 class="anchored" data-anchor-id="using-ai">Using AI</h2>
+<p>Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.</p>
 <ul>
-<li><p>Use the following prompts on a generative AI, like chatGPT, to learn more about ANOVA analysis.</p></li>
 <li><p>Explain how ANOVA is used to compare group means. What are the assumptions of ANOVA, and how do we interpret the F-statistic and p-value?</p></li>
 <li><p>Walk me through the steps of conducting a one-way ANOVA. Explain how to use the aov() function in R and how to interpret the results, including the F-statistic and p-value.</p></li>
 <li><p>Describe how to conduct a two-way ANOVA in R. What are the key differences between one-way and two-way ANOVA, and how do we interpret multiple F-statistics?</p></li>

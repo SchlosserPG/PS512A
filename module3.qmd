@@ -1146,7 +1146,7 @@ kurtosis(brfss.cleaned$PHYSHLTH)
 
 ## Using AI
 
-Use the following prompts with a generative AI tool like ChatGPT to explore data visualization with `ggplot2` further.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   How can I modify the appearance of a ggplot bar chart to include custom colors for each bar, and what are the best practices for choosing colors in data visualization?
 

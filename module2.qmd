@@ -792,7 +792,7 @@ ggplot(fbi.deaths.small, aes(x = "", y = X2016, fill = Weapon)) +
 
 ## Using AI
 
-Use the following prompts with a generative AI tool like ChatGPT to explore descriptive statistics further.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   What is the difference between mean, median, and mode in describing data distributions, and how can each be used to understand the shape of a distribution?
 -   How do mean and median help identify whether a distribution is skewed, and what does it tell us about the dataset?

@@ -1389,7 +1389,7 @@ summary(africa2)
 
 ## Using AI
 
-Use the following prompts on a generative AI, like chatGPT, to learn more about introductory topics.
+Use the following prompts with our chatbot (bottom right of this page) to explore these concepts further.
 
 -   Explain the difference between descriptive and inferential statistics and provide real-life examples of both.
 
