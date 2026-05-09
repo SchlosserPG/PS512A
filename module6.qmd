@@ -9,13 +9,13 @@ format: html
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
-This lesson covers two foundational tools for examining relationships in data: Analysis of Variance (ANOVA) and correlation analysis. Together, they form a complete toolkit for a day focused on group comparisons and linear relationships.
+This lesson covers two foundational tools for examining relationships in data: Analysis of Variance (ANOVA) and correlation analysis. Together, they form a complete toolkit for a day focused on group comparisons and linear relationships. For each tool, we also cover the assumptions that must be satisfied for the results to be trustworthy, what breaks when those assumptions fail, and how to test them in R.
 
-We begin with **ANOVA**, which extends hypothesis testing beyond two groups. Where a t-test compares the means of two populations, a one-way ANOVA compares three or more, and a two-way ANOVA introduces a second grouping variable. The core question in every ANOVA is the same: is the variation in the outcome variable explained by the group structure, or is it just noise? We will work through the F-statistic, degrees of freedom, and the logic of between-group versus within-group variability. When a significant ANOVA is found, post-hoc tests — Bonferroni and Tukey HSD — tell us which specific groups differ. We also cover Type I and Type II errors here, since understanding the cost of false positives and false negatives is essential context for any hypothesis test, and ANOVA is a natural place to make those concepts concrete.
+We begin with **ANOVA**, which extends hypothesis testing beyond two groups. Where a t-test compares the means of two populations, a one-way ANOVA compares three or more, and a two-way ANOVA introduces a second grouping variable. The core question in every ANOVA is the same: is the variation in the outcome variable explained by the group structure, or is it just noise? We will work through the F-statistic, degrees of freedom, and the logic of between-group versus within-group variability. When a significant ANOVA is found, post-hoc tests — Bonferroni and Tukey HSD — tell us which specific groups differ. We also cover Type I and Type II errors here, since understanding the cost of false positives and false negatives is essential context for any hypothesis test, and ANOVA is a natural place to make those concepts concrete. Each ANOVA variant is followed by a discussion of its assumptions — normality, homogeneity of variance, and independence — and how to check them using R.
 
-The lesson closes with **correlation analysis**, which shifts our focus from group comparisons to continuous relationships. Covariance describes the direction of the linear relationship between two numeric variables; the correlation coefficient standardizes it into a value between −1 and +1 that captures both direction and strength. We test whether a correlation is statistically significant using `cor.test()`, and we learn to visualize relationships with scatterplots before interpreting any numerical result. The lesson closes by connecting correlation back to the t-test and ANOVA covered earlier in the course, showing how these tools address related but distinct questions depending on whether your variables are categorical or continuous.
+The lesson closes with **correlation analysis**, which shifts our focus from group comparisons to continuous relationships. Covariance describes the direction of the linear relationship between two numeric variables; the correlation coefficient standardizes it into a value between −1 and +1 that captures both direction and strength. We test whether a correlation is statistically significant using `cor.test()`, and we learn to visualize relationships with scatterplots before interpreting any numerical result. We also examine the assumptions behind Pearson's correlation — particularly the linearity requirement and the outsized influence of outliers — and how to detect violations. The lesson closes by connecting correlation back to the t-test and ANOVA covered earlier in the course, showing how these tools address related but distinct questions depending on whether your variables are categorical or continuous.
 
-By the end of this lesson, you should be able to set up and conduct one- and two-way ANOVAs, run and interpret post-hoc tests, distinguish Type I from Type II error, calculate and test a correlation coefficient, and explain when each tool is appropriate. Work through every code example in your own R script alongside the reading.
+By the end of this lesson, you should be able to set up and conduct one- and two-way ANOVAs, run and interpret post-hoc tests, distinguish Type I from Type II error, calculate and test a correlation coefficient, explain when each tool is appropriate, and verify that the statistical assumptions for ANOVA and correlation are reasonably met before drawing conclusions. Work through every code example in your own R script alongside the reading.
 
 ### At a Glance
 
@@ -30,6 +30,7 @@ By the end of this lesson, you should be able to set up and conduct one- and two
 -   Calculate and interpret a correlation coefficient.
 -   Conduct and interpret a hypothesis test for correlation using `cor.test()`.
 -   Visualize the relationship between two continuous variables using a scatterplot.
+-   Identify the assumptions of ANOVA and correlation, explain what happens when they are violated, and use R to check them.
 
 ### Consider While Reading
 
@@ -603,6 +604,88 @@ ggplot(corolla, aes(x = Fuel_Type, y = Price, color = Metallic, group = Metallic
        color = "Metallic Paint") 
 ```
 
+## Assumptions of ANOVA
+
+ANOVA produces a reliable F-statistic and p-value only when certain conditions about the data are reasonably satisfied. These assumptions are conceptually similar to those of the independent samples t-test — ANOVA is, after all, an extension of that logic to three or more groups.
+
+### What the Assumptions Are
+
+**Normality** means that the outcome variable is approximately normally distributed within each group. As with t-tests, this assumption is protected by the Central Limit Theorem when group sample sizes are reasonably large (roughly $n_j \geq 30$ per group). With smaller groups, the shapes of the within-group distributions matter more.
+
+**Homogeneity of variance** (homoscedasticity) requires that the population variance is approximately equal across all groups. This is the ANOVA equivalent of the equal-variances assumption in the independent samples t-test. When this assumption is violated, the within-group estimate of error (MSE) is biased, which distorts the F-statistic. Unlike the t-test, ANOVA does not have a built-in Welch-style correction by default, so this assumption carries more weight.
+
+**Independence** means that the observations within and between groups are drawn independently. If observations are clustered, matched, or correlated in any way that is not modeled, standard errors will be underestimated and the F-test will be anti-conservative.
+
+### What Happens When Assumptions Are Violated
+
+When **normality fails** with small group sizes, the F-distribution is no longer the correct reference distribution for your test statistic, which can inflate or deflate your p-value. With large groups, the CLT protects you and mild departures from normality have little practical impact.
+
+When **homogeneity of variance fails**, the pooled MSE term in the denominator of the F-statistic is a blend of unequal variances, producing an inaccurate ratio. Groups with larger variances are underrepresented in the estimate and groups with smaller variances are overrepresented. This can lead to either false positives or false negatives depending on how the variance inequality maps onto group sizes. Welch's ANOVA (`oneway.test()` in R) is a direct remedy.
+
+When **independence fails**, the same concerns as in the t-test apply: standard errors shrink, F-statistics inflate, and the false positive rate rises above the nominal alpha level.
+
+### Visualizing the Homogeneity of Variance Assumption
+
+Equal spread across groups is as important as the location of the group means. The left panel shows groups with comparable variance — the assumption holds. The right panel shows groups with very different spreads — a sign to investigate further.
+
+```{=html}
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Homogeneity of Variance — Equal vs. Unequal Spread Across Groups</p>
+  <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="170" y="16" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Equal Variances — Assumption Met ✓</text>
+    <path d="M30,185 C30,185 50,183 65,170 C80,157 88,130 95,105 C100,88 102,75 105,66 C108,75 110,88 115,105 C122,130 130,157 145,170 C160,183 180,185 180,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"/>
+    <text x="105" y="198" text-anchor="middle" font-size="9" fill="#444">Group A</text>
+    <path d="M130,185 C130,185 150,183 165,170 C180,157 188,130 195,105 C200,88 202,75 205,66 C208,75 210,88 215,105 C222,130 230,157 245,170 C260,183 280,185 280,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"/>
+    <text x="205" y="198" text-anchor="middle" font-size="9" fill="#444">Group B</text>
+    <path d="M230,185 C230,185 250,183 265,170 C280,157 288,130 295,105 C300,88 302,75 305,66 C308,75 310,88 315,105 C322,130 330,157 345,170 C360,183 380,185 380,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"/>
+    <text x="305" y="198" text-anchor="middle" font-size="9" fill="#444">Group C</text>
+    <line x1="395" y1="20" x2="395" y2="195" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="540" y="16" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Unequal Variances — May Violate ✗</text>
+    <path d="M405,185 C405,185 415,183 420,175 C426,165 428,140 430,105 C431,88 431.5,75 432,66 C432.5,75 433,88 434,105 C436,140 438,165 444,175 C450,183 460,185 460,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"/>
+    <text x="432" y="198" text-anchor="middle" font-size="9" fill="#444">Group A</text>
+    <path d="M455,185 C455,185 470,183 480,172 C492,158 498,132 504,105 C508,88 510,75 512,66 C514,75 516,88 520,105 C526,132 532,158 544,172 C556,183 570,185 570,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"/>
+    <text x="512" y="198" text-anchor="middle" font-size="9" fill="#444">Group B</text>
+    <path d="M548,185 C548,185 560,182 572,170 C586,154 595,125 604,100 C610,83 613,72 615,64 C617,72 620,83 626,100 C635,125 644,154 658,170 C672,182 685,185 685,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"/>
+    <text x="616" y="198" text-anchor="middle" font-size="9" fill="#444">Group C</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">When group widths (variances) differ substantially, the MSE denominator in the F-statistic becomes unreliable. Welch's ANOVA or a data transformation may be needed.</p>
+</div>
+```
+
+### Testing Assumptions in R
+
+**Normality within each group** can be assessed with a histogram per group or with the Shapiro-Wilk test applied to each group separately.
+
+```r
+# Shapiro-Wilk by group
+tapply(outcome_variable, grouping_variable, shapiro.test)
+
+# Q-Q plot of model residuals
+qqnorm(residuals(anova_model))
+qqline(residuals(anova_model))
+```
+
+**Homogeneity of variance** is most commonly tested with Levene's test, available in the `car` package. A p-value above .05 means we cannot reject the assumption of equal variances.
+
+```r
+library(car)
+leveneTest(outcome_variable ~ grouping_variable, data = mydata)
+# p > .05: variances are not significantly different — assumption holds
+```
+
+If Levene's test is significant, use Welch's ANOVA as a robust alternative:
+
+```r
+oneway.test(outcome_variable ~ grouping_variable, data = mydata, var.equal = FALSE)
+```
+
+**Independence** must be assessed from the study design. If there is reason to believe observations within groups are correlated, a mixed-effects or repeated-measures model is more appropriate.
+
+::: {.callout-tip}
+### Robustness of ANOVA
+ANOVA is generally robust to mild violations of normality, especially with balanced designs and group sizes above 15–20. It is more sensitive to violations of homogeneity of variance, particularly when group sizes are unequal — the combination of unequal variances *and* unequal group sizes is the most problematic scenario.
+:::
+
 ## choose() command
 
 -   The choose(n, k) function in R calculates the number of ways to choose k items from a set of n items without regard to order. It answers the question: "How many different groups of k can I make from n items?" For example, choose(5, 2) equals 10, meaning you can make 10 different pairs from a group of 5 items.
@@ -889,6 +972,96 @@ To establish **causation**, three conditions must all be met:
 -   The correlation coefficient captures only *linear* relationships. Two variables can be strongly related in a non-linear way and still show r ≈ 0.
 -   The correlation coefficient may not be a reliable measure in the presence of outliers.
 -   Lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.
+
+## Assumptions of Correlation Analysis
+
+Pearson's correlation coefficient ($r$) and the significance test in `cor.test()` rest on specific assumptions. When these are met, $r$ accurately captures the linear relationship and the associated p-value is trustworthy. When they are violated, $r$ can be misleading even if the test reports significance.
+
+### What the Assumptions Are
+
+**Linearity** is the most fundamental assumption: the relationship between the two variables should be approximately linear. Pearson's $r$ is specifically a measure of *linear* association. Two variables can be strongly related in a curved way and still yield $r \approx 0$.
+
+**Normality (bivariate)** means that the two variables are jointly normally distributed — roughly, that for any value of X, the distribution of Y values is approximately normal, and vice versa. With moderate to large samples this assumption is not critical, but with small samples, extreme departures from normality can distort the correlation estimate.
+
+**No influential outliers**: a single extreme observation can dramatically inflate or deflate $r$, giving an entirely misleading picture of the typical relationship. Pearson's $r$ is not robust to outliers.
+
+**Independence** means each pair of $(x, y)$ observations was collected independently from the others. Autocorrelated data (e.g., time series) or clustered sampling can produce artificially inflated correlations.
+
+### What Happens When Assumptions Are Violated
+
+When **linearity fails**, $r$ underestimates the true strength of the relationship. A U-shaped pattern, for example, can produce $r \approx 0$ even when the variables are perfectly related — the increasing and decreasing halves cancel out.
+
+When **outliers are present**, a single data point can pull the correlation strongly in its direction. The reported $r$ may reflect one anomalous observation rather than the bulk of the data. Always inspect a scatterplot before interpreting $r$.
+
+When **normality fails with small samples**, the p-value from `cor.test()` can be unreliable. Spearman's rank correlation (`cor.test(method = "spearman")`) is a distribution-free alternative.
+
+### Visualizing the Linearity Assumption
+
+Pearson's $r$ is designed for straight-line relationships. The left panel shows a linear relationship where $r$ is a valid summary. The right panel shows a curved relationship where $r$ would be misleading.
+
+```{=html}
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Linearity — The Core Assumption of Pearson's Correlation</p>
+  <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="170" y="16" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Linear Relationship — r is Valid ✓</text>
+    <rect x="20" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"/>
+    <line x1="40" y1="162" x2="300" y2="40" stroke="#1a6b3a" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <circle cx="52"  cy="158" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="70"  cy="148" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="88"  cy="135" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="100" cy="130" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="120" cy="118" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="140" cy="108" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="155" cy="100" r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="175" cy="90"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="195" cy="82"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="215" cy="72"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="235" cy="62"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="258" cy="53"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <circle cx="280" cy="45"  r="3.5" fill="#2d6a4f" opacity="0.7"/>
+    <text x="170" y="193" text-anchor="middle" font-size="9.5" fill="#333">Points follow a straight-line trend; r captures this well</text>
+    <text x="510" y="16" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Non-linear (Curved) — r is Misleading ✗</text>
+    <rect x="360" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"/>
+    <path d="M375,162 Q510,30 645,162" stroke="#9b2226" stroke-width="1.5" fill="none" stroke-dasharray="5,3"/>
+    <circle cx="382" cy="158" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="400" cy="140" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="420" cy="115" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="440" cy="90"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="460" cy="70"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="480" cy="58"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="510" cy="50"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="540" cy="58"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="560" cy="72"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="580" cy="90"  r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="600" cy="115" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="620" cy="140" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <circle cx="638" cy="158" r="3.5" fill="#ae2012" opacity="0.7"/>
+    <text x="510" y="193" text-anchor="middle" font-size="9.5" fill="#333">U-shape gives r ≈ 0 even though the relationship is strong</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">Always visualize with a scatterplot before computing r. A near-zero correlation does not mean no relationship — it means no <em>linear</em> relationship.</p>
+</div>
+```
+
+### Testing Assumptions in R
+
+```r
+# 1. Scatterplot — always do this first
+ggplot(mydata, aes(x = var1, y = var2)) +
+  geom_point() +
+  stat_smooth(method = "lm")   # A curved pattern around the line signals non-linearity
+
+# 2. Normality check for each variable
+shapiro.test(mydata$var1)
+shapiro.test(mydata$var2)
+
+# 3. Spearman's correlation — no normality or linearity assumption required
+cor.test(mydata$var1, mydata$var2, method = "spearman")
+```
+
+::: {.callout-tip}
+### The cardinal rule
+Always look at the scatterplot first. No correlation coefficient — no matter how large or how small — should be interpreted without visual inspection of the data. The scatterplot will reveal outliers, non-linearity, clusters, and other features that $r$ alone will not.
+:::
 
 # Review and Practice
 
@@ -1554,7 +1727,7 @@ No need to submit this quiz anywhere. This exercise is for your benefit to help 
 
 ## Summary
 
-This lesson covered group comparison with ANOVA and linear association with correlation:
+This lesson covered group comparison with ANOVA, linear association with correlation, and the assumptions that make both analyses trustworthy:
 
 | Topic | Key concepts |
 |------------------------------------|------------------------------------|
@@ -1564,6 +1737,7 @@ This lesson covered group comparison with ANOVA and linear association with corr
 | Post-hoc tests | Bonferroni (`pairwise.t.test()`), Tukey HSD (`TukeyHSD()`), Type I vs. Type II tradeoff |
 | Two-way ANOVA | Two grouping variables, SSA, SSB, two F-statistics, `droplevels()` |
 | Two-way ANOVA with interaction | Interaction term SSAB, three F-statistics, interaction plots |
+| ANOVA assumptions | Normality, homogeneity of variance, independence; `leveneTest()`, `oneway.test()` as Welch alternative |
 | choose() | Counting pairwise comparisons, `choose(k, 2)` |
 | Covariance | Direction of linear relationship, `cov()` |
 | Correlation coefficient | Strength and direction, range −1 to +1, `cor()` |
@@ -1571,5 +1745,6 @@ This lesson covered group comparison with ANOVA and linear association with corr
 | Scatterplots | `ggplot2`, `geom_point()`, `stat_smooth(method="lm")` |
 | Practical vs. statistical significance | Effect size vs. p-value, large-sample caution |
 | Limitations of correlation | Linearity only, outlier sensitivity, correlation ≠ causation |
+| Correlation assumptions | Linearity, bivariate normality, no influential outliers, independence; `shapiro.test()`, Spearman's $\rho$ as alternative |
 
-**What comes next:** The Regression lesson picks up directly from correlation. Where correlation describes the strength and direction of the relationship between two continuous variables, regression uses that relationship to build a predictive model — estimating a slope and intercept so that we can forecast values of the outcome variable. The goodness-of-fit measures introduced there (R², adjusted R², RSE) build on the sum-of-squares logic covered in this lesson. Regression is the last major topic we have in OMSBA 512A and is the foundation for advanced analytics.
+**What comes next:** The Regression lesson picks up directly from correlation. Where correlation describes the strength and direction of the relationship between two continuous variables, regression uses that relationship to build a predictive model — estimating a slope and intercept so that we can forecast values of the outcome variable. Regression carries its own set of assumptions (linearity, independence of errors, homoscedasticity, normality of residuals, no multicollinearity) that extend naturally from what you learned here. The goodness-of-fit measures introduced there (R², adjusted R², RSE) build on the sum-of-squares logic covered in this lesson. Regression is the last major topic we have in OMSBA 512A and is the foundation for advanced analytics.

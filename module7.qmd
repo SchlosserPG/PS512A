@@ -9,15 +9,15 @@ format: html
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
-This lesson covers simple and multiple linear regression — the foundational predictive modeling technique in business analytics. Building on the correlation analysis from the previous lesson, we move from describing relationships to modeling and forecasting them.
+This lesson covers simple and multiple linear regression — the foundational predictive modeling technique in business analytics. Building on the correlation analysis from the previous lesson, we move from describing relationships to modeling and forecasting them. The lesson also covers the assumptions that regression requires, what goes wrong when they are violated, and how to diagnose them systematically in R.
 
 We begin with the **simple linear regression model**, which estimates a straight-line relationship between one explanatory variable and one continuous response variable. The key outputs are the slope and intercept — parameters that define the regression line — along with three goodness-of-fit measures: the Residual Standard Error (RSE), the coefficient of determination (R²), and the Adjusted R². The F-statistic tests whether the model as a whole explains a meaningful share of the variation in the outcome, and the t-statistics on each coefficient test each predictor individually.
 
 We then extend to **multiple regression**, which adds two or more explanatory variables to the model. Multiple regression allows us to control for competing influences on the outcome, isolating the unique contribution of each predictor while holding the others constant. We cover the p-value method for variable selection — iteratively removing the least significant predictors while watching that the Adjusted R² does not meaningfully decline — and multicollinearity, which arises when predictors are highly correlated with each other and can distort or destabilize coefficient estimates.
 
-The lesson closes with **regression using categorical variables**. When a predictor is categorical rather than continuous, R automatically converts it into dummy variables — a set of binary indicators, one per category, with one category held back as the reference. We work through examples with two-category and multi-category predictors, and combine continuous and categorical predictors in the same model.
+The lesson closes with **regression using categorical variables** and a dedicated section on **regression assumptions**. When a predictor is categorical rather than continuous, R automatically converts it into dummy variables — a set of binary indicators, one per category, with one category held back as the reference. We work through examples with two-category and multi-category predictors, and combine continuous and categorical predictors in the same model. The assumptions section covers linearity, independence of errors, homoscedasticity, normality of residuals, and multicollinearity — explaining each conceptually, what breaks when it fails, and how R's built-in diagnostic plots make checking them straightforward.
 
-By the end of this lesson, you should be able to fit and interpret simple and multiple regression models in R, evaluate goodness of fit, test predictor significance, build a regression equation for prediction, detect and address multicollinearity, and correctly include categorical variables using dummy coding. Work through every code example in your own R script alongside the reading.
+By the end of this lesson, you should be able to fit and interpret simple and multiple regression models in R, evaluate goodness of fit, test predictor significance, build a regression equation for prediction, detect and address multicollinearity, correctly include categorical variables using dummy coding, and verify that the assumptions of linear regression are reasonably satisfied using diagnostic plots and formal tests. Work through every code example in your own R script alongside the reading.
 
 ### AI and Regression: From Descriptive to Predictive
 
@@ -48,6 +48,7 @@ AI accelerates every mechanical step of regression modeling. It can write `lm()`
 -   Apply the p-value method for variable selection.
 -   Detect and interpret multicollinearity using VIF scores.
 -   Include categorical predictors using dummy variables.
+-   Identify the assumptions of linear regression, explain the consequence of each violation, and use R's diagnostic plots and formal tests to check them.
 
 ### Consider While Reading
 
@@ -746,6 +747,124 @@ glance(lmModel4)
 
 -   We can look at the R-squared value of .693 and adjusted R-squared value of .692 and state that about 69% of the variable in total score is explained by a linear relationship with the predictors in our model.
 
+# Assumptions of Linear Regression
+
+Linear regression produces unbiased, efficient estimates and reliable significance tests only when a set of assumptions about the data and errors are reasonably satisfied. These assumptions apply to both simple and multiple regression. Violating them affects different things — some violations bias the coefficient estimates themselves, while others make the standard errors unreliable without changing the estimates.
+
+## What the Assumptions Are
+
+**Linearity** means that the true relationship between each predictor and the outcome is linear — the expected value of $Y$ changes by a constant amount for each one-unit increase in $X$, all else equal. If the true relationship is curved, the slope estimate will average over different parts of the curve and be systematically wrong for some ranges of $X$.
+
+**Independence of errors** means that the residuals ($e_i = y_i - \hat{y}_i$) from one observation are not correlated with the residuals from any other observation. This is violated most commonly in time-series data and in clustered or hierarchical data. Correlated errors make standard errors too small, inflating t-statistics and producing false positives.
+
+**Homoscedasticity** (constant variance of errors) means that the spread of residuals is approximately the same across all values of the predicted outcome. When the residuals fan out as $\hat{y}$ increases — a funnel pattern — the assumption is violated. Heteroscedastic errors do not bias coefficient estimates, but they make standard errors unreliable, which invalidates hypothesis tests and confidence intervals.
+
+**Normality of errors** means that the residuals are approximately normally distributed. This is needed for the t-statistics on each coefficient and the F-statistic to follow their theoretical distributions. With large samples, the CLT protects you; with small samples, severely non-normal residuals can produce unreliable p-values.
+
+**No perfect multicollinearity** means that no predictor is a perfect linear combination of the others. Near-perfect multicollinearity — the more common issue — does not bias estimates but inflates standard errors, making predictors appear non-significant even when they genuinely predict the outcome.
+
+## What Happens When Assumptions Are Violated
+
+| Assumption violated | Effect on estimates | Effect on inference |
+|---|---|---|
+| Non-linearity | Biased — wrong slope for parts of the range | Misleading predictions |
+| Correlated errors | Unbiased | Standard errors too small; p-values too low |
+| Heteroscedasticity | Unbiased | Standard errors unreliable; tests invalid |
+| Non-normal errors | Unbiased (large samples) | p-values unreliable (small samples) |
+| Multicollinearity | Unbiased | Standard errors inflated; predictors appear non-significant |
+
+## Visualizing the Homoscedasticity Assumption
+
+The most important thing to check visually in regression is whether the residuals spread evenly across the range of fitted values — or whether they fan out. The left panel shows well-behaved residuals; the right shows the classic funnel pattern that signals heteroscedasticity.
+
+```{=html}
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Residuals vs. Fitted Values — Homoscedasticity Check</p>
+  <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="170" y="16" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Homoscedastic — Assumption Met ✓</text>
+    <rect x="20" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"/>
+    <line x1="30" y1="100" x2="310" y2="100" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+    <circle cx="55"  cy="85"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="75"  cy="112" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="95"  cy="91"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="115" cy="108" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="135" cy="88"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="155" cy="115" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="175" cy="90"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="195" cy="110" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="215" cy="87"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="235" cy="113" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="255" cy="92"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="275" cy="108" r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <circle cx="295" cy="86"  r="3.5" fill="#2d6a4f" opacity="0.75"/>
+    <text x="30"  y="185" text-anchor="start" font-size="9" fill="#888">Low fitted</text>
+    <text x="290" y="185" text-anchor="end"   font-size="9" fill="#888">High fitted</text>
+    <text x="170" y="196" text-anchor="middle" font-size="9.5" fill="#333">Constant spread — standard errors are reliable</text>
+    <text x="510" y="16" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Heteroscedastic — Assumption Violated ✗</text>
+    <rect x="360" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"/>
+    <line x1="370" y1="100" x2="650" y2="100" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+    <circle cx="385" cy="98"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="400" cy="103" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="415" cy="96"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="430" cy="105" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="447" cy="93"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="462" cy="110" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="480" cy="85"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="498" cy="118" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="518" cy="72"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="538" cy="130" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="558" cy="58"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="578" cy="145" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="600" cy="45"  r="3.5" fill="#ae2012" opacity="0.75"/>
+    <circle cx="625" cy="155" r="3.5" fill="#ae2012" opacity="0.75"/>
+    <text x="370" y="185" text-anchor="start" font-size="9" fill="#888">Low fitted</text>
+    <text x="650" y="185" text-anchor="end"   font-size="9" fill="#888">High fitted</text>
+    <text x="510" y="196" text-anchor="middle" font-size="9.5" fill="#333">Funnel pattern — standard errors unreliable</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">In R, <code>plot(your_lm_object)</code> generates four diagnostic plots automatically, including residuals vs. fitted values and a Q-Q plot of residuals.</p>
+</div>
+```
+
+## Testing Assumptions in R
+
+The most efficient first step is the built-in `plot()` method for `lm` objects, which generates four diagnostic plots in sequence.
+
+```r
+# Four diagnostic plots in one command
+plot(your_lm_model)
+# Plot 1: Residuals vs. Fitted — check linearity and homoscedasticity
+# Plot 2: Q-Q plot of residuals — check normality
+# Plot 3: Scale-Location — another homoscedasticity check
+# Plot 4: Residuals vs. Leverage — identify influential observations
+```
+
+**Linearity** is assessed from the Residuals vs. Fitted plot: a random cloud around zero with no systematic curve indicates the assumption holds.
+
+**Homoscedasticity** can also be tested formally with the Breusch-Pagan test:
+
+```r
+library(lmtest)
+bptest(your_lm_model)   # p > .05: no significant heteroscedasticity
+```
+
+**Normality of residuals** is assessed from the Q-Q plot. For a formal test:
+
+```r
+shapiro.test(residuals(your_lm_model))   # Works best for n < 5000
+```
+
+**Multicollinearity** is diagnosed with VIF scores, as covered in the multicollinearity section above:
+
+```r
+library(car)
+vif(your_lm_model)   # All values < 5: no problematic multicollinearity
+```
+
+::: {.callout-tip}
+### When to be concerned vs. when to relax
+The hierarchy of concern is roughly: (1) multicollinearity deserves attention whenever VIF ≥ 10; (2) heteroscedasticity matters most for inference — use heteroscedasticity-robust standard errors or a log transformation of Y if the funnel is pronounced; (3) non-normality of residuals matters most with small samples — it rarely causes problems when $n > 100$; (4) non-linearity is the most serious because it means your slopes are wrong, not just your standard errors. Always check linearity first.
+:::
+
 # Review and Practice
 
 ## Using AI
@@ -1357,7 +1476,7 @@ No need to submit this quiz anywhere. This exercise is for your benefit to help 
 
 ## Summary
 
-This lesson covered simple linear regression, multiple regression, and regression with categorical variables:
+This lesson covered simple linear regression, multiple regression, regression with categorical variables, and the assumptions that underpin reliable regression analysis:
 
 | Topic | Key concepts |
 |------------------------------------|------------------------------------|
@@ -1373,5 +1492,7 @@ This lesson covered simple linear regression, multiple regression, and regressio
 | Dummy variables | Categorical predictors as binary indicators; reference category held in intercept |
 | Multi-category dummies | k − 1 dummy variables for k categories; R handles automatically in `lm()` |
 | Predictions with categorical variables | `predict()` with `data.frame()` specifying category as character string |
+| Regression assumptions | Linearity, independence of errors, homoscedasticity, normality of residuals, no multicollinearity |
+| Diagnosing assumptions | `plot(lm_object)` for four diagnostic plots; `bptest()` for heteroscedasticity; `shapiro.test(residuals())` for normality |
 
 **Course summary:** Regression is the capstone of OMSBA 512A. The analytical arc of this course has moved from summarizing what you have (descriptive statistics), to cleaning and preparing data (data preparation), to testing claims about groups (hypothesis testing and ANOVA), to quantifying relationships (correlation), and finally to building predictive models (regression). Each stage has used AI as a tool while requiring your statistical judgment for the question, the data, and the interpretation. The AI critical framework — understanding what AI handles well, recognizing causal language errors, verifying output against your statistical knowledge — applies to every deliverable you will produce in your career.

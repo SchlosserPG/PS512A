@@ -2444,6 +2444,13 @@ window.Quarto = {
   <li><a href="#example-of-an-dependent-samples-t-test-in-r" id="toc-example-of-an-dependent-samples-t-test-in-r" class="nav-link" data-scroll-target="#example-of-an-dependent-samples-t-test-in-r">Example of an Dependent Samples t-Test in R</a></li>
   <li><a href="#reshape-function" id="toc-reshape-function" class="nav-link" data-scroll-target="#reshape-function">reshape function</a></li>
   </ul></li>
+  <li><a href="#assumptions-of-t-tests" id="toc-assumptions-of-t-tests" class="nav-link" data-scroll-target="#assumptions-of-t-tests">Assumptions of t-Tests</a>
+  <ul class="collapse">
+  <li><a href="#what-the-assumptions-are" id="toc-what-the-assumptions-are" class="nav-link" data-scroll-target="#what-the-assumptions-are">What the Assumptions Are</a></li>
+  <li><a href="#what-happens-when-assumptions-are-violated" id="toc-what-happens-when-assumptions-are-violated" class="nav-link" data-scroll-target="#what-happens-when-assumptions-are-violated">What Happens When Assumptions Are Violated</a></li>
+  <li><a href="#visualizing-normality" id="toc-visualizing-normality" class="nav-link" data-scroll-target="#visualizing-normality">Visualizing Normality</a></li>
+  <li><a href="#testing-assumptions-in-r" id="toc-testing-assumptions-in-r" class="nav-link" data-scroll-target="#testing-assumptions-in-r">Testing Assumptions in R</a></li>
+  </ul></li>
   <li><a href="#review-and-practice" id="toc-review-and-practice" class="nav-link" data-scroll-target="#review-and-practice">Review and Practice</a>
   <ul class="collapse">
   <li><a href="#using-ai" id="toc-using-ai" class="nav-link" data-scroll-target="#using-ai">Using AI</a></li>
@@ -2773,11 +2780,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<p>This lesson introduces the logic and mechanics of statistical hypothesis testing, then applies that framework to three t-tests that will appear throughout the rest of the course.</p>
+<p>This lesson introduces the logic and mechanics of statistical hypothesis testing, then applies that framework to three t-tests that will appear throughout the rest of the course. It also covers the assumptions underlying each test — what they mean conceptually, what goes wrong when they are violated, and how to check them in R.</p>
 <p>We begin with the <strong>foundations of hypothesis testing</strong>: what a null and alternative hypothesis are, why we assume the null is true until the evidence says otherwise, and how the p-value approach works. A p-value is the probability of observing a result at least as extreme as the one calculated, <em>assuming the null hypothesis is true</em>. A small p-value means the observed data would be very unlikely if the null were true — giving us grounds to reject it. We set a decision rule in advance: reject <span class="math inline">\(H_0\)</span> if the p-value is less than alpha (typically 0.05). We also cover the three tail configurations — two-tailed (<span class="math inline">\(\neq\)</span>), right-tailed (<span class="math inline">\(&gt;\)</span>), and left-tailed (<span class="math inline">\(&lt;\)</span>) — and how the direction of the alternative hypothesis determines which tail of the distribution we look at.</p>
 <p>The lesson then works through three <strong>t-tests</strong>, each using R’s <code>t.test()</code> function with different arguments. All three follow the same three-step procedure: specify hypotheses, compute the test statistic and p-value, interpret and conclude. The t-distribution is used instead of the z-distribution because we are estimating population parameters from sample data — specifically, we rarely know the population standard deviation. Where a z-score measures how many standard deviations a value is from the mean, a t-statistic measures how many standard errors the sample mean is from the hypothesized value. As sample size grows, the t-distribution approaches the normal distribution.</p>
 <p>The <strong>one-sample t-test</strong> compares a single sample mean to a known or hypothesized value — for example, testing whether average study hours differ from 12. The <strong>independent samples t-test</strong> compares the means of two unrelated groups — for example, whether systolic blood pressure differs between males and females. The <strong>dependent (paired) samples t-test</strong> compares two related measurements, such as weight before and after an intervention, where each observation in one group is matched to a specific observation in the other. The key to choosing the right test is understanding how the data are structured.</p>
-<p>By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, and write a formal conclusion from the output. Work through every code example in your own R script alongside the reading.</p>
+<p>By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, write a formal conclusion from the output, and verify that the assumptions of the test are reasonably satisfied before drawing conclusions. Work through every code example in your own R script alongside the reading.</p>
 <section id="ai-and-hypothesis-testing-where-misinterpretation-happens" class="level3">
 <h3 class="anchored" data-anchor-id="ai-and-hypothesis-testing-where-misinterpretation-happens">AI and Hypothesis Testing: Where Misinterpretation Happens</h3>
 <p>AI can run any of these t-tests in seconds and produce a plausible-sounding interpretation of the result. That interpretation may be wrong. The most common AI errors in hypothesis testing are:</p>
@@ -2803,6 +2810,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>Compare two unrelated sample means with an independent-samples t-test.</li>
 <li>Compare two related sample means with a dependent-samples (paired) t-test.</li>
 <li>Select the correct t-test for a given research question based on data structure.</li>
+<li>Identify the assumptions of t-tests, explain what happens when they are violated, and use R to check them.</li>
 </ul>
 </section>
 <section id="consider-while-reading" class="level3">
@@ -3897,6 +3905,72 @@ mean difference
 </ul>
 </section>
 </section>
+<section id="assumptions-of-t-tests" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-of-t-tests">Assumptions of t-Tests</h2>
+<p>Every t-test rests on a set of statistical assumptions. An assumption is a condition about the data or population that must be reasonably true for the test’s results to be trustworthy. Violating an assumption does not automatically invalidate your analysis, but it can distort your p-values and confidence intervals — sometimes dramatically.</p>
+<section id="what-the-assumptions-are" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-assumptions-are">What the Assumptions Are</h3>
+<p><strong>Normality</strong> is the assumption that the variable being tested is approximately normally distributed in the population — or that the sampling distribution of the mean is normal. In practice this is satisfied either by the data itself being roughly bell-shaped, or by having a large enough sample (<span class="math inline">\(n \geq 30\)</span>), where the Central Limit Theorem takes over and the sampling distribution of the mean becomes approximately normal regardless of the shape of the underlying data.</p>
+<p><strong>Independence</strong> means that each observation in your sample was drawn separately and does not influence any other observation. If you sampled the same person twice and treated the responses as independent, or collected data in clusters where people within a cluster influence each other, independence is violated. For the paired t-test, independence applies <em>between pairs</em>, not within them — the pairing is deliberate and expected.</p>
+<p><strong>Equal variances</strong> (also called homoscedasticity or homogeneity of variance) applies to the independent samples t-test: the two groups being compared should have roughly similar spread. By default, R’s <code>t.test()</code> uses the Welch correction, which adjusts the degrees of freedom to compensate when variances differ — so this assumption is less critical in practice than it used to be.</p>
+</section>
+<section id="what-happens-when-assumptions-are-violated" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-when-assumptions-are-violated">What Happens When Assumptions Are Violated</h3>
+<p>When <strong>normality fails</strong> with a small sample, the t-distribution no longer correctly describes the sampling distribution of your test statistic. Your p-value becomes unreliable — it may be too small (inflating false positive rates) or too large (causing you to miss real effects). With <span class="math inline">\(n \geq 30\)</span>, the CLT provides enough protection that mild non-normality rarely causes meaningful distortion.</p>
+<p>When <strong>independence fails</strong>, your standard errors are typically underestimated, which makes your t-statistic artificially large and your p-value artificially small. You appear to have stronger evidence than you actually do. This is one of the most serious violations because there is no built-in correction.</p>
+<p>When <strong>equal variances fail</strong> without using the Welch correction (i.e., if you set <code>var.equal = TRUE</code> when it should not be), your degrees of freedom are miscalculated and the test loses accuracy. R’s default Welch t-test sidesteps this, which is why the default is almost always the right choice.</p>
+</section>
+<section id="visualizing-normality" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-normality">Visualizing Normality</h3>
+<p>The normality assumption asks whether your data looks roughly like the symmetric, bell-shaped curve on the left — not like the skewed shapes on the right, which would require either a larger sample or a non-parametric alternative.</p>
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Distribution Shape and the Normality Assumption</p>
+  <svg viewbox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="113" y="18" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Normal — Assumption Met ✓</text>
+    <path d="M20,170 C20,170 40,168 55,160 C70,152 80,130 95,105 C105,88 110,72 113,62 C116,72 121,88 131,105 C146,130 156,152 171,160 C186,168 206,170 206,170 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.5"></path>
+    <line x1="113" y1="62" x2="113" y2="175" stroke="#1a6b3a" stroke-width="1" stroke-dasharray="3,2"></line>
+    <text x="113" y="188" text-anchor="middle" font-size="9.5" fill="#333">Symmetric, bell-shaped</text>
+    <text x="357" y="18" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Right-Skewed — May Violate ✗</text>
+    <path d="M255,170 C255,170 262,168 268,158 C274,148 278,128 284,100 C288,82 290,66 292,58 C295,66 300,85 310,105 C322,128 338,150 365,162 C390,172 460,170 460,170 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.5"></path>
+    <line x1="292" y1="58" x2="292" y2="175" stroke="#9b2226" stroke-width="1" stroke-dasharray="3,2"></line>
+    <text x="295" y="188" text-anchor="middle" font-size="9.5" fill="#333">Long tail to the right</text>
+    <text x="588" y="18" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Left-Skewed — May Violate ✗</text>
+    <path d="M478,170 C478,170 548,172 573,162 C600,150 616,128 628,105 C638,85 643,66 646,58 C648,66 650,82 654,100 C660,128 664,148 670,158 C676,168 683,170 683,170 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.5"></path>
+    <line x1="646" y1="58" x2="646" y2="175" stroke="#9b2226" stroke-width="1" stroke-dasharray="3,2"></line>
+    <text x="582" y="188" text-anchor="middle" font-size="9.5" fill="#333">Long tail to the left</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">With small samples (n &lt; 30), skewed data can produce unreliable p-values. With n ≥ 30, the Central Limit Theorem provides protection against mild skew.</p>
+</div>
+</section>
+<section id="testing-assumptions-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="testing-assumptions-in-r">Testing Assumptions in R</h3>
+<p>R makes it straightforward to check your assumptions before interpreting results.</p>
+<p><strong>Normality</strong> can be assessed visually with a histogram or Q-Q plot, or formally with the Shapiro-Wilk test (<code>shapiro.test()</code>). The Q-Q plot is particularly useful: if the points follow the diagonal line closely, the normality assumption is reasonable.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visual checks</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(your_variable)                    <span class="co"># Look for roughly bell-shaped distribution</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(your_variable)                  <span class="co"># Points should follow the diagonal</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(your_variable)</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Formal test (works best for small to moderate samples)</span></span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(your_variable)            <span class="co"># p &gt; .05 means we cannot reject normality</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Equal variances</strong> (for the independent samples t-test) can be checked with the <code>var.test()</code> function in base R. If variances are unequal, R’s default Welch correction already handles it — just make sure you are not overriding it with <code>var.equal = TRUE</code>.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(variable <span class="sc">~</span> group, <span class="at">data =</span> mydata)   <span class="co"># p &gt; .05 suggests equal variances</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Independence</strong> cannot be tested statistically — it must be reasoned from how the data were collected. Ask: could any two observations have influenced each other? If the answer is yes, the independence assumption may be compromised.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A practical rule of thumb
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For most business and social science datasets, a histogram and a quick sample size check will take you far. If <span class="math inline">\(n \geq 30\)</span> and the distribution is not severely multimodal or contaminated by extreme outliers, the t-test is generally robust. When you do have a small sample and clear non-normality, consider a non-parametric alternative like the Wilcoxon signed-rank test (<code>wilcox.test()</code>), which makes no distributional assumption.</p>
+</div>
+</div>
+</section>
+</section>
 <section id="review-and-practice" class="level1">
 <h1>Review and Practice</h1>
 <section id="using-ai" class="level2">
@@ -3945,7 +4019,7 @@ mean difference
 <h2 class="anchored" data-anchor-id="t-test-lab">t-Test Lab</h2>
 <p><strong>A campus dining service</strong> claims that the average wait time at peak lunch hours is 8 minutes. A student researcher times 40 randomly selected visits and finds a mean wait of 9.4 minutes (sd = 3.1 minutes). Without running the code, set up the null and alternative hypotheses for a two-tailed test, and identify which t-test is appropriate and why.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3954,7 +4028,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This is a <strong>one-sample t-test</strong> because we are comparing a single sample mean (9.4 minutes) to a known or claimed population value (8 minutes).</p>
 <ul>
@@ -3962,7 +4036,7 @@ Show Answer
 <li><span class="math inline">\(H_A\)</span>: The mean wait time is not equal to 8 minutes. (<span class="math inline">\(\mu \neq 8\)</span>)</li>
 <li>Two-tailed because the researcher is testing for any difference, not a specific direction.</li>
 </ul>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(wait_times, <span class="at">mu =</span> <span class="dv">8</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(wait_times, <span class="at">mu =</span> <span class="dv">8</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -3982,7 +4056,7 @@ Show Answer
 </ol></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3991,7 +4065,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>a. Independent samples t-test.</strong> Two separate, unrelated groups (different patients in different programs). Each patient appears in only one group.</li>
@@ -4004,25 +4078,6 @@ Show Answer
 </div>
 <p><strong>A two-tailed one-sample t-test</strong> returns a t-statistic of 2.31 with a p-value of 0.024. Alpha is set at 0.05. State the conclusion in plain English, including both the formal decision and a sentence that communicates the result to a non-statistician.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Show Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Formal decision:</strong> Since the p-value (0.024) is less than alpha (0.05), we reject the null hypothesis.</p>
-<p><strong>Plain English conclusion:</strong> The sample provides statistically significant evidence that the true population mean is different from the hypothesized value. In other words, the difference we observed is unlikely to be due to random chance alone — there is real evidence that the actual average differs from what was claimed.</p>
-<p>Note: If alpha had been set to 0.01, the p-value of 0.024 would be <em>greater</em> than alpha, and we would fail to reject the null. The conclusion depends on the alpha level chosen before running the test.</p>
-</div>
-</div>
-</div>
-<p><strong>A researcher</strong> wants to test whether employees who participate in a wellness program report fewer sick days than those who do not. She collects data on 45 participants and 45 non-participants. Write out the null and alternative hypotheses, identify the test, specify the <code>alternative</code> argument in R’s <code>t.test()</code> function, and explain how the direction of the hypothesis affects which tail is examined.</p>
-<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -4034,20 +4089,13 @@ Show Answer
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Test:</strong> Independent samples t-test — two separate, unrelated groups (participants vs.&nbsp;non-participants).</p>
-<p>Let <span class="math inline">\(\mu_1\)</span> = mean sick days for wellness program participants and <span class="math inline">\(\mu_2\)</span> = mean sick days for non-participants.</p>
-<ul>
-<li><span class="math inline">\(H_0: \mu_1 - \mu_2 \geq 0\)</span> (participants have the same or more sick days)</li>
-<li><span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span> (participants have <em>fewer</em> sick days — left-tailed)</li>
-</ul>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sick_days <span class="sc">~</span> group, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Why left-tailed?</strong> The hypothesis is directional — the researcher specifically predicts that participants will have <em>fewer</em> sick days, meaning <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>, which places the rejection region in the <em>left</em> tail of the distribution. If the data showed participants had <em>more</em> sick days, the test would not reject the null regardless of the magnitude of the difference.</p>
+<p><strong>Formal decision:</strong> Since the p-value (0.024) is less than alpha (0.05), we reject the null hypothesis.</p>
+<p><strong>Plain English conclusion:</strong> The sample provides statistically significant evidence that the true population mean is different from the hypothesized value. In other words, the difference we observed is unlikely to be due to random chance alone — there is real evidence that the actual average differs from what was claimed.</p>
+<p>Note: If alpha had been set to 0.01, the p-value of 0.024 would be <em>greater</em> than alpha, and we would fail to reject the null. The conclusion depends on the alpha level chosen before running the test.</p>
 </div>
 </div>
 </div>
-<p><strong>A before-and-after study</strong> measures employee productivity scores before and after a training program for 12 employees. The differences (after minus before) are:</p>
-<p><code>4, -1, 6, 3, 5, 2, 0, 7, 3, -2, 4, 5</code></p>
-<p>By hand: (a) calculate the mean difference <span class="math inline">\(\bar{d}\)</span>, and (b) state what value of <code>mu</code> you would use in the <code>t.test()</code> call and why.</p>
+<p><strong>A researcher</strong> wants to test whether employees who participate in a wellness program report fewer sick days than those who do not. She collects data on 45 participants and 45 non-participants. Write out the null and alternative hypotheses, identify the test, specify the <code>alternative</code> argument in R’s <code>t.test()</code> function, and explain how the direction of the hypothesis affects which tail is examined.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -4060,11 +4108,37 @@ Show Answer
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>Test:</strong> Independent samples t-test — two separate, unrelated groups (participants vs.&nbsp;non-participants).</p>
+<p>Let <span class="math inline">\(\mu_1\)</span> = mean sick days for wellness program participants and <span class="math inline">\(\mu_2\)</span> = mean sick days for non-participants.</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_1 - \mu_2 \geq 0\)</span> (participants have the same or more sick days)</li>
+<li><span class="math inline">\(H_A: \mu_1 - \mu_2 &lt; 0\)</span> (participants have <em>fewer</em> sick days — left-tailed)</li>
+</ul>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sick_days <span class="sc">~</span> group, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Why left-tailed?</strong> The hypothesis is directional — the researcher specifically predicts that participants will have <em>fewer</em> sick days, meaning <span class="math inline">\(\mu_1 &lt; \mu_2\)</span>, which places the rejection region in the <em>left</em> tail of the distribution. If the data showed participants had <em>more</em> sick days, the test would not reject the null regardless of the magnitude of the difference.</p>
+</div>
+</div>
+</div>
+<p><strong>A before-and-after study</strong> measures employee productivity scores before and after a training program for 12 employees. The differences (after minus before) are:</p>
+<p><code>4, -1, 6, 3, 5, 2, 0, 7, 3, -2, 4, 5</code></p>
+<p>By hand: (a) calculate the mean difference <span class="math inline">\(\bar{d}\)</span>, and (b) state what value of <code>mu</code> you would use in the <code>t.test()</code> call and why.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p><strong>(a) Mean difference:</strong></p>
 <p><span class="math display">\[\bar{d} = \frac{4 + (-1) + 6 + 3 + 5 + 2 + 0 + 7 + 3 + (-2) + 4 + 5}{12} = \frac{36}{12} = 3.0\]</span></p>
 <p>The average productivity score increased by 3.0 points after training.</p>
 <p><strong>(b) Value of <code>mu</code>:</strong></p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(after, before, <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We use <code>mu = 0</code> because the null hypothesis for a paired test is that the mean difference is zero — meaning training had no effect on productivity. We are testing whether the observed mean difference of 3.0 is significantly different from zero.</p>
 </div>
 </div>
@@ -4080,7 +4154,7 @@ sample estimates:
 mean of the differences 
                       3</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4089,7 +4163,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Conclusion:</strong> Since the p-value (0.0015) is less than alpha (0.05), we reject the null hypothesis. There is statistically significant evidence that the mean difference is not equal to zero — the training program did change productivity scores (t(11) = 4.18, p = 0.0015).</p>
 <p><strong>Direction:</strong> The mean difference is positive (3.0), meaning scores were higher <em>after</em> the training program than before. The program appears to have increased productivity on average.</p>
@@ -4461,7 +4535,7 @@ Note
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>This lesson covered the logic of hypothesis testing and three t-tests in R:</p>
+<p>This lesson covered the logic of hypothesis testing, three t-tests in R, and the assumptions that make those tests trustworthy:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -4518,9 +4592,21 @@ Note
 <td>Confidence intervals</td>
 <td>Output includes 95% CI around the estimate; interpreted alongside the p-value</td>
 </tr>
+<tr class="even">
+<td>Assumptions</td>
+<td>Normality, independence, equal variances; CLT protects normality for <span class="math inline">\(n \geq 30\)</span></td>
+</tr>
+<tr class="odd">
+<td>Checking assumptions</td>
+<td><code>shapiro.test()</code> for normality, <code>var.test()</code> for equal variances; independence assessed from study design</td>
+</tr>
+<tr class="even">
+<td>Non-parametric alternative</td>
+<td><code>wilcox.test()</code> when normality fails with small samples</td>
+</tr>
 </tbody>
 </table>
-<p><strong>What comes next:</strong> The ANOVA lesson extends hypothesis testing beyond two groups. Where the independent samples t-test compares the means of two populations, a one-way ANOVA compares three or more. The F-statistic and p-value interpretation follow the same logic introduced here.</p>
+<p><strong>What comes next:</strong> The ANOVA lesson extends hypothesis testing beyond two groups. Where the independent samples t-test compares the means of two populations, a one-way ANOVA compares three or more. The F-statistic and p-value interpretation follow the same logic introduced here — and so do the assumptions, which are the same family of normality, independence, and homogeneity of variance concerns.</p>
 
 
 </section>

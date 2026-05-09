@@ -2432,6 +2432,13 @@ window.Quarto = {
   <li><a href="#statistics-in-a-two-way-with-interaction-anova" id="toc-statistics-in-a-two-way-with-interaction-anova" class="nav-link" data-scroll-target="#statistics-in-a-two-way-with-interaction-anova">Statistics in a Two-Way with Interaction ANOVA</a></li>
   <li><a href="#example-of-a-two-way-anova-with-interaction" id="toc-example-of-a-two-way-anova-with-interaction" class="nav-link" data-scroll-target="#example-of-a-two-way-anova-with-interaction">Example of a Two-way ANOVA with Interaction</a></li>
   </ul></li>
+  <li><a href="#assumptions-of-anova" id="toc-assumptions-of-anova" class="nav-link" data-scroll-target="#assumptions-of-anova">Assumptions of ANOVA</a>
+  <ul class="collapse">
+  <li><a href="#what-the-assumptions-are" id="toc-what-the-assumptions-are" class="nav-link" data-scroll-target="#what-the-assumptions-are">What the Assumptions Are</a></li>
+  <li><a href="#what-happens-when-assumptions-are-violated" id="toc-what-happens-when-assumptions-are-violated" class="nav-link" data-scroll-target="#what-happens-when-assumptions-are-violated">What Happens When Assumptions Are Violated</a></li>
+  <li><a href="#visualizing-the-homogeneity-of-variance-assumption" id="toc-visualizing-the-homogeneity-of-variance-assumption" class="nav-link" data-scroll-target="#visualizing-the-homogeneity-of-variance-assumption">Visualizing the Homogeneity of Variance Assumption</a></li>
+  <li><a href="#testing-assumptions-in-r" id="toc-testing-assumptions-in-r" class="nav-link" data-scroll-target="#testing-assumptions-in-r">Testing Assumptions in R</a></li>
+  </ul></li>
   <li><a href="#choose-command" id="toc-choose-command" class="nav-link" data-scroll-target="#choose-command">choose() command</a></li>
   </ul></li>
   <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">Correlation</a>
@@ -2453,6 +2460,13 @@ window.Quarto = {
   <li><a href="#additional-examples" id="toc-additional-examples" class="nav-link" data-scroll-target="#additional-examples">Additional Examples</a></li>
   <li><a href="#comparing-to-t.test-and-anova" id="toc-comparing-to-t.test-and-anova" class="nav-link" data-scroll-target="#comparing-to-t.test-and-anova">Comparing to t.test and ANOVA</a></li>
   <li><a href="#correlation-causation-and-ai" id="toc-correlation-causation-and-ai" class="nav-link" data-scroll-target="#correlation-causation-and-ai">Correlation, Causation, and AI</a></li>
+  <li><a href="#assumptions-of-correlation-analysis" id="toc-assumptions-of-correlation-analysis" class="nav-link" data-scroll-target="#assumptions-of-correlation-analysis">Assumptions of Correlation Analysis</a>
+  <ul class="collapse">
+  <li><a href="#what-the-assumptions-are-1" id="toc-what-the-assumptions-are-1" class="nav-link" data-scroll-target="#what-the-assumptions-are-1">What the Assumptions Are</a></li>
+  <li><a href="#what-happens-when-assumptions-are-violated-1" id="toc-what-happens-when-assumptions-are-violated-1" class="nav-link" data-scroll-target="#what-happens-when-assumptions-are-violated-1">What Happens When Assumptions Are Violated</a></li>
+  <li><a href="#visualizing-the-linearity-assumption" id="toc-visualizing-the-linearity-assumption" class="nav-link" data-scroll-target="#visualizing-the-linearity-assumption">Visualizing the Linearity Assumption</a></li>
+  <li><a href="#testing-assumptions-in-r-1" id="toc-testing-assumptions-in-r-1" class="nav-link" data-scroll-target="#testing-assumptions-in-r-1">Testing Assumptions in R</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#review-and-practice" id="toc-review-and-practice" class="nav-link" data-scroll-target="#review-and-practice">Review and Practice</a>
   <ul class="collapse">
@@ -2783,10 +2797,10 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<p>This lesson covers two foundational tools for examining relationships in data: Analysis of Variance (ANOVA) and correlation analysis. Together, they form a complete toolkit for a day focused on group comparisons and linear relationships.</p>
-<p>We begin with <strong>ANOVA</strong>, which extends hypothesis testing beyond two groups. Where a t-test compares the means of two populations, a one-way ANOVA compares three or more, and a two-way ANOVA introduces a second grouping variable. The core question in every ANOVA is the same: is the variation in the outcome variable explained by the group structure, or is it just noise? We will work through the F-statistic, degrees of freedom, and the logic of between-group versus within-group variability. When a significant ANOVA is found, post-hoc tests — Bonferroni and Tukey HSD — tell us which specific groups differ. We also cover Type I and Type II errors here, since understanding the cost of false positives and false negatives is essential context for any hypothesis test, and ANOVA is a natural place to make those concepts concrete.</p>
-<p>The lesson closes with <strong>correlation analysis</strong>, which shifts our focus from group comparisons to continuous relationships. Covariance describes the direction of the linear relationship between two numeric variables; the correlation coefficient standardizes it into a value between −1 and +1 that captures both direction and strength. We test whether a correlation is statistically significant using <code>cor.test()</code>, and we learn to visualize relationships with scatterplots before interpreting any numerical result. The lesson closes by connecting correlation back to the t-test and ANOVA covered earlier in the course, showing how these tools address related but distinct questions depending on whether your variables are categorical or continuous.</p>
-<p>By the end of this lesson, you should be able to set up and conduct one- and two-way ANOVAs, run and interpret post-hoc tests, distinguish Type I from Type II error, calculate and test a correlation coefficient, and explain when each tool is appropriate. Work through every code example in your own R script alongside the reading.</p>
+<p>This lesson covers two foundational tools for examining relationships in data: Analysis of Variance (ANOVA) and correlation analysis. Together, they form a complete toolkit for a day focused on group comparisons and linear relationships. For each tool, we also cover the assumptions that must be satisfied for the results to be trustworthy, what breaks when those assumptions fail, and how to test them in R.</p>
+<p>We begin with <strong>ANOVA</strong>, which extends hypothesis testing beyond two groups. Where a t-test compares the means of two populations, a one-way ANOVA compares three or more, and a two-way ANOVA introduces a second grouping variable. The core question in every ANOVA is the same: is the variation in the outcome variable explained by the group structure, or is it just noise? We will work through the F-statistic, degrees of freedom, and the logic of between-group versus within-group variability. When a significant ANOVA is found, post-hoc tests — Bonferroni and Tukey HSD — tell us which specific groups differ. We also cover Type I and Type II errors here, since understanding the cost of false positives and false negatives is essential context for any hypothesis test, and ANOVA is a natural place to make those concepts concrete. Each ANOVA variant is followed by a discussion of its assumptions — normality, homogeneity of variance, and independence — and how to check them using R.</p>
+<p>The lesson closes with <strong>correlation analysis</strong>, which shifts our focus from group comparisons to continuous relationships. Covariance describes the direction of the linear relationship between two numeric variables; the correlation coefficient standardizes it into a value between −1 and +1 that captures both direction and strength. We test whether a correlation is statistically significant using <code>cor.test()</code>, and we learn to visualize relationships with scatterplots before interpreting any numerical result. We also examine the assumptions behind Pearson’s correlation — particularly the linearity requirement and the outsized influence of outliers — and how to detect violations. The lesson closes by connecting correlation back to the t-test and ANOVA covered earlier in the course, showing how these tools address related but distinct questions depending on whether your variables are categorical or continuous.</p>
+<p>By the end of this lesson, you should be able to set up and conduct one- and two-way ANOVAs, run and interpret post-hoc tests, distinguish Type I from Type II error, calculate and test a correlation coefficient, explain when each tool is appropriate, and verify that the statistical assumptions for ANOVA and correlation are reasonably met before drawing conclusions. Work through every code example in your own R script alongside the reading.</p>
 <section id="at-a-glance" class="level3">
 <h3 class="anchored" data-anchor-id="at-a-glance">At a Glance</h3>
 <ul>
@@ -2803,6 +2817,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <li>Calculate and interpret a correlation coefficient.</li>
 <li>Conduct and interpret a hypothesis test for correlation using <code>cor.test()</code>.</li>
 <li>Visualize the relationship between two continuous variables using a scatterplot.</li>
+<li>Identify the assumptions of ANOVA and correlation, explain what happens when they are violated, and use R to check them.</li>
 </ul>
 </section>
 <section id="consider-while-reading" class="level3">
@@ -3669,6 +3684,77 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </section>
 </section>
 </section>
+<section id="assumptions-of-anova" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-of-anova">Assumptions of ANOVA</h2>
+<p>ANOVA produces a reliable F-statistic and p-value only when certain conditions about the data are reasonably satisfied. These assumptions are conceptually similar to those of the independent samples t-test — ANOVA is, after all, an extension of that logic to three or more groups.</p>
+<section id="what-the-assumptions-are" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-assumptions-are">What the Assumptions Are</h3>
+<p><strong>Normality</strong> means that the outcome variable is approximately normally distributed within each group. As with t-tests, this assumption is protected by the Central Limit Theorem when group sample sizes are reasonably large (roughly <span class="math inline">\(n_j \geq 30\)</span> per group). With smaller groups, the shapes of the within-group distributions matter more.</p>
+<p><strong>Homogeneity of variance</strong> (homoscedasticity) requires that the population variance is approximately equal across all groups. This is the ANOVA equivalent of the equal-variances assumption in the independent samples t-test. When this assumption is violated, the within-group estimate of error (MSE) is biased, which distorts the F-statistic. Unlike the t-test, ANOVA does not have a built-in Welch-style correction by default, so this assumption carries more weight.</p>
+<p><strong>Independence</strong> means that the observations within and between groups are drawn independently. If observations are clustered, matched, or correlated in any way that is not modeled, standard errors will be underestimated and the F-test will be anti-conservative.</p>
+</section>
+<section id="what-happens-when-assumptions-are-violated" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-when-assumptions-are-violated">What Happens When Assumptions Are Violated</h3>
+<p>When <strong>normality fails</strong> with small group sizes, the F-distribution is no longer the correct reference distribution for your test statistic, which can inflate or deflate your p-value. With large groups, the CLT protects you and mild departures from normality have little practical impact.</p>
+<p>When <strong>homogeneity of variance fails</strong>, the pooled MSE term in the denominator of the F-statistic is a blend of unequal variances, producing an inaccurate ratio. Groups with larger variances are underrepresented in the estimate and groups with smaller variances are overrepresented. This can lead to either false positives or false negatives depending on how the variance inequality maps onto group sizes. Welch’s ANOVA (<code>oneway.test()</code> in R) is a direct remedy.</p>
+<p>When <strong>independence fails</strong>, the same concerns as in the t-test apply: standard errors shrink, F-statistics inflate, and the false positive rate rises above the nominal alpha level.</p>
+</section>
+<section id="visualizing-the-homogeneity-of-variance-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-homogeneity-of-variance-assumption">Visualizing the Homogeneity of Variance Assumption</h3>
+<p>Equal spread across groups is as important as the location of the group means. The left panel shows groups with comparable variance — the assumption holds. The right panel shows groups with very different spreads — a sign to investigate further.</p>
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Homogeneity of Variance — Equal vs. Unequal Spread Across Groups</p>
+  <svg viewbox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="170" y="16" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Equal Variances — Assumption Met ✓</text>
+    <path d="M30,185 C30,185 50,183 65,170 C80,157 88,130 95,105 C100,88 102,75 105,66 C108,75 110,88 115,105 C122,130 130,157 145,170 C160,183 180,185 180,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"></path>
+    <text x="105" y="198" text-anchor="middle" font-size="9" fill="#444">Group A</text>
+    <path d="M130,185 C130,185 150,183 165,170 C180,157 188,130 195,105 C200,88 202,75 205,66 C208,75 210,88 215,105 C222,130 230,157 245,170 C260,183 280,185 280,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"></path>
+    <text x="205" y="198" text-anchor="middle" font-size="9" fill="#444">Group B</text>
+    <path d="M230,185 C230,185 250,183 265,170 C280,157 288,130 295,105 C300,88 302,75 305,66 C308,75 310,88 315,105 C322,130 330,157 345,170 C360,183 380,185 380,185 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.3"></path>
+    <text x="305" y="198" text-anchor="middle" font-size="9" fill="#444">Group C</text>
+    <line x1="395" y1="20" x2="395" y2="195" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"></line>
+    <text x="540" y="16" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Unequal Variances — May Violate ✗</text>
+    <path d="M405,185 C405,185 415,183 420,175 C426,165 428,140 430,105 C431,88 431.5,75 432,66 C432.5,75 433,88 434,105 C436,140 438,165 444,175 C450,183 460,185 460,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"></path>
+    <text x="432" y="198" text-anchor="middle" font-size="9" fill="#444">Group A</text>
+    <path d="M455,185 C455,185 470,183 480,172 C492,158 498,132 504,105 C508,88 510,75 512,66 C514,75 516,88 520,105 C526,132 532,158 544,172 C556,183 570,185 570,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"></path>
+    <text x="512" y="198" text-anchor="middle" font-size="9" fill="#444">Group B</text>
+    <path d="M548,185 C548,185 560,182 572,170 C586,154 595,125 604,100 C610,83 613,72 615,64 C617,72 620,83 626,100 C635,125 644,154 658,170 C672,182 685,185 685,185 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.3"></path>
+    <text x="616" y="198" text-anchor="middle" font-size="9" fill="#444">Group C</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">When group widths (variances) differ substantially, the MSE denominator in the F-statistic becomes unreliable. Welch's ANOVA or a data transformation may be needed.</p>
+</div>
+</section>
+<section id="testing-assumptions-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="testing-assumptions-in-r">Testing Assumptions in R</h3>
+<p><strong>Normality within each group</strong> can be assessed with a histogram per group or with the Shapiro-Wilk test applied to each group separately.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk by group</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(outcome_variable, grouping_variable, shapiro.test)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q plot of model residuals</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(anova_model))</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(anova_model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Homogeneity of variance</strong> is most commonly tested with Levene’s test, available in the <code>car</code> package. A p-value above .05 means we cannot reject the assumption of equal variances.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(outcome_variable <span class="sc">~</span> grouping_variable, <span class="at">data =</span> mydata)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># p &gt; .05: variances are not significantly different — assumption holds</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If Levene’s test is significant, use Welch’s ANOVA as a robust alternative:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(outcome_variable <span class="sc">~</span> grouping_variable, <span class="at">data =</span> mydata, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Independence</strong> must be assessed from the study design. If there is reason to believe observations within groups are correlated, a mixed-effects or repeated-measures model is more appropriate.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Robustness of ANOVA
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ANOVA is generally robust to mild violations of normality, especially with balanced designs and group sizes above 15–20. It is more sensitive to violations of homogeneity of variance, particularly when group sizes are unequal — the combination of unequal variances <em>and</em> unequal group sizes is the most problematic scenario.</p>
+</div>
+</div>
+</section>
+</section>
 <section id="choose-command" class="level2">
 <h2 class="anchored" data-anchor-id="choose-command">choose() command</h2>
 <ul>
@@ -3683,14 +3769,14 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li><p>You can also calculate the factorial of a number using the factorial function in base R.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># C(4,2) = 4!/2!*(4-2)! manually</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)<span class="sc">/</span>((<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># C(4,2) = 4!/2!*(4-2)! manually</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>(<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span> <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>)<span class="sc">/</span>((<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>) <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with the factorial function</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial</span>(<span class="dv">4</span>)<span class="sc">/</span>(<span class="fu">factorial</span>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">factorial</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with the factorial function</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial</span>(<span class="dv">4</span>)<span class="sc">/</span>(<span class="fu">factorial</span>(<span class="dv">4</span> <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">factorial</span>(<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
@@ -3701,8 +3787,8 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with choose function</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with choose function</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">4</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
@@ -3711,7 +3797,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li>We had 3 instructors, so we would use 3,2 inside the command as shown below. If this variable was significant, we should see 3 p-value statistics for 3 pairwise tests.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -3732,19 +3818,19 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">8</span>, <span class="dv">4</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>devX <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>devY <span class="ot">&lt;-</span> y <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>covXY <span class="ot">&lt;-</span> <span class="fu">sum</span>(devX <span class="sc">*</span> devY)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>covXY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">8</span>, <span class="dv">4</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>devX <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>devY <span class="ot">&lt;-</span> y <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>covXY <span class="ot">&lt;-</span> <span class="fu">sum</span>(devX <span class="sc">*</span> devY)<span class="sc">/</span>(<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>covXY</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.333333</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cov() function in R.</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cov() function in R.</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8.333333</code></pre>
 </div>
@@ -3759,13 +3845,13 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculated manually</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>covXY<span class="sc">/</span>(<span class="fu">sd</span>(x) <span class="sc">*</span> <span class="fu">sd</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculated manually</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>covXY<span class="sc">/</span>(<span class="fu">sd</span>(x) <span class="sc">*</span> <span class="fu">sd</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7102387</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cor() function in R.</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can verify this by using cor() function in R.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7102387</code></pre>
 </div>
@@ -3810,8 +3896,8 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/DebtPayments.csv"</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Debt_Payments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/DebtPayments.csv"</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Debt_Payments)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   26 obs. of  4 variables:
  $ Metropolitan.area: chr  "Washington, D.C." "Seattle" "Baltimore" "Boston" ...
@@ -3829,9 +3915,9 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li>Layer 3 or more: many other optional additions like labs() command (for labels) or stat_smooth() command to generate a regression line.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Income, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Income, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3844,9 +3930,9 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li><p>In a second example below, we look at Unemployment as the X variable. This scatterplot is much more difficult to use in determining whether the correlation will be significant. It looks negative, but there is not a strong linear trend to the data. This will also need to be confirmed with a correlation test.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Unemployment, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Debt_Payments <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Unemployment, Debt)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#183028"</span>, <span class="at">shape =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"#789F90"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3902,7 +3988,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li>The cor() command gives you just the correlation coefficient. This command can be useful if you are testing many correlations at one time. In the below statement, I can use <span class="math inline">\(cor(Variable1, Variable2)\)</span> to see the correlation between 2 continuous variables.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8675115</code></pre>
 </div>
@@ -3911,7 +3997,7 @@ Petrol:Yes-Diesel:Yes -1285.8392 -2359.62643 -212.052 0.0085182</code></pre>
 <li>The cor.test() command tests the hypothesis whether <span class="math inline">\(r=0\)</span> or not. This command comes with a p-value and t-test statistic (along with the correlation coefficient).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Debt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -3931,7 +4017,7 @@ sample estimates:
 <li>We also see a confidence interval listed. It suggests that we are 95% confident that the correlation is between .723 and .939.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Debt_Payments<span class="sc">$</span>Income, Debt_Payments<span class="sc">$</span>Unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -3955,9 +4041,9 @@ sample estimates:
 <section id="additional-examples" class="level2">
 <h2 class="anchored" data-anchor-id="additional-examples">Additional Examples</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Credit"</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Credit"</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Credit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       ID            Income           Limit           Rating     
  Min.   :  1.0   Min.   : 10.35   Min.   :  855   Min.   : 93.0  
@@ -3981,9 +4067,9 @@ sample estimates:
                                   3rd Qu.: 863.00  
                                   Max.   :1999.00  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Credit)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Income)  <span class="co">#0.7913776 moderate and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Credit)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Income)  <span class="co">#0.7913776 moderate and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -3997,7 +4083,7 @@ sample estimates:
       cor 
 0.7913776 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Balance)  <span class="co">#0.8636252 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Balance)  <span class="co">#0.8636252 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -4011,7 +4097,7 @@ sample estimates:
       cor 
 0.8636252 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Limit)  <span class="co">#0.9968797 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Limit)  <span class="co">#0.9968797 strong and positive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -4025,8 +4111,8 @@ sample estimates:
       cor 
 0.9968797 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="do">## almost perfectly linear</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Limit)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="do">## almost perfectly linear</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Limit)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4034,7 +4120,7 @@ sample estimates:
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Education)  <span class="co">#-0.03013563 no correlation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Education)  <span class="co">#-0.03013563 no correlation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -4048,7 +4134,7 @@ sample estimates:
         cor 
 -0.03013563 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Age)  <span class="co">#0.103165 - between -.2 and .2 - so no relationship even though p-value &lt; .05 -- p-value fails at .01 level. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Age)  <span class="co">#0.103165 - between -.2 and .2 - so no relationship even though p-value &lt; .05 -- p-value fails at .01 level. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -4062,7 +4148,7 @@ sample estimates:
      cor 
 0.103165 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Age)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Age)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4070,7 +4156,7 @@ sample estimates:
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Cards)  <span class="co">#0.05323903 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Rating, Cards)  <span class="co">#0.05323903 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -4084,7 +4170,7 @@ sample estimates:
        cor 
 0.05323903 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Cards)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Rating, Cards)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4102,8 +4188,8 @@ sample estimates:
 <li>Both can provide insights into relationships in the dataset, but they address different questions. An independent t-test evaluates mean differences (group comparisons), while correlation evaluates relationships (continuous covariation). * A significant t-test does not imply a strong correlation between the grouping variable and the dependent variable; the correlation would depend on the coding of the categorical variable and the distribution of data</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of an independent t.test using same dataset</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Gender, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of an independent t.test using same dataset</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Gender, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -4117,7 +4203,7 @@ sample estimates:
  mean in group  Male mean in group Female 
             353.5181             356.2657 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Gender, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Gender, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4125,7 +4211,7 @@ sample estimates:
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Married, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Rating <span class="sc">~</span> Married, <span class="at">data =</span> Credit)  <span class="do">##no group differences</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -4139,7 +4225,7 @@ sample estimates:
  mean in group No mean in group Yes 
          347.8000          359.4571 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Married, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Married, Rating)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4154,9 +4240,9 @@ sample estimates:
 <li>ANOVA focuses on group comparisons (e.g., Rating differences across Ethnicity), while correlation looks at how two variables change together.A significant ANOVA could suggest that the categorical grouping variable explains some variance in the dependent variable, but this variance is not quantified as a relationship strength (as correlation would provide).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of An ANOVA using same dataset</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>anova1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rating <span class="sc">~</span> Ethnicity, <span class="at">data =</span> Credit)</span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anova1)  <span class="co">#no group differences - no need for a post hoc test. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Example of An ANOVA using same dataset</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>anova1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rating <span class="sc">~</span> Ethnicity, <span class="at">data =</span> Credit)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anova1)  <span class="co">#no group differences - no need for a post hoc test. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -4165,7 +4251,7 @@ Response: Rating
 Ethnicity   2   19388  9694.1  0.4037 0.6681
 Residuals 397 9532496 24011.3               </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Ethnicity, Rating, <span class="at">fill =</span> Ethnicity)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Credit, <span class="fu">aes</span>(Ethnicity, Rating, <span class="at">fill =</span> Ethnicity)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4243,6 +4329,94 @@ Residuals 397 9532496 24011.3               </code></pre>
 <li>Lack of significance does not mean a variable X has no relationship with Y; it might suggest a more complex or non-linear relationship.</li>
 </ul>
 </section>
+<section id="assumptions-of-correlation-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions-of-correlation-analysis">Assumptions of Correlation Analysis</h2>
+<p>Pearson’s correlation coefficient (<span class="math inline">\(r\)</span>) and the significance test in <code>cor.test()</code> rest on specific assumptions. When these are met, <span class="math inline">\(r\)</span> accurately captures the linear relationship and the associated p-value is trustworthy. When they are violated, <span class="math inline">\(r\)</span> can be misleading even if the test reports significance.</p>
+<section id="what-the-assumptions-are-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-assumptions-are-1">What the Assumptions Are</h3>
+<p><strong>Linearity</strong> is the most fundamental assumption: the relationship between the two variables should be approximately linear. Pearson’s <span class="math inline">\(r\)</span> is specifically a measure of <em>linear</em> association. Two variables can be strongly related in a curved way and still yield <span class="math inline">\(r \approx 0\)</span>.</p>
+<p><strong>Normality (bivariate)</strong> means that the two variables are jointly normally distributed — roughly, that for any value of X, the distribution of Y values is approximately normal, and vice versa. With moderate to large samples this assumption is not critical, but with small samples, extreme departures from normality can distort the correlation estimate.</p>
+<p><strong>No influential outliers</strong>: a single extreme observation can dramatically inflate or deflate <span class="math inline">\(r\)</span>, giving an entirely misleading picture of the typical relationship. Pearson’s <span class="math inline">\(r\)</span> is not robust to outliers.</p>
+<p><strong>Independence</strong> means each pair of <span class="math inline">\((x, y)\)</span> observations was collected independently from the others. Autocorrelated data (e.g., time series) or clustered sampling can produce artificially inflated correlations.</p>
+</section>
+<section id="what-happens-when-assumptions-are-violated-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-when-assumptions-are-violated-1">What Happens When Assumptions Are Violated</h3>
+<p>When <strong>linearity fails</strong>, <span class="math inline">\(r\)</span> underestimates the true strength of the relationship. A U-shaped pattern, for example, can produce <span class="math inline">\(r \approx 0\)</span> even when the variables are perfectly related — the increasing and decreasing halves cancel out.</p>
+<p>When <strong>outliers are present</strong>, a single data point can pull the correlation strongly in its direction. The reported <span class="math inline">\(r\)</span> may reflect one anomalous observation rather than the bulk of the data. Always inspect a scatterplot before interpreting <span class="math inline">\(r\)</span>.</p>
+<p>When <strong>normality fails with small samples</strong>, the p-value from <code>cor.test()</code> can be unreliable. Spearman’s rank correlation (<code>cor.test(method = "spearman")</code>) is a distribution-free alternative.</p>
+</section>
+<section id="visualizing-the-linearity-assumption" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-linearity-assumption">Visualizing the Linearity Assumption</h3>
+<p>Pearson’s <span class="math inline">\(r\)</span> is designed for straight-line relationships. The left panel shows a linear relationship where <span class="math inline">\(r\)</span> is a valid summary. The right panel shows a curved relationship where <span class="math inline">\(r\)</span> would be misleading.</p>
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Linearity — The Core Assumption of Pearson's Correlation</p>
+  <svg viewbox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="170" y="16" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Linear Relationship — r is Valid ✓</text>
+    <rect x="20" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"></rect>
+    <line x1="40" y1="162" x2="300" y2="40" stroke="#1a6b3a" stroke-width="1.5" stroke-dasharray="5,3"></line>
+    <circle cx="52" cy="158" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="70" cy="148" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="88" cy="135" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="100" cy="130" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="120" cy="118" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="140" cy="108" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="155" cy="100" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="175" cy="90" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="195" cy="82" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="215" cy="72" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="235" cy="62" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="258" cy="53" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <circle cx="280" cy="45" r="3.5" fill="#2d6a4f" opacity="0.7"></circle>
+    <text x="170" y="193" text-anchor="middle" font-size="9.5" fill="#333">Points follow a straight-line trend; r captures this well</text>
+    <text x="510" y="16" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Non-linear (Curved) — r is Misleading ✗</text>
+    <rect x="360" y="22" width="300" height="155" rx="4" fill="white" stroke="#dde1e8" stroke-width="1"></rect>
+    <path d="M375,162 Q510,30 645,162" stroke="#9b2226" stroke-width="1.5" fill="none" stroke-dasharray="5,3"></path>
+    <circle cx="382" cy="158" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="400" cy="140" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="420" cy="115" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="440" cy="90" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="460" cy="70" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="480" cy="58" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="510" cy="50" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="540" cy="58" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="560" cy="72" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="580" cy="90" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="600" cy="115" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="620" cy="140" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <circle cx="638" cy="158" r="3.5" fill="#ae2012" opacity="0.7"></circle>
+    <text x="510" y="193" text-anchor="middle" font-size="9.5" fill="#333">U-shape gives r ≈ 0 even though the relationship is strong</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">Always visualize with a scatterplot before computing r. A near-zero correlation does not mean no relationship — it means no <em>linear</em> relationship.</p>
+</div>
+</section>
+<section id="testing-assumptions-in-r-1" class="level3">
+<h3 class="anchored" data-anchor-id="testing-assumptions-in-r-1">Testing Assumptions in R</h3>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Scatterplot — always do this first</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> var1, <span class="at">y =</span> var2)) <span class="sc">+</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)   <span class="co"># A curved pattern around the line signals non-linearity</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Normality check for each variable</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(mydata<span class="sc">$</span>var1)</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(mydata<span class="sc">$</span>var2)</span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Spearman's correlation — no normality or linearity assumption required</span></span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(mydata<span class="sc">$</span>var1, mydata<span class="sc">$</span>var2, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The cardinal rule
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always look at the scatterplot first. No correlation coefficient — no matter how large or how small — should be interpreted without visual inspection of the data. The scatterplot will reveal outliers, non-linearity, clusters, and other features that <span class="math inline">\(r\)</span> alone will not.</p>
+</div>
+</div>
+</section>
+</section>
 </section>
 <section id="review-and-practice" class="level1">
 <h1>Review and Practice</h1>
@@ -4298,53 +4472,6 @@ Residuals 397 9532496 24011.3               </code></pre>
 <p><strong>AI causal language warning:</strong> When AI interprets ANOVA or correlation results, watch carefully for language like “season <em>affects</em> home values” or “income <em>drives</em> home prices.” These are causal claims. Your results are observational — they establish association and group differences, not causation. If AI uses causal language, correct the interpretation: “seasons are <em>associated with</em> differences in home values” or “income needed and home value are <em>correlated</em>.” ## ANOVA Lab</p>
 <p><strong>A marketing analyst</strong> wants to test whether average customer satisfaction scores differ across four store locations (North, South, East, West). She collected satisfaction ratings (1–10 scale) from random samples at each location. Without running any code, identify the correct test, state the null and alternative hypotheses, and write the <code>aov()</code> command she would use given a data frame called <code>stores</code> with columns <code>Satisfaction</code> and <code>Location</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Show Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Correct test:</strong> One-way ANOVA — she is comparing a continuous outcome (satisfaction score) across more than two groups defined by a single categorical variable (Location).</p>
-<ul>
-<li><span class="math inline">\(H_0: \mu_{North} = \mu_{South} = \mu_{East} = \mu_{West}\)</span> (all population mean satisfaction scores are equal)</li>
-<li><span class="math inline">\(H_A:\)</span> Not all population mean satisfaction scores are equal</li>
-</ul>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>anova_model <span class="ot">&lt;-</span> <span class="fu">aov</span>(Satisfaction <span class="sc">~</span> Location, <span class="at">data =</span> stores)</span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The formula <code>Satisfaction ~ Location</code> tells R to model the continuous outcome (Satisfaction) as a function of the categorical grouping variable (Location). The <code>summary()</code> command produces the ANOVA table with the F-statistic and p-value.</p>
-</div>
-</div>
-</div>
-<p><strong>Interpret</strong> the following one-way ANOVA output. State whether the result is significant at <span class="math inline">\(\alpha = 0.05\)</span>, write a plain-English conclusion, and explain whether a post-hoc test is needed and why.</p>
-<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)
-Location     3  142.8   47.60   8.34   0.0001 ***
-Residuals   96  548.2    5.71</code></pre>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Show Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Significance:</strong> The p-value (0.0001) is less than <span class="math inline">\(\alpha = 0.05\)</span>, so we reject the null hypothesis. The result is significant at the 0.001 level (three asterisks).</p>
-<p><strong>Plain-English conclusion:</strong> There is statistically significant evidence that not all store locations have the same mean customer satisfaction score. At least one location’s mean satisfaction differs from the others.</p>
-<p><strong>Post-hoc test:</strong> Yes — a post-hoc test is needed. The omnibus F-test only tells us that <em>some</em> difference exists somewhere among the four groups. It does not identify <em>which</em> pairs of locations differ. Running <code>TukeyHSD()</code> or <code>pairwise.t.test()</code> with Bonferroni correction will pinpoint which specific location pairs are significantly different from each other.</p>
-<p><strong>Degrees of freedom check:</strong> <span class="math inline">\(df_\text{treatment} = k - 1 = 4 - 1 = 3\)</span> ✓ and <span class="math inline">\(df_\text{error} = n_t - k = 100 - 4 = 96\)</span> ✓, so the total sample size is 100.</p>
-</div>
-</div>
-</div>
-<p><strong>A researcher</strong> conducts a two-way ANOVA to examine the effect of teaching method (Lecture, Flipped, Hybrid) and class size (Small, Large) on student exam scores. The R output shows: teaching method F = 6.21 (p = 0.003), class size F = 1.84 (p = 0.179). Write the two sets of hypotheses, state which effects are significant at <span class="math inline">\(\alpha = 0.05\)</span>, and explain what each conclusion means in practical terms.</p>
-<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -4355,6 +4482,53 @@ Show Answer
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Correct test:</strong> One-way ANOVA — she is comparing a continuous outcome (satisfaction score) across more than two groups defined by a single categorical variable (Location).</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_{North} = \mu_{South} = \mu_{East} = \mu_{West}\)</span> (all population mean satisfaction scores are equal)</li>
+<li><span class="math inline">\(H_A:\)</span> Not all population mean satisfaction scores are equal</li>
+</ul>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>anova_model <span class="ot">&lt;-</span> <span class="fu">aov</span>(Satisfaction <span class="sc">~</span> Location, <span class="at">data =</span> stores)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The formula <code>Satisfaction ~ Location</code> tells R to model the continuous outcome (Satisfaction) as a function of the categorical grouping variable (Location). The <code>summary()</code> command produces the ANOVA table with the F-statistic and p-value.</p>
+</div>
+</div>
+</div>
+<p><strong>Interpret</strong> the following one-way ANOVA output. State whether the result is significant at <span class="math inline">\(\alpha = 0.05\)</span>, write a plain-English conclusion, and explain whether a post-hoc test is needed and why.</p>
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)
+Location     3  142.8   47.60   8.34   0.0001 ***
+Residuals   96  548.2    5.71</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Significance:</strong> The p-value (0.0001) is less than <span class="math inline">\(\alpha = 0.05\)</span>, so we reject the null hypothesis. The result is significant at the 0.001 level (three asterisks).</p>
+<p><strong>Plain-English conclusion:</strong> There is statistically significant evidence that not all store locations have the same mean customer satisfaction score. At least one location’s mean satisfaction differs from the others.</p>
+<p><strong>Post-hoc test:</strong> Yes — a post-hoc test is needed. The omnibus F-test only tells us that <em>some</em> difference exists somewhere among the four groups. It does not identify <em>which</em> pairs of locations differ. Running <code>TukeyHSD()</code> or <code>pairwise.t.test()</code> with Bonferroni correction will pinpoint which specific location pairs are significantly different from each other.</p>
+<p><strong>Degrees of freedom check:</strong> <span class="math inline">\(df_\text{treatment} = k - 1 = 4 - 1 = 3\)</span> ✓ and <span class="math inline">\(df_\text{error} = n_t - k = 100 - 4 = 96\)</span> ✓, so the total sample size is 100.</p>
+</div>
+</div>
+</div>
+<p><strong>A researcher</strong> conducts a two-way ANOVA to examine the effect of teaching method (Lecture, Flipped, Hybrid) and class size (Small, Large) on student exam scores. The R output shows: teaching method F = 6.21 (p = 0.003), class size F = 1.84 (p = 0.179). Write the two sets of hypotheses, state which effects are significant at <span class="math inline">\(\alpha = 0.05\)</span>, and explain what each conclusion means in practical terms.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Hypothesis 1 — Teaching Method:</strong></p>
 <ul>
@@ -4382,7 +4556,7 @@ Show Answer
 <li>Explain what happens to each error type as sample size increases.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4391,7 +4565,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Hypotheses:</strong></p>
 <ul>
@@ -4414,7 +4588,7 @@ D-B     -2.00    0.089
 D-C     -4.25    0.000</code></pre>
 <p>How many pairwise comparisons are there — verify this using <code>choose(4, 2)</code> — and based on the output, which pairs are significantly different at <span class="math inline">\(\alpha = 0.05\)</span>? For the pairs that are significant, identify the direction of the difference.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4423,7 +4597,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Number of comparisons:</strong> <code>choose(4, 2) = 6</code> — with four groups, there are always <span class="math inline">\(\frac{4!}{2!(4-2)!} = 6\)</span> unique pairwise comparisons. ✓ The output shows all six.</p>
 <p><strong>Significant pairs</strong> (p adj &lt; 0.05):</p>
@@ -4477,7 +4651,7 @@ Show Answer
 </ol></li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4486,7 +4660,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><strong>a. Positive correlation.</strong> More study time is generally associated with higher exam scores — both variables tend to move in the same direction.</li>
@@ -4537,7 +4711,7 @@ Show Answer
 <p><span class="math inline">\(\bar{x} = 6\)</span>, <span class="math inline">\(\bar{y} = 11.6\)</span>, <span class="math inline">\(cov_{xy} = 13.0\)</span>, <span class="math inline">\(s_x = 3.162\)</span>, <span class="math inline">\(s_y = 4.827\)</span></p>
 <p>Interpret the result using the strength guidelines for business data (strong: |r| ≥ 0.8, moderate: 0.5–0.8, weak: 0.2–0.5).</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4546,14 +4720,14 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[r_{xy} = \frac{cov_{xy}}{s_x \cdot s_y} = \frac{13.0}{3.162 \times 4.827} = \frac{13.0}{15.25} \approx 0.853\]</span></p>
 <p><strong>Interpretation:</strong> A correlation of 0.853 indicates a <strong>strong positive</strong> linear relationship between advertising spend and sales. As advertising spend increases, sales tend to increase substantially. Since <span class="math inline">\(|r| &gt; 0.8\)</span>, this clears the threshold for a strong relationship in a business context.</p>
 <p><strong>Verify in R:</strong></p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">18</span>)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">18</span>)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -4568,7 +4742,7 @@ sample estimates:
       cor 
  0.775</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4577,7 +4751,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>t = 5.892:</strong> The test statistic measuring how many standard errors the observed correlation of 0.775 is from zero. A value this large is very unlikely if the true correlation were zero.</p>
 <p><strong>df = 23:</strong> Degrees of freedom for the correlation test = <span class="math inline">\(n - 2 = 25 - 2 = 23\)</span>, so the sample had 25 paired observations.</p>
@@ -4590,7 +4764,7 @@ Show Answer
 </div>
 <p><strong>A researcher reports</strong> a correlation of <span class="math inline">\(r = 0.12\)</span> between two variables, with a sample size of <span class="math inline">\(n = 850\)</span>, and finds <span class="math inline">\(p &lt; 0.001\)</span>. A colleague argues this is an important finding. Another colleague disagrees. Who is right, and what concept explains the disagreement?</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4599,7 +4773,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Both have a point, but the skeptical colleague is closer to correct in a practical sense.</strong></p>
 <p>The concept at the heart of this disagreement is the distinction between <strong>statistical significance and practical significance</strong>.</p>
@@ -4611,7 +4785,7 @@ Show Answer
 </div>
 <p><strong>A scatterplot</strong> of two variables shows a clear curved (U-shaped) pattern, but <code>cor.test()</code> returns <span class="math inline">\(r = 0.03\)</span> and <span class="math inline">\(p = 0.71\)</span>. A student concludes there is no relationship between the variables. What is wrong with this conclusion, and what does it illustrate about the limitations of the correlation coefficient?</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4620,7 +4794,7 @@ Show Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>The student’s conclusion is incorrect.</strong> There is clearly a relationship — the scatterplot shows a strong U-shaped pattern. The problem is that the correlation coefficient (<span class="math inline">\(r\)</span>) measures only <strong>linear</strong> relationships. A U-shaped (quadratic) pattern has roughly equal increases on the left side and decreases on the right side, which cancel out when computing <span class="math inline">\(r\)</span>, producing a value near zero.</p>
 <p><strong>What this illustrates:</strong></p>
@@ -5012,7 +5186,7 @@ Note
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>This lesson covered group comparison with ANOVA and linear association with correlation:</p>
+<p>This lesson covered group comparison with ANOVA, linear association with correlation, and the assumptions that make both analyses trustworthy:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -5050,36 +5224,44 @@ Note
 <td>Interaction term SSAB, three F-statistics, interaction plots</td>
 </tr>
 <tr class="odd">
+<td>ANOVA assumptions</td>
+<td>Normality, homogeneity of variance, independence; <code>leveneTest()</code>, <code>oneway.test()</code> as Welch alternative</td>
+</tr>
+<tr class="even">
 <td>choose()</td>
 <td>Counting pairwise comparisons, <code>choose(k, 2)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Covariance</td>
 <td>Direction of linear relationship, <code>cov()</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Correlation coefficient</td>
 <td>Strength and direction, range −1 to +1, <code>cor()</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Correlation significance</td>
 <td><code>cor.test()</code>, t-distribution, p-value, confidence interval</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Scatterplots</td>
 <td><code>ggplot2</code>, <code>geom_point()</code>, <code>stat_smooth(method="lm")</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Practical vs.&nbsp;statistical significance</td>
 <td>Effect size vs.&nbsp;p-value, large-sample caution</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Limitations of correlation</td>
 <td>Linearity only, outlier sensitivity, correlation ≠ causation</td>
 </tr>
+<tr class="odd">
+<td>Correlation assumptions</td>
+<td>Linearity, bivariate normality, no influential outliers, independence; <code>shapiro.test()</code>, Spearman’s <span class="math inline">\(\rho\)</span> as alternative</td>
+</tr>
 </tbody>
 </table>
-<p><strong>What comes next:</strong> The Regression lesson picks up directly from correlation. Where correlation describes the strength and direction of the relationship between two continuous variables, regression uses that relationship to build a predictive model — estimating a slope and intercept so that we can forecast values of the outcome variable. The goodness-of-fit measures introduced there (R², adjusted R², RSE) build on the sum-of-squares logic covered in this lesson. Regression is the last major topic we have in OMSBA 512A and is the foundation for advanced analytics.</p>
+<p><strong>What comes next:</strong> The Regression lesson picks up directly from correlation. Where correlation describes the strength and direction of the relationship between two continuous variables, regression uses that relationship to build a predictive model — estimating a slope and intercept so that we can forecast values of the outcome variable. Regression carries its own set of assumptions (linearity, independence of errors, homoscedasticity, normality of residuals, no multicollinearity) that extend naturally from what you learned here. The goodness-of-fit measures introduced there (R², adjusted R², RSE) build on the sum-of-squares logic covered in this lesson. Regression is the last major topic we have in OMSBA 512A and is the foundation for advanced analytics.</p>
 
 
 </section>

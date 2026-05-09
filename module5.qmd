@@ -9,7 +9,7 @@ format: html
 knitr::opts_chunk$set(echo=TRUE, tidy.opts = list(width.cutoff = 70), tidy = TRUE, message=FALSE, warning=FALSE)
 ```
 
-This lesson introduces the logic and mechanics of statistical hypothesis testing, then applies that framework to three t-tests that will appear throughout the rest of the course.
+This lesson introduces the logic and mechanics of statistical hypothesis testing, then applies that framework to three t-tests that will appear throughout the rest of the course. It also covers the assumptions underlying each test — what they mean conceptually, what goes wrong when they are violated, and how to check them in R.
 
 We begin with the **foundations of hypothesis testing**: what a null and alternative hypothesis are, why we assume the null is true until the evidence says otherwise, and how the p-value approach works. A p-value is the probability of observing a result at least as extreme as the one calculated, *assuming the null hypothesis is true*. A small p-value means the observed data would be very unlikely if the null were true — giving us grounds to reject it. We set a decision rule in advance: reject $H_0$ if the p-value is less than alpha (typically 0.05). We also cover the three tail configurations — two-tailed ($\neq$), right-tailed ($>$), and left-tailed ($<$) — and how the direction of the alternative hypothesis determines which tail of the distribution we look at.
 
@@ -17,7 +17,7 @@ The lesson then works through three **t-tests**, each using R's `t.test()` funct
 
 The **one-sample t-test** compares a single sample mean to a known or hypothesized value — for example, testing whether average study hours differ from 12. The **independent samples t-test** compares the means of two unrelated groups — for example, whether systolic blood pressure differs between males and females. The **dependent (paired) samples t-test** compares two related measurements, such as weight before and after an intervention, where each observation in one group is matched to a specific observation in the other. The key to choosing the right test is understanding how the data are structured.
 
-By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, and write a formal conclusion from the output. Work through every code example in your own R script alongside the reading.
+By the end of this lesson, you should be able to set up and interpret any of the three t-tests in R, choose the correct test for a given research question, write a formal conclusion from the output, and verify that the assumptions of the test are reasonably satisfied before drawing conclusions. Work through every code example in your own R script alongside the reading.
 
 ### AI and Hypothesis Testing: Where Misinterpretation Happens
 
@@ -41,6 +41,7 @@ Understanding the logic in this module is what gives you the ability to catch th
 -   Compare two unrelated sample means with an independent-samples t-test.
 -   Compare two related sample means with a dependent-samples (paired) t-test.
 -   Select the correct t-test for a given research question based on data structure.
+-   Identify the assumptions of t-tests, explain what happens when they are violated, and use R to check them.
 
 ### Consider While Reading
 
@@ -713,6 +714,80 @@ t.test(sleep2$extra.1, sleep2$extra.2, paired=TRUE)
 
 -   In either case, we reject the null hypotheses and find that the type of drug does affect the sleep in patient
 
+## Assumptions of t-Tests
+
+Every t-test rests on a set of statistical assumptions. An assumption is a condition about the data or population that must be reasonably true for the test's results to be trustworthy. Violating an assumption does not automatically invalidate your analysis, but it can distort your p-values and confidence intervals — sometimes dramatically.
+
+### What the Assumptions Are
+
+**Normality** is the assumption that the variable being tested is approximately normally distributed in the population — or that the sampling distribution of the mean is normal. In practice this is satisfied either by the data itself being roughly bell-shaped, or by having a large enough sample ($n \geq 30$), where the Central Limit Theorem takes over and the sampling distribution of the mean becomes approximately normal regardless of the shape of the underlying data.
+
+**Independence** means that each observation in your sample was drawn separately and does not influence any other observation. If you sampled the same person twice and treated the responses as independent, or collected data in clusters where people within a cluster influence each other, independence is violated. For the paired t-test, independence applies *between pairs*, not within them — the pairing is deliberate and expected.
+
+**Equal variances** (also called homoscedasticity or homogeneity of variance) applies to the independent samples t-test: the two groups being compared should have roughly similar spread. By default, R's `t.test()` uses the Welch correction, which adjusts the degrees of freedom to compensate when variances differ — so this assumption is less critical in practice than it used to be.
+
+### What Happens When Assumptions Are Violated
+
+When **normality fails** with a small sample, the t-distribution no longer correctly describes the sampling distribution of your test statistic. Your p-value becomes unreliable — it may be too small (inflating false positive rates) or too large (causing you to miss real effects). With $n \geq 30$, the CLT provides enough protection that mild non-normality rarely causes meaningful distortion.
+
+When **independence fails**, your standard errors are typically underestimated, which makes your t-statistic artificially large and your p-value artificially small. You appear to have stronger evidence than you actually do. This is one of the most serious violations because there is no built-in correction.
+
+When **equal variances fail** without using the Welch correction (i.e., if you set `var.equal = TRUE` when it should not be), your degrees of freedom are miscalculated and the test loses accuracy. R's default Welch t-test sidesteps this, which is why the default is almost always the right choice.
+
+### Visualizing Normality
+
+The normality assumption asks whether your data looks roughly like the symmetric, bell-shaped curve on the left — not like the skewed shapes on the right, which would require either a larger sample or a non-parametric alternative.
+
+```{=html}
+<div style="margin: 1.5rem 0; padding: 1.2rem 1.5rem; background: #f8f9fb; border: 1px solid #dde1e8; border-radius: 8px;">
+  <p style="font-size: 0.85rem; font-weight: 600; color: #555; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.04em;">Distribution Shape and the Normality Assumption</p>
+  <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:680px; display:block; margin:0 auto;">
+    <text x="113" y="18" text-anchor="middle" font-size="11" fill="#1a6b3a" font-weight="600">Normal — Assumption Met ✓</text>
+    <path d="M20,170 C20,170 40,168 55,160 C70,152 80,130 95,105 C105,88 110,72 113,62 C116,72 121,88 131,105 C146,130 156,152 171,160 C186,168 206,170 206,170 Z" fill="#c8ecd5" stroke="#1a6b3a" stroke-width="1.5"/>
+    <line x1="113" y1="62" x2="113" y2="175" stroke="#1a6b3a" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="113" y="188" text-anchor="middle" font-size="9.5" fill="#333">Symmetric, bell-shaped</text>
+    <text x="357" y="18" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Right-Skewed — May Violate ✗</text>
+    <path d="M255,170 C255,170 262,168 268,158 C274,148 278,128 284,100 C288,82 290,66 292,58 C295,66 300,85 310,105 C322,128 338,150 365,162 C390,172 460,170 460,170 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.5"/>
+    <line x1="292" y1="58" x2="292" y2="175" stroke="#9b2226" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="295" y="188" text-anchor="middle" font-size="9.5" fill="#333">Long tail to the right</text>
+    <text x="588" y="18" text-anchor="middle" font-size="11" fill="#9b2226" font-weight="600">Left-Skewed — May Violate ✗</text>
+    <path d="M478,170 C478,170 548,172 573,162 C600,150 616,128 628,105 C638,85 643,66 646,58 C648,66 650,82 654,100 C660,128 664,148 670,158 C676,168 683,170 683,170 Z" fill="#f8d0d0" stroke="#9b2226" stroke-width="1.5"/>
+    <line x1="646" y1="58" x2="646" y2="175" stroke="#9b2226" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="582" y="188" text-anchor="middle" font-size="9.5" fill="#333">Long tail to the left</text>
+  </svg>
+  <p style="font-size: 0.8rem; color: #666; margin: 0.8rem 0 0 0; font-style: italic;">With small samples (n &lt; 30), skewed data can produce unreliable p-values. With n ≥ 30, the Central Limit Theorem provides protection against mild skew.</p>
+</div>
+```
+
+### Testing Assumptions in R
+
+R makes it straightforward to check your assumptions before interpreting results.
+
+**Normality** can be assessed visually with a histogram or Q-Q plot, or formally with the Shapiro-Wilk test (`shapiro.test()`). The Q-Q plot is particularly useful: if the points follow the diagonal line closely, the normality assumption is reasonable.
+
+```r
+# Visual checks
+hist(your_variable)                    # Look for roughly bell-shaped distribution
+qqnorm(your_variable)                  # Points should follow the diagonal
+qqline(your_variable)
+
+# Formal test (works best for small to moderate samples)
+shapiro.test(your_variable)            # p > .05 means we cannot reject normality
+```
+
+**Equal variances** (for the independent samples t-test) can be checked with the `var.test()` function in base R. If variances are unequal, R's default Welch correction already handles it — just make sure you are not overriding it with `var.equal = TRUE`.
+
+```r
+var.test(variable ~ group, data = mydata)   # p > .05 suggests equal variances
+```
+
+**Independence** cannot be tested statistically — it must be reasoned from how the data were collected. Ask: could any two observations have influenced each other? If the answer is yes, the independence assumption may be compromised.
+
+::: {.callout-tip}
+### A practical rule of thumb
+For most business and social science datasets, a histogram and a quick sample size check will take you far. If $n \geq 30$ and the distribution is not severely multimodal or contaminated by extreme outliers, the t-test is generally robust. When you do have a small sample and clear non-normality, consider a non-parametric alternative like the Wilcoxon signed-rank test (`wilcox.test()`), which makes no distributional assumption.
+:::
+
 # Review and Practice
 
 ## Using AI
@@ -1223,7 +1298,7 @@ No need to submit this quiz anywhere. This exercise is for your benefit to help 
 
 ## Summary
 
-This lesson covered the logic of hypothesis testing and three t-tests in R:
+This lesson covered the logic of hypothesis testing, three t-tests in R, and the assumptions that make those tests trustworthy:
 
 | Topic | Key concepts |
 |------------------------------------|------------------------------------|
@@ -1238,5 +1313,8 @@ This lesson covered the logic of hypothesis testing and three t-tests in R:
 | Dependent samples t-test | Compares two related measurements; use `paired = TRUE`; formula uses mean of differences $m_d$ |
 | `reshape()` | Converts long-to-wide data for paired tests; tidyverse alternative uses `filter()` + `full_join()` |
 | Confidence intervals | Output includes 95% CI around the estimate; interpreted alongside the p-value |
+| Assumptions | Normality, independence, equal variances; CLT protects normality for $n \geq 30$ |
+| Checking assumptions | `shapiro.test()` for normality, `var.test()` for equal variances; independence assessed from study design |
+| Non-parametric alternative | `wilcox.test()` when normality fails with small samples |
 
-**What comes next:** The ANOVA lesson extends hypothesis testing beyond two groups. Where the independent samples t-test compares the means of two populations, a one-way ANOVA compares three or more. The F-statistic and p-value interpretation follow the same logic introduced here.
+**What comes next:** The ANOVA lesson extends hypothesis testing beyond two groups. Where the independent samples t-test compares the means of two populations, a one-way ANOVA compares three or more. The F-statistic and p-value interpretation follow the same logic introduced here — and so do the assumptions, which are the same family of normality, independence, and homogeneity of variance concerns.
